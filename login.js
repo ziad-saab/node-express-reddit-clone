@@ -19,8 +19,10 @@ app.post('/Login', parser, function(request, response){
         //need to add code to use the token for the login session
     })
     .catch(function(e){
-        response.send(e);
-        throw e;
+        if(e.message === 'Invalid password' || e.message === 'User not found'){
+            response.send(e.message);
+        }
+        else throw e;
     });
 });
 
