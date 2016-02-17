@@ -69,7 +69,7 @@ function createNewUser(username, password, email) {
 //returns a token for a sessionid on successful login, otherwise throws an error
 function login(username, password) {
 	return dbInit.then(function() {
-		User.findOne({
+		return User.findOne({
 			where: {
 				username: username
 			}
@@ -87,11 +87,12 @@ function login(username, password) {
 				token: token
 			})
 			.then(function(session) {
-				return session.token;
+				return session.dataValues.token;
 			});
 		});
 	});
 }
+
 module.exports = {
 	createNewUser: createNewUser,
 	login: login
