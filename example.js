@@ -36,3 +36,7 @@ app.post('/signup', function(request, response) {
 app.post('/vote', function(request, response) {
   // code to add an up or down vote for a content+user combination
 });
+
+
+// Listen
+app.listen(process.env.PORT);
