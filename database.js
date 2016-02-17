@@ -132,8 +132,6 @@ function createNewContent(sessionId, url, title) {
 	});
 }
 
-getUserFromSessionId('4ad8517348b7f054683a73d046448f5bc337825eb9afac4b5179af87bf21143d854c8bf2585f7f4e').then(console.log);
-
 module.exports = {
 	createNewUser: createNewUser,
 	login: login,
