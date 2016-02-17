@@ -13,14 +13,15 @@ app.get('/Login', function(req, res){
 });
 
 app.post('/Login', parser, function(request, response){
-    database.login(request.body.username, request.body.password).
-    then(function(token){
+    database.login(request.body.username, request.body.password)
+    .then(function(token){
         response.send("You are now logged in with token: " + token);
         //need to add code to use the token for the login session
-    }).catch(e){
+    })
+    .catch(function(e){
         response.send(e);
         throw e;
-    };
+    });
 });
 
 var server = app.listen(process.env.PORT, process.env.IP, function () {
