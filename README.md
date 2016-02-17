@@ -386,6 +386,8 @@ But how will the user cast a vote? Their browser will have to make a **POST** re
 This is weird though. Imagine if on Reddit every time you cast a vote, the page would refresh? In the next weeks we will learn how to make these kind of requests (GET, POST, ...) to a server but without refreshing the page.
 
 ## Rendering HTML
+*This whole section is optional. You can render HTML on the server-side by simply doing string concatenation.*
+
 Rendering HTML by doing things like:
 
 ```javascript
