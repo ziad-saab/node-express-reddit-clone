@@ -2,7 +2,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var database = require('database.js');
+var database = require('./database.js');
 
 var parser = bodyParser.urlencoded({ extended: false });
 app.post('/SignUp', parser, function(request, response){
