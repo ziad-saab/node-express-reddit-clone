@@ -1,5 +1,6 @@
 var db = require('mysql-promise')();
 var Sequelize = require('sequelize');
+var sha1 = require('sha1');
 var username = require('./config.json').username;
 
 db.configure({
@@ -39,7 +40,7 @@ function createNewUser(username, password, email) {
   return dbInit.then(function(res) {
 		return User.create({
 	    username: username,
-	    password: password,
+	    password: sha1(password),
 			email: email
 	  });
 	})
