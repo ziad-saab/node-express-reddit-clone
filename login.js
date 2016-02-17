@@ -6,6 +6,13 @@ var config = require('./config.json');
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+var port = config.port;
+if(!port)
+port = process.env.PORT;
+var ip = config.server;
+if (!ip)
+ip = process.env.IP;
+
 var parser = bodyParser.urlencoded({ extended: false });
 
 app.get('/Login', function(req, res){
@@ -26,7 +33,7 @@ app.post('/Login', parser, function(request, response){
     });
 });
 
-var server = app.listen(process.env.PORT, process.env.IP, function () {
+var server = app.listen(port, ip, function () {
   var host = server.address().address;
   var port = server.address().port;
 

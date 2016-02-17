@@ -92,6 +92,9 @@ function login(username, password) {
 		});
 	});
 }
+login('jimothy', '').catch(function(e) {
+	console.log(e.message);
+})
 
 module.exports = {
 	createNewUser: createNewUser,
