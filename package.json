@@ -23,8 +23,9 @@
   },
   "homepage": "https://github.com/crispmark/node-express-sequelize-reddit-clone#readme",
   "dependencies": {
-    "mysql-promise": "^1.5.0"
     "bcrypt": "^0.8.5",
+    "body-parser": "^1.15.0",
+    "mysql-promise": "^1.5.0",
     "sequelize": "^3.19.2"
   }
 }
