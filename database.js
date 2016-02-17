@@ -16,6 +16,8 @@ db.configure({
 });
 
 var User;
+var Session;
+var Content;
 
 //create database if it doesn't already exist
 var dbInit = db.query('create database reddit_clone')
@@ -46,13 +48,20 @@ var dbInit = db.query('create database reddit_clone')
 	    },
 			email: Sequelize.STRING(50)
 	});
-	var Session = db.define('session', {
+	Session = db.define('session', {
 	    token: Sequelize.STRING
 	});
 	User.hasMany(Session);
 	Session.belongsTo(User);
+
+	Content = db.define('content', {
+	  url: Sequelize.STRING,
+	  title: Sequelize.STRING
+	});
+	Content.belongsTo(User);
+	User.hasMany(Content);
+
 	return db.sync();
-	//return;
 })
 
 //Inserts a new user into users table
@@ -69,7 +78,7 @@ function createNewUser(username, password, email) {
 //returns a token for a sessionid on successful login, otherwise throws an error
 function login(username, password) {
 	return dbInit.then(function() {
-		User.findOne({
+		return User.findOne({
 			where: {
 				username: username
 			}
@@ -87,12 +96,45 @@ function login(username, password) {
 				token: token
 			})
 			.then(function(session) {
-				return session.token;
+				return session.dataValues.token;
 			});
 		});
 	});
 }
+//Given a sessionId, return
+function getUserFromSessionId(sessionId) {
+	return dbInit.then(function() {
+		return Session.findOne({
+			include:[User],
+			where: {
+				token: sessionId
+			}
+		}).then(function(res) {
+			return res.dataValues.user;
+		});
+	});
+}
+/* takes a sessionId, a URL, a title, creates a new content with Sequelize and returns the content in a promise
+*/
+function createNewContent(sessionId, url, title) {
+  return dbInit.then(function() {
+		return getUserFromSessionId(sessionId)
+		.then(function(user) {
+			return Content.create({
+	      url: url,
+	      title: title
+			})
+			.then(function(content) {
+		    user.addContent(content);
+		    return content;
+			});
+		});
+	});
+}
+
+
 module.exports = {
 	createNewUser: createNewUser,
-	login: login
+	login: login,
+	createNewContent: createNewContent
 }
