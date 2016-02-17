@@ -8,7 +8,7 @@ var config = require('./config.json');
 var parser = bodyParser.urlencoded({ extended: false });
 
 app.get('/SignUp', function(req, res){
-  res.sendFile('/home/mark/Programming Docs/github/node-express-sequelize-reddit-clone/SignUp/index.html');
+  res.sendFile('/SignUp/index.html', {root: __dirname});
 });
 
 app.post('/SignUp', parser, function(request, response){
@@ -29,7 +29,7 @@ app.post('/SignUp', parser, function(request, response){
     }
 });
 
-var server = app.listen(config.port, config.server, function () {
+var server = app.listen(process.env.PORT, process.env.IP, function () {
   var host = server.address().address;
   var port = server.address().port;
 
