@@ -8,7 +8,7 @@ var config = require('./config.json');
 var parser = bodyParser.urlencoded({ extended: false });
 
 app.get('/SignUp', function(req, res){
-  res.sendFile('/SignUp/index.html', {root: __dirname});
+  res.sendFile('/SignUp/index.html', {root: __dirname });
 });
 
 app.post('/SignUp', parser, function(request, response){
