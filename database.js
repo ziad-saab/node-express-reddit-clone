@@ -1,6 +1,6 @@
 var db = require('mysql-promise')();
 var Sequelize = require('sequelize');
-var sha1 = require('sha1');
+var bcrypt = require('bcrypt');
 var username = require('./config.json').username;
 
 db.configure({
@@ -27,8 +27,18 @@ var dbInit = db.query('create database reddit_clone')
 	});
 	//define users table
 	User = db.define('user', {
-	    username: {type: Sequelize.STRING(20), unique: true, allowNull: false},
-	    password: {type: Sequelize.STRING(20), allowNull: false}, // TODO: make the passwords more secure!
+	    username: {
+				type: Sequelize.STRING(20),
+				unique: true,
+				allowNull: false
+			},
+	    hashed_password: Sequelize.STRING,
+	    password: {
+	        type: Sequelize.VIRTUAL,
+	        set: function(actualPassword) {
+	            this.setDataValue('hashed_password', bcrypt.hashSync(actualPassword, 10));
+	        }
+	    },
 			email: Sequelize.STRING(50)
 	});
 	return db.sync();
@@ -40,7 +50,7 @@ function createNewUser(username, password, email) {
   return dbInit.then(function(res) {
 		return User.create({
 	    username: username,
-	    password: sha1(password),
+			password: password,
 			email: email
 	  });
 	})
