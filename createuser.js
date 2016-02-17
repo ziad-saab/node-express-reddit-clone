@@ -2,11 +2,12 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var database = require('database.js');
 
 var parser = bodyParser.urlencoded({ extended: false });
 app.post('/SignUp', parser, function(request, response){
     if(request.body.password === request.body.confirmPassword){
-        createNewUser(request.body.user, request.body.password, request.body.email)
+        database.createNewUser(request.body.user, request.body.password, request.body.email)
         .then(function(result){
             response.send('<h1>Nice Job!</h1>');
         });
