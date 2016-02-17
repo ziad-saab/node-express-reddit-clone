@@ -3,6 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var database = require('./database.js');
 var config = require('./config.json');
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 var port = config.port;
 if(!port)
@@ -18,6 +20,7 @@ app.get('/CreateContent', function(req, res){
 });
 
 app.post('/CreateContent', parser, function(request, response){
+    console.log(request.cookies);
     database.postContent(request.cookies.sessionId, request.body.title, request.body.url)
     .then(function(result){
         //redirect to content page

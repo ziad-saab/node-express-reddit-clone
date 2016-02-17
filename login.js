@@ -23,9 +23,8 @@ app.post('/Login', parser, function(request, response){
     database.login(request.body.username, request.body.password)
     .then(function(token){
         if(token){
-            response.send("You are now logged in with token: " + token);
-            //need to add code to use the token for the login session
             response.cookie('sessionId', token);
+            response.send("You are now logged in with token: " + token);
         }
     })
     .catch(function(e){

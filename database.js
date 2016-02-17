@@ -135,5 +135,5 @@ function createNewContent(sessionId, url, title) {
 module.exports = {
 	createNewUser: createNewUser,
 	login: login,
-	createNewContent: createNewContent
+	postContent: createNewContent
 }
