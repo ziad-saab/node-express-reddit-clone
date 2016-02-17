@@ -1,0 +1,25 @@
+{
+  "name": "node-express-sequelize-reddit-clone",
+  "version": "1.0.0",
+  "description": "clone of reddit using node.js, express, and sequelize packages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crispmark/node-express-sequelize-reddit-clone.git"
+  },
+  "keywords": [
+    "reddit",
+    "clone",
+    "workshop",
+    "database"
+  ],
+  "author": "'Mark <macr1324@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crispmark/node-express-sequelize-reddit-clone/issues"
+  },
+  "homepage": "https://github.com/crispmark/node-express-sequelize-reddit-clone#readme"
+}
