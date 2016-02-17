@@ -16,6 +16,8 @@ db.configure({
 });
 
 var User;
+var Session;
+var Content;
 
 //create database if it doesn't already exist
 var dbInit = db.query('create database reddit_clone')
@@ -46,13 +48,17 @@ var dbInit = db.query('create database reddit_clone')
 	    },
 			email: Sequelize.STRING(50)
 	});
-	var Session = db.define('session', {
+	Session = db.define('session', {
 	    token: Sequelize.STRING
 	});
 	User.hasMany(Session);
 	Session.belongsTo(User);
 
+<<<<<<< HEAD
 	var Content = db.define('content', {
+=======
+	Content = db.define('content', {
+>>>>>>> database
 	  url: Sequelize.STRING,
 	  title: Sequelize.STRING
 	});
@@ -95,10 +101,44 @@ function login(username, password) {
 			})
 			.then(function(session) {
 				return session.dataValues.token;
+<<<<<<< HEAD
+=======
 			});
 		});
 	});
 }
+//Given a sessionId, return
+function getUserFromSessionId(sessionId) {
+	return dbInit.then(function() {
+		return Session.findOne({
+			include:[User],
+			where: {
+				token: sessionId
+			}
+		}).then(function(res) {
+			return res.dataValues.user;
+		});
+	});
+}
+/* takes a sessionId, a URL, a title, creates a new content with Sequelize and returns the content in a promise
+*/
+function createNewContent(sessionId, url, title) {
+  return dbInit.then(function() {
+		return getUserFromSessionId(sessionId)
+		.then(function(user) {
+			return Content.create({
+	      url: url,
+	      title: title
+			})
+			.then(function(content) {
+		    user.addContent(content);
+		    return content;
+>>>>>>> database
+			});
+		});
+	});
+}
+<<<<<<< HEAD
 //Given a sessionId, return
 function getUserFromSessionId(sessionId) {
 	return Session.findOne({
@@ -127,6 +167,10 @@ function createNewContent(sessionId, url, title) {
 }
 
 getUserFromSessionId('4ad8517348b7f054683a73d046448f5bc337825eb9afac4b5179af87bf21143d854c8bf2585f7f4e').then(console.log);
+=======
+
+
+>>>>>>> database
 module.exports = {
 	createNewUser: createNewUser,
 	login: login,
