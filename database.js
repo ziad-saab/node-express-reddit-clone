@@ -30,6 +30,7 @@ db.configure({
 var User;
 var Session;
 var Content;
+var Vote;
 
 //create database if it doesn't already exist
 var dbInit = db.query('create database reddit_clone')
@@ -73,7 +74,7 @@ var dbInit = db.query('create database reddit_clone')
 	Content.belongsTo(User);
 	User.hasMany(Content);
 
-  var Vote = db.define('vote', {
+  Vote = db.define('vote', {
     upVote: Sequelize.BOOLEAN
   });
 
@@ -168,26 +169,36 @@ function getLatestNContent(sessionId, n) {
             ]
         })
         .then(function(content) {
+          return user.getUpvotes()
+          .then(function(upvotes) {
+            content = content.map(i => i.toJSON()).map(function(c) {
+              var vote = upvotes.map(i => i.toJSON()).find(function(upvote) {
+                return upvote.id === c.id;
+              });
+              if (vote)
+              c.vote = vote.vote;
+              return c;
+            });
+            return {
+              User: user.toJSON(),
+              Content: content
+            }
+          });
+        });
+    })
+    .catch(function(e) {
+      return Content.findAll({
+            include: [User],
+            limit: n,
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        })
+        .then(function(content) {
           return {
-            User: user.toJSON(),
             Content: content.map(i => i.toJSON())
           }
         });
-    })
-    .catch(function(e){
-      console.log(e);
-      return Content.findAll({
-                include: [User],
-                limit: n,
-                order: [
-                    ['createdAt', 'DESC']
-                ]
-            })
-            .then(function(content) {
-              return {
-                Content: content.map(i => i.toJSON())
-              }
-            });
     });
   });
 }
