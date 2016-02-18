@@ -22,7 +22,7 @@ app.post('/SignUp', function(request, response){
         })
         .catch(function(e) {
           if(e.name === 'SequelizeUniqueConstraintError') {
-            response.redirect('/Login?error=Username Taken');
+            response.redirect('/SignUp?error=Username Taken');
           }
           else throw e;
         });
