@@ -3,7 +3,7 @@ var database = require('./database.js');
 var app = require('./app.js');
 
 app.get('/SignUp', function(req, res){
-  res.sendFile('/SignUp/index.html', {root: __dirname });
+  res.render('signup-form', {error: req.query.error});
 });
 
 
@@ -22,7 +22,7 @@ app.post('/SignUp', function(request, response){
         })
         .catch(function(e) {
           if(e.name === 'SequelizeUniqueConstraintError') {
-            response.send('<h1>Username taken</h1>');
+            response.redirect('/Login?error=Username Taken');
           }
           else throw e;
         });
