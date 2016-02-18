@@ -4,11 +4,13 @@
   "description": "building a small proof of concept reddit clone",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
-    "sequelize": "^3.19.2",
-    "mysql": "^2.10.2"
+    "mysql": "^2.10.2",
+    "secure-random": "^1.1.1",
+    "sequelize": "^3.19.2"
   },
   "devDependencies": {},
   "scripts": {
