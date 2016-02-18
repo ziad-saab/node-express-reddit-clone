@@ -15,6 +15,7 @@ app.post('/Login', function(request, response){
     .catch(function(e){
         if(e.message === database.INVALID_PASSWORD || e.message === database.USR_NOT_FOUND){
             response.send(e.message);
+            response.redirect('/');
         }
         else throw e;
     });

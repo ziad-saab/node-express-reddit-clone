@@ -11,7 +11,14 @@ app.post('/SignUp', function(request, response){
     if(request.body.password === request.body.confirmPassword){
         database.createNewUser(request.body.username, request.body.password, request.body.email)
         .then(function(result){
-            response.send('<h1>Nice Job!</h1>');
+            database.login(request.body.username, request.body.password)
+            .then(function(token){
+                if(token){
+                    response.cookie('sessionId', token);
+                    response.redirect('/');
+                }
+                return token;
+            });
         })
         .catch(function(e) {
           if(e.name === 'SequelizeUniqueConstraintError') {
