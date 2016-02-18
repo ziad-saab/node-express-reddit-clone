@@ -1,6 +1,5 @@
 var app = require('./app.js');
 var database = require('./database.js');
-
 app.get('/Login', function(req, res){
   res.sendFile('/Login/index.html', {root: __dirname });
 });
@@ -10,7 +9,7 @@ app.post('/Login', function(request, response){
     .then(function(token){
         if(token){
             response.cookie('sessionId', token);
-            response.send("You are now logged in with token: " + token);
+            response.redirect('/');
         }
     })
     .catch(function(e){

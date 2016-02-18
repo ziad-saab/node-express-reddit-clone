@@ -125,7 +125,6 @@ function getUserFromSessionId(sessionId) {
         }
 			}
 		}).then(function(res) {
-      console.log(res);
       if (!res)
       throw new Error(INVALID_SESSIONID);
 

@@ -6,11 +6,11 @@ app.get('/CreateContent', function(req, res){
 });
 
 app.post('/CreateContent', function(request, response){
-    console.log(request.cookies);
+    console.log(request.body);
     database.postContent(request.cookies.sessionId, request.body.title,  request.body.url)
     .then(function(result){
         //redirect to content page
-        response.send("Content Page");
+        response.redirect("/");
     })
     .catch(function(e){
       if(e.message === database.INVALID_SESSIONID)

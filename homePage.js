@@ -5,7 +5,7 @@ require('./createuser.js');
 require('./login.js');
 require('./createcontent.js');
 
-app.get('/homepage', function(req, res){
+app.get('/', function(req, res){
   database.getLatestNContent(25)
   .then(function(content) {
     res.send(htmlify(content));
