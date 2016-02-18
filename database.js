@@ -166,12 +166,20 @@ function getLatestNContent(sessionId, n) {
         	return newResult;
     	})
     	.then(function(contentObject){
-    		return getUserFromSessionId(sessionId).then(function(userObject){
+    		return getUserFromSessionId(sessionId)
+        .then(function(userObject){
     			return {
     				User: userObject,
     				Content: contentObject
     			};
-    		});
+    		})
+        .catch(function(e) {
+          if (e.message === INVALID_SESSIONID)
+      		return {
+      			Content: contentObject
+      		};
+          else throw e;
+        });
     	});
 	});
 }

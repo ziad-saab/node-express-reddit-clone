@@ -6,13 +6,14 @@ require('./login.js');
 require('./createcontent.js');
 
 app.get('/', function(req, res){
-  database.getLatestNContent(25)
-  .then(function(content) {
-    res.send(htmlify(content));
+  var sessionId = req.cookies.sessionId;
+  database.getLatestNContent(sessionId, 25)
+  .then(function(response) {
+    res.send(htmlify(response.User, response.Content));
   });
 });
 
-function htmlify(contents) {
+function htmlify(user, contents) {
   var htmlstring = '<a href=/SignUp>Sign Up</a>\
     <a href=/Login>Login</a>\
     <a href=/CreateContent>Create Content</a>\
