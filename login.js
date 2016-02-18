@@ -2,7 +2,7 @@ var app = require('./app.js');
 var database = require('./database.js');
 
 app.get('/Login', function(req, res){
-  res.sendFile('/Login/index.html', {root: __dirname });
+  res.render('login-form', {error: req.query.error});
 });
 
 app.post('/Login', function(request, response){
@@ -15,7 +15,7 @@ app.post('/Login', function(request, response){
     })
     .catch(function(e){
         if(e.message === database.INVALID_PASSWORD || e.message === database.USR_NOT_FOUND){
-            response.send(e.message);
+            response.redirect('/Login?error=Invalid Username or Password');
         }
         else throw e;
     });
