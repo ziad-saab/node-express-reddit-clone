@@ -1,7 +1,7 @@
 //Requiring npm packagaes
 var app = require('./app.js');
 var database = require('./database.js');
-var signup = require('./createuser.js');
+require('./createuser.js');
 
 app.get('/homepage', function(req, res){
   database.getLatestNContent(25)
