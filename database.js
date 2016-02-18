@@ -150,7 +150,7 @@ function createNewContent(sessionId, url, title) {
 	});
 }
 
-function getLatestNContent(n) {
+function getLatestNContent(sessionId, n) {
 	return dbInit.then(function() {
 		return Content.findAll({
 	        include: [User],
@@ -163,7 +163,15 @@ function getLatestNContent(n) {
 	        var newResult = results.map(function(object){
 	            return object.dataValues;
 	        });
-        return newResult;
+        	return newResult;
+    	})
+    	.then(function(contentObject){
+    		return getUserFromSessionId(sessionId).then(function(userObject){
+    			return {
+    				User: userObject,
+    				Content: contentObject
+    			};
+    		});
     	});
 	});
 }
