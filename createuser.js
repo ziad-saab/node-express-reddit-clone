@@ -1,24 +1,15 @@
 //Requiring npm packagaes
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
 var database = require('./database.js');
-var config = require('./config.json');
+var app = require('./app.js');
 
-var parser = bodyParser.urlencoded({ extended: false });
 
-var port = config.port;
-if(!port)
-port = process.env.PORT;
-var ip = config.server;
-if (!ip)
-ip = process.env.IP;
 
-app.get('/SignUp', function(req, res){
+var signupGet = app.get('/SignUp', function(req, res){
   res.sendFile('/SignUp/index.html', {root: __dirname });
 });
 
-app.post('/SignUp', parser, function(request, response){
+
+var signupPost = app.post('/SignUp', function(request, response){
     if(request.body.password === request.body.confirmPassword){
         database.createNewUser(request.body.username, request.body.password, request.body.email)
         .then(function(result){
@@ -36,9 +27,7 @@ app.post('/SignUp', parser, function(request, response){
     }
 });
 
-var server = app.listen(port, ip, function () {
-  var host = server.address().address;
-  var port = server.address().port;
-
-  console.log('Example app listening at http://%s:%s', host, port);
-});
+module.exports = {
+  signupGet: signupGet,
+  signupPost: signupPost
+};
