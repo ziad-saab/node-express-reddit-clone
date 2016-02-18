@@ -2,6 +2,7 @@
 var app = require('./app.js');
 var database = require('./database.js');
 var signup = require('./createuser.js');
+var login = require('./login.js');
 
 app.get('/homepage', function(req, res){
   database.getLatestNContent(25)
