@@ -341,21 +341,22 @@ And here's one that will let you cast a vote for a user:
 ```javascript
 // First check if a vote already exists
 Vote.findOne({
-    muserId: 1, // This should be the currently logged in user's ID
+    userId: 1, // This should be the currently logged in user's ID
     contentId: 1 // This should be the ID of the content we want to vote on
 }).then(
     function(vote) {
         if (!vote) {
             // here we didn't find a vote so let's add one. Notice Vote with capital V, the model
             return Vote.create({
-                muserId: 1,
-                contentId: 1
+                userId: 1, // Received from the loggedIn middleware
+                contentId: 1, // Received from the user's form submit
+                upVote: true // Received from the user's form submit
             });
         }
         else {
             // user already voted, perhaps we need to change the direction of the vote?
             return vote.update({
-                upVote: true //This should be what we received from the user
+                upVote: true // Received from the user's form submit
             });
         }
     }
