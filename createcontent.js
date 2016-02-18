@@ -27,7 +27,10 @@ app.post('/CreateContent', parser, function(request, response){
         response.send("Content Page");
     })
     .catch(function(e){
-        response.send("You are not logged in!!!");
+      if(e.message === database.INVALID_SESSIONID)
+      response.send("You are not logged in!!!");
+
+      else throw e;
     });
 });
 

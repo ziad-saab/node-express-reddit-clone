@@ -3,7 +3,12 @@ var Sequelize = require('sequelize');
 var bcrypt = require('bcrypt');
 var secureRandom = require('secure-random');
 var username = require('./config.json').username;
-var sessionLength = 24;
+
+//constants
+const SESSION_LENGTH = 24;
+const USR_NOT_FOUND = 'User not found';
+const INVALID_PASSWORD = 'Invalid password';
+const INVALID_SESSIONID = 'Invalid sessionID'
 
 function createSessionToken() {
     return secureRandom.randomArray(40).map(code => code.toString(16)).join('')
@@ -11,7 +16,7 @@ function createSessionToken() {
 //hold for 24 hours
 function expireDate() {
   var date = new Date(Date.now());
-  date.setUTCHours(date.getUTCHours() - sessionLength);
+  date.setUTCHours(date.getUTCHours() - SESSION_LENGTH);
   return date;
 }
 
@@ -92,11 +97,11 @@ function login(username, password) {
 		})
 		.then(function(rawUser) {
 			if (!rawUser)
-			throw new Error('User not found');
+			throw new Error(USR_NOT_FOUND);
 
 			var user = rawUser.dataValues;
 			if(!bcrypt.compareSync(password, user.hashed_password))
-			throw new Error('Invalid password');
+			throw new Error(INVALID_PASSWORD);
 
 			var token = createSessionToken();
 			return rawUser.createSession({
@@ -122,7 +127,7 @@ function getUserFromSessionId(sessionId) {
 		}).then(function(res) {
       console.log(res);
       if (!res)
-      throw new Error('Invalid sessionID');
+      throw new Error(INVALID_SESSIONID);
 
 			return res.dataValues.user;
 		});
@@ -149,5 +154,8 @@ function createNewContent(sessionId, url, title) {
 module.exports = {
 	createNewUser: createNewUser,
 	login: login,
-	postContent: createNewContent
+	postContent: createNewContent,
+  USR_NOT_FOUND: USR_NOT_FOUND,
+  INVALID_PASSWORD: INVALID_PASSWORD,
+  INVALID_SESSIONID: INVALID_SESSIONID
 }
