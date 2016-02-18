@@ -1,5 +1,6 @@
 var app = require('./app.js');
 var database = require('./database.js');
+
 app.get('/Login', function(req, res){
   res.sendFile('/Login/index.html', {root: __dirname });
 });
@@ -15,8 +16,13 @@ app.post('/Login', function(request, response){
     .catch(function(e){
         if(e.message === database.INVALID_PASSWORD || e.message === database.USR_NOT_FOUND){
             response.send(e.message);
-            response.redirect('/');
         }
         else throw e;
     });
+});
+
+
+app.get('/Logout', function(req, res){
+  res.cookie('sessionId', undefined);
+  res.redirect('/');
 });

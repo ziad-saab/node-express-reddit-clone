@@ -14,10 +14,17 @@ app.get('/', function(req, res){
 });
 
 function htmlify(user, contents) {
-  var htmlstring = '<a href=/SignUp>Sign Up</a>\
-    <a href=/Login>Login</a>\
-    <a href=/CreateContent>Create Content</a>\
-    <div id="contents">\
+  var htmlstring = ''
+  if (user) {
+    htmlstring += '<a>Welcome ' + user.username +'</a>\
+      <a href=/Logout>Logout</a>\
+      <a href=/CreateContent>Create Content</a>'
+  }
+  else {
+    htmlstring += '<a href=/SignUp>Sign Up</a>\
+      <a href=/Login>Login</a>'
+  }
+  htmlstring += '<div id="contents">\
     <h1>List of contents</h1>\
     <ul class="contents-list">';
   contents.forEach(function(content) {
