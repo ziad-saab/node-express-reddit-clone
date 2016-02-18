@@ -73,6 +73,13 @@ var dbInit = db.query('create database reddit_clone')
 	Content.belongsTo(User);
 	User.hasMany(Content);
 
+  var Vote = db.define('vote', {
+    upVote: Sequelize.BOOLEAN
+  });
+
+  User.belongsToMany(Content, {through: Vote, as: 'Upvotes'});
+  Content.belongsToMany(User, {through: Vote, as: 'Upvotes'});
+
 	return db.sync();
 })
 
@@ -149,11 +156,30 @@ function createNewContent(sessionId, url, title) {
 		});
 	});
 }
-
+function getLatestNContentForSession(sessionId, n) {
+  return dbInit.then(function() {
+    return getUserFromSessionId(sessionId)
+    .then(function(user) {
+      return Content.findAll({
+            include: [User,
+            {
+              model: Vote,
+              include: User
+            }],
+            limit: n,
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        });
+    })
+    .catch();
+  });
+}
+/*
 function getLatestNContent(sessionId, n) {
 	return dbInit.then(function() {
 		return Content.findAll({
-	        include: [User],
+	        include: [User, Vote],
 	        limit: n,
 	        order: [
 	            ['createdAt', 'DESC']
@@ -183,6 +209,15 @@ function getLatestNContent(sessionId, n) {
     	});
 	});
 }
+*/
+function voteOnContent(sessionId, contentId, isUpvote) {
+  return Promise.all([
+    getUserFromSessionId(sessionId),
+    Content.findById(contentId)])
+    .then(function([user, content]) {
+      return user.addUpvote(content, {upVote: isUpvote});
+    });
+  }
 
 module.exports = {
 	createNewUser: createNewUser,
