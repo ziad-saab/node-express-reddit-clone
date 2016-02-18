@@ -6,6 +6,8 @@ var app = express();
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine','ejs');
+//to use images in ejs
+app.use(express.static('images'));
 
 var port = config.port;
 if(!port)

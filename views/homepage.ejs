@@ -20,8 +20,8 @@
             <% contentList.forEach(function(content) { %>
               <li class="content-item">
                 <h2 class=<%-content.title%>>
-                  <a href=<%-"/upvote/" + content.id%>>^</a>
-                  <a href=<%-"/downvote/" + content.id%>>V</a>
+                  <a href=<%-"/upvote/" + content.id%>><img src="upgrey.png"></img></a>
+                  <a href=<%-"/downvote/" + content.id%>><img src="downgrey.png"></img></a>
                   <a href=<%-content.url%>><%-content.title%></a>
               </h2>
               <p>Created by <%-content.user.username%></p>
