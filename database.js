@@ -169,12 +169,13 @@ function getLatestNContent(sessionId, n) {
         })
         .then(function(content) {
           return {
-            User: user.map(i => i.toJSON()),
+            User: user.toJSON(),
             Content: content.map(i => i.toJSON())
           }
         });
     })
-    .catch(function(){
+    .catch(function(e){
+      console.log(e);
       return Content.findAll({
                 include: [User],
                 limit: n,
@@ -190,41 +191,7 @@ function getLatestNContent(sessionId, n) {
     });
   });
 }
-/*
-function getLatestNContent(sessionId, n) {
-	return dbInit.then(function() {
-		return Content.findAll({
-	        include: [User, Vote],
-	        limit: n,
-	        order: [
-	            ['createdAt', 'DESC']
-	        ]
-    	})
-    	.then(function(results) {
-	        var newResult = results.map(function(object){
-	            return object.dataValues;
-	        });
-        	return newResult;
-    	})
-    	.then(function(contentObject){
-    		return getUserFromSessionId(sessionId)
-        .then(function(userObject){
-    			return {
-    				User: userObject,
-    				Content: contentObject
-    			};
-    		})
-        .catch(function(e) {
-          if (e.message === INVALID_SESSIONID)
-      		return {
-      			Content: contentObject
-      		};
-          else throw e;
-        });
-    	});
-	});
-}
-*/
+
 function voteOnContent(sessionId, contentId, isUpvote) {
   return Promise.all([
     getUserFromSessionId(sessionId),
@@ -241,6 +208,7 @@ module.exports = {
 	login: login,
 	postContent: createNewContent,
 	getLatestNContent: getLatestNContent,
+	voteOnContent: voteOnContent,
   USR_NOT_FOUND: USR_NOT_FOUND,
   INVALID_PASSWORD: INVALID_PASSWORD,
   INVALID_SESSIONID: INVALID_SESSIONID

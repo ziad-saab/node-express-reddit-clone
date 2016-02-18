@@ -1,8 +1,9 @@
 var app = require('./app.js');
+var database = require('./database.js');
 
-app.get('/upvote/:sessionId', function(req, res){
-  console.log(sessionId);
+app.get('/upvote/:contentId', function(req, res){
+  database.voteOnContent(req.cookies.sessionId, req.params.contentId, true);
 });
-app.get('/downvote/:sessionId', function(req, res){
-  console.log(sessionId);
+app.get('/downvote/:contentId', function(req, res){
+  database.voteOnContent(req.cookies.sessionId, req.params.contentId, false);
 });

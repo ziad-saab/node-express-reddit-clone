@@ -16,6 +16,7 @@ app.get('/', function(req, res){
 
 function htmlify(user, contents) {
   var htmlstring = ''
+  console.log(user);
   if (user) {
     htmlstring += '<a>Welcome ' + user.username +'</a>\
       <a href=/Logout>Logout</a>\
