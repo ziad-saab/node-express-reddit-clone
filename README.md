@@ -375,10 +375,12 @@ But how will the user cast a vote? Their browser will have to make a **POST** re
 ```html
 <form action="/voteContent" method="post">
   <input type="hidden" name="upVote" value="true">
+  <input type="hidden" name="contentId" value="XXXX">
   <button type="submit">upvote this</button>
 </form>
 <form action="/voteContent" method="post">
   <input type="hidden" name="upVote" value="false">
+  <input type="hidden" name="contentId" value="XXXX">
   <button type="submit">downvote this</button>
 </form>
 ```
