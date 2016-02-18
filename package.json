@@ -17,11 +17,13 @@
   },
   "homepage": "https://github.com/DM87/node-express-sequelize-reddit-clone#readme",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "mysql": "^2.10.2",
     "nodemon": "^1.8.1",
+    "secure-random": "^1.1.1",
     "sequelize": "^3.19.2",
     "sha-1": "^0.1.1"
   }
