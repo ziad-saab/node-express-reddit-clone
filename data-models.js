@@ -9,7 +9,6 @@ var User = db.define('user', {
         type: Sequelize.STRING,
         unique: true
     },
-    password: Sequelize.STRING ,
     passwordHash: Sequelize.STRING
 });
 
