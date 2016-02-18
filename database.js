@@ -151,11 +151,30 @@ function createNewContent(sessionId, url, title) {
 	});
 }
 
+function getLatestNContent(n) {
+	return dbInit.then(function() {
+		return Content.findAll({
+	        include: [User],
+	        limit: n,
+	        order: [
+	            ['createdAt', 'DESC']
+	        ]
+    	})
+    	.then(function(results) {
+	        var newResult = results.map(function(object){
+	            return object.dataValues;
+	        });
+        return newResult;
+    	});
+	});
+}
+
 module.exports = {
 	createNewUser: createNewUser,
 	login: login,
 	postContent: createNewContent,
+	getLatestNContent: getLatestNContent,
   USR_NOT_FOUND: USR_NOT_FOUND,
   INVALID_PASSWORD: INVALID_PASSWORD,
   INVALID_SESSIONID: INVALID_SESSIONID
-}
+};
