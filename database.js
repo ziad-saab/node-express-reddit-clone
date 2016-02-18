@@ -3,9 +3,16 @@ var Sequelize = require('sequelize');
 var bcrypt = require('bcrypt');
 var secureRandom = require('secure-random');
 var username = require('./config.json').username;
+var sessionLength = 24;
 
 function createSessionToken() {
     return secureRandom.randomArray(40).map(code => code.toString(16)).join('')
+}
+//hold for 24 hours
+function expireDate() {
+  var date = new Date(Date.now());
+  date.setUTCHours(date.getUTCHours() - sessionLength);
+  return date;
 }
 
 db.configure({
@@ -28,7 +35,7 @@ var dbInit = db.query('create database reddit_clone')
 	else throw e;
 })
 .then(function(res) {
-	//change databae to sequelize after creating a database
+	//change database to sequelize after creating a database
 	db = new Sequelize('reddit_clone', username, '', {
 		dialect: 'mysql'
 	});
@@ -107,9 +114,16 @@ function getUserFromSessionId(sessionId) {
 		return Session.findOne({
 			include:[User],
 			where: {
-				token: sessionId
+				token: sessionId,
+        createdAt: {
+          $gt: expireDate()
+        }
 			}
 		}).then(function(res) {
+      console.log(res);
+      if (!res)
+      throw new Error('Invalid sessionID');
+
 			return res.dataValues.user;
 		});
 	});
