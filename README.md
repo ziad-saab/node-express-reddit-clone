@@ -334,6 +334,8 @@ Content.findAll({
 })
 ```
 
+For this to work you have to associate Content to Vote. How? Add a new association `Content.hasMany(Vote)` :)
+
 And here's one that will let you cast a vote for a user:
 
 ```javascript
