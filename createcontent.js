@@ -21,7 +21,7 @@ app.get('/CreateContent', function(req, res){
 
 app.post('/CreateContent', parser, function(request, response){
     console.log(request.cookies);
-    database.postContent(request.cookies.sessionId, request.body.title, request.body.url)
+    database.postContent(request.cookies.sessionId, request.body.title,  request.body.url)
     .then(function(result){
         //redirect to content page
         response.send("Content Page");
