@@ -28,7 +28,7 @@ app.post('/Login', parser, function(request, response){
         }
     })
     .catch(function(e){
-        if(e.message === INVALID_PASSWORD || e.message === USR_NOT_FOUND){
+        if(e.message === database.INVALID_PASSWORD || e.message === database.USR_NOT_FOUND){
             response.send(e.message);
         }
         else throw e;

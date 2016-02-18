@@ -8,7 +8,7 @@ var username = require('./config.json').username;
 const SESSION_LENGTH = 24;
 const USR_NOT_FOUND = 'User not found';
 const INVALID_PASSWORD = 'Invalid password';
-const INVALID_SESSIONID = 'Invalid sessionID'
+const INVALID_SESSIONID = 'Invalid sessionID';
 
 function createSessionToken() {
     return secureRandom.randomArray(40).map(code => code.toString(16)).join('')
