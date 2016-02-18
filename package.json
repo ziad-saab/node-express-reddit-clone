@@ -1,0 +1,28 @@
+{
+  "name": "node-express-sequelize-reddit-clone",
+  "version": "1.0.0",
+  "description": "building a small proof of concept reddit clone",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
+    "sequelize": "^3.19.2",
+    "mysql": "^2.10.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philraj/node-express-sequelize-reddit-clone.git"
+  },
+  "author": "Phil Rajchgot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/philraj/node-express-sequelize-reddit-clone/issues"
+  },
+  "homepage": "https://github.com/philraj/node-express-sequelize-reddit-clone#readme"
+}
