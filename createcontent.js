@@ -2,7 +2,7 @@ var app = require('./app.js');
 var database = require('./database.js');
 
 app.get('/CreateContent', function(req, res){
-    res.sendFile('/CreateContent/index.html', {root: __dirname });
+    res.render('createcontent-form', {error: req.query.error});
 });
 
 app.post('/CreateContent', function(request, response){
@@ -13,9 +13,9 @@ app.post('/CreateContent', function(request, response){
         response.redirect("/");
     })
     .catch(function(e){
-      if(e.message === database.INVALID_SESSIONID)
-      response.send("You are not logged in!!!");
-
+      if(e.message === database.INVALID_SESSIONID){
+      response.redirect('/CreateContent/?error=You are not logged in');
+      }
       else throw e;
     });
 });

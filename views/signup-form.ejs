@@ -7,6 +7,11 @@
     </head>
     <body>
         <h4>Sign Up</h4>
+        <span id="error" style="color:red">
+          <% if (error) { %>
+            <%=error%>
+          <% } %>
+        </span>
         <form action="/SignUp" method="post">
           <div>
             <input type="text" name="username" maxlength="20" placeholder="Enter an awesome username">
