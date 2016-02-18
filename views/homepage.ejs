@@ -18,10 +18,19 @@
         <ul class="contents-list">
           <span id="contentList">
             <% contentList.forEach(function(content) { %>
-              <li class="content-item">
+              <% var upvote = "tinygreyupvote.ico" %>
+              <% var downvote = "tinygreydownvote.ico" %>
+              <% if (content.vote !== undefined) { %>
+                <% if (content.vote.upVote) { %>
+                  <% upvote = "tinyredupvote.ico"; %>
+                <% } else { %>
+                  <% downvote = "tinybluedownvote.ico"; %>
+                <% } %>
+              <% } %>
+              <li style="list-style: none;"class="content-item">
                 <h2 class=<%-content.title%>>
-                  <a href=<%-"/upvote/" + content.id%>><img src="upgrey.png"></img></a>
-                  <a href=<%-"/downvote/" + content.id%>><img src="downgrey.png"></img></a>
+                  <a href=<%-"/upvote/" + content.id%>><img src=<%=upvote%>></img></a>
+                  <a href=<%-"/downvote/" + content.id%>><img src=<%=downvote%>></img></a>
                   <a href=<%-content.url%>><%-content.title%></a>
               </h2>
               <p>Created by <%-content.user.username%></p>
