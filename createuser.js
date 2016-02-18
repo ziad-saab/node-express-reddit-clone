@@ -2,8 +2,6 @@
 var database = require('./database.js');
 var app = require('./app.js');
 
-
-
 app.get('/SignUp', function(req, res){
   res.sendFile('/SignUp/index.html', {root: __dirname });
 });
