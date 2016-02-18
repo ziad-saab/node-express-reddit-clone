@@ -172,7 +172,15 @@ function getLatestNContentForSession(sessionId, n) {
             ]
         });
     })
-    .catch();
+    .catch(function(){
+      return Content.findAll({
+                include: [User],
+                limit: n,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            });
+    });
   });
 }
 /*
