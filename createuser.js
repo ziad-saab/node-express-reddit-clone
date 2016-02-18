@@ -7,6 +7,13 @@ var config = require('./config.json');
 
 var parser = bodyParser.urlencoded({ extended: false });
 
+var port = config.port;
+if(!port)
+port = process.env.PORT;
+var ip = config.server;
+if (!ip)
+ip = process.env.IP;
+
 app.get('/SignUp', function(req, res){
   res.sendFile('/SignUp/index.html', {root: __dirname });
 });
@@ -29,7 +36,7 @@ app.post('/SignUp', parser, function(request, response){
     }
 });
 
-var server = app.listen(process.env.PORT, process.env.IP, function () {
+var server = app.listen(port, ip, function () {
   var host = server.address().address;
   var port = server.address().port;
 
