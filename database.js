@@ -156,20 +156,22 @@ function createNewContent(sessionId, url, title) {
 		});
 	});
 }
-function getLatestNContentForSession(sessionId, n) {
+function getLatestNContent(sessionId, n) {
   return dbInit.then(function() {
     return getUserFromSessionId(sessionId)
     .then(function(user) {
       return Content.findAll({
-            include: [User,
-            {
-              model: Vote,
-              include: User
-            }],
+            include: [User],
             limit: n,
             order: [
                 ['createdAt', 'DESC']
             ]
+        })
+        .then(function(content) {
+          return {
+            User: user.map(i => i.toJSON()),
+            Content: content.map(i => i.toJSON())
+          }
         });
     })
     .catch(function(){
@@ -179,6 +181,11 @@ function getLatestNContentForSession(sessionId, n) {
                 order: [
                     ['createdAt', 'DESC']
                 ]
+            })
+            .then(function(content) {
+              return {
+                Content: content.map(i => i.toJSON())
+              }
             });
     });
   });
@@ -222,7 +229,9 @@ function voteOnContent(sessionId, contentId, isUpvote) {
   return Promise.all([
     getUserFromSessionId(sessionId),
     Content.findById(contentId)])
-    .then(function([user, content]) {
+    .then(function(response) {
+      var user = response[0];
+      var content = response[1];
       return user.addUpvote(content, {upVote: isUpvote});
     });
   }

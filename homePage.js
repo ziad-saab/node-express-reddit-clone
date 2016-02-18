@@ -4,6 +4,7 @@ var database = require('./database.js');
 require('./createuser.js');
 require('./login.js');
 require('./createcontent.js');
+require('./vote.js');
 
 app.get('/', function(req, res){
   var sessionId = req.cookies.sessionId;
@@ -30,6 +31,8 @@ function htmlify(user, contents) {
   contents.forEach(function(content) {
     htmlstring += '<li class="content-item"> \
       <h2 class="' + content.title + '"> \
+        <a href="/upvote/' +content.id+ '">^</a> \
+        <a href="/downvote/' +content.id+ '">V</a> \
         <a href="' + content.url + '">' + content.title + '</a> \
       </h2> \
       <p>Created by ' + content.user.username + '</p> \
