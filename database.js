@@ -184,7 +184,7 @@ function getFunctionNContent(sessionId, n, order) {
               [order, 'postorder']
             ]
           },
-          //limit: 25,
+          //limit: n,
           order: [Sequelize.literal('postorder DESC')]
         })
         .then(function(content) {
@@ -222,12 +222,20 @@ function getFunctionNContent(sessionId, n, order) {
     });
   });
 }
-
-function getLatestNContent(sessionId, n) {
-  return getFunctionNContent(sessionId, n, 'createdAt');
+function getHottestNContent(sessionId, n) {
+  var votescore = Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1));
+  var count = Sequelize.fn('COUNT', Sequelize.col('votes.upVote'));
+  Sequelize.col('content.createdAt');
+  var v = Sequelize.literal('');
+  return getFunctionNContent(sessionId, n, votescore / count
+  );
 }
 
 
+function getTopNContent(sessionId, n) {
+  var votescore = Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1));
+  return getFunctionNContent(sessionId, n, votescore);
+}
 function getLatestNContent(sessionId, n) {
   return getFunctionNContent(sessionId, n, 'createdAt');
 }
