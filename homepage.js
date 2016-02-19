@@ -14,5 +14,6 @@ app.get('/', function(req, res){
     var username;
     try {username = response.User.username} catch(e) {}
     res.render('homepage', {user: username, contentList: response.Content});
+    console.log(response.Content);
   });
 });
