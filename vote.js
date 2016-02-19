@@ -1,13 +1,13 @@
 var app = require('./app.js');
 var database = require('./database.js');
 
-app.get('/upvote/:contentId', function(req, res){
+app.get('/upvote/:order/:contentId', function(req, res){
   database.voteOnContent(req.cookies.sessionId, req.params.contentId, true).then(function(resp) {
-    res.redirect('/');
+    res.redirect('/'+req.params.order);
   });
 });
-app.get('/downvote/:contentId', function(req, res){
+app.get('/downvote/:order/:contentId', function(req, res){
   database.voteOnContent(req.cookies.sessionId, req.params.contentId, false).then(function(resp) {
-    res.redirect('/');
+    res.redirect('/'+req.params.order);
   });
 });

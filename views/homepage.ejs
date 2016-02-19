@@ -37,7 +37,7 @@
                 <hr>
                 <table>
                   <tr>
-                    <td><a href=<%-"/upvote/" + content.id%>><img src=<%=upvote%>></img></a></td>
+                    <td><a href=<%-"/upvote/" + type + "/" + content.id%>><img src=<%=upvote%>></img></a></td>
                     <td><p class="createdby">Post by <span class="usercreater"><%-content.submitter%></span></p></td>
                   </tr>
                   <tr>
@@ -45,7 +45,7 @@
                     <td><a class="contentpost" href=<%-content.url%>><%-content.title%></a></td>
                   </tr>
                   <tr>
-                    <td><a href=<%-"/downvote/" + content.id%>><img src=<%=downvote%>></img></a></td>
+                    <td><a href=<%-"/downvote/" + type + "/" + content.id%>><img src=<%=downvote%>></img></a></td>
                     <td><a class="comments" href=<%-"/link/" + content.id + "/comments"%>>Comments</a></td>
                   </tr>
                 </table>
