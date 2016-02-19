@@ -10,25 +10,57 @@ require('./vote.js');
 const PAGE_LENGTH = 5;
 
 app.get('/', function(req, res){
-  var sessionId = req.cookies.sessionId;
-  database.getLatestNContent(sessionId, PAGE_LENGTH, 0)
-  .then(function(response) {
-    var username;
-    try {username = response.User.username} catch(e) {}
-    res.render('homepage', {user: username, contentList: response.Content});
-  });
+  res.redirect('/0');
 });
 
 app.get('/:page', function(req, res){
   var sessionId = req.cookies.sessionId;
-  var page = parseInt(req.params.page);
+  var page = parseInt(req.params.page) * PAGE_LENGTH;
+  if (isNaN(page))
+  page = 0;
+  database.getHottestNContent(sessionId, PAGE_LENGTH, page)
+  .then(function(response) {
+    var username;
+    try {username = response.User.username} catch(e) {}
+    res.render('homepage', {user: username, contentList: response.Content, page: page, type: ''});
+  });
+});
+
+app.get('/controversial/:page', function(req, res){
+  var sessionId = req.cookies.sessionId;
+  var page = parseInt(req.params.page) * PAGE_LENGTH;
   if (isNaN(page))
   page = 0;
   database.getControversialNContent(sessionId, PAGE_LENGTH, page)
   .then(function(response) {
     var username;
     try {username = response.User.username} catch(e) {}
-    res.render('homepage', {user: username, contentList: response.Content});
-    console.log(response.Content);
+    res.render('homepage', {user: username, contentList: response.Content, page: page, type: 'controversial'});
+  });
+});
+
+app.get('/top/:page', function(req, res){
+  var sessionId = req.cookies.sessionId;
+  var page = parseInt(req.params.page) * PAGE_LENGTH;
+  if (isNaN(page))
+  page = 0;
+  database.getTopNContent(sessionId, PAGE_LENGTH, page)
+  .then(function(response) {
+    var username;
+    try {username = response.User.username} catch(e) {}
+    res.render('homepage', {user: username, contentList: response.Content, page: page, type: 'top'});
+  });
+});
+
+app.get('/latest/:page', function(req, res){
+  var sessionId = req.cookies.sessionId;
+  var page = parseInt(req.params.page) * PAGE_LENGTH;
+  if (isNaN(page))
+  page = 0;
+  database.getLatestNContent(sessionId, PAGE_LENGTH, page)
+  .then(function(response) {
+    var username;
+    try {username = response.User.username} catch(e) {}
+    res.render('homepage', {user: username, contentList: response.Content, page: page, type: 'latest'});
   });
 });

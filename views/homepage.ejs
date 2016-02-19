@@ -13,6 +13,14 @@
         <a href=/SignUp class="link">Sign Up</a>
         <a href=/Login class="link">Login</a>
       <% } %>
+      
+      <div id="orderbylinks">
+        <a href=/0 class="getlink">Hot</a>
+        <a href=/controversial class="getlink">Controversial</a>
+        <a href=/top class="getlink">Top</a>
+        <a href=/latest class="getlink">Latest</a>
+      </div> 
+      
       <div id="contents">
         <h1 id="heading">List of contents</h1>
         <ul class="contents-list">
@@ -45,6 +53,18 @@
             <% })%>
             <hr>
           </span>
+        </ul>
+      </div>
+      
+      <div id="pages">
+        <ul class="pagination">
+          <% if (page === 0) { %>
+            <li><a href="#">Next»</a></li>
+          <% } else { %>
+            <li><a href=<%-"/" + type%>>«Previous</a></li>
+            <li><a href=<%-"/" + type%>>Next»</a></li>
+          <% } %>
+          
         </ul>
       </div>
     </body>
