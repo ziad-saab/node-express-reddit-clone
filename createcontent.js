@@ -7,7 +7,7 @@ app.get('/CreateContent', function(req, res){
 
 app.post('/CreateContent', function(request, response){
     console.log(request.body);
-    database.postContent(request.cookies.sessionId, request.body.title,  request.body.url)
+    database.postContent(request.cookies.sessionId, request.body.url,  request.body.title)
     .then(function(result){
         console.log(result);
         database.voteOnContent(request.cookies.sessionId, result.dataValues.id, true)
