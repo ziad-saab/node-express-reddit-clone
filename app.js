@@ -8,6 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine','ejs');
 //to use images in ejs
 app.use(express.static('images'));
+app.use(express.static('css'));
 
 var port = config.port;
 if(!port)

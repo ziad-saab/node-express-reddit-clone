@@ -8,7 +8,7 @@ app.get('/SignUp', function(req, res){
 
 
 app.post('/SignUp', function(request, response){
-    if(request.body.password === request.body.confirmPassword){
+    if(request.body.password === request.body.confirmpassword){
         database.createNewUser(request.body.username, request.body.password, request.body.email)
         .then(function(result){
             database.login(request.body.username, request.body.password)
@@ -28,6 +28,6 @@ app.post('/SignUp', function(request, response){
         });
     }
     else{
-        response.send('<h1>Your passwords do not match. Please try again.</h1>');
+        response.redirect('/SignUp?error=Your passwords do not match');
     }
 });

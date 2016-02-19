@@ -3,22 +3,22 @@
     <head>
         <meta charset="utf-8">
         <script type="text/javascript" src="login.js"></script>
+        <link href="style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <h4>Login</h4>
-        <span id="error" style="color:red">
+        <div class='loginform'>
+        <div class='loginformheading'>Login</div>
+       
+        <span id="error">
           <% if (error) { %>
             <%=error%>
           <% } %>
         </span>
         <form action="/Login" method="post">
-          <div>
-            <input type="text" name="username" maxlength="20" placeholder="What is your username?">
-          </div>
-          <div>
-            <input type="password" name="password" maxlength="50" placeholder="What is your password?">
-          </div>
-          <button type="submit">Login!</button>
+          <label for="username"><span>Username <span class="required">*</span></span><input type="text" class="input-field" name="username" value="" maxlength="20"/></label>
+          <label for="password"><span>Password <span class="required">*</span></span><input type="password" class="input-field" name="password" value="" maxlength="50"/></label>
+          <label><span>&nbsp;</span><input type="submit" value="Submit" /></label>
         </form>
+        </div>
     </body>
 </html>
