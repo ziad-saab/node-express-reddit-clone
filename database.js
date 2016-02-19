@@ -162,7 +162,9 @@ function createNewContent(sessionId, url, title) {
 
 
 function getControversialNContent(sessionId, n) {
-  return getOrderedNtoMContentForSession(sessionId, n, 0, 'Sum(IF(`votes`.`upvote`, 1, 0)) / Sum(IF(`votes`.`upvote`, 1, 1))');
+  var upvotes = 'Sum(IF(`votes`.`upvote`, 1, 0))';
+  var downvotes = 'Sum(IF(`votes`.`upvote`, 0, 1))';
+  return getOrderedNtoMContentForSession(sessionId, n, 0, 'GREATEST('+ upvotes +', ' + downvotes + ') - ABS('+upvotes+' - '+downvotes+')');
 }
 function getHottestNContent(sessionId, n) {
   var currentTime = Math.floor(Date.now() / 1000);
@@ -173,9 +175,11 @@ function getHottestNContent(sessionId, n) {
 function getTopNContent(sessionId, n) {
   return getOrderedNtoMContentForSession(sessionId, n, 0, 'Sum(IF(`votes`.`upvote`, 1, -1))');
 }
+
 function getLatestNContent(sessionId, n) {
   return getOrderedNtoMContentForSession(sessionId, n, 0, 'contents.createdAt');
 }
+
 function getOrderedNtoMContentForSession(sessionId, n, m, order) {
   return dbInit.then(function() {
     return getUserFromSessionId(sessionId)
@@ -238,6 +242,7 @@ module.exports = {
 	postContent: createNewContent,
 	getLatestNContent: getLatestNContent,
 	getHottestNContent: getHottestNContent,
+  getControversialNContent: getControversialNContent,
 	voteOnContent: voteOnContent,
   USR_NOT_FOUND: USR_NOT_FOUND,
   INVALID_PASSWORD: INVALID_PASSWORD,
