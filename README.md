@@ -330,7 +330,9 @@ Content.findAll({
             [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1)), 'voteScore']
         ]
     },
-    order: [Sequelize.literal('voteScore DESC')]
+    order: [Sequelize.literal('voteScore DESC')],
+    limit: 25, // this can be hard-coded to 25, and eventually in a later phase parameterized
+    subQuery: false // what's this?? come see me if you feel adventurous and want to know more :)
 })
 ```
 
