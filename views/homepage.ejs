@@ -20,14 +20,14 @@
             <% contentList.forEach(function(content) { %>
               <% var upvote = "tinygreyupvote.ico" %>
               <% var downvote = "tinygreydownvote.ico" %>
-              <% if (content.upVote === 1) { %>
+              <% if (content.upvote === 1) { %>
                 <% upvote = "tinyredupvote.ico"; %>
-              <% } else if (content.upVote === 0){ %>
+              <% } else if (content.upvote === 0){ %>
                 <% downvote = "tinybluedownvote.ico"; %>
               <% } %>
               <li style="list-style: none;"class="content-item">
                 <h2 class=<%-content.title%>>
-                  <a><%=content.voteScore%></a>
+                  <a><%=content.votescore%></a>
                   <a href=<%-"/upvote/" + content.id%>><img src=<%=upvote%>></img></a>
                   <a href=<%-"/downvote/" + content.id%>><img src=<%=downvote%>></img></a>
                   <a href=<%-content.url%>><%-content.title%></a>
