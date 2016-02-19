@@ -8,3 +8,80 @@
   <input type="hidden" name="contentId" value="XXXX">
   <button type="submit">downvote this</button>
 </form>
+
+
+
+<!--function buildHtml(contentsArray){
+   
+  var html = 
+  `<div id="contents">
+    <h3><a href="https://project-reddit-clone-heynah.c9users.io/login">Login</a> /  <a href="https://project-reddit-clone-heynah.c9users.io/joinUs">Sign-Up</a></h3>
+    <h2><a href="https://project-reddit-clone-heynah.c9users.io/postSomething">Add a New Post! </a></h2>
+    <h1>List of contents</h1>
+      <ul class="contents-list">`
+  contentsArray.forEach(function(item){
+      console.log(item.user.dataValues)
+    html +=
+      `<li class="content-item">
+      <h2 class="content-item__title">
+        <a href="`+ item.url +`">`+ item.title + `</a>
+      </h2>
+      <p>Created by ` + item.user.dataValues.username + `</p>
+      </li>`
+      /*<span><form action="/votePost" method="post">
+      <input type="hidden" name="upVote" value="true">
+      <input type="hidden" name="contentId" value="XXXX">
+      <button type="submit">upvote this</button>
+      </form>
+      <form action="/votePost" method="post">
+       <input type="hidden" name="upVote" value="false">
+       <input type="hidden" name="contentId" value="XXXX">
+      <button type="submit">downvote this</button>
+      </form></span>*/
+  });
+      
+    html += `</ul></div>`;
+    
+return html;
+}-->
+
+<!--app.get('/votePost', function(req, res) {
+    var options = {
+      root: __dirname
+    };
+    res.sendFile("forms/voteForm.html", options);
+})-->
+
+
+ <!--First check if a vote already exists
+Vote.findOne({
+    userId: 1, // This should be the currently logged in user's ID
+    contentId: 1 // This should be the ID of the content we want to vote on
+}).then(
+    function(vote) {
+        if (!vote) {
+            // here we didn't find a vote so let's add one. Notice Vote with capital V, the model
+            return Vote.create({
+                userId: 1, // Received from the loggedIn middleware
+                contentId: 1, // Received from the user's form submit
+                upVote: true // Received from the user's form submit
+            });
+        }
+        else {
+            // user already voted, perhaps we need to change the direction of the vote?
+            return vote.update({
+                upVote: true // Received from the user's form submit
+            });
+        }
+    }
+).then(
+    // Look at the two returns in the previous callbacks. In both cases we are returning
+    // a promise, one to create a vote and one to update a vote. Either way we get the result here
+    function(vote) {
+        // Good to go, the user was able to vote. Let's redirect them to the homepage?
+        response.redirect('/');
+
+        // Perhaps we could redirect them to where they came from?
+        // Try to figure out how to do this using the Referer HTTP header :)
+    }
+);-->
