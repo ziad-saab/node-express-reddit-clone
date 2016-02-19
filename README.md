@@ -343,8 +343,10 @@ And here's one that will let you cast a vote for a user:
 ```javascript
 // First check if a vote already exists
 Vote.findOne({
-    userId: 1, // This should be the currently logged in user's ID
-    contentId: 1 // This should be the ID of the content we want to vote on
+    where: {
+      userId: 1, // This should be the currently logged in user's ID
+      contentId: 1 // This should be the ID of the content we want to vote on
+    }
 }).then(
     function(vote) {
         if (!vote) {
