@@ -171,7 +171,12 @@ function getHottestNContent(sessionId, n) {
 
 
 function getControversialNContent(sessionId, n) {
-  return getOrderedNtoMContentForSession(sessionId, n, 0, 'Sum(IF(`votes`.`upvote`, 1, -1))');
+  return getOrderedNtoMContentForSession(sessionId, n, 0, 'Sum(IF(`votes`.`upvote`, 1, 0)) / Sum(IF(`votes`.`upvote`, 1, 1))');
+}
+function getHottestNContent(sessionId, n) {
+  var currentTime = Math.floor(Date.now() / 1000);
+  var ageFactor = '((' + currentTime + ' - UNIX_TIMESTAMP(CONVERT_TZ(`contents`.`createdAt`, \'+00:00\', @@global.time_zone))) / 10000)';
+  return getOrderedNtoMContentForSession(sessionId, n, 0, '((Sum(IF(`votes`.`upvote`, 1, -1))) / ' + ageFactor + ')');
 }
 
 function getTopNContent(sessionId, n) {
@@ -184,7 +189,7 @@ function getOrderedNtoMContentForSession(sessionId, n, m, order) {
   return dbInit.then(function() {
     return getUserFromSessionId(sessionId)
     .then(function(user) {
-      return getOrderedNtoMContent(user.id, n, m, order)
+      return getOrderedNtoMContent(user.dataValues.id, n, m, order)
       .then(function(contentObject) {
         contentObject.User = user.toJSON();
         return contentObject;
@@ -201,20 +206,23 @@ function getOrderedNtoMContentForSession(sessionId, n, m, order) {
 function getOrderedNtoMContent(userId, n, m, order) {
   return dbInit.then(function() {
     return db.query(
-      'SELECT `contents`.*, \
-       `users`.`username`                           AS `submitter`, \
-       IF(`votes`.`userid` = ' + userId + ', votes.upvote, NULL) AS `upVote`, \
-       ' + order + '                                AS `postOrder`, \
-       Sum(IF(`votes`.`upvote`, 1, -1))             AS `voteScore` \
-FROM   `contents` \
-       LEFT OUTER JOIN `votes` AS `votes` \
-                    ON `contents`.`id` = `votes`.`contentid` \
-       LEFT OUTER JOIN `users` AS `users` \
-                    ON `contents`.`userid` = `users`.`id` \
-GROUP  BY `contents`.`id` \
-ORDER  BY `postOrder` DESC \
-LIMIT ' + n + ' \
-OFFSET '+ m +';',
+      'SELECT          `contentlist`.*, `uservotes`.`upvote` AS `upvote` \
+FROM  (     SELECT          `contents`.*, \
+                            `users`.`username`               AS `submitter`, \
+                            ' + order + '                    AS `postorder`, \
+                            sum(IF(`votes`.`upvote`, 1, -1)) AS `votescore` \
+            FROM            `contents` \
+            LEFT OUTER JOIN `votes` AS `votes` \
+            ON              `contents`.`id` = `votes`.`contentid` \
+            LEFT OUTER JOIN `users` AS `users` \
+            ON              `contents`.`userid` = `users`.`id` \
+            GROUP BY        `contents`.`id` \
+            ORDER BY        `postorder` DESC limit ' + n + ' offset '+ m +') AS contentlist \
+LEFT OUTER JOIN `votes`                                                                           AS `uservotes` \
+ON              `uservotes`.`contentid`=`contentlist`.`id` \
+AND             `uservotes`.`userid`='+ userId +' \
+GROUP BY        `contentlist`.`id` \
+ORDER BY        `contentlist`.`postorder` DESC;',
     { type: Sequelize.QueryTypes.SELECT});
   }).then(function(contents) {
     return {
@@ -238,6 +246,7 @@ module.exports = {
 	login: login,
 	postContent: createNewContent,
 	getLatestNContent: getLatestNContent,
+	getHottestNContent: getHottestNContent,
 	voteOnContent: voteOnContent,
   USR_NOT_FOUND: USR_NOT_FOUND,
   INVALID_PASSWORD: INVALID_PASSWORD,

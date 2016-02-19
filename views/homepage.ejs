@@ -20,9 +20,9 @@
             <% contentList.forEach(function(content) { %>
               <% var upvote = "tinygreyupvote.ico" %>
               <% var downvote = "tinygreydownvote.ico" %>
-              <% if (content.upVote === 1) { %>
+              <% if (content.upvote === 1) { %>
                 <% upvote = "tinyredupvote.ico"; %>
-              <% } else if (content.upVote === 0){ %>
+              <% } else if (content.upvote === 0){ %>
                 <% downvote = "tinybluedownvote.ico"; %>
               <% } %>
               <li style="list-style: none;"class="content-item">
@@ -40,7 +40,6 @@
                     <td><p class="createdby">Created by <span class="usercreater"><%-content.submitter%></span></p></td>
                   </tr>
                 </table>
-                
             </li>
             <% })%>
           </span>
@@ -48,19 +47,3 @@
       </div>
     </body>
 </html>
-
-<!--<tr>-->
-<!--    <td>Jill</td>-->
-<!--    <td>Smith</td>		-->
-<!--    <td>50</td>-->
-<!--  </tr>-->
-<!--  <tr>-->
-<!--    <td>Eve</td>-->
-<!--    <td>Jackson</td>		-->
-<!--    <td>94</td>-->
-<!--  </tr>-->
-<!--  <tr>-->
-<!--    <td>John</td>-->
-<!--    <td>Doe</td>		-->
-<!--    <td>80</td>-->
-<!--  </tr>-->

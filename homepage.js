@@ -9,7 +9,7 @@ require('./vote.js');
 
 app.get('/', function(req, res){
   var sessionId = req.cookies.sessionId;
-  database.getLatestNContent(sessionId, 25)
+  database.getHottestNContent(sessionId, 25)
   .then(function(response) {
     var username;
     try {username = response.User.username} catch(e) {}
