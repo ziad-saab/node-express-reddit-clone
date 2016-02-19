@@ -159,69 +159,7 @@ function createNewContent(sessionId, url, title) {
 		});
 	});
 }
-function getFunctionNContent(sessionId, n, order) {
-  return dbInit.then(function() {
-    return getUserFromSessionId(sessionId)
-    .then(function(user) {
-      return Content.findAll({
-          include: [User, {
-            model: Vote,
-            as: 'uservotes',
-            where: {userId: user.id},
-            attributes: [],
-            required: false,
-          }, {
-            model: Vote,
-            attributes: [],
-            required: false,
-          }
-        ],
-          group: 'content.id',
-          attributes: {
-            include: [
-              [Sequelize.col('uservotes.upVote'), 'vote'],
-              [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1)), 'voteScore'],
-              [order, 'postorder']
-            ]
-          },
-          //limit: n,
-          order: [Sequelize.literal('postorder DESC')]
-        })
-        .then(function(content) {
-          return {
-            User: user.toJSON(),
-            Content: content.map(i => i.toJSON())
-          }
-        });
-    })
-    .catch(function(e) {
-      if(e.message !== INVALID_SESSIONID)
-      throw e;
 
-      return Content.findAll({
-            include: [User, {
-              model: Vote,
-              attributes: [],
-              required: false,
-            }],
-            group: 'content.id',
-            attributes: {
-              include: [
-                [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1)), 'voteScore'],
-                [order, 'postorder']
-              ]
-            },
-            //limit: n,
-            order: [Sequelize.literal('postorder DESC')]
-        })
-        .then(function(content) {
-          return {
-            Content: content.map(i => i.toJSON())
-          }
-        });
-    });
-  });
-}
 function getHottestNContent(sessionId, n) {
   var votescore = Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1));
   var count = Sequelize.fn('COUNT', Sequelize.col('votes.upVote'));
@@ -232,12 +170,15 @@ function getHottestNContent(sessionId, n) {
 }
 
 
+function getControversialNContent(sessionId, n) {
+  return getOrderedNtoMContentForSession(sessionId, n, 0, 'Sum(IF(`votes`.`upvote`, 1, -1))');
+}
+
 function getTopNContent(sessionId, n) {
-  var votescore = Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1));
-  return getFunctionNContent(sessionId, n, votescore);
+  return getOrderedNtoMContentForSession(sessionId, n, 0, 'Sum(IF(`votes`.`upvote`, 1, -1))');
 }
 function getLatestNContent(sessionId, n) {
-  return getOrderedNtoMContentForSession(sessionId, n, 0, 'createdAt');
+  return getOrderedNtoMContentForSession(sessionId, n, 0, 'contents.createdAt');
 }
 function getOrderedNtoMContentForSession(sessionId, n, m, order) {
   return dbInit.then(function() {
@@ -263,7 +204,7 @@ function getOrderedNtoMContent(userId, n, m, order) {
       'SELECT `contents`.*, \
        `users`.`username`                           AS `submitter`, \
        IF(`votes`.`userid` = ' + userId + ', votes.upvote, NULL) AS `upVote`, \
-       Sum(IF(`votes`.`upvote`, 1, -1))             AS `postOrder`, \
+       ' + order + '                                AS `postOrder`, \
        Sum(IF(`votes`.`upvote`, 1, -1))             AS `voteScore` \
 FROM   `contents` \
        LEFT OUTER JOIN `votes` AS `votes` \
@@ -281,6 +222,7 @@ OFFSET '+ m +';',
     }
   });
 }
+
 function voteOnContent(sessionId, contentId, isUpvote) {
   return Promise.all([
     getUserFromSessionId(sessionId),
