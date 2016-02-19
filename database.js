@@ -120,16 +120,18 @@ function createNewComment(sessionId, contentId, parentCommentId, text) {
   });
 }
 
-function getContentAndComments(contentId) {
+function getContentAndComments(sessionId, contentId) {
   return dbInit.then(function() {
     return Promise.all([
+      getUserFromSessionId(sessionId),
       Content.findById(contentId),
       getCommentsForContent(contentId)
     ])
     .then(function(response) {
       return {
-        content: response[0].toJSON(),
-        comments: response[1]
+        user: response[0].toJSON(),
+        content: response[1].toJSON(),
+        comments: response[2]
       }
     });
   });
