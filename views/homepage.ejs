@@ -13,14 +13,14 @@
         <a href=/SignUp class="link">Sign Up</a>
         <a href=/Login class="link">Login</a>
       <% } %>
-      
+
       <div id="orderbylinks">
-        <a href=/0 class="getlink">Hot</a>
+        <a href=/hot class="getlink">Hot</a>
         <a href=/controversial class="getlink">Controversial</a>
         <a href=/top class="getlink">Top</a>
         <a href=/latest class="getlink">Latest</a>
-      </div> 
-      
+      </div>
+
       <div id="contents">
         <h1 id="heading">List of contents</h1>
         <ul class="contents-list">
@@ -46,7 +46,7 @@
                   </tr>
                   <tr>
                     <td><a href=<%-"/downvote/" + content.id%>><img src=<%=downvote%>></img></a></td>
-                    <td><a class="comments" href="">Comments</a></td>
+                    <td><a class="comments" href=<%-"/link/" + content.id + "/comments"%>>Comments</a></td>
                   </tr>
                 </table>
             </li>
@@ -55,16 +55,18 @@
           </span>
         </ul>
       </div>
-      
+
       <div id="pages">
         <ul class="pagination">
+          <% var next = page + 1 %>
+          <% var previous = page - 1 %>
           <% if (page === 0) { %>
-            <li><a href="#">Next»</a></li>
+            <li><a href=<%-"/" + type +"/" + next%>>Next»</a></li>
           <% } else { %>
-            <li><a href=<%-"/" + type +"/"%>>«Previous</a></li>
-            <li><a href=<%-"/" + type +"/"%>>Next»</a></li>
+            <li><a href=<%-"/" + type +"/" + previous%>>«Previous</a></li>
+            <li><a href=<%-"/" + type +"/" + next%>>Next»</a></li>
           <% } %>
-          
+
         </ul>
       </div>
     </body>

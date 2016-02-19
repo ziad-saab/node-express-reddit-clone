@@ -9,4 +9,23 @@
     <%}%>
   </div>
 <%}%>
-<%comments.forEach(renderComment)%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="comment.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+      <% if (user) { %>
+        <h4 id="welcomeuser">Welcome <span id="user"><%=user%></span></h4>
+        <a href=/Logout class="link">Logout</a>
+        <a href=/CreateContent class="link">Create Content</a>
+      <% } else { %>
+        <a href=/SignUp class="link">Sign Up</a>
+        <a href=/Login class="link">Login</a>
+      <% } %>
+      <div id="contents">
+        <%comments.forEach(renderComment)%>
+      </div>
+    </body>
+</html>
