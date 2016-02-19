@@ -13,9 +13,11 @@ const PAGE_LENGTH = 5;
 app.get('/', function(req, res){
   res.redirect('/hot/0');
 });
+
 app.get('/:order', function(req, res){
   res.redirect('/' + req.params.order + '/0');
 });
+
 function getFunction(type) {
   switch(type) {
     case 'hot':
