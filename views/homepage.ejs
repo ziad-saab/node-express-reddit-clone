@@ -30,18 +30,20 @@
                 <table>
                   <tr>
                     <td><a href=<%-"/upvote/" + content.id%>><img src=<%=upvote%>></img></a></td>
+                    <td><p class="createdby">Post by <span class="usercreater"><%-content.submitter%></span></p></td>
                   </tr>
                   <tr>
-                    <td><h5 class="votescore"><%=content.voteScore%></h5></td>
-                    <td><a class="content" href=<%-content.url%>><%-content.title%></a></td>
+                    <td><p class="votescore"><%=content.voteScore%></p></td>
+                    <td><a class="contentpost" href=<%-content.url%>><%-content.title%></a></td>
                   </tr>
                   <tr>
                     <td><a href=<%-"/downvote/" + content.id%>><img src=<%=downvote%>></img></a></td>
-                    <td><p class="createdby">Created by <span class="usercreater"><%-content.submitter%></span></p></td>
+                    <td><a class="comments" href="">Comments</a></td>
                   </tr>
                 </table>
             </li>
             <% })%>
+            <hr>
           </span>
         </ul>
       </div>

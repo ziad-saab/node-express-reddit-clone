@@ -160,15 +160,6 @@ function createNewContent(sessionId, url, title) {
 	});
 }
 
-function getHottestNContent(sessionId, n) {
-  var votescore = Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1));
-  var count = Sequelize.fn('COUNT', Sequelize.col('votes.upVote'));
-  Sequelize.col('content.createdAt');
-  var v = Sequelize.literal('');
-  return getFunctionNContent(sessionId, n, votescore / count
-  );
-}
-
 
 function getControversialNContent(sessionId, n) {
   return getOrderedNtoMContentForSession(sessionId, n, 0, 'Sum(IF(`votes`.`upvote`, 1, 0)) / Sum(IF(`votes`.`upvote`, 1, 1))');

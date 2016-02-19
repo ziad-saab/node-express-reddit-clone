@@ -8,15 +8,20 @@
 }
 
 #heading{
-    font-family: times, Times New Roman, times-roman, georgia, serif;
-	color: #444;
-	margin: 0;
-	padding: 0px 0px 6px 0px;
-	font-size: 51px;
-	line-height: 44px;
-	letter-spacing: -2px;
-	font-weight: bold;
-	padding-top: 20px;
+ /*   font-family: times, Times New Roman, times-roman, georgia, serif;*/
+	/*color: #444;*/
+	/*margin: 0;*/
+	/*padding: 0px 0px 6px 0px;*/
+	/*font-size: 51px;*/
+	/*line-height: 44px;*/
+	/*letter-spacing: -2px;*/
+	/*font-weight: bold;*/
+	/*padding-top: 20px;*/
+	font-family: Helvetica, Arial, sans-serif;
+    font-size: 40px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: .04em;
 }
 
 .votescore{
@@ -25,26 +30,19 @@
     font-size: 20px;
 }
 
-.content:link {
+.contentpost:link {
     text-decoration: none;
-    color: blue;
+    color: #2d2db9;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
+    font-family: ;
 }
 
-.content:visited {
+.contentpost:visited {
     text-decoration: none;
-    color: red;
-}
-
-.content:hover {
-    text-decoration: underline;
-    color: green;
-}
-
-.content:active {
-    text-decoration: underline;
-    color: green;
+    color: #9898e6;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .createdby{
@@ -55,6 +53,22 @@
 .usercreater{
     font-weight: bold;
     color: #FF8500;
+}
+
+.comments:link, .comments:visited{
+    color: #666666;
+    font-weight: bold;
+    padding: 0 1px;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.comments:hover, .comments:active{
+    color: #808080;
+    font-weight: bold;
+    padding: 0 1px;
+    font-size: 12px;
+    text-decoration: underline;
 }
 
 .link:link, .link:visited {
