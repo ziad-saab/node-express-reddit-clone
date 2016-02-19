@@ -26,12 +26,12 @@
         <ul class="contents-list">
           <span id="contentList">
             <% contentList.forEach(function(content) { %>
-              <% var upvote = "tinygreyupvote.ico" %>
-              <% var downvote = "tinygreydownvote.ico" %>
+              <% var upvote = "/tinygreyupvote.ico" %>
+              <% var downvote = "/tinygreydownvote.ico" %>
               <% if (content.upvote === 1) { %>
-                <% upvote = "tinyredupvote.ico"; %>
+                <% upvote = "/tinyredupvote.ico"; %>
               <% } else if (content.upvote === 0){ %>
-                <% downvote = "tinybluedownvote.ico"; %>
+                <% downvote = "/tinybluedownvote.ico"; %>
               <% } %>
               <li style="list-style: none;"class="content-item">
                 <hr>
