@@ -12,7 +12,7 @@ app.get('/', function(req, res){
   database.getLatestNContent(sessionId, 25)
   .then(function(response) {
     var username;
-    try {username = response.User.username} catch(e) {};
+    try {username = response.User.username} catch(e) {}
     res.render('homepage', {user: username, contentList: response.Content});
   });
 });
