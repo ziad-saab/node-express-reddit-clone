@@ -20,12 +20,10 @@
             <% contentList.forEach(function(content) { %>
               <% var upvote = "tinygreyupvote.ico" %>
               <% var downvote = "tinygreydownvote.ico" %>
-              <% if (content.vote !== undefined) { %>
-                <% if (content.vote.upVote) { %>
-                  <% upvote = "tinyredupvote.ico"; %>
-                <% } else { %>
-                  <% downvote = "tinybluedownvote.ico"; %>
-                <% } %>
+              <% if (content.vote === 1) { %>
+                <% upvote = "tinyredupvote.ico"; %>
+              <% } else if (content.vote === 0){ %>
+                <% downvote = "tinybluedownvote.ico"; %>
               <% } %>
               <li style="list-style: none;"class="content-item">
                 <h2 class=<%-content.title%>>

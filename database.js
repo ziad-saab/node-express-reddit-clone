@@ -80,6 +80,7 @@ var dbInit = db.query('create database reddit_clone')
 
   User.belongsToMany(Content, {through: Vote, as: 'Upvotes'});
   Content.belongsToMany(User, {through: Vote, as: 'Upvotes'});
+  Content.hasMany(Vote);
 
 	return db.sync();
 })
@@ -162,31 +163,31 @@ function getLatestNContent(sessionId, n) {
     return getUserFromSessionId(sessionId)
     .then(function(user) {
       return Content.findAll({
-            include: [User],
-            limit: n,
-            order: [
-                ['createdAt', 'DESC']
+          include: [User, {
+            model: Vote,
+            where: {userId: user.id},
+            attributes: [],
+            required: false
+          }],
+          attributes: {
+            include: [
+              [Sequelize.col('votes.upVote'), 'vote']
             ]
+          },
+          group: 'content.id',
+          order: [['createdAt', 'DESC']]
         })
         .then(function(content) {
-          return user.getUpvotes()
-          .then(function(upvotes) {
-            content = content.map(i => i.toJSON()).map(function(c) {
-              var vote = upvotes.map(i => i.toJSON()).find(function(upvote) {
-                return upvote.id === c.id;
-              });
-              if (vote)
-              c.vote = vote.vote;
-              return c;
-            });
-            return {
-              User: user.toJSON(),
-              Content: content
-            }
-          });
+          return {
+            User: user.toJSON(),
+            Content: content.map(i => i.toJSON())
+          }
         });
     })
     .catch(function(e) {
+      if(e.message !== INVALID_SESSIONID)
+      throw e;
+
       return Content.findAll({
             include: [User],
             limit: n,
@@ -213,7 +214,24 @@ function voteOnContent(sessionId, contentId, isUpvote) {
       return user.addUpvote(content, {upVote: isUpvote});
     });
   }
-
+  /*
+  dbInit.then(function(p) {
+  Content.findAll({
+      include: [User, {
+        model: Vote,
+        attributes: [],
+        when: {userId: 1}
+      }],
+      group: 'content.id',
+      attributes: {
+          include: [
+              [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1)), 'voteScore']
+          ]
+      },
+      limit: 25,
+      order: [['createdAt', 'DESC']]
+    }).then(console.log);
+  })*/
 module.exports = {
 	createNewUser: createNewUser,
 	login: login,
