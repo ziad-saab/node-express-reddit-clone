@@ -2,18 +2,19 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link href="homepage.css" rel="stylesheet" type="text/css">
     </head>
     <body>
       <% if (user) { %>
-        <a>Welcome <%=user%></a>
-        <a href=/Logout>Logout</a>
-        <a href=/CreateContent>Create Content</a>
+        <h4 id="welcomeuser">Welcome <span id="user"><%=user%></span></h4>
+        <a href=/Logout class="link">Logout</a>
+        <a href=/CreateContent class="link">Create Content</a>
       <% } else { %>
-        <a href=/SignUp>Sign Up</a>
-        <a href=/Login>Login</a>
+        <a href=/SignUp class="link">Sign Up</a>
+        <a href=/Login class="link">Login</a>
       <% } %>
       <div id="contents">
-        <h1>List of contents</h1>
+        <h1 id="heading">List of contents</h1>
         <ul class="contents-list">
           <span id="contentList">
             <% contentList.forEach(function(content) { %>
@@ -25,13 +26,21 @@
                 <% downvote = "tinybluedownvote.ico"; %>
               <% } %>
               <li style="list-style: none;"class="content-item">
-                <h2 class=<%-content.title%>>
-                  <a><%=content.voteScore%></a>
-                  <a href=<%-"/upvote/" + content.id%>><img src=<%=upvote%>></img></a>
-                  <a href=<%-"/downvote/" + content.id%>><img src=<%=downvote%>></img></a>
-                  <a href=<%-content.url%>><%-content.title%></a>
-              </h2>
-              <p>Created by <%-content.submitter%></p>
+                <hr>
+                <table>
+                  <tr>
+                    <td><a href=<%-"/upvote/" + content.id%>><img src=<%=upvote%>></img></a></td>
+                  </tr>
+                  <tr>
+                    <td><h5 class="votescore"><%=content.voteScore%></h5></td>
+                    <td><a class="content" href=<%-content.url%>><%-content.title%></a></td>
+                  </tr>
+                  <tr>
+                    <td><a href=<%-"/downvote/" + content.id%>><img src=<%=downvote%>></img></a></td>
+                    <td><p class="createdby">Created by <span class="usercreater"><%-content.submitter%></span></p></td>
+                  </tr>
+                </table>
+                
             </li>
             <% })%>
           </span>
@@ -39,3 +48,19 @@
       </div>
     </body>
 </html>
+
+<!--<tr>-->
+<!--    <td>Jill</td>-->
+<!--    <td>Smith</td>		-->
+<!--    <td>50</td>-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td>Eve</td>-->
+<!--    <td>Jackson</td>		-->
+<!--    <td>94</td>-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td>John</td>-->
+<!--    <td>Doe</td>		-->
+<!--    <td>80</td>-->
+<!--  </tr>-->

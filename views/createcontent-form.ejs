@@ -3,21 +3,45 @@
     <head>
         <meta charset="utf-8">
         <link href="style.css" rel="stylesheet" type="text/css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bootstrap.css" type="text/css">
+        <script src="jquery.js"></script>
+        <script src="bootstrap.js"></script>
     </head>
     <body>
         <div class='form'>
         <div class='formheading'>Post Content</div>
-       
-        <span id="error">
-          <% if (error) { %>
-            <%=error%>
-          <% } %>
-        </span>
-        <form action="/CreateContent" method="post">
-          <label for="title"><span>Title <span class="required">*</span></span><input type="title" class="input-field" name="title" value="" maxlength="255"/></label>
-          <label for="url"><span>URL <span class="required">*</span></span><input type="url" class="input-field" name="url" value="" maxlength="255"/></label>
-          <label><span>&nbsp;</span><input type="submit" value="Create" /></label>
-        </form>
+          <div class='container'>
+            
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#link">Link</a></li>
+              <li><a data-toggle="tab" href="#self">Self</a></li>
+            </ul>
+          
+            <div class="tab-content">
+              <div id="link" class="tab-pane fade in active">
+                
+                <span id="error">
+                  <% if (error) { %>
+                    <%=error%>
+                  <% } %>
+                </span>
+    
+                <form action="/CreateContent" method="post">
+                  <label for="title"><span>Title <span class="required">*</span></span><input type="title" class="input-field" name="title" value="" maxlength="255"/></label>
+                  <label for="url"><span>URL <span class="required">*</span></span><input type="url" class="input-field" name="url" value="" maxlength="255"/></label>
+                  <label><span>&nbsp;</span><input type="submit" value="Create" /></label>
+                </form>
+                
+              </div>
+              
+              <div id="self" class="tab-pane fade">
+                <h3>Self</h3>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </div>
+              
+            </div>
+          </div>
         </div>
     </body>
 </html>

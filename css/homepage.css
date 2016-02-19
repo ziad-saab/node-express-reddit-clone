@@ -1,0 +1,88 @@
+#welcomeuser{
+    font-family: Arial;
+}
+
+#user{
+    font-weight: bold;
+    color: #6699ff;
+}
+
+#heading{
+    font-family: times, Times New Roman, times-roman, georgia, serif;
+	color: #444;
+	margin: 0;
+	padding: 0px 0px 6px 0px;
+	font-size: 51px;
+	line-height: 44px;
+	letter-spacing: -2px;
+	font-weight: bold;
+	padding-top: 20px;
+}
+
+.votescore{
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.content:link {
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.content:visited {
+    text-decoration: none;
+    color: red;
+}
+
+.content:hover {
+    text-decoration: underline;
+    color: green;
+}
+
+.content:active {
+    text-decoration: underline;
+    color: green;
+}
+
+.createdby{
+    font-family: Tahoma;
+    font-size: 14px;
+}
+
+.usercreater{
+    font-weight: bold;
+    color: #FF8500;
+}
+
+.link:link, .link:visited {
+    background-color: #f44336;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;	
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 8px;
+     -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: solid 1px #20538D;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+.link:hover, .link:active {
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    background: #2E5481;
+    border: solid 1px #203E5F;
+}
