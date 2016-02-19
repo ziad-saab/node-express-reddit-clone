@@ -31,6 +31,7 @@ var User;
 var Session;
 var Content;
 var Vote;
+var Comment;
 
 //create database if it doesn't already exist
 var dbInit = db.query('create database reddit_clone')
@@ -83,9 +84,78 @@ var dbInit = db.query('create database reddit_clone')
   Content.hasMany(Vote, {as: 'uservotes'});
   Content.hasMany(Vote);
 
+  Comment = db.define('comment', {
+    text: Sequelize.STRING
+  });
+
+  Comment.hasMany(Comment, {as: 'children', foreignKey: 'parentId'});
+  User.hasMany(Comment);
+  Content.hasMany(Comment);
+
 	return db.sync();
 })
 
+//creates a new comment
+function createNewComment(sessionId, contentId, parentCommentId, text) {
+  return dbInit.then(function() {
+    return Promise.all([
+      getUserFromSessionId(sessionId),
+      Content.findById(contentId),
+      Comment.findById(parentCommentId)
+    ])
+    .then(function(response) {
+      var user = response[0];
+      var content = response[1];
+      var comment = response[2];
+      return Comment.create({
+        text: text
+      })
+      .then(function(newComment) {
+        if(comment)
+        comment.addChildren(newComment);
+        user.addComment(newComment);
+        content.addComment(newComment);
+      });
+    });
+  });
+}
+
+function getContentAndComments(contentId) {
+  return dbInit.then(function() {
+    return Promise.all([
+      Content.findById(contentId),
+      getCommentsForContent(contentId)
+    ])
+    .then(function(response) {
+      return {
+        content: response[0].toJSON(),
+        comments: response[1]
+      }
+    });
+  });
+};
+
+function getCommentsForContent(contentId) {
+  return dbInit.then(function() {
+    return Comment.findAll({
+      include: {
+        model: Comment,
+        as: 'children',
+        include: {
+          model: Comment,
+          as: 'children'
+        }
+      },
+      where: {
+        contentId: contentId,
+        parentId: null
+      }
+    })
+    .then(function(comments) {
+      return comments.map(i => i.toJSON());
+    })
+  });
+}
 //Inserts a new user into users table
 function createNewUser(username, password, email) {
   return dbInit.then(function(res) {
@@ -245,7 +315,9 @@ module.exports = {
 	getLatestNContent: getLatestNContent,
 	getHottestNContent: getHottestNContent,
   getControversialNContent: getControversialNContent,
+  getContentAndComments: getContentAndComments,
   getTopNContent: getTopNContent,
+  getContentAndComments: getContentAndComments,
 	voteOnContent: voteOnContent,
   USR_NOT_FOUND: USR_NOT_FOUND,
   INVALID_PASSWORD: INVALID_PASSWORD,

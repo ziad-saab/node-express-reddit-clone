@@ -1,0 +1,12 @@
+<%function renderComment(comment) {%>
+  <div style="margin-left:10;">
+    <a><%=comment.userId%></a>
+    <a><%=comment.text%></a>
+    <%if (comment.children) {%>
+      <%comment.children.forEach(function(child) {%>
+        <%renderComment(child);%>
+      <%});%>
+    <%}%>
+  </div>
+<%}%>
+<%comments.forEach(renderComment)%>
