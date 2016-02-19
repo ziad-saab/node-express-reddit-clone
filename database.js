@@ -161,23 +161,23 @@ function createNewContent(sessionId, url, title) {
 }
 
 
-function getControversialNContent(sessionId, n) {
+function getControversialNContent(sessionId, n, m) {
   var upvotes = 'Sum(IF(`votes`.`upvote`, 1, 0))';
   var downvotes = 'Sum(IF(`votes`.`upvote`, 0, 1))';
-  return getOrderedNtoMContentForSession(sessionId, n, 0, 'GREATEST('+ upvotes +', ' + downvotes + ') - ABS('+upvotes+' - '+downvotes+')');
+  return getOrderedNtoMContentForSession(sessionId, n, m, '(GREATEST('+ upvotes +', ' + downvotes + ') / (ABS('+upvotes+' - '+downvotes+'+0.1)))');
 }
-function getHottestNContent(sessionId, n) {
+function getHottestNContent(sessionId, n, m) {
   var currentTime = Math.floor(Date.now() / 1000);
   var ageFactor = '((' + currentTime + ' - UNIX_TIMESTAMP(CONVERT_TZ(`contents`.`createdAt`, \'+00:00\', @@global.time_zone))) / 10000)';
-  return getOrderedNtoMContentForSession(sessionId, n, 0, '((Sum(IF(`votes`.`upvote`, 1, -1))) / ' + ageFactor + ')');
+  return getOrderedNtoMContentForSession(sessionId, n, m, '((Sum(IF(`votes`.`upvote`, 1, -1))) / ' + ageFactor + ')');
 }
 
-function getTopNContent(sessionId, n) {
-  return getOrderedNtoMContentForSession(sessionId, n, 0, 'Sum(IF(`votes`.`upvote`, 1, -1))');
+function getTopNContent(sessionId, n, m) {
+  return getOrderedNtoMContentForSession(sessionId, n, m, 'Sum(IF(`votes`.`upvote`, 1, -1))');
 }
 
-function getLatestNContent(sessionId, n) {
-  return getOrderedNtoMContentForSession(sessionId, n, 0, 'contents.createdAt');
+function getLatestNContent(sessionId, n, m) {
+  return getOrderedNtoMContentForSession(sessionId, n, m, 'contents.createdAt');
 }
 
 function getOrderedNtoMContentForSession(sessionId, n, m, order) {
@@ -212,12 +212,14 @@ FROM  (     SELECT          `contents`.*, \
             LEFT OUTER JOIN `users` AS `users` \
             ON              `contents`.`userid` = `users`.`id` \
             GROUP BY        `contents`.`id` \
-            ORDER BY        `postorder` DESC limit ' + n + ' offset '+ m +') AS contentlist \
+            ORDER BY        `postorder` DESC) AS contentlist \
 LEFT OUTER JOIN `votes`                                                                           AS `uservotes` \
 ON              `uservotes`.`contentid`=`contentlist`.`id` \
 AND             `uservotes`.`userid`='+ userId +' \
 GROUP BY        `contentlist`.`id` \
-ORDER BY        `contentlist`.`postorder` DESC;',
+ORDER BY        `contentlist`.`postorder` DESC, `contentlist`.`createdAt` DESC \
+LIMIT ' + n + ' \
+OFFSET '+ m +';',
     { type: Sequelize.QueryTypes.SELECT});
   }).then(function(contents) {
     return {
@@ -243,6 +245,7 @@ module.exports = {
 	getLatestNContent: getLatestNContent,
 	getHottestNContent: getHottestNContent,
   getControversialNContent: getControversialNContent,
+  getTopNContent: getTopNContent,
 	voteOnContent: voteOnContent,
   USR_NOT_FOUND: USR_NOT_FOUND,
   INVALID_PASSWORD: INVALID_PASSWORD,
