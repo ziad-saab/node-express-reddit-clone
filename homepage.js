@@ -6,6 +6,7 @@ require('./createuser.js');
 require('./login.js');
 require('./createcontent.js');
 require('./vote.js');
+require('./comments.js');
 
 const PAGE_LENGTH = 5;
 
@@ -31,7 +32,7 @@ app.get('/controversial/:page', function(req, res){
   var page = parseInt(req.params.page) * PAGE_LENGTH;
   if (isNaN(page))
   page = 0;
-  database.getControversialNContent(sessionId, PAGE_LENGTH, page)
+  database.getLatestNContent(sessionId, PAGE_LENGTH, page)
   .then(function(response) {
     var username;
     try {username = response.User.username} catch(e) {}
