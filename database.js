@@ -80,6 +80,7 @@ var dbInit = db.query('create database reddit_clone')
 
   User.belongsToMany(Content, {through: Vote, as: 'Upvotes'});
   Content.belongsToMany(User, {through: Vote, as: 'Upvotes'});
+  Content.hasMany(Vote, {as: 'uservotes'});
   Content.hasMany(Vote);
 
 	return db.sync();
@@ -158,24 +159,33 @@ function createNewContent(sessionId, url, title) {
 		});
 	});
 }
-function getLatestNContent(sessionId, n) {
+function getFunctionNContent(sessionId, n, order) {
   return dbInit.then(function() {
     return getUserFromSessionId(sessionId)
     .then(function(user) {
       return Content.findAll({
           include: [User, {
             model: Vote,
+            as: 'uservotes',
             where: {userId: user.id},
             attributes: [],
-            required: false
-          }],
+            required: false,
+          }, {
+            model: Vote,
+            attributes: [],
+            required: false,
+          }
+        ],
+          group: 'content.id',
           attributes: {
             include: [
-              [Sequelize.col('votes.upVote'), 'vote']
+              [Sequelize.col('uservotes.upVote'), 'vote'],
+              [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1)), 'voteScore'],
+              [order, 'postorder']
             ]
           },
-          group: 'content.id',
-          order: [['createdAt', 'DESC']]
+          //limit: 25,
+          order: [Sequelize.literal('postorder DESC')]
         })
         .then(function(content) {
           return {
@@ -189,11 +199,20 @@ function getLatestNContent(sessionId, n) {
       throw e;
 
       return Content.findAll({
-            include: [User],
-            limit: n,
-            order: [
-                ['createdAt', 'DESC']
-            ]
+            include: [User, {
+              model: Vote,
+              attributes: [],
+              required: false,
+            }],
+            group: 'content.id',
+            attributes: {
+              include: [
+                [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1)), 'voteScore'],
+                [order, 'postorder']
+              ]
+            },
+            //limit: n,
+            order: [Sequelize.literal('postorder DESC')]
         })
         .then(function(content) {
           return {
@@ -202,6 +221,15 @@ function getLatestNContent(sessionId, n) {
         });
     });
   });
+}
+
+function getLatestNContent(sessionId, n) {
+  return getFunctionNContent(sessionId, n, 'createdAt');
+}
+
+
+function getLatestNContent(sessionId, n) {
+  return getFunctionNContent(sessionId, n, 'createdAt');
 }
 
 function voteOnContent(sessionId, contentId, isUpvote) {
@@ -214,24 +242,6 @@ function voteOnContent(sessionId, contentId, isUpvote) {
       return user.addUpvote(content, {upVote: isUpvote});
     });
   }
-  /*
-  dbInit.then(function(p) {
-  Content.findAll({
-      include: [User, {
-        model: Vote,
-        attributes: [],
-        when: {userId: 1}
-      }],
-      group: 'content.id',
-      attributes: {
-          include: [
-              [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('votes.upVote'), 1, -1)), 'voteScore']
-          ]
-      },
-      limit: 25,
-      order: [['createdAt', 'DESC']]
-    }).then(console.log);
-  })*/
 module.exports = {
 	createNewUser: createNewUser,
 	login: login,
