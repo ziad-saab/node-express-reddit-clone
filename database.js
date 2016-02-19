@@ -237,9 +237,50 @@ function getTopNContent(sessionId, n) {
   return getFunctionNContent(sessionId, n, votescore);
 }
 function getLatestNContent(sessionId, n) {
-  return getFunctionNContent(sessionId, n, 'createdAt');
+  return getOrderedNtoMContentForSession(sessionId, n, 0, 'createdAt');
 }
+function getOrderedNtoMContentForSession(sessionId, n, m, order) {
+  return dbInit.then(function() {
+    return getUserFromSessionId(sessionId)
+    .then(function(user) {
+      return getOrderedNtoMContent(user.id, n, m, order)
+      .then(function(contentObject) {
+        contentObject.User = user.toJSON();
+        return contentObject;
+      });
+    })
+    .catch(function(e) {
+      if(e.message !== INVALID_SESSIONID)
+      throw e;
 
+      return getOrderedNtoMContent(null, n, m, order);
+    });
+  });
+}
+function getOrderedNtoMContent(userId, n, m, order) {
+  return dbInit.then(function() {
+    return db.query(
+      'SELECT `contents`.*, \
+       `users`.`username`                           AS `submitter`, \
+       IF(`votes`.`userid` = ' + userId + ', votes.upvote, NULL) AS `upVote`, \
+       Sum(IF(`votes`.`upvote`, 1, -1))             AS `postOrder`, \
+       Sum(IF(`votes`.`upvote`, 1, -1))             AS `voteScore` \
+FROM   `contents` \
+       LEFT OUTER JOIN `votes` AS `votes` \
+                    ON `contents`.`id` = `votes`.`contentid` \
+       LEFT OUTER JOIN `users` AS `users` \
+                    ON `contents`.`userid` = `users`.`id` \
+GROUP  BY `contents`.`id` \
+ORDER  BY `postOrder` DESC \
+LIMIT ' + n + ' \
+OFFSET '+ m +';',
+    { type: Sequelize.QueryTypes.SELECT});
+  }).then(function(contents) {
+    return {
+      Content: contents
+    }
+  });
+}
 function voteOnContent(sessionId, contentId, isUpvote) {
   return Promise.all([
     getUserFromSessionId(sessionId),
