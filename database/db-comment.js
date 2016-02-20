@@ -43,24 +43,32 @@ function getContentAndComments(sessionId, contentId) {
   });
 };
 
+function getNCommentLevels(n, initDB) {
+  if (n <= 0)
+  return [];
+  else return [initDB.User, {
+    model: initDB.Comment,
+    as: 'children',
+    include: getNCommentLevels(n-1, initDB)
+  }]
+}
+
 function getCommentsForContent(contentId) {
   return dbinit.then(function(initDB) {
     return initDB.Comment.findAll({
-      include: {
-        model: initDB.Comment,
-        as: 'children',
-        include: {
-          model: initDB.Comment,
-          as: 'children'
-        }
-      },
+      include: getNCommentLevels(10, initDB),
       where: {
         contentId: contentId,
         parentId: null
       }
     })
     .then(function(comments) {
+      console.log(comments.map(i => i.toJSON()));
       return comments.map(i => i.toJSON());
     })
   });
+}
+
+module.exports = {
+  getContentAndComments: getContentAndComments
 }

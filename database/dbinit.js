@@ -73,6 +73,7 @@ var dbInit = db.query('create database reddit_clone')
   });
 
   Comment.hasMany(Comment, {as: 'children', foreignKey: 'parentId'});
+	Comment.belongsTo(User);
   User.hasMany(Comment);
   Content.hasMany(Comment);
 
