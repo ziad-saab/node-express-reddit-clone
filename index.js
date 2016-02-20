@@ -82,7 +82,6 @@ Post.belongsToMany(User, {through: Vote});
 Post.hasMany(Vote); // New association, new sync (1 time)
 
 function buildHtml(contentsArray){
-   
   var html = 
   `<div id="contents">
 
@@ -91,10 +90,10 @@ function buildHtml(contentsArray){
     <h1>List of contents</h1>
       <ul class="contents-list">`
   contentsArray.forEach(function(item){
-      // console.log(item.user.dataValues)
+    console.log(item)
     html += `
       <li class="content-item">
-      <h2 class="content-item__title">
+      <h2 class="content-item__title">` + item.dataValues.voteScore +`
         <a href="`+ item.url +`">`+ item.title + `</a>
       </h2>
       <p>Created by ` + item.user.dataValues.username + `</p>
@@ -118,17 +117,6 @@ return html;
 
 }
 
-function retrieveTop5(callback) {
-  Post.findAll({ //group by content, ATTRIBUTES : fn(SUM => 'nameOfMyAggrigate'), order by 'name...'
-  order: [['createdAt','DESC']],
-  limit: 5,
-  //*subQuery: false
-  include: User
-  }).then(function(res) { //build html
-    callback(res);
-});
-
-}
 function createSessionToken() {
     return secureRandom.randomArray(40).map(code => code.toString(16)).join('');
 }
@@ -145,15 +133,48 @@ app.get('/hello', function (req, res) {
 
 
 app.get('/', function(req, res) {
+  
+  
+  
+  Post.findAll({
+    include: [{model: Vote, attributes: []}, {model: User}],
+    group: 'content.id',
+    attributes: {
+        include: [
+            [Sequelize.fn('SUM', Sequelize.col('votes.upVote')), 'voteScore']
+        ]
+    },
+    order: [Sequelize.literal('voteScore DESC')],
+    limit: 5, // this can be hard-coded to 25, and eventually in a later phase parameterized
+    subQuery: false // what's this?? come see me if you feel adventurous and want to know more :)
+}).then(function (posts) {
+ 
+    var html = buildHtml(posts);
+    res.send(`<span style="color: maroon">${req.query.error ? req.query.error : ''}</span>` + html);
+})
+  
+  
+/*=========>>>>IN ===>>> */ });  
    
+/*function retrieveTop5(callback) {
+  Post.findAll({ //group by content, ATTRIBUTES : fn(SUM => 'nameOfMyAggrigate'), order by 'name...'
+  order: [['createdAt','DESC']],
+  limit: 5,
+  //*subQuery: false
+  include: User
+  }).then(function(res) { //build html
+    callback(res);
+});
+
+}   
 //if logged in, can do everything=>  
 retrieveTop5(function(contents){
-    var html = buildHtml(contents);
+    var ehtml = buildHtml(contents);
     
-    res.send(`<span style="color: maroon">${req.query.error ? req.query.error : ''}</span>` + html);
+    res.send(`<span style="color: maroon">${req.query.error ? req.query.error : ''}</span>` + ehtml);
   });
 //if not logged in, can view but all html buttons/links will redirect to login/signup    
-});
+======>>>>>>> OUT!!!!});*/
 
 app.get('/joinUs', function(req, res) {
     var html = `
