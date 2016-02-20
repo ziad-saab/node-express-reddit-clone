@@ -1,7 +1,7 @@
 //Requiring npm packagaes
 var ejs = require('ejs');
 var app = require('./app.js');
-var database = require('./database.js');
+var database = require('./database/database.js');
 require('./createuser.js');
 require('./login.js');
 require('./createcontent.js');

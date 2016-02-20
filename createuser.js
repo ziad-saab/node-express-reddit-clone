@@ -1,5 +1,5 @@
 //Requiring npm packagaes
-var database = require('./database.js');
+var database = require('./database/database.js');
 var app = require('./app.js');
 
 app.get('/SignUp', function(req, res){

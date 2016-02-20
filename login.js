@@ -1,5 +1,5 @@
 var app = require('./app.js');
-var database = require('./database.js');
+var database = require('./database/database.js');
 
 app.get('/Login', function(req, res){
   res.render('login-form', {error: req.query.error});

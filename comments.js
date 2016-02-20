@@ -1,4 +1,4 @@
-var database = require('./database.js');
+var database = require('./database/database.js');
 var app = require('./app.js');
 
 app.get('/link/17/comments',function(req, res) {
