@@ -63,12 +63,12 @@ function getCommentsForContent(contentId) {
       }
     })
     .then(function(comments) {
-      console.log(comments.map(i => i.toJSON()));
       return comments.map(i => i.toJSON());
     })
   });
 }
 
 module.exports = {
-  getContentAndComments: getContentAndComments
+  getContentAndComments: getContentAndComments,
+  createNewComment: createNewComment
 }

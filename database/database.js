@@ -13,6 +13,7 @@ module.exports = {
   getTopNContent: dbContent.getTopNContent,
 	voteOnContent: dbContent.voteOnContent,
   getContentAndComments: dbComment.getContentAndComments,
+  createNewComment: dbComment.createNewComment,
   SESSION_LENGTH: dbUser.SESSION_LENGTH,
   USR_NOT_FOUND: dbUser.USR_NOT_FOUND,
   INVALID_PASSWORD: dbUser.INVALID_PASSWORD,
