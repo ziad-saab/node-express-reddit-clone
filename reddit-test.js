@@ -1,6 +1,4 @@
 //require('longjohn')
-require('babel-register');
-var render = require("./rendering.jsx");
 var Models = require('./models/index.js');
 var express = require('express');
 var app = express();
@@ -11,9 +9,8 @@ var Sequelize = require('sequelize');
 var mysql = require('mysql');
 var bcrypt = require('bcrypt');
 
-
 function checkLoginToken(request, response, next) {
-     console.log(request.cookies.SESSION)
+    console.log(request.cookies.SESSION)
 
     if (request.cookies.SESSION) {
         Models.sessions.findOne({
@@ -77,8 +74,7 @@ function buildHTMLlist(array) {
     return html;
 }
 
-
-app.get('/', function(request, response) {
+function sortMe(cb, sort) {
     Models.contents.findAll({
         include: [{
             model: Models.votes,
@@ -91,14 +87,40 @@ app.get('/', function(request, response) {
                 [Sequelize.fn('SUM', Sequelize.col('votes.upVote')), 'voteScore']
             ]
         },
-        order: [Sequelize.literal('voteScore DESC')],
+        order: [Sequelize.literal(sort + ' DESC')],
         limit: 25,
         subQuery: false
     }).then(function(results) {
-
-        response.send(render.renderHomepage(results))
+        cb(results);
     });
-});
+}
+
+app.get('/sort/:sort', function(request, response) {
+    if (request.params.sort === 'new'){
+        sortMe(function(results) {
+            var html = buildHTMLlist(results);
+            response.send(html)
+        }, "createdAt")
+    }
+    else if (request.params.sort === 'top'){
+        sortMe(function(results){
+            var html = buildHTMLlist(results);
+            response.send(html)
+        }, "voteScore")
+    }
+    // else if (request.params.sort === 'hot'){
+    //     sortMe(function(results){
+    //         var html = buildHTMLlist(results);
+    //         response.send(html)
+    //     }, '(datediff(now(), createdAt))')
+    // }
+    else if (request.params.sort === '/'){
+        sortMe(function(results){
+            var html = buildHTMLlist(results);
+            response.send(html)
+        }, 'createdAt')
+    }
+})
 
 app.post('/voteContent', function(request, response) {
     if (request.loggedInUser.id) {
@@ -126,7 +148,7 @@ app.post('/voteContent', function(request, response) {
             function(vote) {
                 response.redirect('/');
             }
-        )
+        );
     }
     else {
         response.redirect('/login')
@@ -140,11 +162,15 @@ function createSessionToken() {
     return secureRandom.randomArray(40).map(code => code.toString(16)).join('')
 }
 
-
+//function to check cookies
 
 //Login form
 app.get('/login/', function(request, response) {
-    response.send(render.renderLogin({error: request.query.error}));
+    var options = {
+        root: __dirname,
+    }
+    response.sendFile('reddit_pages/form-login.html', options);
+
 });
 
 app.post('/login/', function(request, response) {
@@ -157,7 +183,7 @@ app.post('/login/', function(request, response) {
     }).then(
         function(user) {
             if (!user) {
-                response.redirect('/login?error=You must sign up!');
+                response.send('You must sign up!');
             }
             else {
                 var isPasswordOk = bcrypt.compareSync(password, user.passwordHash)
@@ -171,7 +197,7 @@ app.post('/login/', function(request, response) {
                     })
                 }
                 else {
-                    response.redirect('/login?error=Username or password incorrect');
+                    console.log('Username or password incorrect');
                 }
             }
         }
@@ -181,7 +207,11 @@ app.post('/login/', function(request, response) {
 //Sign up
 
 app.get('/signup/', function(request, response) {
-    response.send(render.renderSignup({error: request.query.error}));
+    var options = {
+        root: __dirname,
+    }
+    response.sendFile('reddit_pages/form-signup.html', options);
+
 });
 
 app.post('/signup/', function(request, response) {
@@ -199,12 +229,12 @@ app.post('/signup/', function(request, response) {
                     username: username,
                     password: password
                 }).then(function(user) {
-                    response.redirect('/login');
+                    response.redirect('/login/');
                     console.log(user.toJSON());
                 });
             }
             else {
-                response.redirect('/signup?error=Pick another username!');
+                response.send('Pick another username!');
             }
         }
     );
@@ -213,13 +243,16 @@ app.post('/signup/', function(request, response) {
 //Create Content
 
 app.get('/createContent', function(request, response) {
-    response.send(render.renderCreateContent({error: request.query.error}));
+    var options = {
+        root: __dirname,
+    }
+    response.sendFile('reddit_pages/form-content.html', options);
 
 });
 
 app.post('/createContent', function(request, response) {
     if (!request.loggedInUser) {
-        response.status(401).redirect('/login?error=You must be logged in to create content!');
+        response.status(401).send('You must be logged in to create content!');
     }
     else {
 
