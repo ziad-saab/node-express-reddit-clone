@@ -4,11 +4,20 @@ var db = new Sequelize('reddit_clone', 'nicjo', '', {
   dialect: 'mysql'
   });
 
+var bcrypt = require('bcrypt');
+
+
 
 var User = db.define('user', {
     email: Sequelize.STRING,
-    username: Sequelize.STRING,
-    password: Sequelize.STRING // TODO: make the passwords more secure!
+    username: {type: Sequelize.STRING, unique: true},
+    hashed_password: Sequelize.STRING,
+    password: {  // TODO: make the passwords more secure!
+        type: Sequelize.VIRTUAL,
+        set: function(actualPassword) {
+            this.setDataValue('hashed_password', bcrypt.hashSync(actualPassword, 10));
+        }
+    }
 });
 
 // Even though the content belongs to users, we will setup the userId relationship later
@@ -22,6 +31,14 @@ var Vote = db.define('vote', {
     upVote: Sequelize.BOOLEAN
 });
 
+var Session = db.define('session', {
+    token: Sequelize.STRING
+});
+
+User.hasMany(Session); // This will let us do user.createSession
+Session.belongsTo(User); // This will let us do Session.findOne({include: User})
+
+
 // User <-> Content relationship
 Content.belongsTo(User); // This will add a `setUser` function on content objects
 User.hasMany(Content); // This will add an `addContent` function on user objects
@@ -30,6 +47,7 @@ User.hasMany(Content); // This will add an `addContent` function on user objects
 User.belongsToMany(Content, {through: Vote, as: 'Upvotes'}); // This will add an `add`
 Content.belongsToMany(User, {through: Vote});
 
+Content.hasMany(Vote); //needed to add the contentId in Vote
 
 
 db.sync().then(function() {
