@@ -1,12 +1,18 @@
 var database = require('./database/database.js');
 var app = require('./app.js');
+var ReactDOMServer = require('react-dom/server');
+require('babel-register');
+var Comments = require('./react-comments.js');
 
 app.get('/link/:contentId/comments',function(req, res) {
   var contentId = parseInt(req.params.contentId);
   var sessionId = req.cookies.sessionId;
   database.getContentAndComments(sessionId, contentId)
   .then(function(response) {
-    res.render('comments-page', {user: response.user, content: response.content, comments: response.comments});
+    var htmlStructure = Comments(response.user, response.content, response.comments);
+    var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
+    res.send('<!doctype html>' + html);
+    //res.render('comments-page', {user: response.user, content: response.content, comments: response.comments});
   });
 });
 
