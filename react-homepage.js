@@ -13,9 +13,10 @@ function Post(content) {
       downvote = "/tinybluedownvote.ico";
     }
   return (
-      <li style={{"list-style": "none"}} className="content-item">
+      <li style={{"listStyle": "none"}} className="content-item">
         <hr/>
         <table>
+        <tbody>
           <tr>
             <form action={upvotelink} method="post">
               <td><input type="image" src={upvote}/></td>
@@ -32,6 +33,7 @@ function Post(content) {
             </form>
             <td><a className="comments" href={comments}>Comments</a></td>
           </tr>
+          </tbody>
         </table>
     </li>
   )
@@ -73,7 +75,7 @@ function HomePage(user, contents, type, page) {
 
     <html>
     <header>
-      <meta charset="utf-8"/>
+      <meta charSet="utf-8"/>
       <link href="/homepage.css" rel="stylesheet" type="text/css"/>
     </header>
     <body>
