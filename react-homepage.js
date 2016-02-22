@@ -13,14 +13,16 @@ function Post(content) {
       downvote = "/tinybluedownvote.ico";
     }
   return (
-      <li style={{"listStyle": "none"}} className="content-item">
+      <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
         <hr/>
         <table>
         <tbody>
           <tr>
-            <form action={upvotelink} method="post">
-              <td><input type="image" src={upvote}/></td>
-            </form>
+            <td>
+              <form action={upvotelink} method="post">
+                <input type="image" src={upvote}/>
+              </form>
+            </td>
             <td><p className="createdby">Post by <span className="usercreater">{content.submitter}</span></p></td>
           </tr>
           <tr>
@@ -28,9 +30,11 @@ function Post(content) {
             <td><a className="contentpost" href={content.url}>{content.title}</a></td>
           </tr>
           <tr>
-            <form action={downvotelink} method="post">
-              <td><input type="image" src={downvote}/></td>
-            </form>
+            <td>
+              <form action={downvotelink} method="post">
+                <input type="image" src={downvote}/>
+              </form>
+            </td>
             <td><a className="comments" href={comments}>Comments</a></td>
           </tr>
           </tbody>
@@ -74,10 +78,10 @@ function HomePage(user, contents, type, page) {
   return (
 
     <html>
-    <header>
+    <head>
       <meta charSet="utf-8"/>
       <link href="/homepage.css" rel="stylesheet" type="text/css"/>
-    </header>
+    </head>
     <body>
       <nav>
       {header}
