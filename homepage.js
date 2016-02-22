@@ -11,11 +11,11 @@ require('./comments.js');
 const PAGE_LENGTH = 5;
 
 app.get('/', function(req, res){
-  res.redirect('/hot/0');
+  res.redirect('/sort/hot/0');
 });
 
-app.get('/:order', function(req, res){
-  res.redirect('/' + req.params.order + '/0');
+app.get('/sort/:order', function(req, res){
+  res.redirect('/sort/' + req.params.order + '/0');
 });
 
 function getFunction(type) {
@@ -34,7 +34,7 @@ function getFunction(type) {
     break;
   }
 }
-app.get('/:order/:page', function(req, res){
+app.get('/sort/:order/:page', function(req, res){
   var sessionId = req.cookies.sessionId;
   var page = parseInt(req.params.page);
   if (isNaN(page))

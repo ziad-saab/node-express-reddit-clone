@@ -29,8 +29,8 @@ function getControversialNContent(sessionId, n, m) {
 }
 function getHottestNContent(sessionId, n, m) {
   var currentTime = Math.floor(Date.now() / 1000);
-  var ageFactor = '((' + currentTime + ' - UNIX_TIMESTAMP(CONVERT_TZ(`contents`.`createdAt`, \'+00:00\', @@global.time_zone))) / 10000)';
-  return getOrderedNtoMContentForSession(sessionId, n, m, '((Sum(IF(`votes`.`upvote`, 1, -1))) / ' + ageFactor + ')');
+  var ageFactor = '(((' + currentTime + ' - UNIX_TIMESTAMP(CONVERT_TZ(`contents`.`createdAt`, \'+00:00\', @@global.time_zone))) / 3600)^2)';
+  return getOrderedNtoMContentForSession(sessionId, n, m, '((Sum(IF(`votes`.`upvote`, 1, -1))) - ' + ageFactor + ')');
 }
 
 function getTopNContent(sessionId, n, m) {
