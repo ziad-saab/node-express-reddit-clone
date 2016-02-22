@@ -36,6 +36,8 @@
         <link href="/comment.css" rel="stylesheet" type="text/css">
     </head>
     <body>
+      
+      <nav>
       <% if (user) { %>
         <h4 id="welcomeuser">Welcome <span id="user"><%=user.username%></span></h4>
         <a href=/Logout class="link">Logout</a>
@@ -44,7 +46,9 @@
         <a href=/SignUp class="link">Sign Up</a>
         <a href=/Login class="link">Login</a>
       <% } %>
-
+      </nav>
+      
+      <main>
       <div id="contents">
         <a id="heading" href=<%=content.url%>><%=content.title%></a>
         <ul class="contents-list">
@@ -53,9 +57,15 @@
               <label for="comment"><span>Comment:</span><input type="text" class="input-field" name="comment" value="" maxlength="255"/></label>
               <label><span>&nbsp;</span><input type="submit" value="Reply" /></label>
             </form>
+            
+            <article>
             <%comments.forEach(renderComment, 0);%>
+            </article>
+            
           </span>
         </ul>
       </div>
+      </main>
+      
     </body>
 </html>
