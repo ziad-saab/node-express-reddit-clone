@@ -53,11 +53,7 @@ function getOrderedNtoMContentForSession(sessionId, n, m, order) {
     })
     .catch(function(e) {
       if(e.message !== INVALID_SESSIONID) {
-        console.log('\n\n\n\n\n\n');
-        console.log('THERE WAS AN ERROR');
-        console.log(e.message);
-        console.log(Object.keys(e));
-        console.log('\n\n\n\n\n\n');
+        throw e;
     }
 
       return getOrderedNtoMContent(null, n, m, order);
