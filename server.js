@@ -22,6 +22,7 @@ function createToken() {
 //intialize express
 var app = express();
 // Middleware
+app.use(express.static('static'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 // custom middleware to check if user is logged in

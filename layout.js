@@ -18,6 +18,7 @@ function Layout (data) {
   return (
     <html>
       <head>
+        <link type="text/css" rel="stylesheet" href="css/style.css"/> 
         <title>{data.title}</title>
       </head>
       <body>
