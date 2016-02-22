@@ -1,8 +1,13 @@
 var app = require('./app.js');
 var database = require('./database/database.js');
+var ReactDOMServer = require('react-dom/server');
+require('babel-register');
+var CreateContent = require('./react-createcontent');
 
 app.get('/CreateContent', function(req, res){
-    res.render('createcontent-form', {error: req.query.error});
+  var htmlStructure = CreateContent(req.query.error);
+  var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
+  res.send('<!doctype html>' + html);
 });
 
 app.post('/CreateContent', function(request, response){

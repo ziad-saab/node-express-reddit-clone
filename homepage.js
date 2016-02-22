@@ -11,7 +11,7 @@ require('./createcontent.js');
 require('./vote.js');
 require('./comments.js');
 
-const PAGE_LENGTH = 5;
+const PAGE_LENGTH = 10;
 
 app.get('/', function(req, res){
   res.redirect('/sort/hot/0');

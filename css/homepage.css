@@ -25,7 +25,8 @@
 }
 
 .votescore{
-    text-align: center;
+    margin-top: -15px;
+    margin-bottom: -15px;
     font-weight: bold;
     font-size: 20px;
 }
@@ -36,7 +37,7 @@
     font-weight: bold;
     font-size: 20px;
     font-family: ;
-    padding-left: 30px;
+    padding-left: 10px;
 }
 
 .contentpost:visited {
@@ -78,7 +79,7 @@
     background-color: #f44336;
     color: white;
     padding: 14px 25px;
-    text-align: center;	
+    text-align: center;
     text-decoration: none;
     display: inline-block;
     border-radius: 8px;
@@ -142,3 +143,42 @@ ul.pagination li a {
 }
 
 ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+
+.contentRow {
+  display:flex;
+  justify-content: flex-start;
+  align-content: center;
+}
+.contentVotescore {
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.contentContent {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contentTitle {
+  display:flex;
+}
+
+.contentMetaData {
+  display:flex;
+  justify-content: flex-end;
+}
+
+.metatext {
+  color: #808080;
+  font-weight: bold;
+  padding-left: 20px;
+  font-size: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.metatext:hover, .metatext:active {
+  text-decoration: underline;
+}

@@ -14,31 +14,27 @@ function Post(content) {
     }
   return (
       <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
-        <hr/>
-        <table>
-        <tbody>
-          <tr>
-            <td>
-              <form action={upvotelink} method="post">
-                <input type="image" src={upvote}/>
-              </form>
-            </td>
-            <td><p className="createdby">Post by <span className="usercreater">{content.submitter}</span></p></td>
-          </tr>
-          <tr>
-            <td><p className="votescore">{content.votescore}</p></td>
-            <td><a className="contentpost" href={content.url}>{content.title}</a></td>
-          </tr>
-          <tr>
-            <td>
-              <form action={downvotelink} method="post">
-                <input type="image" src={downvote}/>
-              </form>
-            </td>
-            <td><a className="comments" href={comments}>Comments</a></td>
-          </tr>
-          </tbody>
-        </table>
+      <div className="contentRow">
+      <div className="contentVotescore">
+        <form action={upvotelink} method="post">
+          <input type="image" src={upvote}/>
+        </form>
+        <p className="votescore">{content.votescore}</p>
+        <form action={downvotelink} method="post">
+          <input type="image" src={downvote}/>
+        </form>
+      </div>
+      <div className="contentContent">
+        <div className="contentTitle">
+          <a className="contentpost" href={content.url}>{content.title}</a>
+        </div>
+        <div className="contentMetaData">
+          <a className="metatext">Post by {content.submitter}</a>
+          <a className="metatext">{content.createdAt.toString()}</a>
+          <a className="metatext" href={comments}>Comments</a>
+        </div>
+      </div>
+      </div>
     </li>
   )
 }

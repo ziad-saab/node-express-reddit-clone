@@ -8,7 +8,7 @@ app.get('/Login', function(req, res){
 
   var htmlStructure = Login(req.query.error);
   var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-  res.send(html);
+  res.send('<!doctype html>' + html);
 });
 
 app.post('/Login', function(request, response){
