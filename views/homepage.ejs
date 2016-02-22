@@ -5,24 +5,28 @@
         <link href="/homepage.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-      <% if (user) { %>
-        <h4 id="welcomeuser">Welcome <span id="user"><%=user%></span></h4>
-        <a href=/Logout class="link">Logout</a>
-        <a href=/CreateContent class="link">Create Content</a>
-      <% } else { %>
-        <a href=/SignUp class="link">Sign Up</a>
-        <a href=/Login class="link">Login</a>
-      <% } %>
+      <nav>
+        <% if (user) { %>
+          <h4 id="welcomeuser">Welcome <span id="user"><%=user%></span></h4>
+          <a href=/Logout class="link">Logout</a>
+          <a href=/CreateContent class="link">Create Content</a>
+        <% } else { %>
+          <a href=/SignUp class="link">Sign Up</a>
+          <a href=/Login class="link">Login</a>
+        <% } %>
 
-      <div id="orderbylinks">
-        <a href=/sort/hot class="getlink">Hot</a>
-        <a href=/sort/controversial class="getlink">Controversial</a>
-        <a href=/sort/top class="getlink">Top</a>
-        <a href=/sort/latest class="getlink">Latest</a>
-      </div>
+        <div id="orderbylinks">
+          <a href=/sort/hot class="getlink">Hot</a>
+          <a href=/sort/controversial class="getlink">Controversial</a>
+          <a href=/sort/top class="getlink">Top</a>
+          <a href=/sort/latest class="getlink">Latest</a>
+        </div>
+      </nav>
 
-      <div id="contents">
-        <h1 id="heading">List of contents</h1>
+      <main id="contents">
+        <header>
+          <h1 id="heading">List of contents</h1>
+        </header>
         <ul class="contents-list">
           <span id="contentList">
             <% contentList.forEach(function(content) { %>
@@ -58,9 +62,9 @@
             <hr>
           </span>
         </ul>
-      </div>
+      </main>
 
-      <div id="pages">
+      <footer id="pages">
         <ul class="pagination">
           <% var next = page + 1 %>
           <% var previous = page - 1 %>
@@ -72,6 +76,6 @@
           <% } %>
 
         </ul>
-      </div>
+      </footer>
     </body>
 </html>
