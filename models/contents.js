@@ -9,6 +9,7 @@ module.exports = function(sequelize, DataTypes) {
                 Content.belongsToMany(models.users, {
                    through: models.votes
                 });
+                Content.hasMany(models.votes)
             }
         }
     });
