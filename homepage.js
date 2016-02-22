@@ -3,7 +3,7 @@ var ejs = require('ejs');
 var app = require('./app.js');
 var database = require('./database/database.js');
 var ReactDOMServer = require('react-dom/server');
-var HomePage = require('babel-register');
+require('babel-register');
 var HomePage = require('./react-homepage');
 require('./createuser.js');
 require('./login.js');
@@ -49,6 +49,5 @@ app.get('/sort/:order/:page', function(req, res){
     var htmlStructure = HomePage(username, response.Content, req.params.order, page);
     var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
     res.send('<!doctype html>' + html);
-    //res.render('homepage', {user: username, contentList: response.Content, page: page, type: req.params.order});
   });
 });

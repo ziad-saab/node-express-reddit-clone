@@ -5,7 +5,7 @@ function Post(content) {
     var upvote = "/tinygreyupvote.ico";
     var upvotelink = "/upvote/" + content.id;
     var downvote = "/tinygreydownvote.ico";
-    var downvotelink = "/tinygreyupvote.ico" + content.id;
+    var downvotelink = "/downvote/" + content.id;
     var comments = "/link/" + content.id + "/comments";
     if (content.upvote === 1) {
       upvote = "/tinyredupvote.ico";

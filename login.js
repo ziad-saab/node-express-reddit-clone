@@ -1,8 +1,14 @@
 var app = require('./app.js');
 var database = require('./database/database.js');
+var ReactDOMServer = require('react-dom/server');
+require('babel-register');
+var Login = require('./react-login');
 
 app.get('/Login', function(req, res){
-  res.render('login-form', {error: req.query.error});
+
+  var htmlStructure = Login(req.query.error);
+  var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
+  res.send(html);
 });
 
 app.post('/Login', function(request, response){

@@ -1,9 +1,14 @@
 //Requiring npm packagaes
 var database = require('./database/database.js');
 var app = require('./app.js');
+var ReactDOMServer = require('react-dom/server');
+require('babel-register');
+var SignUp = require('./react-signup');
 
 app.get('/SignUp', function(req, res){
-  res.render('signup-form', {error: req.query.error});
+  var htmlStructure = SignUp(req.query.error);
+  var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
+  res.send('<!doctype html>' + html);
 });
 
 
