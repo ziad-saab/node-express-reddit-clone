@@ -1,5 +1,6 @@
 
 var React = require('react');
+var Nav = require('./react-nav');
 
 function Post(content) {
     var upvote = "/tinygreyupvote.ico";
@@ -39,23 +40,21 @@ function Post(content) {
   )
 }
 
+var tabs = ['hot', 'latest', 'top', 'controversial']
+
+function getTablist(type) {
+  return tabs.map(function(tab) {
+    return {
+      name: tab,
+      url: '/sort/' + tab + '/0',
+      selected: tab === type
+    }
+  });
+}
+
 function HomePage(user, contents, type, page) {
 
-  var header;
-  if (user)
-  header = (
-    <div>
-      <h4 id="welcomeuser">Welcome <span id="user">{user}</span></h4>
-      <a href="/Logout" className="link">Logout</a>
-      <a href="/CreateContent" className="link">Create Content</a>
-    </div>);
-
-  else header = (
-    <div>
-      <a href="/SignUp" className="link">Sign Up</a>
-      <a href="/Login" className="link">Login</a>
-    </div>
-  );
+  var nav = Nav(user, getTablist(type));
   var posts = contents.map(Post);
   var pages;
   var next = page + 1;
@@ -79,16 +78,7 @@ function HomePage(user, contents, type, page) {
       <link href="/homepage.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-      <nav>
-      {header}
-        <div id="orderbylinks">
-          <a href="/sort/hot" className="getlink">Hot</a>
-          <a href="/sort/controversial" className="getlink">Controversial</a>
-          <a href="/sort/top" className="getlink">Top</a>
-          <a href="/sort/latest" className="getlink">Latest</a>
-        </div>
-      </nav>
-
+      {nav}
       <main id="contents">
         <header>
           <h1 id="heading">List of contents</h1>

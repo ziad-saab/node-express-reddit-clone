@@ -1,0 +1,83 @@
+.flexnav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-color: white;
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: -10px;
+  padding-bottom: 4px;
+  margin-bottom: -4px;
+  border-radius: 15px 0px 0px 0px;
+}
+
+.userbarElement {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #ff9900;
+  font-weight: bold;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.elementLink:hover {
+  text-decoration: underline;
+}
+
+.leftbar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.tab, .tabselected {
+  background-color: white;
+  margin-left: 5px;
+  margin-bottom: -2px;
+  padding: 3px;
+  padding-bottom: 5px;
+  border-top: 2px solid #0066cc;
+  border-right: 2px solid #0066cc;
+  border-left: 2px solid #0066cc;
+  color:#0066cc;
+  background-color: #ffc266;
+  font-family: "Arial", Serif;
+  font-weight: bold;
+  text-decoration: none;
+}
+.tab:hover, .tabselected:hover {
+  text-decoration: underline;
+}
+.tabselected {
+margin-bottom: -4px;
+padding-bottom: 7px;
+background-color: white;
+color:#00cc00;
+}
+
+.navbar {
+  background-color: #ff9900;
+  padding-top: 30px;
+  margin-top: -10px;
+  padding-left: 10px;
+  margin-left: -10px;
+  padding-right: 10px;
+  margin-right: -10px;
+  padding-bottom: 2px;
+  border-bottom: 2px solid #0066cc;
+}
+
+.siteTitle {
+  display: flex;
+  align-items: flex-end;
+  font-size: 40px;
+  color:#0066cc;
+  font-family: "Arial", Serif;
+  font-weight: bold;
+  padding-right: 10px;
+}
