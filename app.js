@@ -2,15 +2,21 @@ var secureRandom = require('secure-random')
 var Sequelize = require("sequelize");
 var express = require('express');
 var app = express();
-var Content = require('./app.js');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var sha = require('./node_modules/sha-1/sha1');
 var bcrypt = require('bcrypt');
+
+
+///react ///
+require('babel-register');
+var layout = require('./rendering.jsx')
+
 
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(cookieParser());
 app.use(checkLoginToken)
+app.use(express.static('css'));
+
 
 //session cookie check
 function createSessionToken(){
@@ -98,35 +104,17 @@ app.get('/',function(req,res){
     order: [Sequelize.literal('voteScore DESC')]
 }
         
-        ).then(function(val){
-        var listItems = val.reduce(function(acc, item){
-            acc = acc + `<li><h2><a href=${item.url}>${item.title}</a></h2><p>Created By: ${item.user.username} | on: ${item.createdAt} | popularity: (${item.dataValues.voteScore})</p>
-              <form style='display:inline-block;padding:5px' action="/voteContent" method="post">
-              <input type="hidden" name="upVote" value="true">
-              <input type="hidden" name="contentId" value=${item.id}>
-              <button type="submit">upvote this</button>
-                            </form><form style='display:inline-block' action="/voteContent" method="post">
-              <input type="hidden" name="upVote" value="false">
-              <input type="hidden" name="contentId" value=${item.id}>
-              <button type="submit">downvote this</button>
-            </form>
-            </li>`
-            return acc
-            },"")
-        var menu = `<ul style="display:inline-block;margin-right:150px">
-          <li><a href="/">Home</a></li>
-          <li><a href="/CreateUser">SignUp!</a></li>
-          <li><a href="/CreateContent">Post</a></li>
-          <li><a href="/SignIn">Login</a></li>
-        </ul>`    
-        res.send(`<div style="float:right;text-align:center;list-style:none">${menu}</div><div style="font-family:Courier New"><h1 style="font-family:impact">Your random Posts</h1><hr><ul>${listItems}</ul></div>`)
-            })
+        ).then( function(data){
+            
+          res.send(layout.renderHomePage(data))
+        } 
+            )
         
 });
 
 //////CREATE CONTENT/////
 app.get('/createContent', function(req,res){
-    res.sendFile(__dirname + '/form.html');
+    res.send(layout.renderCreateContent());
 });
 app.post('/createContent', function(req, res){
     if(!req.loggedInUser){
@@ -142,7 +130,7 @@ app.post('/createContent', function(req, res){
 
 ////////  CREATE A NEW USER  //////
 app.get('/createUser', function(req,res){
-    res.sendFile(__dirname + '/createUser.html')
+    res.send(layout.renderCreateUser())
 })
 app.post('/createUser', function(req, res){
             User.create({
@@ -157,7 +145,7 @@ app.post('/createUser', function(req, res){
 
 /////////   SIGN IN   ///////////
 app.get('/signIn', function(req,res){
-    res.sendFile(__dirname + '/signIn.html')
+    res.send(layout.renderLoginPage())
 })
 app.post('/signIn', function(req, res) {
     User.findOne({
@@ -195,6 +183,7 @@ app.post('/signIn', function(req, res) {
 
 
 app.post('/voteContent', function(req,res) {
+    console.log('TESTING TESTING' + JSON.stringify(req.body))
     UpVote.findOne({
         where: {
             userId: req.loggedInUser.id,
