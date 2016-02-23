@@ -1,4 +1,5 @@
 var React = require('react');
+var Nav = require('./react-nav');
 
 function renderComment(comment, n) {
     var upvote = "/tinygreyupvote.ico";
@@ -39,21 +40,10 @@ function renderComment(comment, n) {
 }
 
 function Comments(user, content, comments){
-    var header;
+    var nav;
     if (user)
-    header = (
-    <div>
-      <h4 id="welcomeuser">Welcome <span id="user">{user.username}</span></h4>
-      <a href="/Logout" className="link">Logout</a>
-      <a href="/CreateContent" className="link">Create Content</a>
-    </div>);
-
-    else header = (
-    <div>
-      <a href="/SignUp" className="link">Sign Up</a>
-      <a href="/Login" className="link">Login</a>
-    </div>
-    );
+    nav = Nav(user.username, []);
+    else nav = Nav(undefined, []);
 
     var commentAction = "/comment/" + content.id;
 
@@ -67,9 +57,7 @@ function Comments(user, content, comments){
             </head>
             <body>
 
-              <nav>
-                {header}
-              </nav>
+              {nav}
 
               <main>
               <div id="contents">

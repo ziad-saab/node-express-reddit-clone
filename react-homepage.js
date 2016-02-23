@@ -80,12 +80,8 @@ function HomePage(user, contents, type, page) {
     <body>
       {nav}
       <main id="contents">
-        <header>
-          <h1 id="heading">List of contents</h1>
-        </header>
         <ul className="contents-list">
           <span id="contentList">
-            <hr/>
             {posts}
             </span>
         </ul>
