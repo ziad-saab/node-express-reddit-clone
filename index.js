@@ -1,3 +1,4 @@
+require('babel-register');
 var Sequelize = require('sequelize');
 var mysql = require('mysql');
 var express = require('express');
@@ -6,6 +7,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var bcrypt = require('bcrypt');
 var secureRandom = require('secure-random');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -90,6 +92,8 @@ Content.hasMany(Vote); //needed to add the contentId in Vote
 User.hasMany(Vote);
 
 
+var renderPage = require("./rendering");
+
 
 function newestList(callback) {
     Content.findAll({
@@ -131,47 +135,58 @@ function topList(callback) {
         limit: 25,
         subQuery: false
     }).then(function(result) {
-        console.log(JSON.stringify(result, 0, 2))
+     
         callback(result);
     });
 }
 
-function homepageHtml(listResults) {
-        var html = `<div>
-                      <a href="/">Home</a>
-                      <a href="/login">Login</a>
-                      <a href="/signup">Signup</a>
-                      <a href="/createContent">Create a post</a>
-                    </div>
-                    <div id="contents"><h1>List of contents</h1>
-                    <div>
-                      <a href="/">Top</a>
-                      <a href="/newest">Newest</a>
-                    </div>
-                    <ul class="contents-list">`
-    listResults.forEach(function(item) {
-        html += `<li class="content-item"><h2 class="content-item__title"><a href="${item.url}">${item.title}</a></h2><p>Created by ${item.user.username}</p></li>
-                            <form action="/voteContent" method="post">
-                                <input type="hidden" name="upVote" value="true">
-                                <input type="hidden" name="contentId" value="${item.id}">
-                                    <button type="submit">upvote this</button>
-                            </form>
-                            <div><a>${item.voteScore ? item.voteScore : 0}</a></div>
-                            <form action="/voteContent" method="post">
-                                  <input type="hidden" name="upVote" value="false">
-                                  <input type="hidden" name="contentId" value="${item.id}">
-                                    <button type="submit">downvote this</button>
-                            </form>
-                            `
-    });
-    html += '</ul></div>';
-    return html;
-}
+// function homepageHtml(listResults) {
+//         var html = `<div>
+//                       <a href="/">Home</a>
+//                       <a href="/login">Login</a>
+//                       <a href="/signup">Signup</a>
+//                       <a href="/createContent">Create a post</a>
+//                     </div>
+//                     <div id="contents"><h1>List of contents</h1>
+//                     <div>
+//                       <a href="/">Top</a>
+//                       <a href="/newest">Newest</a>
+//                     </div>
+//                     <ul class="contents-list">`
+//     listResults.forEach(function(item) {
+//         html += `<li class="content-item"><h2 class="content-item__title"><a href="${item.url}">${item.title}</a></h2><p>Created by ${item.user.username}</p></li>
+//                             
+
+//                              <form action="/voteContent" method="post">
+//                                 <input type="hidden" name="upVote" value="true">
+//                                 <input type="hidden" name="contentId" value="${item.id}">
+//                                     <button type="submit">upvote this</button>
+//                             </form>
+//                             <div><a>${item.voteScore ? item.voteScore : 0}</a></div>
+//                             <form action="/voteContent" method="post">
+//                                   <input type="hidden" name="upVote" value="false">
+//                                   <input type="hidden" name="contentId" value="${item.id}">
+//                                     <button type="submit">downvote this</button>
+//                             </form>
+//                             `
+//     });
+//     html += '</ul></div>';
+//     return html;
+// }
+
+
+// app.get('/', function(req, res){
+//     topList(function(result){
+//         var html = homepageHtml(result);
+//         res.send(html);
+//     });
+// });
+
 
 
 app.get('/', function(req, res){
     topList(function(result){
-        var html = homepageHtml(result);
+        var html = renderPage.renderHome(result);
         res.send(html);
     });
 });
@@ -184,22 +199,28 @@ app.get('/newest', function(req, res){
 });
 
 
-app.get('/signup', function(request, response) {
-  // code to display signup form
-  var options = {
-    root: __dirname
-}
-var fileName = 'signup-form.html'
+// app.get('/signup', function(request, response) {
+//   // code to display signup form
+//   var options = {
+//     root: __dirname
+// }
+// var fileName = 'signup-form.html'
 
-response.sendFile(fileName, options, function (err){
-  if (err) {
-      console.log(err);
-      response.status(err.status).end();
-    }
-    else {
-      console.log('Sent:', fileName);
-    }
-})
+// response.sendFile(fileName, options, function (err){
+//   if (err) {
+//       console.log(err);
+//       response.status(err.status).end();
+//     }
+//     else {
+//       console.log('Sent:', fileName);
+//     }
+// })
+// });
+
+app.get('/signup', function(request, response) {
+    var html = renderPage.renderSignup({error: request.query.error});
+    response.send(html);
+    
 });
 
 
@@ -214,7 +235,7 @@ app.post('/signup', function(request, response) {
     //     response.send('Please enter a username.')
     // }
     if (username.length < 4) {
-        response.send('Username must contain at least 3 characters.<br> <a href="/signup"><strong>Click Here</strong></a> to try again.');
+        response.redirect('/signup?error=Username must contain at least 3 characters');
     }
     else {
 
@@ -233,7 +254,7 @@ app.post('/signup', function(request, response) {
                 response.redirect(303, '/login');
             }
             else {
-                response.send('The username [ ' + username + ' ] already exists. <br> <a href="/signup"><strong>Click Here</strong></a> to try a different one.');
+                response.redirect('/signup?error=The username ${username} already exists');
             };
 
         });
@@ -241,24 +262,58 @@ app.post('/signup', function(request, response) {
 });
 
 
+// References an external html file
+// app.get('/login', function(request, response) {
+//     // code to display login form
+//     var options = {
+//         root: __dirname
+//     }
+//     var fileName = 'login-form.html'
+
+//     response.sendFile(fileName, options, function(err) {
+//         if (err) {
+//             console.log(err);
+//             response.status(err.status).end();
+//         }
+//         else {
+//             console.log('Sent:', fileName);
+//         }
+//     })
+// });
+
+
+// // Html is built in the get parameter
+// app.get('/login', function(request, response) {
+    
+//   var maybeError = request.query.error;
+
+//   var html = `<form action='/login' method='post'>`;
+//   if (maybeError) {
+//     html += `<div>${maybeError}</div>`;
+//   }
+//   else {
+//   html += `<div>
+//                 <input type='text' name='username'></div>
+//             <div>
+//                 <input type="password" name="password" placeholder="Enter your password">
+//             </div>
+//                 <button type="submit">Sign Up!</button>`;
+//     html += `</form>`;
+//   //...
+//   // and then finally
+//   }
+//   response.send(html);
+// })
+
+
+
+
 
 app.get('/login', function(request, response) {
-    // code to display login form
-    var options = {
-        root: __dirname
-    }
-    var fileName = 'login-form.html'
-
-    response.sendFile(fileName, options, function(err) {
-        if (err) {
-            console.log(err);
-            response.status(err.status).end();
-        }
-        else {
-            console.log('Sent:', fileName);
-        }
-    })
+    var html = renderPage.renderLogin({error: request.query.error});
+    response.send(html);
 });
+
 
 
 
@@ -276,7 +331,7 @@ app.post('/login', function(request, response) {
         function(user) {
             if (!user) {
                 // here we would use response.send instead :)
-                response.send('Username or Password incorrect');
+                response.redirect('/login?error=Username or Password incorrect');
                     //   console.log('username or password incorrect');
             }
             else {
@@ -298,7 +353,7 @@ app.post('/login', function(request, response) {
                     
                 }
                 else {
-                    response.send('username or password incorrect.<br><a href="/login"><strong>Click Here</strong></a> to try again.');
+                    response.redirect('/login?error=Username or Password incorrect');
                 }
             }
         }
@@ -308,33 +363,41 @@ app.post('/login', function(request, response) {
 
 
 
-app.get('/createContent', function(request, response, next) {
-    var options = {
-        root: __dirname
-    }
-    var fileName = 'content-form.html'
-
-    response.sendFile(fileName, options, function(err) {
-        if (err) {
-            console.log(err);
-            response.status(err.status).end();
-        }
-        else {
-            console.log('Sent:', fileName);
-        }
-    })
-
+app.get('/createContent', function(request, response) {
+  var html = renderPage.renderContent({error: request.query.error});
+    response.send(html);
 });
 
 
+// app.post('/createContent', function(request, response) {
+
+//     if (!request.loggedInUser) {
+//         // HTTP status code 401 means Unauthorized
+//         response.status(401).send('You must be logged in to create content!<br>Login <a href="/login">HERE</a>');
+//     } else if (request.body.title.length < 4 || request.body.url.length < 4) {
+//         response.send('Username must contain at least 3 characters.<br> <a href="/signup"><strong>Click Here</strong></a> to try again.');
+//     }
+//     else {
+        
+//     // response.send('derp')
+//         request.loggedInUser.createContent({
+//             title: request.body.title,
+//             url: request.body.url
+
+//         }).then(
+//             function(content) {
+//                 response.redirect('/');
+//             });
+//     }
+// });
 
 app.post('/createContent', function(request, response) {
 
     if (!request.loggedInUser) {
         // HTTP status code 401 means Unauthorized
-        response.status(401).send('You must be logged in to create content!<br>Login <a href="/login">HERE</a>');
-    } else if (request.body.title.length < 4 || request.body.url.length < 4) {
-        response.send('Username must contain at least 3 characters.<br> <a href="/signup"><strong>Click Here</strong></a> to try again.');
+        response.redirect('/createContent?error=You must be logged in to create content!');
+    } else if (request.body.title.length < 5 || request.body.url.length < 5) {
+        response.redirect('/createContent?error=Title and url must contain at least 5 characters');
     }
     else {
         
@@ -349,7 +412,6 @@ app.post('/createContent', function(request, response) {
             });
     }
 });
-
 
 
 
