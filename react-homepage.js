@@ -30,9 +30,11 @@ function Post(content) {
           <a className="contentpost" href={content.url}>{content.title}</a>
         </div>
         <div className="contentMetaData">
-          <a className="metatext">Post by {content.submitter}</a>
-          <a className="metatext">{content.createdAt.toString()}</a>
-          <a className="metatext" href={comments}>Comments</a>
+          <div className="submissionInfo">
+            <a className="metatext">Post by {content.submitter}</a>
+            <a className="metatext">{content.createdAt.toString()}</a>
+          </div>
+          <a className="metalink" href={comments}>Comments</a>
         </div>
       </div>
       </div>
@@ -80,7 +82,7 @@ function HomePage(user, contents, type, page) {
   		</div>
 		</section>
   );
-  
+
   return (
 
     <html>

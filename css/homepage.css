@@ -101,6 +101,7 @@
   display:flex;
   justify-content: flex-start;
   align-content: center;
+  margin: 10px 0px;
 }
 .contentVotescore {
   display:flex;
@@ -121,7 +122,7 @@
 
 .contentMetaData {
   display:flex;
-  justify-content: flex-end;
+  flex-direction: column;
 }
 .contents {
   display: flex;
@@ -142,15 +143,16 @@
 .contentButton:hover {
   background-color: #00cc00;
 }
-.metatext {
+.metatext, .metalink {
   color: #808080;
-  font-weight: bold;
-  padding-left: 20px;
+  padding: 0px 10px;
   font-size: 12px;
-  padding-left: 10px;
-  padding-right: 10px;
+  text-decoration: none;
 }
-.metatext:hover, .metatext:active {
+.metalink {
+  font-weight: bold;
+}
+.metalink:hover {
   text-decoration: underline;
 }
 
