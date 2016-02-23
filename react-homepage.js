@@ -2,7 +2,7 @@
 var React = require('react');
 var Nav = require('./react-nav');
 
-function Post(content, sessionId) {
+function Post(content) {
     var upvote = "/grey-upvote.png";
     var upvotelink = "/upvote/" + content.id;
     var downvote = "/grey-downvote.png";
@@ -17,9 +17,9 @@ function Post(content, sessionId) {
       <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
       <div className="contentRow">
       <div className="contentVotescore">
-        <input className="upvote" data-content={content.id} data-session={sessionId} type="image" src={upvote}/>
+        <input className="upvote" data-content={content.id} type="image" src={upvote}/>
         <p className="votescore">{content.votescore}</p>
-        <input className="downvote" data-content={content.id} data-session={sessionId} type="image" src={downvote}/>
+        <input className="downvote" data-content={content.id} type="image" src={downvote}/>
       </div>
       <div className="contentContent">
         <div className="contentTitle">
@@ -50,12 +50,10 @@ function getTablist(type) {
   });
 }
 
-function HomePage(user, contents, type, page, sessionId) {
+function HomePage(user, contents, type, page) {
 
   var nav = Nav(user, getTablist(type));
-  var posts = contents.map(function(content) {
-    return Post(content, sessionId);
-  });
+  var posts = contents.map(Post);
   var pages;
   var next = page + 1;
   var previous = page - 1;
