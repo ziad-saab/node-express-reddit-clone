@@ -46,7 +46,7 @@ app.get('/sort/:order/:page', function(req, res){
   .then(function(response) {
     var username;
     try {username = response.User.username} catch(e) {}
-    var htmlStructure = HomePage(username, response.Content, req.params.order, page);
+    var htmlStructure = HomePage(username, response.Content, req.params.order, page, sessionId);
     var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
     res.send('<!doctype html>' + html);
   });

@@ -26,8 +26,8 @@
 }
 
 .votescore{
-    margin-top: -3px;
-    margin-bottom: -1px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     font-weight: bold;
     color: grey;
     font-size: 15px;

@@ -2,7 +2,7 @@
 var React = require('react');
 var Nav = require('./react-nav');
 
-function Post(content) {
+function Post(content, sessionId) {
     var upvote = "/grey-upvote.png";
     var upvotelink = "/upvote/" + content.id;
     var downvote = "/grey-downvote.png";
@@ -17,13 +17,9 @@ function Post(content) {
       <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
       <div className="contentRow">
       <div className="contentVotescore">
-        <form action={upvotelink} method="post">
-          <input type="image" src={upvote}/>
-        </form>
+        <input className="upvote" data-content={content.id} data-session={sessionId} type="image" src={upvote}/>
         <p className="votescore">{content.votescore}</p>
-        <form action={downvotelink} method="post">
-          <input type="image" src={downvote}/>
-        </form>
+        <input className="downvote" data-content={content.id} data-session={sessionId} type="image" src={downvote}/>
       </div>
       <div className="contentContent">
         <div className="contentTitle">
@@ -54,10 +50,12 @@ function getTablist(type) {
   });
 }
 
-function HomePage(user, contents, type, page) {
+function HomePage(user, contents, type, page, sessionId) {
 
   var nav = Nav(user, getTablist(type));
-  var posts = contents.map(Post);
+  var posts = contents.map(function(content) {
+    return Post(content, sessionId);
+  });
   var pages;
   var next = page + 1;
   var previous = page - 1;
@@ -89,6 +87,8 @@ function HomePage(user, contents, type, page) {
     <head>
       <meta charSet="utf-8"/>
       <link href="/homepage.css" rel="stylesheet" type="text/css"/>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+      <script src="/logvote.js"></script>
     </head>
     <body>
       {nav}
