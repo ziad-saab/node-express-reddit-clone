@@ -90,12 +90,15 @@ function HomePage(user, contents, type, page) {
     </head>
     <body>
       {nav}
-      <main id="contents">
+      <main className="contents">
         <ul className="contents-list">
           <span id="contentList">
             {posts}
             </span>
         </ul>
+        <div className="sidebar">
+          <a href="/CreateContent" className="contentButton">Submit Link</a>
+        </div>
       </main>
 
       <footer id="pages">

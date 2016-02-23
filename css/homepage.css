@@ -123,7 +123,25 @@
   display:flex;
   justify-content: flex-end;
 }
-
+.contents {
+  display: flex;
+  justify-content: space-between;
+}
+.contentButton {
+  display: inline-block;
+  background-color: #ff9900;
+  color: white;
+  padding: 5px 60px;
+  margin-top: 50px;
+  font-family: "Arial", Serif;
+  font-weight: bold;
+  font-size: 30px;
+  text-decoration: none;
+  border-radius: 2px;
+}
+.contentButton:hover {
+  background-color: #00cc00;
+}
 .metatext {
   color: #808080;
   font-weight: bold;

@@ -9,7 +9,6 @@ function Nav(user, tablist) {
     <div className="userbar">
       <a className="userbarElement">{user}</a>
       <a href="/Logout" className="userbarElement elementLink">Logout</a>
-      <a href="/CreateContent" className="userbarElement elementLink">Create Content</a>
     </div>);
 
   else userbar = (
