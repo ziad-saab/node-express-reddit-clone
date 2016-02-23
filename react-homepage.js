@@ -1,5 +1,6 @@
 
 var React = require('react');
+var Nav = require('./react-nav');
 
 function Post(content) {
     var upvote = "/tinygreyupvote.ico";
@@ -13,49 +14,47 @@ function Post(content) {
       downvote = "/tinybluedownvote.ico";
     }
   return (
-      <li style={{"listStyle": "none"}} className="content-item">
-        <hr/>
-        <table>
-        <tbody>
-          <tr>
-            <form action={upvotelink} method="post">
-              <td><input type="image" src={upvote}/></td>
-            </form>
-            <td><p className="createdby">Post by <span className="usercreater">{content.submitter}</span></p></td>
-          </tr>
-          <tr>
-            <td><p className="votescore">{content.votescore}</p></td>
-            <td><a className="contentpost" href={content.url}>{content.title}</a></td>
-          </tr>
-          <tr>
-            <form action={downvotelink} method="post">
-              <td><input type="image" src={downvote}/></td>
-            </form>
-            <td><a className="comments" href={comments}>Comments</a></td>
-          </tr>
-          </tbody>
-        </table>
+      <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
+      <div className="contentRow">
+      <div className="contentVotescore">
+        <form action={upvotelink} method="post">
+          <input type="image" src={upvote}/>
+        </form>
+        <p className="votescore">{content.votescore}</p>
+        <form action={downvotelink} method="post">
+          <input type="image" src={downvote}/>
+        </form>
+      </div>
+      <div className="contentContent">
+        <div className="contentTitle">
+          <a className="contentpost" href={content.url}>{content.title}</a>
+        </div>
+        <div className="contentMetaData">
+          <a className="metatext">Post by {content.submitter}</a>
+          <a className="metatext">{content.createdAt.toString()}</a>
+          <a className="metatext" href={comments}>Comments</a>
+        </div>
+      </div>
+      </div>
     </li>
   )
 }
 
+var tabs = ['hot', 'latest', 'top', 'controversial']
+
+function getTablist(type) {
+  return tabs.map(function(tab) {
+    return {
+      name: tab,
+      url: '/sort/' + tab + '/0',
+      selected: tab === type
+    }
+  });
+}
+
 function HomePage(user, contents, type, page) {
 
-  var header;
-  if (user)
-  header = (
-    <div>
-      <h4 id="welcomeuser">Welcome <span id="user">{user}</span></h4>
-      <a href="/Logout" className="link">Logout</a>
-      <a href="/CreateContent" className="link">Create Content</a>
-    </div>);
-
-  else header = (
-    <div>
-      <a href="/SignUp" className="link">Sign Up</a>
-      <a href="/Login" className="link">Login</a>
-    </div>
-  );
+  var nav = Nav(user, getTablist(type));
   var posts = contents.map(Post);
   var pages;
   var next = page + 1;
@@ -74,21 +73,12 @@ function HomePage(user, contents, type, page) {
   return (
 
     <html>
-    <header>
+    <head>
       <meta charSet="utf-8"/>
       <link href="/homepage.css" rel="stylesheet" type="text/css"/>
-    </header>
+    </head>
     <body>
-      <nav>
-      {header}
-        <div id="orderbylinks">
-          <a href="/sort/hot" className="getlink">Hot</a>
-          <a href="/sort/controversial" className="getlink">Controversial</a>
-          <a href="/sort/top" className="getlink">Top</a>
-          <a href="/sort/latest" className="getlink">Latest</a>
-        </div>
-      </nav>
-
+      {nav}
       <main id="contents">
         <header>
           <h1 id="heading">List of contents</h1>
