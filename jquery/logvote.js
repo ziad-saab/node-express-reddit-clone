@@ -9,8 +9,16 @@ $(document).ready(function() {
          data: {contentId: contentId},
       }).success(function (data){
         console.log('successful upvote');
+        var downvote = elem.parent().find(".downvote");
+        var votescore = elem.parent().find(".votescore");
+        var score = parseInt(votescore.text()) + 1;
+        if (downvote.attr("src") === "/red-downvote.png")
+        score ++;
+        if (elem.attr("src") === "/green-upvote.png")
+        score --;
         elem.attr( "src", "/green-upvote.png");
         elem.parent().find(".downvote").attr("src", "/grey-downvote.png");
+        votescore.text(score);
       });
   });
   $(".downvote").click(function() {
@@ -22,8 +30,16 @@ $(document).ready(function() {
          data: {contentId: contentId},
       }).success(function (data){
         console.log('successful downvote');
+        var upvote = elem.parent().find(".upvote");
+        var votescore = elem.parent().find(".votescore");
+        var score = parseInt(votescore.text()) - 1;
+        if (elem.attr("src") === "/red-downvote.png")
+        score ++;
+        if (upvote.attr("src") === "/green-upvote.png")
+        score --;
         elem.attr("src", "/red-downvote.png");
-        elem.parent().find(".upvote").attr("src", "/grey-upvote.png");
+        upvote.attr("src", "/grey-upvote.png");
+        votescore.text(score);
       });
   });
 });
