@@ -1,18 +1,21 @@
-
 var React = require('react');
+var Nav = require('./react-nav');
 
 function CreateContent(error) {
+  var nav = Nav('jimothy', []);
   return (
     <html>
         <head>
             <meta charSet="utf-8"/>
             <link href="style.css" rel="stylesheet" type="text/css"/>
+            <link href="nav.css" rel="stylesheet" type="text/css"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <link rel="stylesheet" href="bootstrap.css" type="text/css"/>
             <script src="jquery.js"></script>
             <script src="bootstrap.js"></script>
         </head>
         <body>
+          {nav}
             <div className='form'>
             <div className='formheading'>Post Content</div>
               <div className='container'>

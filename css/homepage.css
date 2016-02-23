@@ -34,7 +34,7 @@
 
 .contentpost:link {
     text-decoration: none;
-    color: #2d2db9;
+    color: #ff9900;
     font-weight: bold;
     font-size: 20px;
     font-family: ;
@@ -43,7 +43,7 @@
 
 .contentpost:visited {
     text-decoration: none;
-    color: #9898e6;
+    color: #ffc266;
     font-weight: bold;
     font-size: 20px;
     padding-left: 30px;
