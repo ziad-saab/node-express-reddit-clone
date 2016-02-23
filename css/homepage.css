@@ -130,6 +130,8 @@
 }
 .contentButton {
   display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
   background-color: #ff9900;
   color: white;
   padding: 5px 60px;
