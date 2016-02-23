@@ -36,7 +36,6 @@
   align-items: flex-end;
 }
 .tab, .tabselected {
-  background-color: white;
   margin-left: 5px;
   margin-bottom: -2px;
   padding: 3px;

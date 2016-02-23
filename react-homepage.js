@@ -62,14 +62,25 @@ function HomePage(user, contents, type, page) {
   var nextlink = "/sort/" + type + "/" + next;
   var prevlink = "/sort/" + type + "/" + previous;
   if (page === 0)
-  pages = <li><a href={nextlink}>Next»</a></li>;
+  pages = (
+    <section id="pagenav">
+      <div className="button-wrapper">
+  				<a className="pagebutton tangerine" href={nextlink}>Next</a>
+  		</div>
+  	</section>
+    );
 
   else pages = (
-    <div>
-      <li><a href={prevlink}>«Previous</a></li>
-      <li><a href={nextlink}>Next»</a></li>
-    </div>
+    <section id="pagenav">
+      <div className="button-wrapper">
+  				<a className="pagebutton tangerine" href={prevlink}>Previous</a>
+  		</div>
+  		<div className="button-wrapper">
+  				<a className="pagebutton tangerine" href={nextlink}>Next</a>
+  		</div>
+		</section>
   );
+  
   return (
 
     <html>
@@ -88,9 +99,7 @@ function HomePage(user, contents, type, page) {
       </main>
 
       <footer id="pages">
-        <ul className="pagination">
         {pages}
-        </ul>
       </footer>
     </body>
     </html>
