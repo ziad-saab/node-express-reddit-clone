@@ -38,6 +38,7 @@ function checkLoginToken(request, response, next) {
 }
 
 //Middlware
+app.use(express.static('css'))
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -45,38 +46,8 @@ app.use(cookieParser());
 app.use(checkLoginToken);
 
 
+
 //Homepage
-
-//Displays list of content on homepage
-function buildHTMLlist(array) {
-    var html = `<div id="contents">
-      <h1>List of contents</h1>
-      <ul class="contents-list">`
-    array.forEach(function(item) {
-        item = item.toJSON();
-        html += `<li class="content-item">
-         <h2 class="content-item__title">
-         <p>${item.voteScore ? item.voteScore : 0}</p>
-         <a href=${item.url}>${item.title}</a>
-          </h2>
-          <p> ${item.user.username}</p>
-        <form action="/voteContent" method="post">
-        <input type="hidden" name="upVote" value="true">
-        <input type="hidden" name="contentId" value="${item.id}">
-        <button type="submit">Upvote this!</button>
-        </form>
-        <form action="/voteContent" method="post">
-        <input type="hidden" name="upVote" value="false">
-        <input type="hidden" name="contentId" value="${item.id}">
-        <button type="submit">Downvote this!</button>
-        </form>
-        </li>`
-    })
-    html += `</ul> 
-        </div>`
-    return html;
-}
-
 
 app.get('/', function(request, response) {
     Models.contents.findAll({
