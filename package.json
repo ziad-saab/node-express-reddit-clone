@@ -1,0 +1,35 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "In a previous workshop, we set out to build a Reddit clone from the data perspective. Finishing this workshop gave us many functions that we'll still be able to use for this one like `createNewUser`, `createNewContent` and `voteOnContent`.",
+  "main": "index.js",
+  "dependencies": {
+    "babel-preset-es2015": "^6.5.0",
+    "babel-register": "^6.5.2",
+    "bcrypt": "^0.8.5",
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
+    "install": "^0.4.4",
+    "mysql": "^2.10.2",
+    "nodemon": "^1.8.1",
+    "npm": "^3.7.3",
+    "react-dom": "^0.14.7",
+    "secure-random": "^1.1.1",
+    "sequelize": "^3.19.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Codertaker/node-express-sequelize-reddit-clone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Codertaker/node-express-sequelize-reddit-clone/issues"
+  },
+  "homepage": "https://github.com/Codertaker/node-express-sequelize-reddit-clone#readme"
+}

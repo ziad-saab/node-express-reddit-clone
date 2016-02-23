@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
         url: {
             type: DataTypes.STRING,
             validate: {
-                len: [1, 500]
+                len: [5, 500]
             }
         },
         title: {

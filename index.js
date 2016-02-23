@@ -1,42 +1,56 @@
+require('babel-register');
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var db = require("./db.js");
 var cookieParser = require("cookie-parser");
+var mw = require("./midWare.js")(db);
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+var rl = require("./rendering.jsx");
+console.log(rl);
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////// APP GET SECTION (BELOW) //////////////////////////////////
 
 // get page of signup
 app.get("/signup", function(req, res) {
-    var options = {
-        root: __dirname
-    };
-    res.sendFile("./signup.html", options);
+    res.send(rl.renderSignup({data: ""}));
 });
 
 // get page of login
 app.get("/login", function(req, res) {
-    var options = {
-        root: __dirname
-    };
-    res.sendFile("./login.html", options);
+    res.send(rl.renderLogin({data: ""}));
 });
 
 // get page of homepage
 app.get("/homepage", function(req, res) {
-    console.log(req.cookies);
-    res.clearCookie("loginToken");
-    res.send("this is the homepage!!");
+    db.content.findAll({
+        include:[ {model: db.user}, {model: db.vote}],
+        group: 'Content.id',
+        attributes: {
+            include: [
+            [db.sequelize.fn('SUM', db.sequelize.col('Votes.upDown')), 'voteScore']
+            ]
+        },
+        order: [db.Sequelize.literal('voteScore DESC')],
+        limit: 25,
+        subQuery: false
+    }).then(function (allPosts) {
+        res.send(rl.homePage(allPosts));
+    });
 });
 
 // get page of createPost
 app.get("/createPost", function(req, res) {
-    var options = {
-        root: __dirname
-    };
-    res.sendFile("./createPost.html", options);
+    res.send(rl.renderCreatePost({data: ""}));
 });
+
+/////////////////////////// APP GET SECTION (ABOVE) ///////////////////////////////////
+
+/////////////////////////// APP POST SECTION (BELOW) //////////////////////////////////
 
 // allowing user to create username and password.
 app.post("/signup", function(req, res) {
@@ -59,25 +73,70 @@ app.post("/signup", function(req, res) {
 app.post("/login", function(req, res) {
     db.user.authentication(req.body).then(function(user) {
         if(user) {
-            res.cookie("loginToken", "we got token bitches" );
-            res.redirect("/homepage");
+            var token = user.genToken();
+            user.createSession({token: token}).then(function() {
+                res.cookie("loginToken", token);
+                res.redirect("/createPost");       
+            });
         }
     }, function (err) {
-        res.send(err);
+        var data = {
+            error: err
+        };
+        res.send(rl(data));
     });
 });
 
 // allowing user to create posts.
-app.post("/createPost", function(req, res) {
+app.post("/createPost", mw.checkLoginToken, function(req, res) {
     var title = (req.body.title);
     var url = (req.body.url);
-    db.user.create({
-        title: title,
-        url: url
-    }).then(function() {
-        res.redirect("/homepage");
-    });
+    if (!req.loggedInUser) {
+        // HTTP status code 401 means Unauthorized
+        res.status(401).send('<h1>You must be logged in to create content!</h1>');
+    }
+    else {
+        req.loggedInUser.createContent({
+            title: title,
+            url: url
+        }).then(function() {
+            res.redirect("/homepage");
+        });
+    }
 });
+
+// allowing users to vote
+app.post("/voteContent", mw.checkLoginToken, function(req, res) {
+    console.log(req.loggedInUser);
+    console.log(req.body);
+    db.vote.findOne({
+        where: {
+            UserId: req.loggedInUser.id, // This should be the currently logged in user's ID
+            ContentId: req.body.contentId // This should be the ID of the content we want to vote on
+        }
+    }).then(
+        function(vote) {
+            if (!vote) {
+                // here we didn't find a vote so let's add one. Notice Vote with capital V, the model
+                return db.vote.create({
+                    UserId: req.loggedInUser.id, // Received from the loggedIn middleware
+                    ContentId: req.body.contentId, // Received from the user's form submit
+                    upDown: req.body.upVote // Received from the user's form submit
+                });
+            }
+            else {
+                // user already voted, perhaps we need to change the direction of the vote?
+                return vote.update({
+                    upDown: !vote.get("upDown") // Received from the user's form submit
+                });
+            }
+        }
+    );
+    res.redirect("/homepage");
+});
+
+/////////////////////////// APP POST SECTION (ABOVE) //////////////////////////////////
+
 
 db.sequelize.sync().then(function() {
     // Boilerplate code to start up the web server
@@ -86,4 +145,5 @@ db.sequelize.sync().then(function() {
         var port = server.address().port;
         console.log("Your application is listening at http://%s:%s", host, port);
     });
-})
+});
+

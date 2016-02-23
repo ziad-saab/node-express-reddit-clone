@@ -1,4 +1,5 @@
 var bcrypt = require("bcrypt");
+var secureRandom = require("secure-random");
 
 module.exports = function(sequelize, DataTypes) {
     var user = sequelize.define("User", {
@@ -19,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
                 len: [6, 25]
             },
             set: function(value) {
-                console.log(this);
+         
                 var hashedPassword = bcrypt.hashSync(value, 10);
                 //this refer to the whole model of user.
                 this.setDataValue("hashedPW", hashedPassword);
@@ -29,24 +30,32 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, {
         classMethods: {
-                authentication: function(data) {
-                    return new Promise(function(resolved, rejected) {
-                        user.findOne({
-                            where: {
-                                userName: data.username
-                            }
-                        }).then(function(user) {
-                            if (!user || !bcrypt.compareSync(data.password, user.get("hashedPW"))) {
-                                return rejected("Unauthorised!");
-                            } else {
-                                return resolved(user);
-                            }
-                        });
+            authentication: function(data) {
+                return new Promise(function(resolved, rejected) {
+                    user.findOne({
+                        where: {
+                            userName: data.username
+                        }
+                    }).then(function(user) {
+                        if (!user || !bcrypt.compareSync(data.password, user.get("hashedPW"))) {
+                            return rejected("Username and/or password is invalid. Please be honest and write accurate your shit!!");
+                        }
+                        else {
+                            return resolved(user);
+                        }
                     });
-                }
+                });
             }
+        },
+        instanceMethods: {
+            genToken: function() {
+                // create an array with 40 random numbers and maps through them to convert to string then join to make one string of 40 characters.
+                var result = secureRandom.randomArray(40).map(function(number) {
+                    return number.toString(16);
+                }).join("");
+                return result;
+            }
+        }
     });
-    
     return user;
 };
-
