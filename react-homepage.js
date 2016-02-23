@@ -3,15 +3,15 @@ var React = require('react');
 var Nav = require('./react-nav');
 
 function Post(content) {
-    var upvote = "/tinygreyupvote.ico";
+    var upvote = "/grey-upvote.png";
     var upvotelink = "/upvote/" + content.id;
-    var downvote = "/tinygreydownvote.ico";
+    var downvote = "/grey-downvote.png";
     var downvotelink = "/downvote/" + content.id;
     var comments = "/link/" + content.id + "/comments";
     if (content.upvote === 1) {
-      upvote = "/tinyredupvote.ico";
+      upvote = "/green-upvote.png";
     } else if (content.upvote === 0){
-      downvote = "/tinybluedownvote.ico";
+      downvote = "/red-downvote.png";
     }
   return (
       <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
