@@ -57,8 +57,6 @@ function Comments(user, content, comments){
 
     var commentAction = "/comment/" + content.id;
 
-    var commentsList = comments.forEach(renderComment, 0);
-
     var comments = comments.map(renderComment);
 
     return (
@@ -84,7 +82,7 @@ function Comments(user, content, comments){
                     </form>
 
                     <article>
-                    {commentsList}
+                    {comments}
                     </article>
 
                   </span>
