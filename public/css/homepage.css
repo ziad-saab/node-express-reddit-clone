@@ -238,7 +238,7 @@ body {
     justify-content: space-around;
 }
 
-.superbox{
+.popbox{
     float: left;
     position: absolute;
     left: 50%;
