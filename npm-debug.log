@@ -1,0 +1,211 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/ubuntu/.nvm/versions/node/v4.2.4/bin/node',
+1 verbose cli   '/home/ubuntu/.nvm/versions/node/v4.2.4/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'react-font-awesome',
+1 verbose cli   '--save' ]
+2 info using npm@2.14.12
+3 info using node@v4.2.4
+4 verbose install initial load of /home/ubuntu/workspace/package.json
+5 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/babel-preset-es2015/package.json
+6 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/babel-preset-react/package.json
+7 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/babel-register/package.json
+8 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/bcrypt/package.json
+9 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/body-parser/package.json
+10 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/cookie-parser/package.json
+11 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/express/package.json
+12 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/font-awesome/package.json
+13 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/mysql/package.json
+14 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/nodemon/package.json
+15 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/react/package.json
+16 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/react-dom/package.json
+17 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/react-intl/package.json
+18 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/secure-random/package.json
+19 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/sequelize/package.json
+20 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/sha-1/package.json
+21 verbose readDependencies loading dependencies from /home/ubuntu/workspace/package.json
+22 silly cache add args [ 'react-font-awesome', null ]
+23 verbose cache add spec react-font-awesome
+24 silly cache add parsed spec Result {
+24 silly cache add   raw: 'react-font-awesome',
+24 silly cache add   scope: null,
+24 silly cache add   name: 'react-font-awesome',
+24 silly cache add   rawSpec: '',
+24 silly cache add   spec: 'latest',
+24 silly cache add   type: 'tag' }
+25 silly addNamed react-font-awesome@latest
+26 verbose addNamed "latest" is being treated as a dist-tag for react-font-awesome
+27 info addNameTag [ 'react-font-awesome', 'latest' ]
+28 silly mapToRegistry name react-font-awesome
+29 silly mapToRegistry using default registry
+30 silly mapToRegistry registry https://registry.npmjs.org/
+31 silly mapToRegistry uri https://registry.npmjs.org/react-font-awesome
+32 verbose addNameTag registry:https://registry.npmjs.org/react-font-awesome not in flight; fetching
+33 verbose request uri https://registry.npmjs.org/react-font-awesome
+34 verbose request no auth needed
+35 info attempt registry request try #1 at 3:34:20 AM
+36 verbose request id 82ed206f76ea2656
+37 http request GET https://registry.npmjs.org/react-font-awesome
+38 http 200 https://registry.npmjs.org/react-font-awesome
+39 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+39 verbose headers   etag: '"2KEFZLFMEQ1IZEHXEZC2XVSVE"',
+39 verbose headers   'content-type': 'application/json',
+39 verbose headers   'cache-control': 'max-age=300',
+39 verbose headers   'content-length': '5014',
+39 verbose headers   'accept-ranges': 'bytes',
+39 verbose headers   date: 'Wed, 24 Feb 2016 03:34:20 GMT',
+39 verbose headers   via: '1.1 varnish',
+39 verbose headers   age: '0',
+39 verbose headers   connection: 'keep-alive',
+39 verbose headers   'x-served-by': 'cache-ord1729-ORD',
+39 verbose headers   'x-cache': 'MISS',
+39 verbose headers   'x-cache-hits': '0',
+39 verbose headers   'x-timer': 'S1456284860.159618,VS0,VE160',
+39 verbose headers   vary: 'Accept' }
+40 silly get cb [ 200,
+40 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+40 silly get     etag: '"2KEFZLFMEQ1IZEHXEZC2XVSVE"',
+40 silly get     'content-type': 'application/json',
+40 silly get     'cache-control': 'max-age=300',
+40 silly get     'content-length': '5014',
+40 silly get     'accept-ranges': 'bytes',
+40 silly get     date: 'Wed, 24 Feb 2016 03:34:20 GMT',
+40 silly get     via: '1.1 varnish',
+40 silly get     age: '0',
+40 silly get     connection: 'keep-alive',
+40 silly get     'x-served-by': 'cache-ord1729-ORD',
+40 silly get     'x-cache': 'MISS',
+40 silly get     'x-cache-hits': '0',
+40 silly get     'x-timer': 'S1456284860.159618,VS0,VE160',
+40 silly get     vary: 'Accept' } ]
+41 verbose get saving react-font-awesome to /home/ubuntu/.npm/registry.npmjs.org/react-font-awesome/.cache.json
+42 silly addNameTag next cb for react-font-awesome with tag latest
+43 silly addNamed react-font-awesome@1.0.3
+44 verbose addNamed "1.0.3" is a plain semver version for react-font-awesome
+45 silly mapToRegistry name react-font-awesome
+46 silly mapToRegistry using default registry
+47 silly mapToRegistry registry https://registry.npmjs.org/
+48 silly mapToRegistry uri https://registry.npmjs.org/react-font-awesome
+49 verbose addRemoteTarball https://registry.npmjs.org/react-font-awesome/-/react-font-awesome-1.0.3.tgz not in flight; adding
+50 verbose addRemoteTarball [ 'https://registry.npmjs.org/react-font-awesome/-/react-font-awesome-1.0.3.tgz',
+50 verbose addRemoteTarball   'c4c67cc0038c2288d35f02d0a952d41ece2a16e0' ]
+51 info retry fetch attempt 1 at 3:34:20 AM
+52 info attempt registry request try #1 at 3:34:20 AM
+53 http fetch GET https://registry.npmjs.org/react-font-awesome/-/react-font-awesome-1.0.3.tgz
+54 http fetch 200 https://registry.npmjs.org/react-font-awesome/-/react-font-awesome-1.0.3.tgz
+55 silly fetchAndShaCheck shasum c4c67cc0038c2288d35f02d0a952d41ece2a16e0
+56 verbose addTmpTarball /tmp/npm-19861-6c0558c8/registry.npmjs.org/react-font-awesome/-/react-font-awesome-1.0.3.tgz not in flight; adding
+57 verbose addTmpTarball already have metadata; skipping unpack for react-font-awesome@1.0.3
+58 silly cache afterAdd react-font-awesome@1.0.3
+59 verbose afterAdd /home/ubuntu/.npm/react-font-awesome/1.0.3/package/package.json not in flight; writing
+60 verbose afterAdd /home/ubuntu/.npm/react-font-awesome/1.0.3/package/package.json written
+61 silly install resolved [ { name: 'react-font-awesome',
+61 silly install resolved     version: '1.0.3',
+61 silly install resolved     description: 'React components for awesome work with FontAwesome',
+61 silly install resolved     main: 'index.js',
+61 silly install resolved     scripts: { test: 'gulp test' },
+61 silly install resolved     repository:
+61 silly install resolved      { type: 'git',
+61 silly install resolved        url: 'git://github.com/Laiff/react-font-awesome.git' },
+61 silly install resolved     keywords:
+61 silly install resolved      [ 'react',
+61 silly install resolved        'font',
+61 silly install resolved        'font-awesome',
+61 silly install resolved        'components',
+61 silly install resolved        'icon',
+61 silly install resolved        'react-component' ],
+61 silly install resolved     author: { name: 'Andrew Laiff' },
+61 silly install resolved     license: 'MIT',
+61 silly install resolved     bugs: { url: 'https://github.com/Laiff/react-font-awesome/issues' },
+61 silly install resolved     peerDependencies: { react: '~0.11.2' },
+61 silly install resolved     _id: 'react-font-awesome@1.0.3',
+61 silly install resolved     dist:
+61 silly install resolved      { shasum: 'c4c67cc0038c2288d35f02d0a952d41ece2a16e0',
+61 silly install resolved        tarball: 'http://registry.npmjs.org/react-font-awesome/-/react-font-awesome-1.0.3.tgz' },
+61 silly install resolved     _from: 'react-font-awesome@latest',
+61 silly install resolved     _npmVersion: '1.3.10',
+61 silly install resolved     _npmUser: { name: 'laiff', email: 'q.laiff@gmail.com' },
+61 silly install resolved     maintainers: [ [Object] ],
+61 silly install resolved     directories: {},
+61 silly install resolved     _shasum: 'c4c67cc0038c2288d35f02d0a952d41ece2a16e0',
+61 silly install resolved     _resolved: 'https://registry.npmjs.org/react-font-awesome/-/react-font-awesome-1.0.3.tgz' } ]
+62 info install react-font-awesome@1.0.3 into /home/ubuntu/workspace
+63 info installOne react-font-awesome@1.0.3
+64 verbose installOne of react-font-awesome to /home/ubuntu/workspace not in flight; installing
+65 verbose lock using /home/ubuntu/.npm/_locks/react-font-awesome-c4c9c3b47a21551b.lock for /home/ubuntu/workspace/node_modules/react-font-awesome
+66 silly install write writing react-font-awesome 1.0.3 to /home/ubuntu/workspace/node_modules/react-font-awesome
+67 verbose unbuild node_modules/react-font-awesome
+68 silly gentlyRm /home/ubuntu/workspace/node_modules/react-font-awesome is being purged from base /home/ubuntu/workspace
+69 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/react-font-awesome
+70 verbose tar unpack /home/ubuntu/.npm/react-font-awesome/1.0.3/package.tgz
+71 verbose tar unpacking to /home/ubuntu/workspace/node_modules/react-font-awesome
+72 silly gentlyRm /home/ubuntu/workspace/node_modules/react-font-awesome is being purged
+73 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/react-font-awesome
+74 silly gunzTarPerm modes [ '755', '644' ]
+75 silly gunzTarPerm extractEntry package.json
+76 silly gunzTarPerm extractEntry .npmignore
+77 silly gunzTarPerm extractEntry README.md
+78 silly gunzTarPerm extractEntry LICENSE
+79 silly gunzTarPerm extractEntry index.js
+80 verbose write writing to /home/ubuntu/workspace/node_modules/react-font-awesome/package.json
+81 info preinstall react-font-awesome@1.0.3
+82 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/react-font-awesome/package.json
+83 silly prepareForInstallMany adding react@~0.11.2 from react-font-awesome peerDependencies
+84 warn peerDependencies The peer dependency react@~0.11.2 included from react-font-awesome will no
+85 warn peerDependencies longer be automatically installed to fulfill the peerDependency
+86 warn peerDependencies in npm 3+. Your application will need to depend on it explicitly.
+87 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/react-font-awesome/package.json
+88 silly install resolved []
+89 verbose about to build /home/ubuntu/workspace/node_modules/react-font-awesome
+90 info build /home/ubuntu/workspace/node_modules/react-font-awesome
+91 info linkStuff react-font-awesome@1.0.3
+92 silly linkStuff react-font-awesome@1.0.3 has /home/ubuntu/workspace/node_modules as its parent node_modules
+93 verbose linkBins react-font-awesome@1.0.3
+94 verbose linkMans react-font-awesome@1.0.3
+95 verbose rebuildBundles react-font-awesome@1.0.3
+96 info install react-font-awesome@1.0.3
+97 info postinstall react-font-awesome@1.0.3
+98 verbose readDependencies loading dependencies from /home/ubuntu/workspace/package.json
+99 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/babel-preset-es2015/package.json
+100 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/babel-preset-react/package.json
+101 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/babel-register/package.json
+102 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/bcrypt/package.json
+103 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/body-parser/package.json
+104 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/cookie-parser/package.json
+105 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/express/package.json
+106 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/font-awesome/package.json
+107 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/mysql/package.json
+108 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/nodemon/package.json
+109 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/react/package.json
+110 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/react-dom/package.json
+111 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/react-font-awesome/package.json
+112 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/react-intl/package.json
+113 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/secure-random/package.json
+114 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/sequelize/package.json
+115 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/sha-1/package.json
+116 verbose targetResolver reading package data from /home/ubuntu/workspace/node_modules/.bin/nodemon/package.json
+117 verbose already installed skipping react@~0.11.2 /home/ubuntu/workspace
+118 silly install resolved []
+119 verbose unlock done using /home/ubuntu/.npm/_locks/react-font-awesome-c4c9c3b47a21551b.lock for /home/ubuntu/workspace/node_modules/react-font-awesome
+120 verbose validateInstall loading /home/ubuntu/workspace/package.json for validation
+121 verbose stack Error: The package react@0.14.7 does not satisfy its siblings' peerDependencies requirements!
+121 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/lib/install.js:125:32
+121 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/lib/install.js:268:7
+121 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+121 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+121 verbose stack     at cb (/home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+121 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+121 verbose stack     at cb (/home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+121 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+121 verbose stack     at cb (/home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+121 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+122 verbose cwd /home/ubuntu/workspace
+123 error Linux 4.2.0-c9
+124 error argv "/home/ubuntu/.nvm/versions/node/v4.2.4/bin/node" "/home/ubuntu/.nvm/versions/node/v4.2.4/bin/npm" "install" "react-font-awesome" "--save"
+125 error node v4.2.4
+126 error npm  v2.14.12
+127 error code EPEERINVALID
+128 error peerinvalid The package react@0.14.7 does not satisfy its siblings' peerDependencies requirements!
+128 error peerinvalid Peer react-dom@0.14.7 wants react@^0.14.7
+128 error peerinvalid Peer react-font-awesome@1.0.3 wants react@~0.11.2
+129 verbose exit [ 1, true ]

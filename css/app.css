@@ -1,3 +1,36 @@
-* {
-    border: red solid 1px;
+
+h2 {
+    font-size:1em;
+}
+
+p {
+    font-size:0.7em;
+}
+
+button {
+    background-color:rgba(255,255,255,0.0);
+    border:none;
+}
+
+button img {
+    width: 16px;
+}
+
+.container {
+    display:flex;
+    justify-content:flex-end;
+    flex-flow: row-reverse;
+}
+.buttonForm {
+    flex-basis: 100px;
+    text-align: right;
+   
+}
+
+.buttonForm p {
+    padding-right: 11px;
+}
+
+.postConten {
+    justify-content:center;
 }

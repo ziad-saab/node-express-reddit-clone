@@ -13,6 +13,7 @@ function Layout(data){
         <head>
             <title>{data.title}</title>
             <link href='app.css' rel="stylesheet" type="text/css"/>
+            
         </head>
         <body>
             {data.children}
@@ -23,15 +24,21 @@ function Layout(data){
 ////// POSTLIST /////
 function Post(data) {
     return (
-        <li>
+        <li className="container">
+            <div className="postContent">
             <h2>
                 <a href={data.url}>{data.title}</a>
             </h2>
-                <form action='/voteContent' method='post'>
+                <p>Created By:{data.user} | on: {data.date}</p>
+            </div>
+            <div className='buttonForm'>
+                <form  action='/voteContent' method='post'>
                 <input name='contentId' type='hidden' value={data.contentId}/>
-                <button name='upVote' type='submit' value='true'>Upvote</button>
-                <button name='upVote' type='submit' value='false'>DownVote</button>
+                <button name='upVote' type='submit' value='true'><img src="http://findicons.com/files/icons/2338/reflection/128/arrow_up_1.png" /></button>
+                <p>{data.popularity}</p>
+                <button name='upVote' type='submit' value='false'><img src="https://systopia.de/sites/default/files/Arrow%20Down%201.png" /></button>
                 </form>
+            </div>    
         </li>
         );
 }
@@ -40,15 +47,17 @@ function renderHomePage (data) {
     
     var postList = data.map(function(item){
         return (
-            <Post title={item.title} url={item.url} contentId={item.id}/>
+            <Post title={item.title} url={item.url} contentId={item.id} user={item.user.username} date={Date(item.createdAt)} popularity={item.dataValues.voteScore}/>
             );
     });
     var result = (
         <div>
             <h1>Your random Posts</h1>
+            
             <ul>
                 {postList}
             </ul>
+    
         </div>
         );
 
