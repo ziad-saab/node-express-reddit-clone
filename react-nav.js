@@ -13,7 +13,7 @@ function Nav(user, tablist) {
 
   else userbar = (
     <div className="userbar">
-      <a href="/SignUp" className="userbarElement elementLink">Sign Up</a>
+      <a className="userbarElement elementLink signup">Sign Up</a>
       <a href="/Login" className="userbarElement elementLink">Login</a>
     </div>
   );

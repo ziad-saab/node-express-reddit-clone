@@ -1,4 +1,9 @@
 @import url("nav.css");
+
+body {
+  position: relative;
+}
+
 #welcomeuser{
     font-family: Arial;
 }
@@ -230,5 +235,15 @@
 
 #pagenav{
     display: flex;
-	justify-content: space-around;
+    justify-content: space-around;
+}
+
+.superbox{
+    float: left;
+    position: absolute;
+    left: 50%;
+    top: 160px;
+    z-index: 1000;
+    display: none;
+    border: 1px solid black;
 }

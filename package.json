@@ -33,6 +33,7 @@
     "express": "^4.13.4",
     "mysql": "^2.10.2",
     "mysql-promise": "^1.5.0",
+    "nodemon": "^1.9.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "secure-random": "^1.1.1",
