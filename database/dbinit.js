@@ -81,7 +81,7 @@ var dbInit = db.query('create database reddit_clone')
 
 	//define comment table
   Comment = db.define('comment', {
-    text: Sequelize.STRING
+    text: Sequelize.TEXT
   });
 
   Comment.hasMany(Comment, {as: 'children', foreignKey: 'parentId'});

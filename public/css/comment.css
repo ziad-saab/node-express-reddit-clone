@@ -1,11 +1,11 @@
 @import url("nav.css");
 
 .votescore{
-    margin-top: 0px;
-    margin-bottom: 0px;
-    font-weight: bold;
-    color: grey;
-    font-size: 15px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-weight: bold;
+  color: grey;
+  font-size: 15px;
 }
 .contents {
   display: flex;
@@ -68,19 +68,19 @@
   background-color: #00cc00;
 }
 .contentpost:link {
-    text-decoration: none;
-    color: #ff9900;
-    font-weight: bold;
-    font-size: 20px;
-    padding-left: 10px;
+  text-decoration: none;
+  color: #ff9900;
+  font-weight: bold;
+  font-size: 20px;
+  padding-left: 10px;
 }
 
 .contentpost:visited {
-    text-decoration: none;
-    color: #ffc266;
-    font-weight: bold;
-    font-size: 20px;
-    padding-left: 30px;
+  text-decoration: none;
+  color: #ffc266;
+  font-weight: bold;
+  font-size: 20px;
+  padding-left: 30px;
 }
 .metatext, .metalink {
   color: #808080;
@@ -94,4 +94,24 @@
 }
 .metalink:hover {
   text-decoration: underline;
+}
+.replyBox {
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;;
+}
+.replyTextBox {
+  width: 40%;
+  height: 300px;
+}
+.replySaveButton {
+  background-color: #ff9900;
+  color: white;
+  padding: 5px 10px;
+  margin: 4px 0px;
+  font-weight: bold;
+}
+.replySaveButton:hover {
+  background-color: #00cc00;
+  cursor: pointer;
 }

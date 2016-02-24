@@ -3,36 +3,36 @@ var Nav = require('./react-nav');
 var ReactDOMServer = require('react-dom/server');
 
 function Post(content) {
-    var upvote = "/images/grey-upvote.png";
-    var upvotelink = "/upvote/" + content.id;
-    var downvote = "/images/grey-downvote.png";
-    var downvotelink = "/downvote/" + content.id;
-    var comments = "/link/" + content.id + "/comments";
-    if (content.upvote === 1) {
-      upvote = "/images/green-upvote.png";
-    } else if (content.upvote === 0){
-      downvote = "/images/red-downvote.png";
-    }
+  var upvote = "/images/grey-upvote.png";
+  var upvotelink = "/upvote/" + content.id;
+  var downvote = "/images/grey-downvote.png";
+  var downvotelink = "/downvote/" + content.id;
+  var comments = "/link/" + content.id + "/comments";
+  if (content.upvote === 1) {
+    upvote = "/images/green-upvote.png";
+  } else if (content.upvote === 0){
+    downvote = "/images/red-downvote.png";
+  }
   return (
-      <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
+    <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
       <div className="contentRow">
-      <div className="contentVotescore">
-        <input className="upvote" data-content={content.id} type="image" src={upvote}/>
-        <p className="votescore">{content.votescore}</p>
-        <input className="downvote" data-content={content.id} type="image" src={downvote}/>
-      </div>
-      <div className="contentContent">
-        <div className="contentTitle">
-          <a className="contentpost" href={content.url}>{content.title}</a>
+        <div className="contentVotescore">
+          <input className="upvote" data-content={content.id} type="image" src={upvote}/>
+          <p className="votescore">{content.votescore}</p>
+          <input className="downvote" data-content={content.id} type="image" src={downvote}/>
         </div>
-        <div className="contentMetaData">
-          <div className="submissionInfo">
-            <a className="metatext">Post by {content.submitter}</a>
-            <a className="metatext">{content.createdAt.toString()}</a>
+        <div className="contentContent">
+          <div className="contentTitle">
+            <a className="contentpost" href={content.url}>{content.title}</a>
           </div>
-          <a className="metalink" href={comments}>Comments</a>
+          <div className="contentMetaData">
+            <div className="submissionInfo">
+              <a className="metatext">Post by {content.submitter}</a>
+              <a className="metatext">{content.createdAt.toString()}</a>
+            </div>
+            <a className="metalink" href={comments}>Comments</a>
+          </div>
         </div>
-      </div>
       </div>
     </li>
   )
@@ -71,18 +71,18 @@ function Pages(page, type) {
   return ReactDOMServer.renderToStaticMarkup(
     <section id="pagenav">
       <div className="button-wrapper">
-          <a className="pagebutton tangerine" href={nextlink}>Next</a>
+        <a className="pagebutton tangerine" href={nextlink}>Next</a>
       </div>
     </section>
-    );
+  );
 
   else return ReactDOMServer.renderToStaticMarkup(
     <section id="pagenav">
       <div className="button-wrapper">
-          <a className="pagebutton tangerine" href={prevlink}>Previous</a>
+        <a className="pagebutton tangerine" href={prevlink}>Previous</a>
       </div>
       <div className="button-wrapper">
-          <a className="pagebutton tangerine" href={nextlink}>Next</a>
+        <a className="pagebutton tangerine" href={nextlink}>Next</a>
       </div>
     </section>
   );

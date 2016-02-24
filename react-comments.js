@@ -56,10 +56,10 @@ function Comments(user, content, comments){
           <a className="contentpost" href={content.url}>{content.title}</a>
           <ul className="contents-list">
             <span id="contentList">
-              <form action={commentAction} method="post">
-                <label htmlFor="comment"><span>Comment:</span><input type="text" className="input-field" name="comment" value="" maxLength="255"/></label>
-                <label><span>&nbsp;</span><input type="submit" value="Reply" /></label>
-              </form>
+              <div className="replyBox" data-content={content.id} data-comment>
+                <textarea className="replyTextBox" type="text"/>
+                <a className="replySaveButton">save</a>
+              </div>
 
               <div className="allComments">
               {comments}
