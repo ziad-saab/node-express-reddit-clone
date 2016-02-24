@@ -13,9 +13,18 @@ function Layout(data){
         <head>
             <title>{data.title}</title>
             <link href='app.css' rel="stylesheet" type="text/css"/>
-            
+            <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'/>
+            <link href='https://fonts.googleapis.com/css?family=Merriweather:700,300,400italic' rel='stylesheet' type='text/css'/>
         </head>
         <body>
+            <div>
+                <logo><a href='/'>reddit</a></logo>
+            <nav>
+                <li><a className="selectedTab" href='hot'>hot</a></li>
+                <li><a href='new'>new</a></li>
+                <li><a href='controversial'>controversial</a></li>
+            </nav>
+            </div>
             {data.children}
         </body>
     </html>
@@ -47,12 +56,12 @@ function renderHomePage (data) {
     
     var postList = data.map(function(item){
         return (
-            <Post title={item.title} url={item.url} contentId={item.id} user={item.user.username} date={Date(item.createdAt)} popularity={item.dataValues.voteScore}/>
+            <Post title={item.title} url={item.url} contentId={item.id} user={item.user.username} date={item.createdAt.toString()} popularity={item.dataValues.voteScore}/>
             );
     });
     var result = (
         <div>
-            <h1>Your random Posts</h1>
+            <h1>project repository</h1>
             
             <ul>
                 {postList}

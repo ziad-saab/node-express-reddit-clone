@@ -92,6 +92,22 @@ Content.hasMany(UpVote);
 
 //////HOME PAGE/////
 app.get('/',function(req,res){
+    res.redirect(301, '/new')
+});
+
+app.get('/:order',function(req,res){
+    var order = [];
+    console.log(req.params)
+    switch (req.params.order){
+        case 'hot':
+            order = [Sequelize.literal('voteScore DESC')];
+            break;
+        case 'new':
+            order = [Sequelize.literal('content.createdAt DESC')];
+            break;
+        default:
+            break;
+    } 
     Content.findAll(
         {
             include: [{model: UpVote, attributes: []}, User],
@@ -101,7 +117,7 @@ app.get('/',function(req,res){
                     [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('upvotes.upvote'), 1, -1)), 'voteScore']
                 ]
             },
-    order: [Sequelize.literal('voteScore DESC')]
+            order: order
 }
         
         ).then( function(data){

@@ -1,3 +1,59 @@
+* {
+    box-sizing:border-box;
+}
+
+logo {
+    position:fixed;
+    top: 10px;
+    left: 30px;
+    font-size: 2em;
+    color: #e54f01;
+    z-index:1;
+    font-weight:200;
+}
+
+nav {
+    background-color: #fff;
+    padding-left: 200px;
+    display: flex;
+    position: fixed;
+    border-bottom: 1px solid #EA7233;
+    width:100%;
+    top: 0;
+    left: 0;
+    height: 45px;
+}
+
+nav li {
+    margin-top:30px;
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    padding-right: 5px;
+    position: relative
+    
+}
+
+nav a, .selectedTab {
+    color: #EA7233;
+    text-decoration: none;
+    font-size: 0.8em;
+    background-color:white;
+    border-top: 1px solid #EA7233;
+    border-right:1px solid #EA7233;
+    border-left: 1px solid #EA7233;
+    padding: 0px 4px;
+}
+
+.selectedTab {
+    padding-bottom: 14px;
+    background-color:white;
+}
+
+body{
+    font-family: 'Raleway', sans-serif;
+    margin-top:50px;
+}
 
 h2 {
     font-size:1em;
@@ -7,9 +63,15 @@ p {
     font-size:0.7em;
 }
 
+a {
+    text-decoration: none;
+    color: #e54f01;
+}
+
 button {
     background-color:rgba(255,255,255,0.0);
     border:none;
+    outline-color:rgba(255,255,255,0.0);
 }
 
 button img {
@@ -22,7 +84,7 @@ button img {
     flex-flow: row-reverse;
 }
 .buttonForm {
-    flex-basis: 100px;
+    flex-basis: 30px;
     text-align: right;
    
 }
@@ -31,6 +93,7 @@ button img {
     padding-right: 11px;
 }
 
-.postConten {
+.postContent {
     justify-content:center;
+    flex-grow: 1;
 }
