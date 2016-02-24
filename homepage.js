@@ -5,12 +5,6 @@ var database = require('./database/database.js');
 var ReactDOMServer = require('react-dom/server');
 require('babel-register');
 var HomePage = require('./react-homepage');
-require('./createuser.js');
-require('./login.js');
-require('./createcontent.js');
-require('./vote.js');
-require('./comments.js');
-
 const PAGE_LENGTH = 20;
 
 app.get('/', function(req, res){
