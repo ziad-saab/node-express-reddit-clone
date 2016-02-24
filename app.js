@@ -6,9 +6,7 @@ var app = express();
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine','ejs');
-app.use(express.static( "images" ));
-app.use(express.static("css"));
-app.use(express.static("jquery"));
+app.use(express.static("public"));
 
 var port = config.port;
 if(!port)

@@ -7,7 +7,7 @@ function Login(error) {
     <html>
         <head>
             <meta charSet="utf-8"/>
-            <link href="style.css" rel="stylesheet" type="text/css"/>
+            <link href="/css/style.css" rel="stylesheet" type="text/css"/>
         </head>
         <body>
             <div className='form'>

@@ -3,15 +3,13 @@ var React = require('react');
 var Nav = require('./react-nav');
 
 function Post(content) {
-    var upvote = "/grey-upvote.png";
-    var upvotelink = "/upvote/" + content.id;
-    var downvote = "/grey-downvote.png";
-    var downvotelink = "/downvote/" + content.id;
+    var upvote = "/images/grey-upvote.png";
+    var downvote = "/images/grey-downvote.png";
     var comments = "/link/" + content.id + "/comments";
     if (content.upvote === 1) {
-      upvote = "/green-upvote.png";
+      upvote = "/images/green-upvote.png";
     } else if (content.upvote === 0){
-      downvote = "/red-downvote.png";
+      downvote = "/images/red-downvote.png";
     }
   return (
       <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
@@ -84,11 +82,11 @@ function HomePage(user, contents, type, page) {
     <html>
     <head>
       <meta charSet="utf-8"/>
-      <link href="/homepage.css" rel="stylesheet" type="text/css"/>
-      <link href="/style.css" rel="stylesheet" type="text/css"/>
+      <link href="/css/homepage.css" rel="stylesheet" type="text/css"/>
+      <link href="/css/style.css" rel="stylesheet" type="text/css"/>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-      <script src="/logvote.js"></script>
-      <script src="/signup.js"></script>
+      <script src="/jquery/logvote.js"></script>
+      <script src="/jquery/signup.js"></script>
     </head>
     <body>
       {nav}
@@ -102,7 +100,7 @@ function HomePage(user, contents, type, page) {
           <a href="/CreateContent" className="contentButton">Submit Link</a>
         </div>
       </main>
-      
+
       <div className="superbox">
       <div className='form'>
             <div className='formheading'>Sign Up!</div>

@@ -7,10 +7,10 @@ function CreateContent(error) {
     <html>
         <head>
             <meta charSet="utf-8"/>
-            <link href="style.css" rel="stylesheet" type="text/css"/>
-            <link href="nav.css" rel="stylesheet" type="text/css"/>
+            <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+            <link href="/css/nav.css" rel="stylesheet" type="text/css"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <link rel="stylesheet" href="bootstrap.css" type="text/css"/>
+            <link rel="stylesheet" href="/css/bootstrap.css" type="text/css"/>
             <script src="jquery.js"></script>
             <script src="bootstrap.js"></script>
         </head>

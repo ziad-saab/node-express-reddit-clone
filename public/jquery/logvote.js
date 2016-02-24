@@ -12,12 +12,12 @@ $(document).ready(function() {
         var downvote = elem.parent().find(".downvote");
         var votescore = elem.parent().find(".votescore");
         var score = parseInt(votescore.text()) + 1;
-        if (downvote.attr("src") === "/red-downvote.png")
+        if (downvote.attr("src") === "/images/red-downvote.png")
         score ++;
-        if (elem.attr("src") === "/green-upvote.png")
+        if (elem.attr("src") === "/images/green-upvote.png")
         score --;
-        elem.attr( "src", "/green-upvote.png");
-        elem.parent().find(".downvote").attr("src", "/grey-downvote.png");
+        elem.attr( "src", "/images/green-upvote.png");
+        elem.parent().find(".downvote").attr("src", "/images/grey-downvote.png");
         votescore.text(score);
       });
   });
@@ -33,12 +33,12 @@ $(document).ready(function() {
         var upvote = elem.parent().find(".upvote");
         var votescore = elem.parent().find(".votescore");
         var score = parseInt(votescore.text()) - 1;
-        if (elem.attr("src") === "/red-downvote.png")
+        if (elem.attr("src") === "/images/red-downvote.png")
         score ++;
-        if (upvote.attr("src") === "/green-upvote.png")
+        if (upvote.attr("src") === "/images/green-upvote.png")
         score --;
-        elem.attr("src", "/red-downvote.png");
-        upvote.attr("src", "/grey-upvote.png");
+        elem.attr("src", "/images/red-downvote.png");
+        upvote.attr("src", "/images/grey-upvote.png");
         votescore.text(score);
       });
   });

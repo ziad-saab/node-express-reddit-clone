@@ -6,9 +6,9 @@ function SignUp(error) {
     <html>
         <head>
             <meta charSet="utf-8"/>
-            <link href="style.css" rel="stylesheet" type="text/css"/>
+            <link href="/css/style.css" rel="stylesheet" type="text/css"/>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-            <script src="/signup.js"></script>
+            <script src="/jquery/signup.js"></script>
         </head>
         <body>
             <div className='form'>
