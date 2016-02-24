@@ -2,7 +2,6 @@
 var ejs = require('ejs');
 var app = require('./app.js');
 var database = require('./database/database.js');
-var ReactDOMServer = require('react-dom/server');
 require('babel-register');
 var HomePage = require('./react-homepage');
 const PAGE_LENGTH = 20;
@@ -42,8 +41,8 @@ app.get('/sort/:order/:page', function(req, res){
     var username;
     try {username = response.User.username} catch(e) {}
     res.render('homepage.ejs', {
-      nav: ReactDOMServer.renderToStaticMarkup(HomePage.HomeNav(username, req.params.order)),
-      posts: ReactDOMServer.renderToStaticMarkup(HomePage.Posts(response.Content)),
-      pages: ReactDOMServer.renderToStaticMarkup(HomePage.Pages(page, req.params.order))});
+      nav: HomePage.HomeNav(username, req.params.order),
+      posts: HomePage.Posts(response.Content),
+      pages: HomePage.Pages(page, req.params.order)});
   });
 });
