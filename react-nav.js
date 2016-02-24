@@ -8,13 +8,13 @@ function Nav(user, tablist) {
   userbar = (
     <div className="userbar">
       <a className="userbarElement">{user}</a>
-      <a href="/Logout" className="userbarElement elementLink">Logout</a>
+      <a href="/Logout" className="elementLink">Logout</a>
     </div>);
 
   else userbar = (
     <div className="userbar">
-      <a className="userbarElement elementLink signup">Sign Up</a>
-      <a href="/Login" className="userbarElement elementLink">Login</a>
+      <a className="elementLink signup">Sign Up</a>
+      <a href="/Login" className="elementLink">Login</a>
     </div>
   );
 
