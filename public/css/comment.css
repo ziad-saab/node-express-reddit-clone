@@ -90,6 +90,7 @@
 }
 .metalink {
   font-weight: bold;
+  cursor: pointer;
 }
 .metalink:hover {
   text-decoration: underline;

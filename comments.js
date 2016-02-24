@@ -12,7 +12,6 @@ app.get('/link/:contentId/comments',function(req, res) {
     var htmlStructure = Comments(response.user, response.content, response.comments);
     var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
     res.send('<!doctype html>' + html);
-    //res.render('comments-page', {user: response.user, content: response.content, comments: response.comments});
   });
 });
 
@@ -27,4 +26,11 @@ app.post('/comment/:contentId', function(req, res) {
     if(e === database.INVALID_SESSIONID)
     res.redirect('/Login');
   });
+});
+app.post('/comment/', function(req, res) {
+  var contentId = parseInt(req.body.contentId);
+  var commentId = parseInt(req.body.commentId);
+  var comment = req.body.text;
+  var sessionId = req.cookies.sessionId;
+  return database.createNewComment(sessionId, contentId, commentId, comment);
 });

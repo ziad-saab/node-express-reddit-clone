@@ -53,7 +53,7 @@ function getContentAndComments(sessionId, contentId) {
 //provides a nested comment query with a depth of n
 function getNCommentLevels(n, initDB) {
   if (n <= 0)
-  return [];
+  return [initDB.User];
   else return [initDB.User, {
     model: initDB.Comment,
     as: 'children',

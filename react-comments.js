@@ -4,6 +4,8 @@ var Nav = require('./react-nav');
 function renderComment(comment) {
   var upvote = "/images/grey-upvote.png";
   var downvote = "/images/grey-downvote.png";
+  var children = [];
+  if (comment.children)
   var children = comment.children.map(function(child) {
     return renderComment(child);
   });
@@ -21,6 +23,7 @@ return (
         <div className="submissionInfo">
           <a className="metatext">Post by {comment.user.username}</a>
           <a className="metatext">{comment.createdAt.toString()}</a>
+          <a className="metalink reply" data-content={comment.contentId} data-comment={comment.id}>reply</a>
         </div>
       </div>
     </div>
@@ -44,7 +47,7 @@ function Comments(user, content, comments){
         <meta charSet="utf-8"/>
         <link href="/css/comment.css" rel="stylesheet" type="text/css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-        <script src="/jquery/logvote.js"></script>
+        <script src="/jquery/reply.js"></script>
       </head>
       <body>
         {nav}
