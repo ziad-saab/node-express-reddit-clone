@@ -1,6 +1,96 @@
-@import url("homepage.css");
-@import url("style.css");
+@import url("nav.css");
 
-.commentDepth {
-  padding-left: 40px;
+.votescore{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: bold;
+    color: grey;
+    font-size: 15px;
+}
+.contents {
+  display: flex;
+  justify-content: space-between;
+}
+.commentRow {
+  display:flex;
+  justify-content: flex-start;
+  align-content: center;
+}
+.allComments {
+  margin: 20px;
+}
+.commentNest {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+  border: 1px solid #0066cc;
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 10px;
+}
+.commentVotescore {
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.commentContent {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.commentText {
+  display:flex;
+}
+
+.commentMeta {
+  display:flex;
+  flex-direction: column;
+}
+
+.contentButton {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #ff9900;
+  color: white;
+  padding: 5px 60px;
+  margin-top: 50px;
+  font-family: "Arial", Serif;
+  font-weight: bold;
+  font-size: 30px;
+  text-decoration: none;
+  border-radius: 2px;
+}
+.contentButton:hover {
+  background-color: #00cc00;
+}
+.contentpost:link {
+    text-decoration: none;
+    color: #ff9900;
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+.contentpost:visited {
+    text-decoration: none;
+    color: #ffc266;
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 30px;
+}
+.metatext, .metalink {
+  color: #808080;
+  padding: 0px 10px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.metalink {
+  font-weight: bold;
+}
+.metalink:hover {
+  text-decoration: underline;
 }

@@ -1,44 +1,33 @@
 var React = require('react');
 var Nav = require('./react-nav');
 
-function renderComment(comment, n) {
-    var upvote = "/tinygreyupvote.ico";
-    var downvote = "/tinygreydownvote.ico";
-    var margins = "margin-left: 40px;";
-    var comments;
-    if (comment.children) {
-        comments = comment.children.map(function(child) {
-          return renderComment(child, n + 10);
-        });
-    }
-
-    return (
-      <div className="commentDepth" key={comment.id}>
-      <li style={{"listStyle": "none"}} className="content-item">
-        <hr></hr>
-        <table>
-        <tbody>
-          <tr>
-            <td><a><img src={upvote}></img></a></td>
-            <td><p className="createdby">Post by <span className="usercreater">{comment.user.username}</span></p></td>
-          </tr>
-          <tr>
-            <td><p className="votescore"></p></td>
-            <td><a className="contentpost">{comment.text}</a></td>
-          </tr>
-          <tr>
-            <td><a><img src={downvote}></img></a></td>
-            <td><a className="comments" href="">Direct Link</a></td>
-          </tr>
-          </tbody>
-        </table>
-      </li>
-      <hr></hr>
-      {comments}
+function renderComment(comment) {
+  var upvote = "/grey-upvote.png";
+  var downvote = "/grey-downvote.png";
+  var children = comment.children.map(function(child) {
+    return renderComment(child);
+  });
+return (
+  <div className="commentNest">
+    <div className="commentRow" key={comment.id}>
+    <div className="commentVotescore">
+      <input className="upvote" data-content={comment.id} type="image" src={upvote}/>
+      <p className="votescore">0</p>
+      <input className="downvote" data-content={comment.id} type="image" src={downvote}/>
     </div>
-    );
-}
-
+    <div className="commentContent">
+      <a className="commentText">{comment.text}</a>
+      <div className="commentMeta">
+        <div className="submissionInfo">
+          <a className="metatext">Post by {comment.user.username}</a>
+          <a className="metatext">{comment.createdAt.toString()}</a>
+        </div>
+      </div>
+    </div>
+    </div>
+  {children}
+</div>
+)};
 function Comments(user, content, comments){
     var nav;
     if (user)
@@ -50,36 +39,38 @@ function Comments(user, content, comments){
     var comments = comments.map(renderComment);
 
     return (
-        <html>
-            <head>
-                <meta charSet="utf-8"/>
-                <link href="/comment.css" rel="stylesheet" type="text/css"/>
-            </head>
-            <body>
+      <html>
+      <head>
+        <meta charSet="utf-8"/>
+        <link href="/comment.css" rel="stylesheet" type="text/css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="/logvote.js"></script>
+      </head>
+      <body>
+        {nav}
+        <main className="contents">
+        <section>
+          <a className="contentpost" href={content.url}>{content.title}</a>
+          <ul className="contents-list">
+            <span id="contentList">
+              <form action={commentAction} method="post">
+                <label htmlFor="comment"><span>Comment:</span><input type="text" className="input-field" name="comment" value="" maxLength="255"/></label>
+                <label><span>&nbsp;</span><input type="submit" value="Reply" /></label>
+              </form>
 
-              {nav}
-
-              <main>
-              <div id="contents">
-                <a id="heading" href={content.url}>{content.title}</a>
-                <ul className="contents-list">
-                  <span id="contentList">
-                    <form action={commentAction} method="post">
-                      <label htmlFor="comment"><span>Comment:</span><input type="text" className="input-field" name="comment" value="" maxLength="255"/></label>
-                      <label><span>&nbsp;</span><input type="submit" value="Reply" /></label>
-                    </form>
-
-                    <article>
-                    {comments}
-                    </article>
-
-                  </span>
-                </ul>
+              <div className="allComments">
+              {comments}
               </div>
-              </main>
 
-            </body>
-        </html>
+            </span>
+          </ul>
+          </section>
+          <div className="sidebar">
+            <a href="/CreateContent" className="contentButton">Submit Link</a>
+          </div>
+        </main>
+      </body>
+      </html>
     );
 }
 
