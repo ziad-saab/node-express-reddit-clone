@@ -2,8 +2,8 @@ var React = require('react');
 var Nav = require('./react-nav');
 
 function renderComment(comment) {
-  var upvote = "/grey-upvote.png";
-  var downvote = "/grey-downvote.png";
+  var upvote = "/images/grey-upvote.png";
+  var downvote = "/images/grey-downvote.png";
   var children = comment.children.map(function(child) {
     return renderComment(child);
   });
@@ -42,9 +42,9 @@ function Comments(user, content, comments){
       <html>
       <head>
         <meta charSet="utf-8"/>
-        <link href="/comment.css" rel="stylesheet" type="text/css"/>
+        <link href="/css/comment.css" rel="stylesheet" type="text/css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-        <script src="/logvote.js"></script>
+        <script src="/jquery/logvote.js"></script>
       </head>
       <body>
         {nav}
