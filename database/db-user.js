@@ -1,3 +1,6 @@
+/*
+Provides functionality for user creation, login, and session verification
+*/
 var bcrypt = require('bcrypt');
 var dbinit = require('./dbinit.js');
 var database = require('./database.js');
@@ -9,11 +12,13 @@ const USR_NOT_FOUND = 'User not found';
 const INVALID_PASSWORD = 'Invalid password';
 const INVALID_SESSIONID = 'Invalid sessionID';
 
+//creates a random string to use as a sessionID
 function createSessionToken() {
     return secureRandom.randomArray(40).map(code => code.toString(16)).join('')
 }
 
-//hold for session length
+//generates the date after which sessions must be created. Any session created
+//before will be expired
 function expireDate() {
   var date = new Date(Date.now());
   date.setUTCHours(date.getUTCHours() - SESSION_LENGTH);

@@ -1,3 +1,7 @@
+/*
+Initialise the database
+*/
+
 var db = require('mysql-promise')();
 var Sequelize = require('sequelize');
 var bcrypt = require('bcrypt');
@@ -46,12 +50,14 @@ var dbInit = db.query('create database reddit_clone')
 	    },
 			email: Sequelize.STRING(50)
 	});
+	//define session table
 	Session = db.define('session', {
 	    token: Sequelize.STRING
 	});
 	User.hasMany(Session);
 	Session.belongsTo(User);
 
+	//define content table
 	Content = db.define('content', {
 	  url: Sequelize.STRING,
 	  title: Sequelize.STRING
@@ -59,6 +65,8 @@ var dbInit = db.query('create database reddit_clone')
 	Content.belongsTo(User);
 	User.hasMany(Content);
 
+
+	//define vote table
   Vote = db.define('vote', {
     upVote: Sequelize.BOOLEAN
   });
@@ -68,6 +76,7 @@ var dbInit = db.query('create database reddit_clone')
   Content.hasMany(Vote, {as: 'uservotes'});
   Content.hasMany(Vote);
 
+	//define comment table
   Comment = db.define('comment', {
     text: Sequelize.STRING
   });

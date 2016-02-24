@@ -1,3 +1,6 @@
+/*
+This file links all database functionality together into one export
+*/
 var dbUser = require('./db-user.js');
 var dbContent = require('./db-content.js');
 var dbComment = require('./db-comment.js');

@@ -1,7 +1,12 @@
+/*
+This file provides database functionality for the creation of new comments, and
+their retrieval
+*/
 var dbinit = require('./dbinit.js');
 var getUserFromSessionId = require('./db-user.js').getUserFromSessionId;
 
-//creates a new comment
+//creates a new comment linked to a user and a content, and optionally a parent
+//comment
 function createNewComment(sessionId, contentId, parentCommentId, text) {
   return dbinit.then(function(initDB) {
     return Promise.all([
@@ -26,6 +31,8 @@ function createNewComment(sessionId, contentId, parentCommentId, text) {
   });
 }
 
+//Gets a content and all comments associated with the content, up to a nested
+//depth of 10
 function getContentAndComments(sessionId, contentId) {
   return dbinit.then(function(initDB) {
     return Promise.all([
@@ -43,6 +50,7 @@ function getContentAndComments(sessionId, contentId) {
   });
 };
 
+//provides a nested comment query with a depth of n
 function getNCommentLevels(n, initDB) {
   if (n <= 0)
   return [];
@@ -53,6 +61,7 @@ function getNCommentLevels(n, initDB) {
   }]
 }
 
+//gets all comments for a content up to a depth of 10
 function getCommentsForContent(contentId) {
   return dbinit.then(function(initDB) {
     return initDB.Comment.findAll({
