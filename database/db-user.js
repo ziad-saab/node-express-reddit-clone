@@ -1,7 +1,7 @@
 /*
 Provides functionality for user creation, login, and session verification
 */
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var dbinit = require('./dbinit.js');
 var database = require('./database.js');
 var secureRandom = require('secure-random');

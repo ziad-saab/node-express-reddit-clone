@@ -16,7 +16,7 @@ $(document).ready(function() {
         $.ajax({
              type:'POST',
              url:'/comment',
-             data: {contentId: contentId, commentId: commentId, text: text},
+             data: {contentId: contentId, commentId: commentId, text: text}
           }).success(function(data) {
 
           });

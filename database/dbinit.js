@@ -4,7 +4,7 @@ Initialise the database
 
 var db = require('mysql-promise')();
 var Sequelize = require('sequelize');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var username = require('../config.json').username;
 
 
@@ -45,7 +45,10 @@ var dbInit = db.query('create database reddit_clone')
 	    password: {
 	        type: Sequelize.VIRTUAL,
 	        set: function(actualPassword) {
-	            this.setDataValue('hashed_password', bcrypt.hashSync(actualPassword, 10));
+						var salt = bcrypt.genSaltSync(10);
+						// Hash the password with the salt
+						var hash = bcrypt.hashSync(actualPassword, salt);
+						this.setDataValue('hashed_password', hash);
 	        }
 	    },
 			email: Sequelize.STRING(50)
