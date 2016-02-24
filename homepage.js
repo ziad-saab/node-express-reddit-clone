@@ -31,6 +31,7 @@ function getFunction(type) {
     break;
   }
 }
+
 app.get('/sort/:order/:page', function(req, res){
   var sessionId = req.cookies.sessionId;
   var page = parseInt(req.params.page);
@@ -40,8 +41,9 @@ app.get('/sort/:order/:page', function(req, res){
   .then(function(response) {
     var username;
     try {username = response.User.username} catch(e) {}
-    var htmlStructure = HomePage(username, response.Content, req.params.order, page);
-    var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-    res.send('<!doctype html>' + html);
+    res.render('homepage.ejs', {
+      nav: ReactDOMServer.renderToStaticMarkup(HomePage.HomeNav(username, req.params.order)),
+      posts: ReactDOMServer.renderToStaticMarkup(HomePage.Posts(response.Content)),
+      pages: ReactDOMServer.renderToStaticMarkup(HomePage.Pages(page, req.params.order))});
   });
 });

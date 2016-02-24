@@ -1,10 +1,11 @@
-
 var React = require('react');
 var Nav = require('./react-nav');
 
 function Post(content) {
     var upvote = "/images/grey-upvote.png";
+    var upvotelink = "/upvote/" + content.id;
     var downvote = "/images/grey-downvote.png";
+    var downvotelink = "/downvote/" + content.id;
     var comments = "/link/" + content.id + "/comments";
     if (content.upvote === 1) {
       upvote = "/images/green-upvote.png";
@@ -36,6 +37,15 @@ function Post(content) {
   )
 }
 
+function Posts(contents) {
+  var posts = contents.map(Post);
+  return (
+    <div>
+      {posts}
+    </div>
+  );
+}
+
 var tabs = ['hot', 'latest', 'top', 'controversial']
 
 function getTablist(type) {
@@ -47,80 +57,38 @@ function getTablist(type) {
     }
   });
 }
+function HomeNav(user, type) {
+  return Nav(user, getTablist(type));
+}
 
-function HomePage(user, contents, type, page) {
-
-  var nav = Nav(user, getTablist(type));
-  var posts = contents.map(Post);
-  var pages;
+function Pages(page, type) {
   var next = page + 1;
   var previous = page - 1;
   var nextlink = "/sort/" + type + "/" + next;
   var prevlink = "/sort/" + type + "/" + previous;
   if (page === 0)
-  pages = (
+  return (
     <section id="pagenav">
       <div className="button-wrapper">
-  				<a className="pagebutton tangerine" href={nextlink}>Next</a>
-  		</div>
-  	</section>
+          <a className="pagebutton tangerine" href={nextlink}>Next</a>
+      </div>
+    </section>
     );
 
-  else pages = (
+  else return (
     <section id="pagenav">
       <div className="button-wrapper">
-  				<a className="pagebutton tangerine" href={prevlink}>Previous</a>
-  		</div>
-  		<div className="button-wrapper">
-  				<a className="pagebutton tangerine" href={nextlink}>Next</a>
-  		</div>
-		</section>
-  );
-
-  return (
-
-    <html>
-    <head>
-      <meta charSet="utf-8"/>
-      <link href="/css/homepage.css" rel="stylesheet" type="text/css"/>
-      <link href="/css/style.css" rel="stylesheet" type="text/css"/>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-      <script src="/jquery/logvote.js"></script>
-      <script src="/jquery/signup.js"></script>
-    </head>
-    <body>
-      {nav}
-      <main className="contents">
-        <ul className="contents-list">
-          <span id="contentList">
-            {posts}
-            </span>
-        </ul>
-        <div className="sidebar">
-          <a href="/CreateContent" className="contentButton">Submit Link</a>
-        </div>
-      </main>
-
-      <div className="superbox">
-      <div className='form'>
-            <div className='formheading'>Sign Up!</div>
-
-            <form action="/SignUp" method="post">
-              <label htmlFor="username"><span>Username <span className="required">*</span></span><input type="text" className="input-field" name="username" value="" maxLength="20"/></label>
-              <label htmlFor="email"><span>Email </span><input type="text" className="input-field" name="email" value="" maxLength="50"/></label>
-              <label htmlFor="password"><span>Password <span className="required">*</span></span><input type="password" className="input-field" name="password" maxLength="50"/></label>
-              <label htmlFor="confirmpassword"><span>Confirm Password <span className="required">*</span></span><input type="password" className="input-field" name="confirmpassword" maxLength="50"/></label>
-              <label><span>&nbsp;</span><input type="submit" value="Sign Up" /></label>
-            </form>
-            </div>
+          <a className="pagebutton tangerine" href={prevlink}>Previous</a>
       </div>
-
-      <footer id="pages">
-        {pages}
-      </footer>
-    </body>
-    </html>
-  )
+      <div className="button-wrapper">
+          <a className="pagebutton tangerine" href={nextlink}>Next</a>
+      </div>
+    </section>
+  );
 }
 
-module.exports = HomePage;
+module.exports = {
+  Posts: Posts,
+  HomeNav: HomeNav,
+  Pages: Pages
+};

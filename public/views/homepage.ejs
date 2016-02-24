@@ -1,81 +1,42 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link href="/homepage.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-      <nav>
-        <% if (user) { %>
-          <h4 id="welcomeuser">Welcome <span id="user"><%=user%></span></h4>
-          <a href=/Logout class="link">Logout</a>
-          <a href=/CreateContent class="link">Create Content</a>
-        <% } else { %>
-          <a href=/SignUp class="link">Sign Up</a>
-          <a href=/Login class="link">Login</a>
-        <% } %>
+<head>
+  <meta charSet="utf-8"/>
+  <link href="/homepage.css" rel="stylesheet" type="text/css"/>
+  <link href="/style.css" rel="stylesheet" type="text/css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="/logvote.js"></script>
+  <script src="/signup.js"></script>
+</head>
+<body>
+  <%-nav%>
+  <main class="contents">
+    <ul class="contents-list">
+      <span id="contentList">
+        <%-posts%>
+      </span>
+    </ul>
+    <div class="sidebar">
+      <a href="/CreateContent" class="contentButton">Submit Link</a>
+    </div>
+  </main>
 
-        <div id="orderbylinks">
-          <a href=/sort/hot class="getlink">Hot</a>
-          <a href=/sort/controversial class="getlink">Controversial</a>
-          <a href=/sort/top class="getlink">Top</a>
-          <a href=/sort/latest class="getlink">Latest</a>
-        </div>
-      </nav>
+  <div class="superbox">
+    <div class='form'>
+      <div class='formheading'>Sign Up!</div>
 
-      <main id="contents">
-        <header>
-          <h1 id="heading">List of contents</h1>
-        </header>
-        <ul class="contents-list">
-          <span id="contentList">
-            <% contentList.forEach(function(content) { %>
-              <% var upvote = "/tinygreyupvote.ico" %>
-              <% var downvote = "/tinygreydownvote.ico" %>
-              <% if (content.upvote === 1) { %>
-                <% upvote = "/tinyredupvote.ico"; %>
-              <% } else if (content.upvote === 0){ %>
-                <% downvote = "/tinybluedownvote.ico"; %>
-              <% } %>
-              <li style="list-style: none;"class="content-item">
-                <hr>
-                <table>
-                  <tr>
-                    <form action=<%-"/upvote/" + content.id%> method="post">
-                      <td><input type="image" src=<%=upvote%>></td>
-                    </form>
-                    <td><p class="createdby">Post by <span class="usercreater"><%-content.submitter%></span></p></td>
-                  </tr>
-                  <tr>
-                    <td><p class="votescore"><%=content.votescore%></p></td>
-                    <td><a class="contentpost" href=<%-content.url%>><%-content.title%></a></td>
-                  </tr>
-                  <tr>
-                    <form action=<%-"/downvote/" + content.id%> method="post">
-                      <td><input type="image" src=<%=downvote%>></td>
-                    </form>
-                    <td><a class="comments" href=<%-"/link/" + content.id + "/comments"%>>Comments</a></td>
-                  </tr>
-                </table>
-            </li>
-            <% })%>
-            <hr>
-          </span>
-        </ul>
-      </main>
+      <form action="/SignUp" method="post">
+        <label for="username"><span>Username <span class="required">*</span></span><input type="text" class="input-field" name="username" value="" maxlength="20"/></label>
+        <label for="email"><span>Email </span><input type="text" class="input-field" name="email" value="" maxlength="50"/></label>
+        <label for="password"><span>Password <span class="required">*</span></span><input type="password" class="input-field" name="password" maxlength="50"/></label>
+        <label for="confirmpassword"><span>Confirm Password <span class="required">*</span></span><input type="password" class="input-field" name="confirmpassword" maxlength="50"/></label>
+        <label><span>&nbsp;</span><input type="submit" value="Sign Up" /></label>
+      </form>
+    </div>
+  </div>
 
-      <footer id="pages">
-        <ul class="pagination">
-          <% var next = page + 1 %>
-          <% var previous = page - 1 %>
-          <% if (page === 0) { %>
-            <li><a href=<%-"/" + type +"/" + next%>>Next»</a></li>
-          <% } else { %>
-            <li><a href=<%-"/" + type +"/" + previous%>>«Previous</a></li>
-            <li><a href=<%-"/" + type +"/" + next%>>Next»</a></li>
-          <% } %>
-
-        </ul>
-      </footer>
-    </body>
+  <footer id="pages">
+    <%-pages%>
+  </footer>
+</body>
 </html>
