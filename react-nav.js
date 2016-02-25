@@ -28,7 +28,7 @@ function Nav(user, tablist) {
       <nav className="navbar">
         <div className="flexnav">
           <div className="leftbar">
-            <a className="siteTitle">fuggedabouddit</a>
+            <a className="siteTitle" href="/">fuggedabouddit</a>
             {tabs}
           </div>
           {userbar}
