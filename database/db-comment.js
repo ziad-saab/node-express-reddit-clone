@@ -4,6 +4,7 @@ their retrieval
 */
 var dbinit = require('./dbinit.js');
 var getUserFromSessionId = require('./db-user.js').getUserFromSessionId;
+var getContentVoteScore = require('./db-content.js').getVoteScore;
 
 //creates a new comment linked to a user and a content, and optionally a parent
 //comment
@@ -39,14 +40,31 @@ function getContentAndComments(sessionId, contentId) {
     return Promise.all([
       getUserFromSessionId(sessionId),
       initDB.Content.findById(contentId),
-      getCommentsForContent(contentId)
+      getCommentsForContent(contentId),
+      getContentVoteScore(contentId)
     ])
     .then(function(response) {
-      return {
-        user: response[0].toJSON(),
-        content: response[1].toJSON(),
-        comments: response[2]
-      }
+      var user = response[0];
+      var content = response[1]
+      var comments = response[2];
+      var votescore = response[3];
+      var findVote = initDB.Vote.findOne({
+        where: {
+          userId: user.id,
+          contentId: content.id
+        }
+      })
+      return Promise.all([findVote, content.getUser()])
+      .then(function(response) {
+        return {
+          user: user.toJSON(),
+          submitter: response[1].toJSON(),
+          content: content.toJSON(),
+          comments: comments,
+          vote: response[0].toJSON(),
+          votescore: votescore
+        }
+      });
     });
   });
 };

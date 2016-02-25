@@ -3,7 +3,13 @@ $(document).ready(function() {
 
   $(".replySaveButton").on("click", submitReply);
 
+  $(".replyCancelButton").on("click", hideReplyBox);
 });
+
+function hideReplyBox() {
+  var replyBox = $(this).parent().parent();
+  replyBox.css("display","none");
+}
 
 function showReplyBox() {
   var replyBox = $(this).parent().parent().parent().parent().parent().find(".hiddenReplyBox");
@@ -11,13 +17,19 @@ function showReplyBox() {
 }
 
 function submitReply() {
-  var parent = $(this).parent();
+  var parent = $(this).closest(".hiddenReplyBox");
+  if(!parent.attr("data-content"))
+  parent = $(this).closest(".replyBox");
+  var textbox = parent.find(".replyTextBox");
+  var text = textbox.val();
+
+  if (text === '')
+  return;
+
   var contentId = parent.attr("data-content");
   var commentId = parent.attr("data-comment");
   if (commentId === 'true')
   commentId = null;
-  var textbox = parent.find(".replyTextBox");
-  var text = textbox.val();
 
   $.ajax({
     type:'POST',
@@ -47,7 +59,10 @@ function submitReply() {
       </div> \
       <div class="hiddenReplyBox" data-content=' + data.content.id + ' data-comment=' + data.comment.id + '> \
         <textarea class="replyTextBox" type="text"/> \
-        <a class="replySaveButton">save</a> \
+          <div class="commentButtons"> \
+            <a class="replySaveButton">save</a> \
+            <a class="replyCancelButton">cancel</a> \
+          </div>\
       </div> \
     </div>';
 
@@ -62,5 +77,7 @@ function submitReply() {
   $(".reply").on("click", showReplyBox);
   $(".replySaveButton").unbind()
   $(".replySaveButton").on("click", submitReply);
+  $(".replyCancelButton").unbind()
+  $(".replyCancelButton").on("click", hideReplyBox);
 });
 }

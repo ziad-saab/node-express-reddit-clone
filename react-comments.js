@@ -13,9 +13,9 @@ function renderComment(comment) {
     <div className="commentNest">
       <div className="commentRow" key={comment.id}>
         <div className="commentVotescore">
-          <input className="upvote" data-content={comment.id} type="image" src={upvote}/>
+          <input className="commentUpvote" data-content={comment.id} type="image" src={upvote}/>
           <p className="votescore">0</p>
-          <input className="downvote" data-content={comment.id} type="image" src={downvote}/>
+          <input className="commentDownvote" data-content={comment.id} type="image" src={downvote}/>
         </div>
         <div className="commentContent">
           <a className="commentText">{comment.text}</a>
@@ -31,16 +31,56 @@ function renderComment(comment) {
 
       <div className="hiddenReplyBox" data-content={comment.contentId} data-comment={comment.id}>
         <textarea className="replyTextBox" type="text"/>
-        <a className="replySaveButton">save</a>
+        <div className="commentButtons">
+          <a className="replySaveButton">save</a>
+          <a className="replyCancelButton">cancel</a>
+        </div>
       </div>
       {children}
     </div>
   )};
-  function Comments(user, content, comments){
+
+  function contentRow(submitter, content, vote, votescore) {
+    var upvote = "/images/grey-upvote.png";
+    var upvotelink = "/upvote/" + content.id;
+    var downvote = "/images/grey-downvote.png";
+    var downvotelink = "/downvote/" + content.id;
+    var comments = "/link/" + content.id + "/comments";
+    if (vote.upVote) {
+      upvote = "/images/green-upvote.png";
+    } else if (!vote.upVote){
+      downvote = "/images/red-downvote.png";
+    }
+    return (
+      <div className="contentRow">
+        <div className="contentVotescore">
+          <input className="upvote" data-content={content.id} type="image" src={upvote}/>
+          <p className="votescore">{votescore}</p>
+          <input className="downvote" data-content={content.id} type="image" src={downvote}/>
+        </div>
+        <div className="contentContent">
+          <div className="contentTitle">
+            <a className="contentpost" href={content.url}>{content.title}</a>
+          </div>
+          <div className="contentMetaData">
+            <div className="submissionInfo">
+              <a className="metatext">Post by {submitter.username}</a>
+              <a className="metatext">{content.createdAt.toString()}</a>
+            </div>
+            <a className="metalink" href={comments}>Comments</a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  function Comments(user, submitter, content, comments, vote, votescore){
     var nav;
     if (user)
     nav = Nav(user.username, []);
     else nav = Nav(undefined, []);
+
+    var contentHeader = contentRow(submitter, content, vote, votescore);
 
     var commentAction = "/comment/" + content.id;
 
@@ -53,12 +93,13 @@ function renderComment(comment) {
           <link href="/css/comment.css" rel="stylesheet" type="text/css"/>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
           <script src="/jquery/reply.js"></script>
+          <script src="/jquery/logvote.js"></script>
         </head>
         <body>
           {nav}
           <main className="contents">
             <div className="pageBody">
-              <a className="contentpost" href={content.url}>{content.title}</a>
+              {contentHeader}
               <div className="replyBox" data-content={content.id} data-comment>
                 <textarea className="replyTextBox" type="text"/>
                 <a className="replySaveButton">save</a>
