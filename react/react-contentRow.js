@@ -17,9 +17,11 @@ function contentRow(content, vote, submitter, votescore) {
         <input className="downvote" data-content={content.id} type="image" src={downvote}/>
       </div>
       <div className="contentContent">
-        <div className="contentTitle">
-          <a className="contentpost" href={content.url}>{content.title}</a>
-        </div>
+        <table className="contentTitle">
+          <tr>
+            <td><a className="contentpost" href={content.url}>{content.title}</a></td>
+          </tr>
+        </table>
         <div className="contentMetaData">
           <div className="submissionInfo">
             <a className="metatext">Post by {submitter}</a>

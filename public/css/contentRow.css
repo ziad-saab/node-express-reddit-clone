@@ -25,7 +25,9 @@
   font-size: 15px;
 }
 .contentTitle {
-  display:flex;
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
 }
 
 .contentMetaData {

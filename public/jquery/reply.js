@@ -52,7 +52,11 @@ function submitReply() {
               <a class="metatext">' + data.comment.createdAt.toString() + '</a> \
             </div> \
           </div> \
-          <a class="commentText">' + data.comment.text + '</a> \
+          <table class="commentText"> \
+            <tr> \
+              <td><a>' + data.comment.text + '</a></td> \
+            </tr> \
+          </table> \
           <a class="metalink reply">reply</a> \
         </div> \
       </div> \

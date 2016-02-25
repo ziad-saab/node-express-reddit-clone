@@ -32,7 +32,12 @@ function renderComment(comment) {
               <a className="metatext">{comment.createdAt.toString()}</a>
             </div>
           </div>
-          <a className="commentText">{comment.text}</a>
+
+            <table className="commentText">
+              <tr>
+                <td><a>{comment.text}</a></td>
+              </tr>
+            </table>
           <a className="metalink reply">reply</a>
         </div>
       </div>
