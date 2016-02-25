@@ -1,5 +1,5 @@
-
 var React = require('react');
+var Popbox = require('./react-popbox.js');
 
 function Nav(user, tablist) {
 
@@ -24,6 +24,8 @@ function Nav(user, tablist) {
     else return <a href={tab.url} className="tab">{tab.name}</a>;
   })
 
+  var popbox = Popbox();
+
   return (
       <nav className="navbar">
         <div className="flexnav">
@@ -33,6 +35,7 @@ function Nav(user, tablist) {
           </div>
           {userbar}
         </div>
+        {popbox}
       </nav>
   )
 }
