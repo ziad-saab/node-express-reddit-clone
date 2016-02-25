@@ -1,3 +1,137 @@
-p {
+html {
   font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+}
+
+html {
+  background: #dddddd;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;  
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+* {
+  /*border: 1px solid red;*/
+}
+
+.post {
+  background: #eeeeee;
+  border-radius: 10px;
+  display: flex;
+  /*height: 20vh;*/
+  margin: 20px;
+  overflow: hidden;
+  max-width: 40em;
+  box-shadow: 0 1vh 2vh 0.5vh hsla(0, 0%, 0%, 0.1);
+}
+
+.post-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  flex: 1 1 100%;
+  padding: 0 1vw;
+}
+
+.post-title {
+  flex: 1 1 100%;
+  font-size: 1.5em;
+  margin-top: 1.5vh;
+}
+
+.post-creator {
+  color: #333333;
+  flex: 1;
+}
+
+.post-timestamp {
+  color: #999999;
+  flex: 2;
+  text-align: right;
+}
+
+.post-vote {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.post form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.vote-score {
+  color: #333333;
+  font-weight: 800;
+  font-size: 1.5em;
+  padding: 5px;
+  margin: 0;
+}
+
+.button {
+  border-radius: 8px;
+  width: 3em;
+  height: 3em;
+  font-weight: bold;
+}
+
+#upvote {
+}
+
+#downvote {
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  background: #aaaaaa;
+  margin: 0;
+  padding: 5px;
+  box-shadow: 0 -5px 20px 10px #888888;
+}
+
+.nav-title {
+  font-size: 2em;
+  margin: 0;
+  padding: 0;
+}
+
+nav form {
+  padding: 5px;
+}
+
+nav>form>input {
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.external-form {
+  background: #bbbbbb;
+  padding: 10px;
+}
+
+.external-form input {
+  margin: 3px 0;
+  border-radius: 4px;
+}
+
+.external-form button {
+  margin: 3px;
+  border-radius: 4px;  
 }

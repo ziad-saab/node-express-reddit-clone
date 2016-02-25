@@ -1,5 +1,7 @@
 require('babel-register');
 // Dependencies
+var        request = require('request');
+var        cheerio = require('cheerio');
 var        express = require('express');
 var     bodyParser = require('body-parser');
 var   cookieParser = require('cookie-parser');
@@ -44,9 +46,11 @@ app.use( (req, res, next) => {
   }
 });
 
-  ///////////////
- // Resources //
-///////////////
+  //////////////
+ // Homepage //
+//////////////
+
+// GET
 app.get('/', function(request, response) {
   var sort = request.query.sort || 'top';
   var score;
@@ -78,34 +82,38 @@ app.get('/', function(request, response) {
       ]
     },
     order: [Sequelize.literal('voteScore DESC, id')],
-    limit: 25,
     subQuery: false
   }).then( results => {
-
-    var body = layout.HomePage({
-      posts: results,
-      loggedIn: request.loggedIn
-    });
-
-    response.status(200).send(layout.renderPage(body, 'Reddit Clone'));
+    console.log(results[0].toJSON())
     
+    var homepage = layout.renderPage( 
+      layout.HomePage({posts: results, loggedIn: request.loggedIn}), 'Reddit Clone'
+    );
+    
+    response.status(200).send(homepage);
   }).catch( err => {
     console.log(err);
     response.status(500).send("Unexpected error occured...");
   });
 });
 
+  ///////////
+ // Login //
+///////////
 
-// Login
+// GET
 app.get('/login', function(request, response) {
   if (request.loggedIn) {
     response.send('already logged in');
   }
   else {
-    response.status(200).sendFile('login.html', sendFileOptions);
+    var login = layout.renderPage( layout.Login(), 'Login' );
+    
+    response.status(200).send(login);
   }
 });
 
+// POST
 app.post('/login', function(request, response) {
   if (request.loggedIn) {
     response.send('already logged in');
@@ -143,17 +151,11 @@ app.post('/login', function(request, response) {
   });
 });
 
+  ////////////
+ // Logout //
+////////////
 
-// Logout
-app.get('/logout', function(request, response) {
-  if (request.loggedIn) {
-    response.status(200).sendFile('logout.html', sendFileOptions);
-  }
-  else {
-    response.status(400).send(`not logged in! can't log out!`);
-  }  
-});
-
+// POST
 app.post('/logout', function(request, response) {
   if (request.loggedIn) {
     db.Session.findOne({
@@ -175,17 +177,23 @@ app.post('/logout', function(request, response) {
   }
 });
 
+  ////////////
+ // Signup //
+////////////
 
-// Signup
+// GET
 app.get('/signup', function(request, response) {
   if (request.loggedIn) {
     response.send('already logged in');
   }
   else {
-    response.status(200).sendFile('signup.html', sendFileOptions);
+    var signup = layout.renderPage( layout.Signup(), 'Sign up' );
+    
+    response.status(200).send(signup);
   }
 });
 
+// POST
 app.post('/signup', function(request, response) {
   if (request.loggedIn) {
     response.send('already logged in');
@@ -222,17 +230,23 @@ app.post('/signup', function(request, response) {
   });
 });
 
+  ////////////////////
+ // Create content //
+////////////////////
 
-// Create content
+// GET
 app.get('/create-content', function(request, response) {
   if (request.loggedIn) {
-    response.status(200).sendFile('create-content.html', sendFileOptions);
+    var createContent = layout.renderPage( layout.CreateContent(), 'Create a post' );
+    
+    response.status(200).send(createContent);
   }
   else {
     response.status(400).response(`Can't post if not logged in!`);
   }  
 });
 
+// POST
 app.post('/create-content', function(request, response) {
   if (request.loggedIn) {
     var user = request.loggedIn;
@@ -250,8 +264,11 @@ app.post('/create-content', function(request, response) {
   }     
 });
 
+  /////////////////////
+ // Vote on content //
+/////////////////////
 
-// Vote on content
+// POST
 app.post('/vote', function(request, response) {
   if (request.loggedIn) {
     var user = request.loggedIn;
@@ -260,11 +277,28 @@ app.post('/vote', function(request, response) {
     
     db.Content.findById(contentID)
     .then( content => user.addUpVotes(content, {upVote: isUpVote}) )
-    .then( () => response.status(303).redirect('/') );    
+    .then( () => response.status(303).redirect(request.headers.referer || '/') );    
   }
   else {
     response.status(400).response(`Can't vote if not logged in!`);
   }   
+});
+
+  ///////////////////
+ // Suggest title //
+///////////////////
+
+// GET
+app.get('/suggest', function(req, res) {
+    var url = req.query.url;
+
+    request(url, (err, response, body) => {
+      if (!err && res.statusCode === 200) {
+        var $ = cheerio.load(body);
+
+        res.status(200).send($('title').text());
+      }
+    });
 });
 
 
