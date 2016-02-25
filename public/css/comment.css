@@ -7,7 +7,7 @@
 .commentRow {
   display:flex;
   justify-content: flex-start;
-  align-content: center;
+  align-items: flex-start;
 }
 .allComments {
 }
@@ -26,6 +26,9 @@
   align-content: center;
   align-items: center;
   flex-direction: column;
+}
+.commentUpvote, .commentDownvote {
+  margin: 1px 0px;
 }
 .commentContent {
   display:flex;

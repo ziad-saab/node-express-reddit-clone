@@ -2,9 +2,7 @@ var React = require('react');
 
 function contentRow(content, vote, submitter, votescore) {
   var upvote = "/images/grey-upvote.png";
-  var upvotelink = "/upvote/" + content.id;
   var downvote = "/images/grey-downvote.png";
-  var downvotelink = "/downvote/" + content.id;
   var comments = "/link/" + content.id + "/comments";
   if (vote === true) {
     upvote = "/images/green-upvote.png";
