@@ -35,19 +35,29 @@ function createNewComment(sessionId, contentId, parentCommentId, text) {
 
 //Gets a content and all comments associated with the content, up to a nested
 //depth of 10
-function getContentAndComments(sessionId, contentId) {
+function getContentAndCommentsForSession(sessionId, contentId) {
+  return dbinit.then(function(initDB) {
+    return getUserFromSessionId(sessionId)
+    .then(function(user) {
+      return getContentAndCommentsForUser(user.toJSON(), contentId);
+    })
+    .catch(function(e) {
+      return getContentAndCommentsForUser({}, contentId);
+    });
+  });
+};
+
+function getContentAndCommentsForUser(user, contentId) {
   return dbinit.then(function(initDB) {
     return Promise.all([
-      getUserFromSessionId(sessionId),
       initDB.Content.findById(contentId),
       getCommentsForContent(contentId),
       getContentVoteScore(contentId)
     ])
     .then(function(response) {
-      var user = response[0];
-      var content = response[1]
-      var comments = response[2];
-      var votescore = response[3];
+      var content = response[0]
+      var comments = response[1];
+      var votescore = response[2];
       var findVote = initDB.Vote.findOne({
         where: {
           userId: user.id,
@@ -56,18 +66,21 @@ function getContentAndComments(sessionId, contentId) {
       })
       return Promise.all([findVote, content.getUser()])
       .then(function(response) {
+        var vote = {};
+        if (response[0])
+        vote = response[0].toJSON();
         return {
-          user: user.toJSON(),
+          user: user,
           submitter: response[1].toJSON(),
           content: content.toJSON(),
           comments: comments,
-          vote: response[0].toJSON(),
+          vote: vote,
           votescore: votescore
         }
       });
     });
   });
-};
+}
 
 //provides a nested comment query with a depth of n
 function getNCommentLevels(n, initDB) {
@@ -97,6 +110,6 @@ function getCommentsForContent(contentId) {
 }
 
 module.exports = {
-  getContentAndComments: getContentAndComments,
+  getContentAndComments: getContentAndCommentsForSession,
   createNewComment: createNewComment
 }
