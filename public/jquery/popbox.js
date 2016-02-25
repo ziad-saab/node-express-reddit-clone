@@ -8,6 +8,10 @@ $(document).ready(function() {
         //Fade in the Popup
         $(".signupbox").fadeIn(300);
 
+        //apply the mask which will grey out background
+        $('body').append('<div id="mask"></div>');
+        $('#mask').fadeIn(300);
+
     });
     $('a.login').click(function() {
         //hide loginbox if it has been clicked
@@ -17,6 +21,15 @@ $(document).ready(function() {
         $(".loginbox").css("left", placement);
         //Fade in the Popup
         $(".loginbox").fadeIn(300);
-        
+
+        //apply the mask which will grey out background
+        $('body').append('<div id="mask"></div>');
+        $('#mask').fadeIn(300);
+    });
+
+    $('a.close, #mask').live('click', function() {
+        $('#mask , .signupbox, .loginbox').fadeOut(300 , function() {
+          $('#mask').remove();
+        });
     });
 });

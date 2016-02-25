@@ -86,7 +86,7 @@ function HomePage(user, contents, type, page) {
       <div className="popbox signupbox">
         <div className='form'>
           <div className='formheading'>Sign Up!</div>
-
+          <a class="close"><img src="/images/close-button.png" class="btn_close" title="Close Window" alt="Close" /></a>
           <form action="/SignUp" method="post">
             <label htmlFor="username"><span>Username <span className="required">*</span></span><input type="text" className="input-field" name="username" value="" maxLength="20"/></label>
             <label htmlFor="email"><span>Email </span><input type="text" className="input-field" name="email" value="" maxLength="50"/></label>
@@ -100,7 +100,7 @@ function HomePage(user, contents, type, page) {
        <div className="popbox loginbox">
          <div className='form'>
             <div className='formheading'>Login</div>
-
+            <a href="#" class="close"><img src="/images/close_button.png" class="btn_close" title="Close Window" alt="Close" /></a>
             <form action="/Login" method="post">
               <label htmlFor="username"><span>Username <span className="required">*</span></span><input type="text" className="input-field" name="username" value="" maxLength="20"/></label>
               <label htmlFor="password"><span>Password <span className="required">*</span></span><input type="password" className="input-field" name="password" value="" maxLength="50"/></label>
