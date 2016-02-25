@@ -1,38 +1,19 @@
 var React = require('react');
 var Nav = require('./react-nav');
+var contentRow = require('./react-contentRow');
 
 function Post(content) {
-  var upvote = "/images/grey-upvote.png";
-  var upvotelink = "/upvote/" + content.id;
-  var downvote = "/images/grey-downvote.png";
-  var downvotelink = "/downvote/" + content.id;
-  var comments = "/link/" + content.id + "/comments";
-  if (content.upvote === 1) {
-    upvote = "/images/green-upvote.png";
-  } else if (content.upvote === 0){
-    downvote = "/images/red-downvote.png";
-  }
+  var vote;
+  if (content.upvote === 1)
+  vote = true;
+
+  else if (content.upvote === 0)
+  vote = false;
+
+  var row = contentRow(content, vote, content.submitter, content.votescore);
   return (
     <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
-      <div className="contentRow">
-        <div className="contentVotescore">
-          <input className="upvote" data-content={content.id} type="image" src={upvote}/>
-          <p className="votescore">{content.votescore}</p>
-          <input className="downvote" data-content={content.id} type="image" src={downvote}/>
-        </div>
-        <div className="contentContent">
-          <div className="contentTitle">
-            <a className="contentpost" href={content.url}>{content.title}</a>
-          </div>
-          <div className="contentMetaData">
-            <div className="submissionInfo">
-              <a className="metatext">Post by {content.submitter}</a>
-              <a className="metatext">{content.createdAt.toString()}</a>
-            </div>
-            <a className="metalink" href={comments}>Comments</a>
-          </div>
-        </div>
-      </div>
+      {row}
     </li>
   )
 }

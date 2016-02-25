@@ -1,0 +1,57 @@
+
+.contentRow {
+  display:flex;
+  justify-content: flex-start;
+  align-content: center;
+  margin: 10px 0px;
+}
+.contentVotescore {
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.contentContent {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contentTitle {
+  display:flex;
+}
+
+.contentMetaData {
+  display:flex;
+  flex-direction: column;
+}
+
+.contentpost:link {
+  text-decoration: none;
+  color: #ff9900;
+  font-weight: bold;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.contentpost:visited {
+  text-decoration: none;
+  color: #ffc266;
+  font-weight: bold;
+  font-size: 20px;
+  padding-left: 30px;
+}
+.metatext, .metalink {
+  color: #808080;
+  padding: 0px 10px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.metalink {
+  font-weight: bold;
+  cursor: pointer;
+}
+.metalink:hover {
+  text-decoration: underline;
+}
