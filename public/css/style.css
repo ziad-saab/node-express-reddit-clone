@@ -11,11 +11,11 @@
     font-size: 15px;
     padding-bottom: 3px;
 }
-.form label{
+.form div{
     display: block;
     margin: 0px 0px 15px 0px;
 }
-.form label > span{
+.form div > span{
     width: 100px;
     font-weight: bold;
     float: left;
@@ -27,7 +27,7 @@
 }
 
 .form input.input-field{
-    width: 48%;
+    width: 50%;
 }
 
 .form input.input-field{
@@ -44,7 +44,7 @@
     padding: 7px;
     outline: none;
 }
-.form .input-field:focus, 
+.form .input-field:focus,
 
 .form input[type=submit],
 .form input[type=button]{
@@ -63,13 +63,13 @@
 .form input[type=button]:hover{
     background: #EA7B00;
     color: #fff;
+    cursor: pointer;
 }
 
-#error {
-    padding-bottom: 5px;
+.error {
+    padding-bottom: 10px;
     color: red;
     font-weight: bold;
     font-family: Arial, Helvetica;
+    display: block;
 }
-
-

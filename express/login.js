@@ -13,7 +13,7 @@ app.post('/Login', function(request, response){
     })
     .catch(function(e){
         if(e.message === database.INVALID_PASSWORD || e.message === database.USR_NOT_FOUND){
-            response.redirect('/Login?error=Invalid Username or Password');
+            response.status(400).send('Invalid Username or Password');
         }
         else throw e;
     });
