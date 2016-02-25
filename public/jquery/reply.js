@@ -12,7 +12,7 @@ function hideReplyBox() {
 }
 
 function showReplyBox() {
-  var replyBox = $(this).parent().parent().parent().parent().parent().find(".hiddenReplyBox");
+  var replyBox = $(this).closest(".commentNest").find(".hiddenReplyBox");
   replyBox.first().css("display","flex");
 }
 
@@ -42,19 +42,18 @@ function submitReply() {
     '<div class="commentNest"> \
       <div class="commentRow" key=' + data.comment.id + '> \
         <div class="commentVotescore"> \
-          <input class="upvote" data-content=' + data.comment.id + ' type="image" src="/images/grey-upvote.png"/> \
-          <p class="votescore">0</p> \
-          <input class="downvote" data-content=' + data.comment.id + ' type="image" src="/images/grey-downvote.png"/> \
+          <input class="commentUpvote" data-comment=' + data.comment.id + ' type="image" src="/images/grey-upvote.png"/> \
+          <input class="commentDownvote" data-comment=' + data.comment.id + ' type="image" src="/images/grey-downvote.png"/> \
         </div> \
         <div class="commentContent"> \
-          <a class="commentText">' + data.comment.text + '</a> \
           <div class="commentMeta"> \
             <div class="submissionInfo"> \
               <a class="metatext">Post by ' + data.user.username + '</a> \
               <a class="metatext">' + data.comment.createdAt.toString() + '</a> \
-              <a class="metalink reply">reply</a> \
             </div> \
           </div> \
+          <a class="commentText">' + data.comment.text + '</a> \
+          <a class="metalink reply">reply</a> \
         </div> \
       </div> \
       <div class="hiddenReplyBox" data-content=' + data.content.id + ' data-comment=' + data.comment.id + '> \

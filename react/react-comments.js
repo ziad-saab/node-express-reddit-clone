@@ -5,6 +5,14 @@ var contentRow = require('./react-contentRow');
 function renderComment(comment) {
   var upvote = "/images/grey-upvote.png";
   var downvote = "/images/grey-downvote.png";
+  var vote;
+  if (comment.usercommentvotes.length > 0)
+  vote = comment.usercommentvotes[0].upVote;
+  if (vote === true) {
+    upvote = "/images/green-upvote.png";
+  } else if (vote === false){
+    downvote = "/images/red-downvote.png";
+  }
   var children = [];
   if (comment.children)
   var children = comment.children.map(function(child) {
@@ -14,19 +22,18 @@ function renderComment(comment) {
     <div className="commentNest">
       <div className="commentRow" key={comment.id}>
         <div className="commentVotescore">
-          <input className="commentUpvote" data-content={comment.id} type="image" src={upvote}/>
-          <p className="votescore">0</p>
-          <input className="commentDownvote" data-content={comment.id} type="image" src={downvote}/>
+          <input className="commentUpvote" data-comment={comment.id} type="image" src={upvote}/>
+          <input className="commentDownvote" data-comment={comment.id} type="image" src={downvote}/>
         </div>
         <div className="commentContent">
-          <a className="commentText">{comment.text}</a>
           <div className="commentMeta">
             <div className="submissionInfo">
               <a className="metatext">Post by {comment.user.username}</a>
               <a className="metatext">{comment.createdAt.toString()}</a>
-              <a className="metalink reply">reply</a>
             </div>
           </div>
+          <a className="commentText">{comment.text}</a>
+          <a className="metalink reply">reply</a>
         </div>
       </div>
 
@@ -61,6 +68,7 @@ function renderComment(comment) {
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
           <script src="/jquery/reply.js"></script>
           <script src="/jquery/logvote.js"></script>
+          <script src="/jquery/logcommentvote.js"></script>
           <script src="/jquery/popbox.js"></script>
         </head>
         <body>
