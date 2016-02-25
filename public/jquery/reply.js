@@ -42,9 +42,8 @@ function submitReply() {
     '<div class="commentNest"> \
       <div class="commentRow" key=' + data.comment.id + '> \
         <div class="commentVotescore"> \
-          <input class="upvote" data-content=' + data.comment.id + ' type="image" src="/images/grey-upvote.png"/> \
-          <p class="votescore">0</p> \
-          <input class="downvote" data-content=' + data.comment.id + ' type="image" src="/images/grey-downvote.png"/> \
+          <input class="commentUpvote" data-comment=' + data.comment.id + ' type="image" src="/images/grey-upvote.png"/> \
+          <input class="commentDownvote" data-comment=' + data.comment.id + ' type="image" src="/images/grey-downvote.png"/> \
         </div> \
         <div class="commentContent"> \
           <div class="commentMeta"> \
