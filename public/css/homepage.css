@@ -5,6 +5,10 @@
   display: flex;
   justify-content: space-between;
 }
+.numberedRow {
+  display: flex;
+  align-items: center;
+}
 .contentButton {
   display: inline-block;
   overflow: hidden;

@@ -13,7 +13,10 @@ function Post(content) {
   var row = contentRow(content, vote, content.submitter, content.votescore);
   return (
     <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
-      {row}
+      <div className="numberedRow">
+        <a>1</a>
+        {row}
+      </div>
     </li>
   )
 }
@@ -74,11 +77,9 @@ function HomePage(user, contents, type, page) {
     <body>
       {nav}
       <main className="contents">
-        <ul className="contents-list">
-          <span id="contentList">
-            {posts}
-          </span>
-        </ul>
+        <ol className="contents-list">
+          {posts}
+        </ol>
         <div className="sidebar">
           <a href="/CreateContent" className="contentButton">Submit Link</a>
         </div>
