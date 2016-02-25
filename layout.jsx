@@ -8,9 +8,9 @@ function renderPage(component, title) {
       {component}
     </Layout>
   );
-  
+
   var html = ReactDOMServer.renderToStaticMarkup(jsx);
-  
+
   return '<!doctype html>' + html;
 }
 
@@ -20,7 +20,7 @@ function Layout (data) {
       <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <script src="js/client.js"></script>
-        <link type="text/css" rel="stylesheet" href="css/style.css"/> 
+        <link type="text/css" rel="stylesheet" href="css/style.css"/>
         <title>{data.title}</title>
       </head>
       <body>
@@ -34,11 +34,11 @@ function HomePage (data) {
   var postsList = data.posts.map( item => {
     return (
       <li key={item.id}>
-        <Post title = {item.title} 
+        <Post title = {item.title}
               url = {item.url}
               contentID = {item.id}
               createdAt = {item.createdAt}
-              creator = {item.user} 
+              creator = {item.user}
               loggedIn = {data.loggedIn}
               voteScore = {item.get('voteScore')}
               voteDiff = {item.get('voteDiff')} />
@@ -68,7 +68,7 @@ function Post (data) {
           <input type='hidden' name='contentID' value={data.contentID} />
         </form>
       </section>
-    : 
+    :
       null
     }
       <section className='post-details'>
@@ -137,9 +137,9 @@ function CreateContent () {
     <main className='external-form'>
       <h4> Create a post </h4>
       <form action="/create-content" method="POST">
-        <input type="text" id="title-field" name="title" placeholder=" title"/> 
+        <input type="text" id="title-field" name="title" placeholder=" title"/>
         <br/>
-        <input type="text" id="url-field" name="url" placeholder=" URL"/> 
+        <input type="text" id="url-field" name="url" placeholder=" URL"/>
         <button id="suggest-button" type="button" name="suggest"> Suggest a title... </button>
         <br/>
         <input type="submit" name="submit" value="Post content..."/>
@@ -156,4 +156,3 @@ module.exports = {
   Signup: Signup,
   CreateContent: CreateContent
 };
-  

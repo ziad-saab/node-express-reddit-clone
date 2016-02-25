@@ -54,11 +54,12 @@ app.use( (req, res, next) => {
 app.get('/', function(request, response) {
   var sort = request.query.sort || 'top';
   var score;
-  var voteDiff = fn('SUM', fn('IF', col('votes.upVote'), 1, -1));
+  var voteDiff = fn('SUM', fn('COALESCE', col('votes.upVote'), 0));
+  // var voteDiff = Sequelize.literal('SUM(IF(votes.upVote = 1, 1, IF(votes.upVote = 0, -1, 0)))');
   var dateDiff = Sequelize.literal('(TIMESTAMPDIFF(SECOND, NOW(), content.createdAt) / 1000000)');
 
   switch (sort) {
-    case 'top': 
+    case 'top':
       score = voteDiff;
       break;
     case 'hot':
@@ -86,11 +87,11 @@ app.get('/', function(request, response) {
   })
   .then( results => {
     console.log(results[0].toJSON())
-    
-    var homepage = layout.renderPage( 
+
+    var homepage = layout.renderPage(
       layout.HomePage({posts: results, loggedIn: request.loggedIn}), 'Reddit Clone'
     );
-    
+
     response.status(200).send(homepage);
   })
   .catch( err => {
@@ -110,7 +111,7 @@ app.get('/login', function(request, response) {
   }
   else {
     var login = layout.renderPage( layout.Login(), 'Login' );
-    
+
     response.status(200).send(login);
   }
 });
@@ -121,10 +122,10 @@ app.post('/login', function(request, response) {
     response.send('already logged in');
     return;
   }
-  
+
   var name = request.body.username;
   var pass = request.body.password;
-  
+
   db.User.findOne({
     where: { username: name }
   })
@@ -190,7 +191,7 @@ app.get('/signup', function(request, response) {
   }
   else {
     var signup = layout.renderPage( layout.Signup(), 'Sign up' );
-    
+
     response.status(200).send(signup);
   }
 });
@@ -201,16 +202,16 @@ app.post('/signup', function(request, response) {
     response.send('already logged in');
     return;
   }
-  
+
   var name = request.body.username;
   var pass = request.body.password;
   var passConfirm = request.body.passwordConfirm;
-  
+
   if (pass !== passConfirm) {
     response.send("passwords don't match!");
     return;
   }
-  
+
   db.User.create({
     username: name,
     password: pass
@@ -240,12 +241,12 @@ app.post('/signup', function(request, response) {
 app.get('/create-content', function(request, response) {
   if (request.loggedIn) {
     var createContent = layout.renderPage( layout.CreateContent(), 'Create a post' );
-    
+
     response.status(200).send(createContent);
   }
   else {
     response.status(400).response(`Can't post if not logged in!`);
-  }  
+  }
 });
 
 // POST
@@ -254,7 +255,7 @@ app.post('/create-content', function(request, response) {
     var user = request.loggedIn;
     var title = request.body.title;
     var url = request.body.url;
-    
+
     user.createContent({
       title: title,
       url: url
@@ -263,7 +264,7 @@ app.post('/create-content', function(request, response) {
   }
   else {
     response.status(400).response(`Can't post if not logged in!`);
-  }     
+  }
 });
 
   /////////////////////
@@ -275,15 +276,15 @@ app.post('/vote', function(request, response) {
   if (request.loggedIn) {
     var user = request.loggedIn;
     var contentID = request.body.contentID;
-    var isUpVote = request.body.upvote ? true : false;
-    
+    var isUpVote = request.body.upvote ? 1 : -1;
+
     db.Content.findById(contentID)
     .then( content => user.addUpVotes(content, {upVote: isUpVote}) )
-    .then( () => response.status(303).redirect(request.headers.referer || '/') );    
+    .then( () => response.status(303).redirect(request.headers.referer || '/') );
   }
   else {
     response.status(400).response(`Can't vote if not logged in!`);
-  }   
+  }
 });
 
   ///////////////////
@@ -305,4 +306,4 @@ app.get('/suggest', function(req, res) {
 
 
 // Listen
-app.listen(process.env.PORT);
+app.listen(8080);

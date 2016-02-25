@@ -2,13 +2,13 @@ var Sequelize = require("sequelize");
 var bcrypt = require('bcrypt');
 
 
-var db = new Sequelize('reddit_clone', 'philraj', null, {
+var db = new Sequelize('reddit_clone', 'phil', null, {
   dialect: 'mysql'
 });
 
 var User = db.define('user', {
   username: {
-    type: Sequelize.STRING, 
+    type: Sequelize.STRING,
     unique: true
   },
   passhash: Sequelize.STRING,
@@ -30,7 +30,7 @@ var Content = db.define('content', {
 });
 
 var Vote = db.define('vote', {
-  upVote: Sequelize.BOOLEAN
+  upVote: Sequelize.INTEGER
 });
 
 var Session = db.define('session', {
@@ -45,14 +45,13 @@ Content.belongsToMany(User, {through: Vote});
 Content.hasMany(Vote);
 Vote.belongsTo(Content);
 
-User.hasMany(Session); 
+User.hasMany(Session);
 Session.belongsTo(User);
 
 
 db.sync({
   // force: true
 });
-
 // createNewUser('test', 'abc123');
 
 //sequelize helper functions
@@ -81,7 +80,7 @@ db.sync({
 //   .then( function (val) {
 //     var user = val[0];
 //     var content = val[1];
-    
+
 //     user.addUpVotes(content, {
 //       upVote: isUpVote
 //     });
@@ -95,4 +94,3 @@ module.exports = {
   Session: Session,
   Sequelize: Sequelize
 }
-
