@@ -253,5 +253,23 @@ body {
     color: white;
     font-weight: bold;
     border-radius: 5px;
+}
 
+/*To mask background when a popbox is showing*/
+#mask {
+    display: none;
+    background: #000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    z-index: 999;
+}
+
+img.btn_close {
+    float: right;
+    margin: -28px -28px 0 0;
 }
