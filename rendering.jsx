@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOMServer = require('react-dom/server');
+var moment = require('moment')
 
 
 function renderHtml(jsxStructure) {
@@ -11,14 +12,24 @@ function Layout(data) {
   return (
     <html>
         <section>
-            <nav>
-                <head>
-                    <link rel="stylesheet" type="text/css" href="style.css"></link>
-                        <title>{data.title}</title>
-                </head>
-            </nav>
+            <head>
+                <link rel="stylesheet" type="text/css" href="style.css"></link>
+                <link href='https://fonts.googleapis.com/css?family=Raleway:400,700|Indie+Flower' rel='stylesheet' type='text/css'></link>
+                <link rel="stylesheet" href="/font-awesome-4.5.0/css/font-awesome.min.css" type='text/css'></link>
+                    <title>{data.title}</title>
+            </head>
             <body>
-                {data.children}
+            <header><h1 className='banner'>Sounding board</h1></header>
+                <nav>
+                    <ul className="nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/createContent">Share</a></li>
+                        <li><a href="/login">Login</a></li>
+                    </ul>
+                </nav>
+                    {data.children}
+                <script type = "text/javascript" src="https://code.jquery.com/jquery-1.12.1.js"></script>
+                <script type = "text/javascript" src= 'app.js'></script>
             </body>
         </section>
     </html>
@@ -37,7 +48,7 @@ function renderLogin(data){
             <div>
                 <input type="password" name="password" placeholder="Enter your Password"/>
             </div>
-            <button type="submit">Login!</button>
+            <button type="submit"><i className="fa fa-sign-in"></i></button>
             </form>
         </Layout>
         );
@@ -57,7 +68,7 @@ function renderSignup(data){
             <div>
                 <input type="password" name="password" placeholder="Enter a Password"/>
             </div>
-            <button type="submit">Signup!</button>
+            <button type="submit"><i className="fa fa-sign-in"></i></button>
             </form>
         </Layout>
         );
@@ -72,12 +83,15 @@ function renderCreateContent(data){
             <form action="/createContent" method="post">
             {data.error && <div>{data.error}</div>}
             <div>
-                <input type="text" name="url" placeholder="Enter a URL"/>
+                <input id="url" type="text" name="url" placeholder="Enter a URL"/>
             </div>
             <div>
-                <input type="text" name="title" placeholder="Enter a Post Title"/>
+                <input id= 'postTitle' type="text" name="title" placeholder="Enter a Post Title"/>
             </div>
-            <button type="submit">Submit!</button>
+            <input type='button' id="suggestTitle" value ='Suggest title'/>
+            <div>
+            <button type="submit"><i className="fa fa-sign-in"></i></button>
+            </div>
             </form>
         </Layout>
         );
@@ -89,7 +103,7 @@ function renderHomepage(data) {
     var structure = (
     <Layout>
         <div id="contents">
-        <h1>List of contents</h1>
+        <h1 className="table-name">Posts</h1>
         <ul className="contents-list">
         
          {data.map(function(item) {
@@ -99,19 +113,22 @@ function renderHomepage(data) {
                     <h2 className="content-item__title">
                         <a href={item.url}>{item.title}</a>
                     </h2>
-                    <p className="content-item__user"> {item.user.username}</p>
+                    <div className="content-details">
+                        <p className="content-item__user"> {item.user.username}</p>
+                        <p className="content-item__time"> {moment(item.createdAt).format('MMMM Do YYYY')}</p>
+                    </div>
                 </div>
                 <div className="full-form">
                     <form className="form" action="/voteContent" method="post">
                         <input type="hidden" name="upVote" value="true"/>
                         <input type="hidden" name="contentId" value={item.id}/>
-                        <button type="submit">Upvote this!</button>
+                        <button type="submit"><i className="fa fa-thumbs-o-up"></i></button>
                     </form>
-                    <p className="form">{item.dataValues.voteScore ? item.dataValues.voteScore : 0}</p>
+                    <p className="form vote-value">{item.dataValues.voteScore ? item.dataValues.voteScore : 0}</p>
                     <form className="form" action="/voteContent" method="post">
                         <input type="hidden" name="upVote" value="false"/>
                         <input type="hidden" name="contentId" value={item.id}/>
-                        <button type="submit">Downvote this!</button>
+                        <button type="submit"><i className="fa fa-thumbs-o-down"></i></button>
                     </form>
                 </div>
             </li>

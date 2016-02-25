@@ -2,14 +2,18 @@
 require('babel-register');
 var render = require("./rendering.jsx");
 var Models = require('./models/index.js');
+//Express
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+//Other dependencies 
 var secureRandom = require('secure-random');
 var Sequelize = require('sequelize');
 var mysql = require('mysql');
 var bcrypt = require('bcrypt');
+var _request=require('request')
+var cheerio=require('cheerio')
 
 
 function checkLoginToken(request, response, next) {
@@ -39,6 +43,7 @@ function checkLoginToken(request, response, next) {
 
 //Middlware
 app.use(express.static('css'))
+app.use(express.static('js'))
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -72,7 +77,7 @@ app.get('/', function(request, response) {
 });
 
 app.post('/voteContent', function(request, response) {
-    if (request.loggedInUser.id) {
+    if (request.loggedInUser) { //displays full object rather, not on the body
         Models.votes.findOne({
             where: {
                 userId: request.loggedInUser.id,
@@ -128,7 +133,7 @@ app.post('/login/', function(request, response) {
     }).then(
         function(user) {
             if (!user) {
-                response.redirect('/login?error=You must sign up!');
+                response.redirect('/signup?error=You must sign up!');
             }
             else {
                 var isPasswordOk = bcrypt.compareSync(password, user.passwordHash)
@@ -188,6 +193,21 @@ app.get('/createContent', function(request, response) {
 
 });
 
+app.get('/titleRequest/:url' , function(request, response){
+    var url = request.params.url
+    _request(url, function(err, res, body){
+        if (err){
+            console.log ("Error")
+        }
+        else{
+            var $ = cheerio.load(body)
+            var title = $('title').html()
+            response.send(title);
+        }
+        
+    })
+})
+
 app.post('/createContent', function(request, response) {
     if (!request.loggedInUser) {
         response.status(401).redirect('/login?error=You must be logged in to create content!');
@@ -205,4 +225,6 @@ app.post('/createContent', function(request, response) {
     }
 });
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT, function() {
+    console.log('web server started');
+});
