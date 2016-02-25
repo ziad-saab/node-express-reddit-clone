@@ -5,6 +5,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var bcrypt = require('bcrypt');
+var cheerio = require('cheerio');
+var request = require('request');
 
 
 ///react ///
@@ -15,7 +17,7 @@ var layout = require('./rendering.jsx')
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(cookieParser());
 app.use(checkLoginToken)
-app.use(express.static('css'));
+app.use(express.static('public'));
 
 
 //session cookie check
@@ -89,45 +91,6 @@ Content.hasMany(UpVote);
 
 
 
-
-//////HOME PAGE/////
-app.get('/',function(req,res){
-    res.redirect(301, '/new')
-});
-
-app.get('/:order',function(req,res){
-    var order = [];
-    console.log(req.params)
-    switch (req.params.order){
-        case 'hot':
-            order = [Sequelize.literal('voteScore DESC')];
-            break;
-        case 'new':
-            order = [Sequelize.literal('content.createdAt DESC')];
-            break;
-        default:
-            break;
-    } 
-    Content.findAll(
-        {
-            include: [{model: UpVote, attributes: []}, User],
-            group: 'content.id',
-            attributes: {
-                include: [
-                    [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('upvotes.upvote'), 1, -1)), 'voteScore']
-                ]
-            },
-            order: order
-}
-        
-        ).then( function(data){
-            
-          res.send(layout.renderHomePage(data))
-        } 
-            )
-        
-});
-
 //////CREATE CONTENT/////
 app.get('/createContent', function(req,res){
     res.send(layout.renderCreateContent());
@@ -199,7 +162,6 @@ app.post('/signIn', function(req, res) {
 
 
 app.post('/voteContent', function(req,res) {
-    console.log('TESTING TESTING' + JSON.stringify(req.body))
     UpVote.findOne({
         where: {
             userId: req.loggedInUser.id,
@@ -220,6 +182,54 @@ app.post('/voteContent', function(req,res) {
                     res.redirect('/')
                 })
 })
+
+////SUGGEST TITLE /////
+app.get('/userReq', function(req, res){
+    request(req.query.url, function (error, response, body) {
+    var $ = cheerio.load(body);
+    var title = $("title").text()
+    res.send(title)
+})
+})
+
+
+//////HOME PAGE/////
+app.get('/',function(req,res){
+    res.redirect(301, '/new')
+});
+
+app.get('/:order',function(req,res){
+    var order = [];
+    switch (req.params.order){
+        case 'hot':
+            order = [Sequelize.literal('voteScore DESC')];
+            break;
+        case 'new':
+            order = [Sequelize.literal('content.createdAt DESC')];
+            break;
+        default:
+            break;
+    } 
+    Content.findAll(
+        {
+            include: [{model: UpVote, attributes: []}, User],
+            group: 'content.id',
+            attributes: {
+                include: [
+                    [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('upvotes.upvote'), 1, -1)), 'voteScore']
+                ]
+            },
+            order: order
+}
+        
+        ).then( function(data){
+            
+          res.send(layout.renderHomePage(data))
+        } 
+            )
+        
+});
+
 
 
 

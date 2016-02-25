@@ -12,7 +12,7 @@ function Layout(data){
     <html>
         <head>
             <title>{data.title}</title>
-            <link href='app.css' rel="stylesheet" type="text/css"/>
+            <link href='css/app.css' rel="stylesheet" type="text/css"/>
             <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'/>
             <link href='https://fonts.googleapis.com/css?family=Merriweather:700,300,400italic' rel='stylesheet' type='text/css'/>
         </head>
@@ -20,12 +20,14 @@ function Layout(data){
             <div>
                 <logo><a href='/'>reddit</a></logo>
             <nav>
-                <li><a className="selectedTab" href='hot'>hot</a></li>
-                <li><a href='new'>new</a></li>
-                <li><a href='controversial'>controversial</a></li>
+                <li><a id='hot' href='/hot'>hot</a></li>
+                <li><a id='new' href='/new'>new</a></li>
+                <li><a id='con' href='/con'>controversial</a></li>
             </nav>
             </div>
             {data.children}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+            <script src='main.js'></script>
         </body>
     </html>
 );
@@ -53,7 +55,7 @@ function Post(data) {
 }
 ////// HOMEPAGE ///////
 function renderHomePage (data) {
-    
+
     var postList = data.map(function(item){
         return (
             <Post title={item.title} url={item.url} contentId={item.id} user={item.user.username} date={item.createdAt.toString()} popularity={item.dataValues.voteScore}/>
@@ -61,7 +63,7 @@ function renderHomePage (data) {
     });
     var result = (
         <div>
-            <h1>project repository</h1>
+            <h1>List of contents</h1>
             
             <ul>
                 {postList}
@@ -121,8 +123,9 @@ function renderCreateContent (date){
     var form = ( 
        <form action="createContent" method="post">
         <h1>Create Content</h1>
-        <input type='text' name='title' placeholder='Please enter a title'/>
-        <input type='text' name='url' placeholder='please enter a url'/>
+        <input type='text' id='theTitle' name='title' placeholder='Please enter a title'/>
+        <input type='text' id='theUrl' name='url' placeholder='please enter a url'/>
+        <button type='button' id='sugg'>Suggest title</button>
         <button type='submit'>Submit</button>
         </form> 
     )
