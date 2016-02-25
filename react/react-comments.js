@@ -40,7 +40,7 @@ function renderComment(comment) {
       {children}
     </div>
   )};
-  
+
   function Comments(user, submitter, content, comments, vote, votescore){
     var nav;
     if (user)
@@ -61,6 +61,7 @@ function renderComment(comment) {
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
           <script src="/jquery/reply.js"></script>
           <script src="/jquery/logvote.js"></script>
+          <script src="/jquery/popbox.js"></script>
         </head>
         <body>
           {nav}
