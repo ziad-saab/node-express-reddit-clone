@@ -269,7 +269,26 @@ body {
     z-index: 999;
 }
 
-img.btn_close {
+a.close{
+    display: block;
     float: right;
-    margin: -28px -28px 0 0;
+    position: relative;
+    top: 0;
+    right: 0;
+    padding: 0px;
+    margin: 0px;
+}
+
+a.close:hover {
+  cursor:pointer
+}
+
+img.btn_close {
+    width: 50px;
+    height: 50px;
+    top: 0;
+    right: 0;
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid black;
 }

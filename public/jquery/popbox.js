@@ -11,7 +11,6 @@ $(document).ready(function() {
         //apply the mask which will grey out background
         $('body').append('<div id="mask"></div>');
         $('#mask').fadeIn(300);
-
     });
     $('a.login').click(function() {
         //hide loginbox if it has been clicked
@@ -27,7 +26,7 @@ $(document).ready(function() {
         $('#mask').fadeIn(300);
     });
 
-    $('a.close, #mask').live('click', function() {
+    $('a.close, #mask').click(function() {
         $('#mask , .signupbox, .loginbox').fadeOut(300 , function() {
           $('#mask').remove();
         });
