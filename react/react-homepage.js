@@ -85,7 +85,7 @@ function HomePage(user, contents, type, page) {
       </main>
 
       <div className="popbox signupbox">
-        <a className="close"><img src="/images/orange-close.png" className="btn_close" title="Close Window" alt="Close"/></a>
+        <a className="close"><img src="/images/orange-close-25.png" className="btn_close" title="Close Window" alt="Close"/></a>
         <div className='form'>
           <div className='formheading'>Sign Up!</div>
           <form action="/SignUp" method="post">
