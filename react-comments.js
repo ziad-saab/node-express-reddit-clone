@@ -9,29 +9,34 @@ function renderComment(comment) {
   var children = comment.children.map(function(child) {
     return renderComment(child);
   });
-return (
-  <div className="commentNest">
-    <div className="commentRow" key={comment.id}>
-    <div className="commentVotescore">
-      <input className="upvote" data-content={comment.id} type="image" src={upvote}/>
-      <p className="votescore">0</p>
-      <input className="downvote" data-content={comment.id} type="image" src={downvote}/>
-    </div>
-    <div className="commentContent">
-      <a className="commentText">{comment.text}</a>
-      <div className="commentMeta">
-        <div className="submissionInfo">
-          <a className="metatext">Post by {comment.user.username}</a>
-          <a className="metatext">{comment.createdAt.toString()}</a>
-          <a className="metalink reply" data-content={comment.contentId} data-comment={comment.id}>reply</a>
+  return (
+    <div className="commentNest">
+      <div className="commentRow" key={comment.id}>
+        <div className="commentVotescore">
+          <input className="upvote" data-content={comment.id} type="image" src={upvote}/>
+          <p className="votescore">0</p>
+          <input className="downvote" data-content={comment.id} type="image" src={downvote}/>
+        </div>
+        <div className="commentContent">
+          <a className="commentText">{comment.text}</a>
+          <div className="commentMeta">
+            <div className="submissionInfo">
+              <a className="metatext">Post by {comment.user.username}</a>
+              <a className="metatext">{comment.createdAt.toString()}</a>
+              <a className="metalink reply">reply</a>
+            </div>
+          </div>
         </div>
       </div>
+
+      <div className="hiddenReplyBox" data-content={comment.contentId} data-comment={comment.id}>
+        <textarea className="replyTextBox" type="text"/>
+        <a className="replySaveButton">save</a>
+      </div>
+      {children}
     </div>
-    </div>
-  {children}
-</div>
-)};
-function Comments(user, content, comments){
+  )};
+  function Comments(user, content, comments){
     var nav;
     if (user)
     nav = Nav(user.username, []);
@@ -43,38 +48,33 @@ function Comments(user, content, comments){
 
     return (
       <html>
-      <head>
-        <meta charSet="utf-8"/>
-        <link href="/css/comment.css" rel="stylesheet" type="text/css"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-        <script src="/jquery/reply.js"></script>
-      </head>
-      <body>
-        {nav}
-        <main className="contents">
-        <section>
-          <a className="contentpost" href={content.url}>{content.title}</a>
-          <ul className="contents-list">
-            <span id="contentList">
+        <head>
+          <meta charSet="utf-8"/>
+          <link href="/css/comment.css" rel="stylesheet" type="text/css"/>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+          <script src="/jquery/reply.js"></script>
+        </head>
+        <body>
+          {nav}
+          <main className="contents">
+            <div className="pageBody">
+              <a className="contentpost" href={content.url}>{content.title}</a>
               <div className="replyBox" data-content={content.id} data-comment>
                 <textarea className="replyTextBox" type="text"/>
                 <a className="replySaveButton">save</a>
               </div>
 
               <div className="allComments">
-              {comments}
+                {comments}
               </div>
-
-            </span>
-          </ul>
-          </section>
-          <div className="sidebar">
-            <a href="/CreateContent" className="contentButton">Submit Link</a>
-          </div>
-        </main>
-      </body>
+            </div>
+            <div className="sidebar">
+              <a href="/CreateContent" className="contentButton">Submit Link</a>
+            </div>
+          </main>
+        </body>
       </html>
     );
-}
+  }
 
-module.exports = Comments;
+  module.exports = Comments;

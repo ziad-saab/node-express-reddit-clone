@@ -26,6 +26,7 @@ function createNewComment(sessionId, contentId, parentCommentId, text) {
         comment.addChildren(newComment);
         user.addComment(newComment);
         content.addComment(newComment);
+        return {comment: newComment, user: user, content: content};
       });
     });
   });
