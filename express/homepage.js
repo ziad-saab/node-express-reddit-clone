@@ -39,6 +39,6 @@ app.get('/sort/:order/:page', function(req, res){
   .then(function(response) {
     var username;
     try {username = response.User.username} catch(e) {}
-    res.send(parseReact(HomePage(username, response.Content, req.params.order, page)));
+    res.send(parseReact(HomePage(username, response.Content, req.params.order, page, PAGE_LENGTH)));
   });
 });

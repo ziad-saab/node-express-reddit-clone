@@ -2,7 +2,7 @@ var React = require('react');
 var Nav = require('./react-nav');
 var contentRow = require('./react-contentRow');
 
-function Post(content) {
+function Post(content, postNumber) {
   var vote;
   if (content.upvote === 1)
   vote = true;
@@ -14,7 +14,7 @@ function Post(content) {
   return (
     <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
       <div className="numberedRow">
-        <a>1</a>
+        <a>{postNumber}</a>
         {row}
       </div>
     </li>
@@ -59,9 +59,13 @@ function Pages(page, type) {
   );
 }
 
-function HomePage(user, contents, type, page) {
+function HomePage(user, contents, type, page, pageLength) {
   var nav = Nav(user, getTablist(type));
-  var posts = contents.map(Post);
+  var posts = []
+  for (var i = 0; i < contents.length; i++) {
+    var pageNumber = page*pageLength + i + 1;
+    posts.push(Post(contents[i], pageNumber));
+  }
   var pages = Pages(page, type);
   return (
     <html>
@@ -84,36 +88,6 @@ function HomePage(user, contents, type, page) {
           <a href="/CreateContent" className="contentButton">Submit Link</a>
         </div>
       </main>
-
-<<<<<<< HEAD
-=======
-      <div className="popbox signupbox">
-        <a className="close"><img src="/images/orange-close-25.png" className="btn_close" title="Close Window" alt="Close"/></a>
-        <div className='form'>
-          <div className='formheading'>Sign Up!</div>
-          <form action="/SignUp" method="post">
-            <label htmlFor="username"><span>Username <span className="required">*</span></span><input type="text" className="input-field" name="username" value="" maxLength="20"/></label>
-            <label htmlFor="email"><span>Email </span><input type="text" className="input-field" name="email" value="" maxLength="50"/></label>
-            <label htmlFor="password"><span>Password <span className="required">*</span></span><input type="password" className="input-field" name="password" maxLength="50"/></label>
-            <label htmlFor="confirmpassword"><span>Confirm Password <span className="required">*</span></span><input type="password" className="input-field" name="confirmpassword" maxLength="50"/></label>
-            <label><span>&nbsp;</span><input type="submit" value="Sign Up" /></label>
-          </form>
-        </div>
-      </div>
-
-       <div className="popbox loginbox">
-          <a className="close"><img src="/images/orange-close.png" className="btn_close" title="Close Window" alt="Close"/></a>
-          <div className='form'>
-            <div className='formheading'>Login</div>
-            <form action="/Login" method="post">
-              <label htmlFor="username"><span>Username <span className="required">*</span></span><input type="text" className="input-field" name="username" value="" maxLength="20"/></label>
-              <label htmlFor="password"><span>Password <span className="required">*</span></span><input type="password" className="input-field" name="password" value="" maxLength="50"/></label>
-              <label><span>&nbsp;</span><input type="submit" value="Login" /></label>
-            </form>
-        </div>
-      </div>
-
->>>>>>> 5e4b92dc23bfc059c11a443667f34aa88e95a122
       <footer id="pages">
         {pages}
       </footer>
