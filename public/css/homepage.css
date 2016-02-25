@@ -47,6 +47,8 @@
     display: flex;
     justify-content: space-around;
 }
+<<<<<<< HEAD
+=======
 
 .popbox{
     float: left;
@@ -96,3 +98,4 @@ img.btn_close {
     padding: 0px;
     margin: 0px;
 }
+>>>>>>> 5e4b92dc23bfc059c11a443667f34aa88e95a122

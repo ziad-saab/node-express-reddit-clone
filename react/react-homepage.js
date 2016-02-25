@@ -85,6 +85,8 @@ function HomePage(user, contents, type, page) {
         </div>
       </main>
 
+<<<<<<< HEAD
+=======
       <div className="popbox signupbox">
         <a className="close"><img src="/images/orange-close-25.png" className="btn_close" title="Close Window" alt="Close"/></a>
         <div className='form'>
@@ -111,6 +113,7 @@ function HomePage(user, contents, type, page) {
         </div>
       </div>
 
+>>>>>>> 5e4b92dc23bfc059c11a443667f34aa88e95a122
       <footer id="pages">
         {pages}
       </footer>
