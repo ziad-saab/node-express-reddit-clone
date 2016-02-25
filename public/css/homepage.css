@@ -1,28 +1,5 @@
 @import url("nav.css");
 @import url("contentRow.css");
-*{
-  box-sizing: border-box;
-}
-body {
-  position: relative;
-}
-
-#welcomeuser{
-    font-family: Arial;
-}
-
-#user{
-    font-weight: bold;
-    color: #6699ff;
-}
-
-#heading{
-	font-family: Helvetica, Arial, sans-serif;
-    font-size: 40px;
-    line-height: 1;
-    text-transform: uppercase;
-    letter-spacing: .04em;
-}
 
 #pages{
     margin: 0 auto;
