@@ -17,7 +17,13 @@
   flex-direction: column;
   justify-content: center;
 }
-
+.votescore{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-weight: bold;
+  color: grey;
+  font-size: 15px;
+}
 .contentTitle {
   display:flex;
 }

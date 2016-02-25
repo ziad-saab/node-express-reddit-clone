@@ -1,13 +1,6 @@
 @import url("nav.css");
 @import url("contentRow.css");
 
-.votescore{
-  margin-top: 0px;
-  margin-bottom: 0px;
-  font-weight: bold;
-  color: grey;
-  font-size: 15px;
-}
 .contents {
   display: flex;
 }
