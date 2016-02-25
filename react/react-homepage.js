@@ -14,7 +14,9 @@ function Post(content, postNumber) {
   return (
     <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
       <div className="numberedRow">
+        <div className="postNumber">
         <a>{postNumber}</a>
+        </div>
         {row}
       </div>
     </li>
@@ -73,6 +75,7 @@ function HomePage(user, contents, type, page, pageLength) {
       <title>fuggedabouddit</title>
       <meta charSet="utf-8"/>
       <link href="/css/homepage.css" rel="stylesheet" type="text/css"/>
+      <link href="/css/style.css" rel="stylesheet" type="text/css"/>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script src="/jquery/logvote.js"></script>
       <script src="/jquery/popbox.js"></script>
