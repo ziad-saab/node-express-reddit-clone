@@ -113,11 +113,8 @@ a.close:hover {
 }
 
 img.btn_close {
-    width: 50px;
-    height: 50px;
     top: 0;
     right: 0;
     padding: 0px;
-    margin: 0px;
-    border: 1px solid black;
+    margin: 10px;
 }
