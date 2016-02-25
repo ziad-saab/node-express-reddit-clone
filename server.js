@@ -83,7 +83,8 @@ app.get('/', function(request, response) {
     },
     order: [Sequelize.literal('voteScore DESC, id')],
     subQuery: false
-  }).then( results => {
+  })
+  .then( results => {
     console.log(results[0].toJSON())
     
     var homepage = layout.renderPage( 
@@ -91,7 +92,8 @@ app.get('/', function(request, response) {
     );
     
     response.status(200).send(homepage);
-  }).catch( err => {
+  })
+  .catch( err => {
     console.log(err);
     response.status(500).send("Unexpected error occured...");
   });
