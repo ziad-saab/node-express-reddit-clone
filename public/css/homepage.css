@@ -5,6 +5,15 @@
   display: flex;
   justify-content: space-between;
 }
+
+.postNumber {
+  width: 2.2em;
+  color: #c6c6c6;
+  font-family: arial;
+  font-size: medium;
+  text-align: right;
+}
+
 .numberedRow {
   display: flex;
   align-items: center;
