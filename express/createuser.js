@@ -1,9 +1,9 @@
 //Requiring npm packagaes
-var database = require('./database/database.js');
+var database = require('../database/database.js');
 var app = require('./app.js');
 var ReactDOMServer = require('react-dom/server');
 require('babel-register');
-var SignUp = require('./react-signup');
+var SignUp = require('../react/react-signup');
 
 app.get('/SignUp', function(req, res){
   var htmlStructure = SignUp(req.query.error);

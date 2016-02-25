@@ -1,8 +1,8 @@
 var app = require('./app.js');
-var database = require('./database/database.js');
+var database = require('../database/database.js');
 var ReactDOMServer = require('react-dom/server');
 require('babel-register');
-var Login = require('./react-login');
+var Login = require('../react/react-login');
 
 app.get('/Login', function(req, res){
 

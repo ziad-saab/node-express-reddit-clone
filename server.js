@@ -1,8 +1,8 @@
 //require pages that will respond to gets and posts
-require('./app.js');
-require('./homepage.js');
-require('./createuser.js');
-require('./login.js');
-require('./createcontent.js');
-require('./vote.js');
-require('./comments.js');
+require('./express/app.js');
+require('./express/homepage.js');
+require('./express/createuser.js');
+require('./express/login.js');
+require('./express/createcontent.js');
+require('./express/vote.js');
+require('./express/comments.js');

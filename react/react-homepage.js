@@ -1,6 +1,5 @@
 var React = require('react');
 var Nav = require('./react-nav');
-var ReactDOMServer = require('react-dom/server');
 
 function Post(content) {
   var upvote = "/images/grey-upvote.png";
@@ -49,9 +48,6 @@ function getTablist(type) {
     }
   });
 }
-function HomeNav(user, type) {
-  return ReactDOMServer.renderToStaticMarkup(Nav(user, getTablist(type)));
-}
 
 function Pages(page, type) {
   var next = page + 1;
@@ -59,7 +55,7 @@ function Pages(page, type) {
   var nextlink = "/sort/" + type + "/" + next;
   var prevlink = "/sort/" + type + "/" + previous;
   if (page === 0)
-  return ReactDOMServer.renderToStaticMarkup(
+  return (
     <section id="pagenav">
       <div className="button-wrapper">
         <a className="pagebutton tangerine" href={nextlink}>Next</a>
@@ -67,7 +63,7 @@ function Pages(page, type) {
     </section>
   );
 
-  else return ReactDOMServer.renderToStaticMarkup(
+  else return (
     <section id="pagenav">
       <div className="button-wrapper">
         <a className="pagebutton tangerine" href={prevlink}>Previous</a>

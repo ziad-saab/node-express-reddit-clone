@@ -1,8 +1,8 @@
 var app = require('./app.js');
-var database = require('./database/database.js');
+var database = require('../database/database.js');
 var ReactDOMServer = require('react-dom/server');
 require('babel-register');
-var CreateContent = require('./react-createcontent');
+var CreateContent = require('../react/react-createcontent');
 
 app.get('/CreateContent', function(req, res){
   var htmlStructure = CreateContent(req.query.error);

@@ -1,10 +1,9 @@
 //Requiring npm packagaes
-var ejs = require('ejs');
 var app = require('./app.js');
-var database = require('./database/database.js');
+var database = require('../database/database.js');
 require('babel-register');
 var ReactDOMServer = require('react-dom/server');
-var HomePage = require('./react-homepage');
+var HomePage = require('../react/react-homepage');
 const PAGE_LENGTH = 20;
 
 app.get('/', function(req, res){

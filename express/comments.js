@@ -1,8 +1,8 @@
-var database = require('./database/database.js');
+var database = require('../database/database.js');
 var app = require('./app.js');
 var ReactDOMServer = require('react-dom/server');
 require('babel-register');
-var Comments = require('./react-comments.js');
+var Comments = require('../react/react-comments.js');
 
 app.get('/link/:contentId/comments',function(req, res) {
   var contentId = parseInt(req.params.contentId);
