@@ -9,7 +9,6 @@
 }
 .contents {
   display: flex;
-  justify-content: space-between;
 }
 .commentRow {
   display:flex;
@@ -17,7 +16,6 @@
   align-content: center;
 }
 .allComments {
-  margin: 20px;
 }
 .commentNest {
   display: flex;
@@ -95,23 +93,74 @@
 .metalink:hover {
   text-decoration: underline;
 }
-.replyBox {
+.hiddenReplyBox, .replyBox {
   display:flex;
   flex-direction: column;
   align-items: flex-start;;
 }
-.replyTextBox {
-  width: 40%;
-  height: 300px;
+.hiddenReplyBox {
+  display:none;
 }
-.replySaveButton {
+
+.replyTextBox {
+  width: 600px;
+  max-width: 100%;
+  height: 150px;
+}
+.replyCancelButton, .replySaveButton {
   background-color: #ff9900;
   color: white;
   padding: 5px 10px;
   margin: 4px 0px;
   font-weight: bold;
 }
-.replySaveButton:hover {
+.replyCancelButton {
+  margin-left: 4px;
+}
+.replyCancelButton:hover, .replySaveButton:hover {
   background-color: #00cc00;
   cursor: pointer;
+}
+
+.commentButtons {
+  display: flex;
+}
+.pageBody {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+
+.contentRow {
+  display:flex;
+  justify-content: flex-start;
+  align-content: center;
+  margin: 10px 0px;
+}
+.contentVotescore {
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.contentContent {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contentTitle {
+  display:flex;
+}
+
+.contentMetaData {
+  display:flex;
+  flex-direction: column;
+}
+.contents {
+  display: flex;
+  justify-content: space-between;
 }

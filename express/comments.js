@@ -1,17 +1,14 @@
-var database = require('./database/database.js');
+var database = require('../database/database.js');
 var app = require('./app.js');
-var ReactDOMServer = require('react-dom/server');
-require('babel-register');
-var Comments = require('./react-comments.js');
+var parseReact = require('./react-parser.js').parseReact;
+var Comments = require('../react/react-comments.js');
 
 app.get('/link/:contentId/comments',function(req, res) {
   var contentId = parseInt(req.params.contentId);
   var sessionId = req.cookies.sessionId;
   database.getContentAndComments(sessionId, contentId)
   .then(function(response) {
-    var htmlStructure = Comments(response.user, response.content, response.comments);
-    var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-    res.send('<!doctype html>' + html);
+    res.send(parseReact(Comments(response.user, response.submitter, response.content, response.comments, response.vote, response.votescore)));
   });
 });
 
@@ -29,8 +26,13 @@ app.post('/comment/:contentId', function(req, res) {
 });
 app.post('/comment/', function(req, res) {
   var contentId = parseInt(req.body.contentId);
-  var commentId = parseInt(req.body.commentId);
+  var commentId = req.body.commentId;
+  if (commentId)
+  commentId = parseInt(commentId);
   var comment = req.body.text;
   var sessionId = req.cookies.sessionId;
-  return database.createNewComment(sessionId, contentId, commentId, comment);
+  database.createNewComment(sessionId, contentId, commentId, comment)
+  .then(function(comment) {
+    res.send(comment);
+  });
 });

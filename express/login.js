@@ -1,22 +1,14 @@
 var app = require('./app.js');
-var database = require('./database/database.js');
+var database = require('../database/database.js');
 var ReactDOMServer = require('react-dom/server');
 require('babel-register');
-var Login = require('./react-login');
-
-app.get('/Login', function(req, res){
-
-  var htmlStructure = Login(req.query.error);
-  var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-  res.send('<!doctype html>' + html);
-});
 
 app.post('/Login', function(request, response){
     database.login(request.body.username, request.body.password)
     .then(function(token){
         if(token){
             response.cookie('sessionId', token);
-            response.redirect('/');
+            response.redirect(request.get('referer'));
         }
     })
     .catch(function(e){
@@ -30,5 +22,5 @@ app.post('/Login', function(request, response){
 
 app.get('/Logout', function(req, res){
   res.cookie('sessionId', undefined);
-  res.redirect('/');
+  res.redirect(req.get('referer'));
 });

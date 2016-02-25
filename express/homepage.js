@@ -1,9 +1,8 @@
 //Requiring npm packagaes
-var ejs = require('ejs');
 var app = require('./app.js');
-var database = require('./database/database.js');
-require('babel-register');
-var HomePage = require('./react-homepage');
+var database = require('../database/database.js');
+var parseReact = require('./react-parser.js').parseReact;
+var HomePage = require('../react/react-homepage');
 const PAGE_LENGTH = 20;
 
 app.get('/', function(req, res){
@@ -40,9 +39,6 @@ app.get('/sort/:order/:page', function(req, res){
   .then(function(response) {
     var username;
     try {username = response.User.username} catch(e) {}
-    res.render('homepage.ejs', {
-      nav: HomePage.HomeNav(username, req.params.order),
-      posts: HomePage.Posts(response.Content),
-      pages: HomePage.Pages(page, req.params.order)});
+    res.send(parseReact(HomePage(username, response.Content, req.params.order, page)));
   });
 });

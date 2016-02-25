@@ -106,7 +106,24 @@ OFFSET '+ m +';',
     }
   });
 }
-
+// gets the votescore for a contentId
+function getVoteScore(contentId) {
+  return dbinit.then(function(initDB) {
+    return initDB.Content.findById(contentId)
+    .then(function(content) {
+      return content.getUpvotes()
+      .then(function(users) {
+        var score = 0;
+        users.forEach(function(user) {
+          if (user.vote.upVote)
+          score++;
+          else score--;
+        });
+        return score;
+      });
+    });
+  });
+}
 // adds a vote to the content for the user attached to sessionID
 function voteOnContent(sessionId, contentId, isUpvote) {
   return dbinit.then(function(initDB) {
@@ -127,5 +144,6 @@ module.exports = {
   getLatestNContent: getLatestNContent,
   getHottestNContent: getHottestNContent,
   getControversialNContent: getControversialNContent,
-  getTopNContent: getTopNContent
+  getTopNContent: getTopNContent,
+  getVoteScore: getVoteScore
 }

@@ -1,16 +1,8 @@
 //Requiring npm packagaes
-var database = require('./database/database.js');
+var database = require('../database/database.js');
 var app = require('./app.js');
 var ReactDOMServer = require('react-dom/server');
 require('babel-register');
-var SignUp = require('./react-signup');
-
-app.get('/SignUp', function(req, res){
-  var htmlStructure = SignUp(req.query.error);
-  var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-  res.send('<!doctype html>' + html);
-});
-
 
 app.post('/SignUp', function(request, response){
     if(request.body.password === request.body.confirmpassword){
@@ -20,9 +12,8 @@ app.post('/SignUp', function(request, response){
             .then(function(token){
                 if(token){
                     response.cookie('sessionId', token);
-                    response.redirect('/');
+                    response.redirect(request.get('referer'));
                 }
-                return token;
             });
         })
         .catch(function(e) {
