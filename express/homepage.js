@@ -1,8 +1,7 @@
 //Requiring npm packagaes
 var app = require('./app.js');
 var database = require('../database/database.js');
-require('babel-register');
-var ReactDOMServer = require('react-dom/server');
+var parseReact = require('./react-parser.js').parseReact;
 var HomePage = require('../react/react-homepage');
 const PAGE_LENGTH = 20;
 
@@ -40,8 +39,6 @@ app.get('/sort/:order/:page', function(req, res){
   .then(function(response) {
     var username;
     try {username = response.User.username} catch(e) {}
-    var htmlStructure = HomePage(username, response.Content, req.params.order, page);
-    var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-    res.send('<!doctype html>' + html);
+    res.send(parseReact(HomePage(username, response.Content, req.params.order, page)));
   });
 });

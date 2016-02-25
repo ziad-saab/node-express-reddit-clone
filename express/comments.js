@@ -1,7 +1,6 @@
 var database = require('../database/database.js');
 var app = require('./app.js');
-var ReactDOMServer = require('react-dom/server');
-require('babel-register');
+var parseReact = require('./react-parser.js').parseReact;
 var Comments = require('../react/react-comments.js');
 
 app.get('/link/:contentId/comments',function(req, res) {
@@ -9,9 +8,7 @@ app.get('/link/:contentId/comments',function(req, res) {
   var sessionId = req.cookies.sessionId;
   database.getContentAndComments(sessionId, contentId)
   .then(function(response) {
-    var htmlStructure = Comments(response.user, response.submitter, response.content, response.comments, response.vote, response.votescore);
-    var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-    res.send('<!doctype html>' + html);
+    res.send(parseReact(Comments(response.user, response.submitter, response.content, response.comments, response.vote, response.votescore)));
   });
 });
 
