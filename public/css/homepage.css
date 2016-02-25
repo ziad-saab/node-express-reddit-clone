@@ -1,9 +1,6 @@
 @import url("nav.css");
 @import url("contentRow.css");
 
-#pages{
-    margin: 0 auto;
-}
 .contents {
   display: flex;
   justify-content: space-between;
