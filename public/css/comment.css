@@ -37,7 +37,7 @@
 }
 
 .commentText {
-  display:flex;
+  word-break: break-all;
 }
 
 .commentMeta {
