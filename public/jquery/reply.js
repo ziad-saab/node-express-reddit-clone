@@ -12,7 +12,7 @@ function hideReplyBox() {
 }
 
 function showReplyBox() {
-  var replyBox = $(this).closest(".commentNest").find(".hiddenReplyBox");
+  var replyBox = $(this).closest(".commentNest, .rootNest").find(".hiddenReplyBox");
   replyBox.first().css("display","flex");
 }
 
