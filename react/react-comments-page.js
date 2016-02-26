@@ -1,7 +1,8 @@
 var React = require('react');
 var Nav = require('./react-nav');
 var contentRow = require('./react-contentRow');
-var renderComment = require('./react-comment');
+var renderComment = require('./react-comment').renderComment;
+var sortComment = require('./react-comment').sortComment;
 
   function Comments(user, submitter, content, comments, vote, votescore, commentScores, rootComment){
     var nav;
@@ -17,7 +18,7 @@ var renderComment = require('./react-comment');
 
     var commentAction = "/comment/" + content.id;
 
-    var comments = comments.map(function(comment) {
+    var comments = sortComment(comments, commentScoreHash).map(function(comment) {
       return renderComment(comment, commentScoreHash, rootComment);
     });
 

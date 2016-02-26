@@ -10,6 +10,15 @@ function createParentLink(comment) {
   }
 }
 
+function sortComment(comments, commentScores) {
+  return comments.sort(function(c1, c2) {
+    if (commentScores[c1.id] === commentScores[c2.id])
+    return c1.createdAt < c2.createdAt;
+
+    else return commentScores[c1.id] < commentScores[c2.id];
+  });
+}
+
 function renderComment(comment, commentScores, rootComment) {
   var rootClass = "commentNest";
   if (rootComment)
@@ -26,7 +35,7 @@ function renderComment(comment, commentScores, rootComment) {
   }
   var children = [];
   if (comment.children)
-  var children = comment.children.map(function(child) {
+  var children = sortComment(comment.children, commentScores).map(function(child) {
     return renderComment(child, commentScores, false);
   });
   var pointString = 'points';
@@ -72,4 +81,7 @@ function renderComment(comment, commentScores, rootComment) {
     </div>
   )};
 
-  module.exports = renderComment;
+  module.exports = {
+    renderComment: renderComment,
+    sortComment: sortComment
+  };
