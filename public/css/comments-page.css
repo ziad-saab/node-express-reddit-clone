@@ -1,0 +1,38 @@
+@import url("nav.css");
+@import url("contentRow.css");
+@import url("comment.css");
+.allComments {
+}
+
+.contentButton {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #ff9900;
+  color: white;
+  padding: 5px 60px;
+  margin-top: 50px;
+  font-family: "Arial", Serif;
+  font-weight: bold;
+  font-size: 30px;
+  text-decoration: none;
+  border-radius: 2px;
+}
+.contentButton:hover {
+  background-color: #00cc00;
+}
+
+.commentButtons {
+  display: flex;
+}
+.pageBody {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.contents {
+  display: flex;
+  justify-content: space-between;
+}
