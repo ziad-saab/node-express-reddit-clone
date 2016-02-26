@@ -28,10 +28,6 @@ function CreateContent(error) {
             <div className="tab-content">
               <div id="link" className="tab-pane fade in active">
 
-                <span id="error">
-                  {error}
-                </span>
-
                 <form action="/CreateContent" method="post">
                   <label htmlFor="title"><span>Title <span className="required">*</span></span><input type="title" className="input-field" name="title" value="" maxLength="255"/></label>
                   <label htmlFor="url"><span>URL <span className="required">*</span></span><input type="url" className="input-field" name="url" value="" maxLength="255"/></label>
