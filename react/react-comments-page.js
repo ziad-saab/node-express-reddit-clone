@@ -27,6 +27,7 @@ var renderComment = require('./react-comment');
           <meta charSet="utf-8"/>
           <link href="/css/comments-page.css" rel="stylesheet" type="text/css"/>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
           <script src="/jquery/reply.js"></script>
           <script src="/jquery/logvote.js"></script>
           <script src="/jquery/logcommentvote.js"></script>

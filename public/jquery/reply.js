@@ -68,10 +68,41 @@ function submitReply() {
           </div>\
       </div> \
     </div>';
+    var newCommentHtml =
+    `    <div class="commentNest">
+          <div class="commentRow" key=${data.comment.id}>
+            <div class="commentVotescore">
+              <input class="commentUpvote" data-comment=${data.comment.id} type="image" src="/images/grey-upvote.png"}/>
+              <input class="commentDownvote" data-comment=${data.comment.id} type="image" src="/images/grey-downvote.png"/>
+            </div>
+            <div class="commentContent">
+              <div class="commentMeta">
+                <div class="submissionInfo">
+                  <a class="metatext">${data.user.username} <span class="commentScore">0</span> <span class="pointString">points</span> ${moment(data.comment.createdAt).fromNow()}</a>
+                </div>
+              </div>
+
+                <table class="commentText">
+                  <tr>
+                    <td><a>${data.comment.text}</a></td>
+                  </tr>
+                </table>
+              <a class="metalink reply">reply</a>
+            </div>
+          </div>
+
+          <div class="hiddenReplyBox" data-content=${data.content.id} data-comment=${data.comment.id}>
+            <textarea class="replyTextBox" type="text"/>
+            <div class="commentButtons">
+              <a class="replySaveButton">save</a>
+              <a class="replyCancelButton">cancel</a>
+            </div>
+          </div>
+        </div>`
 
     if (commentId) {
       parent.css("display","none");
-      parent.after(commentHtml);
+      parent.after(newCommentHtml);
     }
     else {
       parent.parent().find(".allComments").first().prepend(commentHtml);
