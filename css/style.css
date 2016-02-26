@@ -15,6 +15,7 @@ header{
     background: url('typewriter.jpg')center center;
     min-height: 50vh;
     background-size: cover;
+    margin-top: 50px;
 }
 a{
     color: pink;
@@ -24,13 +25,7 @@ a{
 p{
     color: white;
 }
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    margin-right: 5px;
-    width: 100%;
-}
+
 nav ul{
     color: white;
     font-family: 'Raleway', Arial, sans-serif;
@@ -42,8 +37,25 @@ nav ul{
     padding: 0;
     
 }
-.nav li{
+.mainNav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.mainNav li{
     margin: 10px;
+    background: rgba(0,0,0,0.5);
+}
+.sortNav{
+    position: flex;
+    width: 100%;
+    right: 0;
+    justify-content: flex-start;
+}
+.sortNav li{
+    margin: 10px;
+    
 }
 #contents {
     margin-top: 50px;
@@ -120,7 +132,7 @@ input{
     font-family: 'Raleway', Arial, sans-serif;
     width: 150px;
 }
-#suggestTitle{
+#suggest{
     font-family: 'Raleway', Arial, sans-serif;
     width: 150px;
     font-size: 0.8em;
