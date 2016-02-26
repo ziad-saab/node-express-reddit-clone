@@ -158,9 +158,6 @@ app.post('/signIn', function(req, res) {
 
 /////VOTING/////
 
-
-
-
 app.post('/voteContent', function(req,res) {
     UpVote.findOne({
         where: {
@@ -179,8 +176,20 @@ app.post('/voteContent', function(req,res) {
                          })
                     }
                 }).then(function(val){
-                    res.redirect('/')
+                    UpVote.findAll({
+                        where: {contentId: req.body.contentId},
+                        attributes: {
+                            include: [
+                                [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('upvote'), 1, -1)), 'newVoteScore']
+                            ]
+                        },
+                    }).then(function(x){
+                        var newVoteScore = x[0].toJSON().newVoteScore
+                        res.json({'newVoteScore':newVoteScore})
+                    })
+                    
                 })
+    
 })
 
 ////SUGGEST TITLE /////
@@ -192,10 +201,16 @@ app.get('/userReq', function(req, res){
 })
 })
 
+/////LogOUT ////
+app.get('/logOut', function(req,res){
+    res.clearCookie('SESSION'); 
+    res.redirect('/');
+})
+
 
 //////HOME PAGE/////
 app.get('/',function(req,res){
-    res.redirect(301, '/new')
+    res.redirect(301, '/hot')
 });
 
 app.get('/:order',function(req,res){

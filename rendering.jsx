@@ -15,14 +15,19 @@ function Layout(data){
             <link href='css/app.css' rel="stylesheet" type="text/css"/>
             <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'/>
             <link href='https://fonts.googleapis.com/css?family=Merriweather:700,300,400italic' rel='stylesheet' type='text/css'/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css"/>
         </head>
         <body>
             <div>
-                <logo><a href='/'>reddit</a></logo>
+                <logo><a href='/'>reddit<i className="fa fa-reddit-alien fa-spin"></i></a></logo>
             <nav>
-                <li><a id='hot' href='/hot'>hot</a></li>
+                <li><a id='hot' href='/hot'><i className='fa fa-fire'></i> hot</a></li>
                 <li><a id='new' href='/new'>new</a></li>
                 <li><a id='con' href='/con'>controversial</a></li>
+                <li><a id='createContent' href='/createContent'><i className="fa fa-reddit-square"></i> Create Content</a></li>
+                <li><a id='createUser' href='/createUser'>Sign Up</a></li>
+                <li><a id='SignIn' href='/SignIn'>Sign In</a></li>
+                <li><a id='logOut' href='/logOut'><i className='fa fa-sign-out'></i> Log Out</a></li>
             </nav>
             </div>
             {data.children}
@@ -32,6 +37,8 @@ function Layout(data){
     </html>
 );
 }
+
+
 ////// POSTLIST /////
 function Post(data) {
     return (
@@ -40,15 +47,24 @@ function Post(data) {
             <h2>
                 <a href={data.url}>{data.title}</a>
             </h2>
-                <p>Created By:{data.user} | on: {data.date}</p>
+                <p>Created By:{data.user} | on: {data.date} <span className='hide'> - Hide?</span></p>
+                
             </div>
             <div className='buttonForm'>
-                <form  action='/voteContent' method='post'>
+                <form className='voteForm'>
                 <input name='contentId' type='hidden' value={data.contentId}/>
-                <button name='upVote' type='submit' value='true'><img src="http://findicons.com/files/icons/2338/reflection/128/arrow_up_1.png" /></button>
-                <p>{data.popularity}</p>
-                <button name='upVote' type='submit' value='false'><img src="https://systopia.de/sites/default/files/Arrow%20Down%201.png" /></button>
+                <input name='upVote' type='hidden' value='true'/>
+                <button className ='button' type='submit'><i className='fa fa-arrow-up'></i></button>
                 </form>
+                
+                <p>{data.popularity}</p>
+                
+                 <form className='voteForm'>
+                <input name='contentId' type='hidden' value={data.contentId}/>
+                <input name='upVote' type='hidden' value='false'/>
+                <button className ='button' type='submit'><i className='fa fa-arrow-down'></i></button>
+                </form>
+                
             </div>    
         </li>
         );

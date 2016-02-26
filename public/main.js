@@ -21,4 +21,34 @@ $('#sugg').on('click', function(){
         })
       }
    )
+$('.votes').on('click', function(){
+    
+})
+
+$('.hide').on('click', function(e){
+    $(this).parents('.container').fadeToggle();
+    return false;
+    
+    //.animate({opacity: '0px', height: '0px'},1500, function(){$(this).parents('.container').css('display','none')})
+        
+        
+    
+})
+
+
+////RECEIVE AJAX CALL FOR VOTES /////
+$('.voteForm').on('submit', function(e){
+    e.preventDefault();
+    var $this = $(this);
+    $this.find("button").css('color', 'green')
+    var data = {
+        contentId: $this.find("input[name=contentId]").val(),
+        upVote: $this.find("input[name=upVote]").val()
+    };
+    
+     $.post('/voteContent', data).done(
+         function(x){
+            $this.parent().find('p').text(x.newVoteScore)
+         })
+})
 })

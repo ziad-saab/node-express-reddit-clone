@@ -21,7 +21,15 @@ nav {
     width:100%;
     top: 0;
     left: 0;
-    height: 45px;
+    height: 47px;
+}
+
+nav li:nth-child(4) {
+    margin-left:20px;
+}
+
+nav li:nth-child(7) {
+    margin-left:20px;
 }
 
 nav li {
@@ -42,17 +50,17 @@ nav a, .selectedTab {
     border-top: 1px solid #EA7233;
     border-right:1px solid #EA7233;
     border-left: 1px solid #EA7233;
-    padding: 0px 4px;
+    padding: 0px 4px 2px 4px;
 }
 
 .selectedTab {
-    padding-bottom: 14px;
+    padding-bottom: 16px;
     background-color:white;
 }
 
 body{
     font-family: 'Raleway', sans-serif;
-    margin-top:50px;
+    margin-top:55px;
 }
 
 h1 {
@@ -77,9 +85,6 @@ button {
     outline-color:rgba(255,255,255,0.0);
 }
 
-button img {
-    width: 16px;
-}
 
 .container {
     display:flex;
@@ -93,7 +98,7 @@ button img {
 }
 
 .buttonForm p {
-    padding-right: 11px;
+    padding-right: 8px;
 }
 
 .postContent {
