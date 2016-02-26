@@ -26,6 +26,7 @@ function createNewComment(sessionId, contentId, parentCommentId, text) {
         if(comment)
         comment.addChildren(newComment);
         user.addComment(newComment);
+        user.addCommentvote(newComment, {upVote: true});
         content.addComment(newComment);
         return {comment: newComment, user: user, content: content};
       });
@@ -169,37 +170,6 @@ function getCommentVoteScores(comment) {
     });
   });
 }
-/*
-//takes a commentTree, and returns a new tree with votescores.
-function getVoteScores(commentTree) {
-return dbinit.then(function(initDB) {
-if (commentTree.length === 0)
-return [];
-else {
-var commentQueries = commentTree.map(function(child) {
-getVoteScores(child);
-});
-return Promise.all(commentQueries)
-.then(function(votes) {
-if (!commentTree.children)
-return {
-votes: votes
-}
-var commentSubqueries = commentTree.children.map(function(child) {
-getVoteScores(child);
-});
-return Promise.all(commentSubqueries)
-.then(function(childvotes) {
-return {
-votes: votes,
-children: childvotes
-}
-});
-});
-}
-});
-}
-*/
 // adds a vote to the comment for the user attached to sessionID
 function voteOnComment(sessionId, commentId, isUpvote) {
   return dbinit.then(function(initDB) {

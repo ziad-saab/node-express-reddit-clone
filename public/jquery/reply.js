@@ -22,7 +22,7 @@ function submitReply() {
   parent = $(this).closest(".replyBox");
   var textbox = parent.find(".replyTextBox");
   var text = textbox.val();
-
+  console.log(text);
   if (text === '')
   return;
 
@@ -39,46 +39,16 @@ function submitReply() {
     console.log(data);
     textbox.val('');
     var commentHtml =
-    '<div class="commentNest"> \
-      <div class="commentRow" key=' + data.comment.id + '> \
-        <div class="commentVotescore"> \
-          <input class="commentUpvote" data-comment=' + data.comment.id + ' type="image" src="/images/grey-upvote.png"/> \
-          <input class="commentDownvote" data-comment=' + data.comment.id + ' type="image" src="/images/grey-downvote.png"/> \
-        </div> \
-        <div class="commentContent"> \
-          <div class="commentMeta"> \
-            <div class="submissionInfo"> \
-              <a class="metatext">Post by ' + data.user.username + '</a> \
-              <a class="metatext">' + data.comment.createdAt.toString() + '</a> \
-            </div> \
-          </div> \
-          <table class="commentText"> \
-            <tr> \
-              <td><a>' + data.comment.text + '</a></td> \
-            </tr> \
-          </table> \
-          <a class="metalink reply">reply</a> \
-        </div> \
-      </div> \
-      <div class="hiddenReplyBox" data-content=' + data.content.id + ' data-comment=' + data.comment.id + '> \
-        <textarea class="replyTextBox" type="text"/> \
-          <div class="commentButtons"> \
-            <a class="replySaveButton">save</a> \
-            <a class="replyCancelButton">cancel</a> \
-          </div>\
-      </div> \
-    </div>';
-    var newCommentHtml =
     `    <div class="commentNest">
           <div class="commentRow" key=${data.comment.id}>
             <div class="commentVotescore">
-              <input class="commentUpvote" data-comment=${data.comment.id} type="image" src="/images/grey-upvote.png"}/>
+              <input class="commentUpvote" data-comment=${data.comment.id} type="image" src="/images/green-upvote.png"}/>
               <input class="commentDownvote" data-comment=${data.comment.id} type="image" src="/images/grey-downvote.png"/>
             </div>
             <div class="commentContent">
               <div class="commentMeta">
                 <div class="submissionInfo">
-                  <a class="metatext">${data.user.username} <span class="commentScore">0</span> <span class="pointString">points</span> ${moment(data.comment.createdAt).fromNow()}</a>
+                  <a class="metatext">${data.user.username} <span class="commentScore">1</span> <span class="pointString">points</span> ${moment(data.comment.createdAt).fromNow()}</a>
                 </div>
               </div>
 
@@ -102,7 +72,7 @@ function submitReply() {
 
     if (commentId) {
       parent.css("display","none");
-      parent.after(newCommentHtml);
+      parent.after(commentHtml);
     }
     else {
       parent.parent().find(".allComments").first().prepend(commentHtml);
