@@ -18,9 +18,11 @@ function contentRow(content, vote, submitter, votescore) {
       </div>
       <div className="contentContent">
         <table className="contentTitle">
-          <tr>
-            <td><a className="contentpost" href={content.url}>{content.title}</a></td>
-          </tr>
+          <tbody>
+            <tr>
+              <td><a className="contentpost" href={content.url}>{content.title}</a></td>
+            </tr>
+          </tbody>
         </table>
         <div className="contentMetaData">
           <div className="submissionInfo">
