@@ -22,7 +22,7 @@ function submitReply() {
   parent = $(this).closest(".replyBox");
   var textbox = parent.find(".replyTextBox");
   var text = textbox.val();
-
+  console.log(text);
   if (text === '')
   return;
 
@@ -38,7 +38,7 @@ function submitReply() {
   }).success(function(data) {
     console.log(data);
     textbox.val('');
-    var newCommentHtml =
+    var commentHtml =
     `    <div class="commentNest">
           <div class="commentRow" key=${data.comment.id}>
             <div class="commentVotescore">
@@ -72,7 +72,7 @@ function submitReply() {
 
     if (commentId) {
       parent.css("display","none");
-      parent.after(newCommentHtml);
+      parent.after(commentHtml);
     }
     else {
       parent.parent().find(".allComments").first().prepend(commentHtml);
