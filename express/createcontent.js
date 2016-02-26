@@ -1,20 +1,15 @@
 var app = require('./app.js');
 var database = require('../database/database.js');
-var ReactDOMServer = require('react-dom/server');
-require('babel-register');
+var parseReact = require('./react-parser.js').parseReact;
 var CreateContent = require('../react/react-createcontent');
 
 app.get('/CreateContent', function(req, res){
   database.getUserFromSessionId(req.cookies.sessionId)
   .then(function(user){
-    var htmlStructure = CreateContent(user.username, req.query.error);
-    var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-    res.send('<!doctype html>' + html);
+    res.send(parseReact(CreateContent(user.username, req.query.error)));
   })
   .catch(function(e){
-    var htmlStructure = CreateContent(null, req.query.error);
-    var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-    res.send('<!doctype html>' + html);
+    res.send(parseReact(CreateContent(null, req.query.error)));
   })
 });
 
