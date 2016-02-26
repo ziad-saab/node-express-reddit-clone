@@ -20,20 +20,26 @@ function sortComment(comments, commentScores) {
 }
 
 function renderComment(comment, commentScores, rootComment) {
+
   var rootClass = "commentNest";
   if (rootComment)
   rootClass = "rootNest";
   var upvote = "/images/grey-upvote.png";
   var downvote = "/images/grey-downvote.png";
-  var vote;
-  if (comment.usercommentvotes.length > 0)
-  vote = comment.usercommentvotes[0].upVote;
+  var vote = null;
+
+  try {
+    if (comment.usercommentvotes.length > 0)
+    vote = comment.usercommentvotes[0].upVote;
+  } catch (e) {}
+
   if (vote === true) {
     upvote = "/images/green-upvote.png";
   } else if (vote === false){
     downvote = "/images/red-downvote.png";
   }
   var children = [];
+
   if (comment.children)
   var children = sortComment(comment.children, commentScores).map(function(child) {
     return renderComment(child, commentScores, false);
@@ -43,6 +49,7 @@ function renderComment(comment, commentScores, rootComment) {
   var pointString = 'point';
   var permalink = `/link/${comment.contentId}/comments/${comment.id}`;
   var parentLink = createParentLink(comment);
+  var submitterLink = `/user/${comment.user.username}`;
   return (
     <div className={rootClass}>
       <div className="commentRow" key={comment.id}>
@@ -53,20 +60,21 @@ function renderComment(comment, commentScores, rootComment) {
         <div className="commentContent">
           <div className="commentMeta">
             <div className="submissionInfo">
-              <a className="metatext">{comment.user.username} <span className="commentScore">{commentScores[comment.id]}</span> <span className="pointString">{pointString}</span> {Moment(comment.createdAt).fromNow()}</a>
+              <a className="userLink" href={submitterLink}>{comment.user.username}</a>
+              <a className="metatext"> <span className="commentScore">{commentScores[comment.id]}</span> <span className="pointString">{pointString}</span> {Moment(comment.createdAt).fromNow()}</a>
             </div>
           </div>
 
-            <table className="commentText">
-              <tr>
-                <td><a>{comment.text}</a></td>
-              </tr>
-            </table>
-            <div className="lowerLinks">
-              <a className="metalink" href={permalink}>permalink</a>
-              {parentLink}
-              <a className="metalink reply">reply</a>
-            </div>
+          <table className="commentText">
+            <tr>
+              <td><a>{comment.text}</a></td>
+            </tr>
+          </table>
+          <div className="lowerLinks">
+            <a className="metalink" href={permalink}>permalink</a>
+            {parentLink}
+            <a className="metalink reply">reply</a>
+          </div>
         </div>
       </div>
 

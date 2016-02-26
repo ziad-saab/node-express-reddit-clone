@@ -34,6 +34,58 @@ function createNewComment(sessionId, contentId, parentCommentId, text) {
   });
 }
 
+function getCommentsAndScoresForUser(username, n, m) {
+  return Promise.all([
+    getCommentsForUser(username, n, m),
+    getCommentScoresForUserName(username)
+  ])
+  .then(function(response) {
+    return {
+      comments: response[0].map(i => i.toJSON()),
+      commentScores: response[1].map(i => i.toJSON())
+    }
+  });
+}
+
+//Gets all comments for the provided userId, with a limit of n offset by m
+function getCommentsForUser(username, n, m) {
+  return dbinit.then(function(initDB) {
+    return initDB.Comment.findAll({
+      include: [{model: initDB.User, where: {username: username}}],
+      limit: n,
+      offset: m,
+      order: [initDB.Sequelize.literal('createdAt DESC')],
+      subquery: false
+    });
+  });
+}
+function getCommentScoresForUserName(username) {
+  return dbinit.then(function(initDB) {
+    return initDB.User.findOne({
+      where: {username: username}
+    })
+    .then(function(user) {
+      return getCommentScoresForUser(user);
+    });
+  });
+}
+function getCommentScoresForUser(user) {
+  return dbinit.then(function(initDB) {
+    return initDB.Comment.findAll({
+      include: [{
+        model: initDB.CommentVote,
+        attributes: []
+      }],
+      where: {userId: user.id},
+      group: 'comment.id',
+      attributes: {
+          include: [
+            [initDB.Sequelize.literal('SUM(IF((`commentvotes`.`upVote` IS NOT NULL), IF(`commentvotes`.`upVote`, 1, -1), 0))'), 'voteScore']
+          ]
+        }
+    });
+  });
+}
 //Gets a content and all comments associated with the content, up to a nested
 //depth of 10
 function getContentAndCommentsForSession(sessionId, contentId, commentId) {
@@ -157,5 +209,6 @@ function voteOnComment(sessionId, commentId, isUpvote) {
   module.exports = {
     getContentAndComments: getContentAndCommentsForSession,
     createNewComment: createNewComment,
-    voteOnComment: voteOnComment
+    voteOnComment: voteOnComment,
+    getCommentsAndScoresForUser: getCommentsAndScoresForUser
   }

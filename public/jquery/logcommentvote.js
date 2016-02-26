@@ -48,7 +48,7 @@ $(document).ready(function() {
       else metatext.find(".pointString").first().text("points");
     }).fail(function(data){
       displayLoginBox();
-    });;
+    });
   });
 });
 function displayLoginBox(){

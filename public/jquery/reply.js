@@ -40,6 +40,7 @@ function submitReply() {
     textbox.val('');
     var permalink = `/link/${data.content.id}/comments/${data.comment.id}`;
     var parentLink = createParentLink(commentId, data.content.id);
+    var submitterLink = `/user/${data.user.username}`;
     var commentHtml =
     `<div class="commentNest">
     <div class="commentRow" key=${data.comment.id}>
@@ -50,7 +51,8 @@ function submitReply() {
       <div class="commentContent">
         <div class="commentMeta">
           <div class="submissionInfo">
-            <a class="metatext">${data.user.username} <span class="commentScore">1</span> <span class="pointString">points</span> ${moment(data.comment.createdAt).fromNow()}</a>
+            <a class="userLink" href=${submitterLink}>${data.user.username}</a>
+            <a class="metatext"> <span class="commentScore">1</span> <span class="pointString">points</span> ${moment(data.comment.createdAt).fromNow()}</a>
           </div>
         </div>
 

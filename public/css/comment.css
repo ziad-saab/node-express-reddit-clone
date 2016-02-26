@@ -78,3 +78,17 @@
 .lowerLinks {
   display: flex;
 }
+.lowerLinks .metalink {
+  padding-right: 5px;
+}
+
+.userLink {
+  color: #ff9900;
+  font-size: 12px;
+  text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+.userLink:hover {
+  text-decoration: underline;
+}

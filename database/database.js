@@ -18,6 +18,7 @@ module.exports = {
   getContentAndComments: dbComment.getContentAndComments,
   createNewComment: dbComment.createNewComment,
   voteOnComment: dbComment.voteOnComment,
+  getCommentsAndScoresForUser: dbComment.getCommentsAndScoresForUser,
   getUserFromSessionId: dbUser.getUserFromSessionId,
   SESSION_LENGTH: dbUser.SESSION_LENGTH,
   USR_NOT_FOUND: dbUser.USR_NOT_FOUND,

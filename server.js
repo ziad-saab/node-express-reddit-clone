@@ -7,3 +7,4 @@ require('./express/createcontent.js');
 require('./express/vote.js');
 require('./express/commentvote.js');
 require('./express/comments-page.js');
+require('./express/user-page.js');

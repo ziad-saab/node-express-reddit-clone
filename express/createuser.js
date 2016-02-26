@@ -5,7 +5,6 @@ var ReactDOMServer = require('react-dom/server');
 require('babel-register');
 
 app.post('/SignUp', function(request, response){
-
   database.createNewUser(request.body.username, request.body.password, request.body.email)
   .then(function(result){
       database.login(request.body.username, request.body.password)

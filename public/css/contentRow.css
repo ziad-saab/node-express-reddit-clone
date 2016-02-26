@@ -51,7 +51,6 @@
 }
 .metatext, .metalink {
   color: #808080;
-  padding: 0px 10px;
   font-size: 12px;
   text-decoration: none;
 }
@@ -60,5 +59,15 @@
   cursor: pointer;
 }
 .metalink:hover {
+  text-decoration: underline;
+}
+.userLink {
+  color: #ff9900;
+  font-size: 12px;
+  text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+.userLink:hover {
   text-decoration: underline;
 }

@@ -1,27 +1,5 @@
 $(document).ready(function() {
 
-  function displayLoginBox(){
-    //THIS IS SAME CODE FROM popbox.js TO DISPLAY LOGIN BOX
-    //hide loginbox if it has been clicked
-    $(".signupbox").hide();
-    //remove error message
-    $('.error').text('');
-    //remove previous input text
-    $('.input-field').val('');
-
-    var placement = $("body").width()/2 - $(".loginbox").width()/2;
-    $(".loginbox").css("left", placement);
-    //Fade in the Popup
-    $(".loginbox").fadeIn(300);
-
-    //apply the mask which will grey out background
-    $('body').append('<div id="mask"></div>');
-    $('#mask').unbind();
-    $('#mask').on("click", fadeOut);
-    $('#mask').fadeIn(300);
-    $('a.close').on("click", fadeOut);
-  }
-
   $(".upvote").click(function() {
     var elem = $(this);
     var contentId = elem.attr("data-content");
@@ -69,3 +47,25 @@ $(document).ready(function() {
       });
   });
 });
+
+function displayLoginBox(){
+  //THIS IS SAME CODE FROM popbox.js TO DISPLAY LOGIN BOX
+  //hide loginbox if it has been clicked
+  $(".signupbox").hide();
+  //remove error message
+  $('.error').text('');
+  //remove previous input text
+  $('.input-field').val('');
+
+  var placement = $("body").width()/2 - $(".loginbox").width()/2;
+  $(".loginbox").css("left", placement);
+  //Fade in the Popup
+  $(".loginbox").fadeIn(300);
+
+  //apply the mask which will grey out background
+  $('body').append('<div id="mask"></div>');
+  $('#mask').unbind();
+  $('#mask').on("click", fadeOut);
+  $('#mask').fadeIn(300);
+  $('a.close').on("click", fadeOut);
+}
