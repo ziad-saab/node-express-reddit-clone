@@ -36,23 +36,23 @@ function createNewComment(sessionId, contentId, parentCommentId, text) {
 
 //Gets a content and all comments associated with the content, up to a nested
 //depth of 10
-function getContentAndCommentsForSession(sessionId, contentId) {
+function getContentAndCommentsForSession(sessionId, contentId, commentId) {
   return dbinit.then(function(initDB) {
     return getUserFromSessionId(sessionId)
     .then(function(user) {
-      return getContentAndCommentsForUser(user.toJSON(), contentId);
+      return getContentAndCommentsForUser(user.toJSON(), contentId, commentId);
     })
     .catch(function(e) {
-      return getContentAndCommentsForUser({}, contentId);
+      return getContentAndCommentsForUser({}, contentId, commentId);
     });
   });
 };
 
-function getContentAndCommentsForUser(user, contentId) {
+function getContentAndCommentsForUser(user, contentId, commentId) {
   return dbinit.then(function(initDB) {
     return Promise.all([
       initDB.Content.findById(contentId),
-      getCommentsForContent(user, contentId),
+      getCommentsForContent(user, contentId, commentId),
       getContentVoteScore(contentId),
       getCommentScores(contentId)
     ])
@@ -107,17 +107,17 @@ function getNCommentLevels(user, n, initDB) {
   }]
 }
 //gets all comments for a content up to a depth of 10
-function getCommentsForContent(user, contentId) {
+function getCommentsForContent(user, contentId, parentId) {
   return dbinit.then(function(initDB) {
+    var where = {contentId: contentId}
+    if (!parentId)
+    where.parentId = null;
+    else where.id = parentId;
     return initDB.Comment.findAll({
       include: getNCommentLevels(user, 10, initDB),
-      where: {
-        contentId: contentId,
-        parentId: null
-      }
+      where: where
     })
     .then(function(comments) {
-      getArrayVoteScores(comments).then(console.log);
       return comments.map(i => i.toJSON());
     });
   });
@@ -140,36 +140,6 @@ function getCommentScores(contentId) {
   })
 }
 
-function getArrayVoteScores(commentArray) {
-  return dbinit.then(function(initDB) {
-    if (commentArray.length === 0)
-    return [];
-
-    var voteQueries = commentArray.map(getCommentVoteScores)
-    return Promise.all(voteQueries);
-  });
-}
-function getCommentVoteScores(comment) {
-  return dbinit.then(function(initDB) {
-    return comment.getCommentvotes()
-    .then(function(votes) {
-      if (!comment.children)
-      return {
-        votes: votes
-      }
-
-      else {
-        return getArrayVoteScores(comment.children)
-        .then(function(response) {
-          return {
-            votes: votes,
-            childVotes: response
-          }
-        });
-      }
-    });
-  });
-}
 // adds a vote to the comment for the user attached to sessionID
 function voteOnComment(sessionId, commentId, isUpvote) {
   return dbinit.then(function(initDB) {

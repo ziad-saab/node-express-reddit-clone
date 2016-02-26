@@ -4,7 +4,7 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
-.commentNest {
+.rootNest, .commentNest {
   display: flex;
   flex-direction: column;
   margin: 10px 0px;
@@ -12,6 +12,13 @@
   border-radius: 5px;
   margin-left: 10px;
   padding: 10px;
+}
+
+.rootNest {
+  background-color: #ffc266;
+}
+.commentNest {
+  background-color: white;
 }
 .commentVotescore {
   display:flex;
@@ -67,4 +74,7 @@
 .replyCancelButton:hover, .replySaveButton:hover {
   background-color: #00cc00;
   cursor: pointer;
+}
+.lowerLinks {
+  display: flex;
 }

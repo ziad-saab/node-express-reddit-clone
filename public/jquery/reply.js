@@ -38,6 +38,8 @@ function submitReply() {
   }).success(function(data) {
     console.log(data);
     textbox.val('');
+    var permalink = `/link/${data.content.id}/comments/${data.comment.id}`;
+    var parentLink = createParentLink(commentId, data.content.id);
     var commentHtml =
     `    <div class="commentNest">
           <div class="commentRow" key=${data.comment.id}>
@@ -57,7 +59,11 @@ function submitReply() {
                     <td><a>${data.comment.text}</a></td>
                   </tr>
                 </table>
-              <a class="metalink reply">reply</a>
+                <div class="lowerLinks">
+                  <a class="metalink" href=${permalink}>permalink</a>
+                  ${parentLink}
+                  <a class="metalink reply">reply</a>
+                </div>
             </div>
           </div>
 
@@ -84,4 +90,13 @@ function submitReply() {
   $(".replyCancelButton").unbind()
   $(".replyCancelButton").on("click", hideReplyBox);
 });
+}
+
+function createParentLink(parentId, contentId) {
+  if (!parentId)
+  return '';
+  else {
+    var parentLink = `/link/${contentId}/comments/${parentId}`
+    return  (`<a class="metalink" href=${parentLink}>parent</a>`);
+  }
 }

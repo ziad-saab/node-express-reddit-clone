@@ -3,7 +3,7 @@ var Nav = require('./react-nav');
 var contentRow = require('./react-contentRow');
 var renderComment = require('./react-comment');
 
-  function Comments(user, submitter, content, comments, vote, votescore, commentScores){
+  function Comments(user, submitter, content, comments, vote, votescore, commentScores, rootComment){
     var nav;
     if (user)
     nav = Nav(user.username, []);
@@ -18,7 +18,7 @@ var renderComment = require('./react-comment');
     var commentAction = "/comment/" + content.id;
 
     var comments = comments.map(function(comment) {
-      return renderComment(comment, commentScoreHash);
+      return renderComment(comment, commentScoreHash, rootComment);
     });
 
     return (
