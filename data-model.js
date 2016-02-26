@@ -43,7 +43,7 @@ User.hasMany(Content);
 User.belongsToMany(Content, {through: Vote, as: 'votes'});
 Content.belongsToMany(User, {through: Vote, as: 'votes'});
 Content.hasMany(Vote);
-// Content.hasMany(Vote, {as: 'uservotes'});
+Content.hasOne(Vote, {as: 'loggedInVote'});
 Vote.belongsTo(Content);
 
 User.hasMany(Session);

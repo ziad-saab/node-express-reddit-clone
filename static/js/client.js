@@ -5,22 +5,52 @@ $(document).ready( function () {
 
 function handleVoteClick () {
   $('.vote-button').click( function (e) {
-    var vote, contentId;
+    var currentButton = $(e.currentTarget);
+    var contentId = e.currentTarget.value;
+    var vote = parseInt(e.currentTarget.name);
 
-    if (e.currentTarget.name === 'upvote') {
-      vote = 1;
-    }
-    else if (e.currentTarget.name === 'downvote') {
-      vote = -1;
-    }
+    var currentScore = parseInt($(`.vote-score.${contentId}`).text());
+    var scoreElement = $(`.vote-score.${contentId}`);
 
-    $.post('/vote', {vote: vote, contentId: e.currentTarget.value})
-    .done(
-      function () {
-        var currentScore = $('.vote-score').text();
-        $('.vote-score').text(++currentScore);
+    $.post('/vote', {vote: vote, contentId: contentId})
+    .done( function () {
+      if (currentButton.hasClass('up')) {
+        currentButton.toggleClass('up');
+        scoreElement.text(--currentScore);
       }
-    );
+      else if (currentButton.hasClass('down')) {
+        currentButton.toggleClass('down');
+        scoreElement.text(++currentScore);
+      }
+      else {
+        var otherButton;
+
+        if (currentButton.is('#upvote')) {
+          otherButton = scoreElement.parent().find('#downvote');
+          currentButton.toggleClass('up');
+
+          if (otherButton.hasClass('down')) {
+            otherButton.toggleClass('down');
+            scoreElement.text(currentScore + 2);
+          }
+          else {
+            scoreElement.text(++currentScore);
+          }
+        }
+        else if (currentButton.is('#downvote')) {
+          otherButton = scoreElement.parent().find('#upvote');
+          currentButton.toggleClass('down');
+
+          if (otherButton.hasClass('up')) {
+            otherButton.toggleClass('up');
+            scoreElement.text(currentScore - 2);
+          }
+          else {
+            scoreElement.text(--currentScore);
+          }
+        }
+      }
+    });
   });
 }
 

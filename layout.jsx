@@ -31,32 +31,25 @@ function Layout (data) {
 }
 
 function HomePage (data) {
-  console.log('inside render', data.votes)
-
-  var postsList = data.posts.map( item => {
-    var userVoted;
-
-    data.votes.forEach( vote => {
-      if (vote.contentId === item.id) {
-        userVoted = vote.voteValue;
-        console.log(vote.contentId, vote.voteValue, item.id, userVoted)
-      }
-    });
-
-    return (
-      <li key={item.id}>
-        <Post title = {item.title}
-              url = {item.url}
-              contentId = {item.id}
-              createdAt = {item.createdAt}
-              creator = {item.user}
-              loggedIn = {data.loggedIn}
-              userVoted = {userVoted}
-              voteScore = {item.get('voteScore')}
-              voteDiff = {item.get('voteDiff')} />
-      </li>
-    );
-  });
+  var postsList = data.posts.map(
+    item => {
+      return (
+        <li key={item.id}>
+          <Post
+            contentId = {item.id}
+            creator = {item.creator}
+            url = {item.url}
+            title = {item.title}
+            createdAt = {item.createdAt}
+            loggedIn = {data.loggedIn}
+            voteScore = {item.voteScore}
+            voteDiff = {item.voteDiff}
+            userVoted = {item.loggedInVote}
+          />
+        </li>
+      );
+    }
+  );
 
   return (
     <main>
@@ -72,33 +65,29 @@ function Post (data) {
   var upVoteClass = 'vote-button';
   var downVoteClass = 'vote-button';
 
-  if (data.userVoted) {
-    switch (data.userVoted) {
-      case 1:
-        upVoteClass += ' upvote-exists';
-        break;
-      case -1:
-        downVoteClass += ' downvote-exists';
-        break;
-    }
+  if (data.userVoted === 1) {
+    upVoteClass += ' up';
+  }
+  else if (data.userVoted === -1) {
+    downVoteClass += ' down';
   }
 
   return (
     <article className='post'>
     { data.loggedIn ?
       <section className='post-vote'>
-        <form action="/vote" method="POST">
-          <button className={upVoteClass} id='upvote' type='button' name='upvote' value={data.contentId}> ▲ </button>
-          <h5 className='vote-score'> {data.voteDiff} </h5>
-          <button className={downVoteClass} id='downvote' type='button' name='downvote' value={data.contentId}> ▼ </button>
+        <form>
+          <button className={upVoteClass} id='upvote' type='button' name='1' value={data.contentId}> ▲ </button>
+          <h5 className={'vote-score ' + data.contentId}> {data.voteDiff} </h5>
+          <button className={downVoteClass} id='downvote' type='button' name='-1' value={data.contentId}> ▼ </button>
         </form>
       </section>
     :
       null
     }
       <section className='post-details'>
-        <h4 className='post-title'><a href={data.url}> {data.title} </a></h4>
-        <p className='post-creator'> Posted by <strong>{data.creator.username}</strong> </p>
+        <h4 className='post-title'> <a href={data.url}> {data.title} </a> </h4>
+        <p className='post-creator'> Posted by <strong> {data.creator} </strong> </p>
         <p className='post-timestamp'> {data.createdAt.toString()} </p>
       </section>
     </article>
@@ -110,6 +99,7 @@ function Header (data) {
     data.loggedIn ?
       <nav>
         <h1 className='nav-title'> "Reddit" </h1>
+        <p className='current-user'>Logged in as... <strong>{data.loggedIn}</strong> </p>
         <form action="/create-content" method="GET">
           <input type='submit' value='Create a post...'/>
         </form>

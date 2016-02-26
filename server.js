@@ -1,5 +1,6 @@
 require('babel-register');
 // Dependencies
+var              _ = require('lodash');
 var        request = require('request');
 var        cheerio = require('cheerio');
 var        express = require('express');
@@ -8,10 +9,11 @@ var   cookieParser = require('cookie-parser');
 var      Sequelize = require('sequelize');
 var            col = Sequelize.col;
 var             fn = Sequelize.fn;
+var        literal = Sequelize.literal;
+var      condition = Sequelize.condition;
 var   secureRandom = require('secure-random');
-var           util = require('util');
-var             db = require('./data-model');
 var         bcrypt = require('bcrypt');
+var             db = require('./data-model');
 var         layout = require('./layout');
 
 var sendFileOptions = { root: '/home/ubuntu/workspace/' };
@@ -55,16 +57,15 @@ app.get('/', function(request, response) {
   var sort = request.query.sort || 'top';
   var score;
   var voteDiff = fn('SUM', fn('COALESCE', col('votes.voteValue'), 0));
-  // var voteDiff = Sequelize.literal('SUM(IF(votes.upVote = 1, 1, IF(votes.upVote = 0, -1, 0)))');
-  var dateDiff = Sequelize.literal('(TIMESTAMPDIFF(SECOND, NOW(), content.createdAt) / 1000000)');
+  var dateDiff = literal('(TIMESTAMPDIFF(SECOND, NOW(), content.createdAt) / 1000000)');
 
   switch (sort) {
     case 'top':
       score = voteDiff;
       break;
     case 'hot':
-      score = Sequelize.condition(voteDiff, '/', dateDiff);
-      score = Sequelize.condition(score, '*', Sequelize.literal('-1'));
+      score = condition(voteDiff, '/', dateDiff);
+      score = condition(score, '*', literal('-1'));
       break;
     case 'new':
       score = dateDiff;
@@ -74,7 +75,15 @@ app.get('/', function(request, response) {
   }
 
   db.Content.findAll({
-    include: [db.User, db.Vote],
+    include:  [ { model: db.User, attributes: ['username'] },
+                { model: db.Vote, attributes: [] },
+                { model: db.Vote,
+                  as: 'loggedInVote',
+                  attributes: ['voteValue'],
+                  where: { userId: request.loggedIn && request.loggedIn.dataValues.id || null},
+                  required: false
+                }
+              ],
     group: 'content.id',
     attributes: {
       include: [
@@ -82,35 +91,46 @@ app.get('/', function(request, response) {
         [voteDiff, 'voteDiff']
       ]
     },
-    order: [Sequelize.literal('voteScore DESC, id')],
+    order: [literal('voteScore DESC, id')],
     subQuery: false
   })
   .then( results => {
 
-    db.Vote.findAll({
-      include: [{model: db.Content, attributes: []}],
-      attributes: ['contentId', 'voteValue'],
-      where: {
-        userId: request.loggedIn.dataValues.id
-      }
-    })
-    .then( votes => {
-      votes = votes.map( item => {
-        return {
-          contentId: item.contentId,
-          voteValue: item.voteValue
-        };
-      });
+    results = results.map( item => {
+        item = item.toJSON();
+        item.creator = item.user.username;
 
-      var homepage = layout.renderPage(
-        layout.HomePage({posts: results, loggedIn: request.loggedIn, votes: votes}), 'Reddit Clone'
-      );
+        if (item.loggedInVote) {
+          item.loggedInVote = item.loggedInVote.voteValue;
+        }
 
-      response.status(200).send(homepage);
+        item = _.pick(item, [ 'id',
+                              'creator',
+                              'url',
+                              'title',
+                              'createdAt',
+                              'voteScore',
+                              'voteDiff',
+                              'loggedInVote' ]);
+        return item;
     });
+
+    if (request.loggedIn) {
+      var user = _.pick(request.loggedIn.toJSON(), ['username']);
+    }
+
+    var data = {
+      posts: results,
+      loggedIn: user && user.username || null
+    };
+
+    var homepage = layout.renderPage(
+      layout.HomePage(data), 'Reddit Clone');
+
+    response.status(200).send(homepage);
   })
   .catch( err => {
-    console.log(err);
+    console.log(err.stack);
     response.status(500).send("Unexpected error occured...");
   });
 });
@@ -291,11 +311,32 @@ app.post('/vote', function(request, response) {
   if (request.loggedIn) {
     var user = request.loggedIn;
     var contentId = request.body.contentId;
-    var vote = request.body.vote;
+    var voteValue = parseInt(request.body.vote);
 
     db.Content.findById(contentId)
-    .then( content => user.addVotes(content, {voteValue: vote}) )
-    // .then( () => response.send() );
+    .then( content => {
+      db.Vote.findOne({
+        where: {userId: user.dataValues.id,
+                contentId: contentId}
+      })
+      .then( vote => {
+        if (vote) {
+          if (vote.toJSON().voteValue === voteValue) {
+            console.log('attempting to destroy vote');
+            vote.destroy();
+          }
+          else {
+            console.log('updating vote');
+            user.addVotes(content, {voteValue: voteValue});
+          }
+        }
+        else {
+          console.log('creating vote');
+          user.addVotes(content, {voteValue: voteValue});
+        }
+      })
+    })
+    .then( () => response.status(200).send() );
   }
   else {
     response.status(400).response(`Can't vote if not logged in!`);

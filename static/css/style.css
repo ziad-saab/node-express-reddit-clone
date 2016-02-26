@@ -91,12 +91,24 @@ ul {
   font-weight: bold;
 }
 
-.upvote-exists {
-  background: green;
+.vote-button.up {
+  background: hsl(120, 60%, 70%);
+  border-radius: 8px;
+  width: 3em;
+  height: 3em;
+  font-weight: bold;
 }
 
-.downvote-exists {
-  background: orange;
+.vote-button.down {
+  background: hsl(30, 70%, 60%);
+  border-radius: 8px;
+  width: 3em;
+  height: 3em;
+  font-weight: bold;
+}
+
+.current-user {
+  margin: 0 10px;
 }
 
 nav {
