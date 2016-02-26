@@ -1,0 +1,58 @@
+@import url("createcontent.css");
+
+/*.popbox{
+    float: left;
+    position: absolute;
+    top: 160px;
+    z-index: 1000;
+    display: none;
+    border: 1px solid black;
+    background-color: #0066cc;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}*/
+
+/*This css is for the createcontent form labels*/
+.form label{
+    display: block;
+    margin: 0px 0px 15px 0px;
+}
+.form label > span{
+    width: 100px;
+    font-weight: bold;
+    float: left;
+    padding-top: 8px;
+    padding-right: 5px;
+}
+
+section.contentType button {
+  font-size: 20px;
+  color: #59b300;
+  background: rgba(0,0,0,0);
+  border: solid 5px #59b300;
+  font-family: tahoma, sans-serif, arial;
+  margin: 20px;
+}
+section.contentType button:hover {
+  border-color: #408000;
+  color: #408000;
+}
+section.contentType button:active {
+  border-color: #336600;
+  color: #336600;
+}
+
+.linkPost, .selfPost{
+  float: left;
+  position: absolute;
+  top: 160px;
+  z-index: 1000;
+  display: none;
+  border: 1px solid black;
+  background-color: #0066cc;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  display: none;
+}
