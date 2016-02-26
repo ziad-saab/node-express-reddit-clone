@@ -43,6 +43,7 @@ $(document).ready(function() {
       votescore.text(score);
       if(score === 1)
       metatext.find(".pointString").first().text("point");
+      else metatext.find(".pointString").first().text("points");
     });
   });
 });
