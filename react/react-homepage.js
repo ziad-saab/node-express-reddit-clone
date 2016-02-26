@@ -14,7 +14,7 @@ function Post(content, postNumber, width) {
   return (
     <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
       <div className="numberedRow">
-        <div className="postNumber" style={{"min-width": width}}>
+        <div className="postNumber" style={{"minWidth": width}}>
           <a>{postNumber}</a>
         </div>
         {row}
