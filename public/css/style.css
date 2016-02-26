@@ -73,15 +73,3 @@
     font-family: Arial, Helvetica;
     display: block;
 }
-
-.form label{
-    display: block;
-    margin: 0px 0px 15px 0px;
-}
-.form label > span{
-    width: 100px;
-    font-weight: bold;
-    float: left;
-    padding-top: 8px;
-    padding-right: 5px;
-}
