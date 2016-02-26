@@ -8,7 +8,7 @@ app.get('/link/:contentId/comments',function(req, res) {
   var sessionId = req.cookies.sessionId;
   database.getContentAndComments(sessionId, contentId)
   .then(function(response) {
-    res.send(parseReact(Comments(response.user, response.submitter, response.content, response.comments, response.vote, response.votescore)));
+    res.send(parseReact(Comments(response.user, response.submitter, response.content, response.comments, response.vote, response.votescore, response.commentScores)));
   });
 });
 

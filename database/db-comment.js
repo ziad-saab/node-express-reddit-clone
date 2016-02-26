@@ -52,12 +52,14 @@ function getContentAndCommentsForUser(user, contentId) {
     return Promise.all([
       initDB.Content.findById(contentId),
       getCommentsForContent(user, contentId),
-      getContentVoteScore(contentId)
+      getContentVoteScore(contentId),
+      getCommentScores(contentId)
     ])
     .then(function(response) {
       var content = response[0]
       var comments = response[1];
       var votescore = response[2];
+      var commentScores = response[3];
       var findVote = initDB.Vote.findOne({
         where: {
           userId: user.id,
@@ -75,7 +77,8 @@ function getContentAndCommentsForUser(user, contentId) {
           content: content.toJSON(),
           comments: comments,
           vote: vote,
-          votescore: votescore
+          votescore: votescore,
+          commentScores: commentScores.map(i => i.toJSON())
         }
       });
     });
@@ -113,10 +116,90 @@ function getCommentsForContent(user, contentId) {
       }
     })
     .then(function(comments) {
+      getArrayVoteScores(comments).then(console.log);
       return comments.map(i => i.toJSON());
     });
   });
 }
+function getCommentScores(contentId) {
+  return dbinit.then(function(initDB) {
+    return initDB.Comment.findAll({
+      include: [{
+        model: initDB.CommentVote,
+        attributes: []
+      }],
+      where: {contentId: contentId},
+      group: 'comment.id',
+      attributes: {
+          include: [
+            [initDB.Sequelize.literal('SUM(IF((`commentvotes`.`upVote` IS NOT NULL), IF(`commentvotes`.`upVote`, 1, -1), 0))'), 'voteScore']
+          ]
+        }
+    });
+  })
+}
+
+function getArrayVoteScores(commentArray) {
+  return dbinit.then(function(initDB) {
+    if (commentArray.length === 0)
+    return [];
+
+    var voteQueries = commentArray.map(getCommentVoteScores)
+    return Promise.all(voteQueries);
+  });
+}
+function getCommentVoteScores(comment) {
+  return dbinit.then(function(initDB) {
+    return comment.getCommentvotes()
+    .then(function(votes) {
+      if (!comment.children)
+      return {
+        votes: votes
+      }
+
+      else {
+        return getArrayVoteScores(comment.children)
+        .then(function(response) {
+          return {
+            votes: votes,
+            childVotes: response
+          }
+        });
+      }
+    });
+  });
+}
+/*
+//takes a commentTree, and returns a new tree with votescores.
+function getVoteScores(commentTree) {
+return dbinit.then(function(initDB) {
+if (commentTree.length === 0)
+return [];
+else {
+var commentQueries = commentTree.map(function(child) {
+getVoteScores(child);
+});
+return Promise.all(commentQueries)
+.then(function(votes) {
+if (!commentTree.children)
+return {
+votes: votes
+}
+var commentSubqueries = commentTree.children.map(function(child) {
+getVoteScores(child);
+});
+return Promise.all(commentSubqueries)
+.then(function(childvotes) {
+return {
+votes: votes,
+children: childvotes
+}
+});
+});
+}
+});
+}
+*/
 // adds a vote to the comment for the user attached to sessionID
 function voteOnComment(sessionId, commentId, isUpvote) {
   return dbinit.then(function(initDB) {

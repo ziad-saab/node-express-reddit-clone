@@ -98,6 +98,7 @@ var dbInit = db.query('create database reddit_clone')
 	User.belongsToMany(Comment, {through: CommentVote, as: 'Commentvotes'});
 	Comment.belongsToMany(User, {through: CommentVote, as: 'Commentvotes'});
 	Comment.hasMany(CommentVote, {as: 'usercommentvotes'});
+	Comment.hasMany(CommentVote, {as: 'childvotes'});
 	Comment.hasMany(CommentVote);
 
 	return db.sync();

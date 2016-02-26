@@ -2,7 +2,8 @@ var React = require('react');
 var Nav = require('./react-nav');
 var contentRow = require('./react-contentRow');
 
-function renderComment(comment) {
+function renderComment(comment, commentScores) {
+  var commentScore = getCommentScore(comment, commentScores);
   var upvote = "/images/grey-upvote.png";
   var downvote = "/images/grey-downvote.png";
   var vote;
@@ -16,7 +17,7 @@ function renderComment(comment) {
   var children = [];
   if (comment.children)
   var children = comment.children.map(function(child) {
-    return renderComment(child);
+    return renderComment(child, commentScores);
   });
   return (
     <div className="commentNest">
@@ -28,7 +29,7 @@ function renderComment(comment) {
         <div className="commentContent">
           <div className="commentMeta">
             <div className="submissionInfo">
-              <a className="metatext">Post by {comment.user.username}</a>
+              <a className="metatext">{commentScore} Post by {comment.user.username}</a>
               <a className="metatext">{comment.createdAt.toString()}</a>
             </div>
           </div>
@@ -53,7 +54,13 @@ function renderComment(comment) {
     </div>
   )};
 
-  function Comments(user, submitter, content, comments, vote, votescore){
+function getCommentScore(comment, commentScores) {
+  return commentScores.find(function(commentScore) {
+    return comment.id === commentScore.id;
+  }).voteScore;
+}
+
+  function Comments(user, submitter, content, comments, vote, votescore, commentScores){
     var nav;
     if (user)
     nav = Nav(user.username, []);
@@ -63,7 +70,9 @@ function renderComment(comment) {
 
     var commentAction = "/comment/" + content.id;
 
-    var comments = comments.map(renderComment);
+    var comments = comments.map(function(comment) {
+      return renderComment(comment, commentScores);
+    });
 
     return (
       <html>
