@@ -1,0 +1,149 @@
+html{
+    background: black;
+}
+
+h1{
+    font-family: 'Raleway', Arial, sans-serif;
+    color: white;
+}
+.banner {
+    font-family: 'Indie Flower', cursive, serif;
+    color: black;
+    font-size: 2em;
+}
+header{
+    background: url('typewriter.jpg')center center;
+    min-height: 50vh;
+    background-size: cover;
+    margin-top: 50px;
+}
+a{
+    color: pink;
+    font-family: 'Raleway', Arial, sans-serif;
+    text-decoration: none;
+}
+p{
+    color: white;
+}
+
+nav ul{
+    color: white;
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 1.2em;
+    display: flex;
+    list-style: none;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    
+}
+.mainNav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.mainNav li{
+    margin: 10px;
+    background: rgba(0,0,0,0.5);
+}
+.sortNav{
+    position: flex;
+    width: 100%;
+    right: 0;
+    justify-content: flex-start;
+}
+.sortNav li{
+    margin: 10px;
+    
+}
+#contents {
+    margin-top: 50px;
+}
+.contents-list {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
+    margin-left: -20px;
+}
+.content-item{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    border-bottom: 1px dotted white;
+}
+.content-item__title{
+    display:flex;
+    justify-content: flex-end;
+    margin-top: -10px;
+}
+.content-item__user{
+    display:flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    margin-top: -10px;
+    font-family: 'Indie Flower', cursive;
+}
+.content-item__time{
+    display:flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    margin-top: -10px;
+    font-family: 'Indie Flower', cursive;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.full-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    margin-right: 100px;
+    
+}
+.full-form{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    align-items: center;
+}
+.content-details{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    font-size: 1.2em;
+}
+
+button{
+    font-size: 1.8em;
+}
+.vote-value{
+    font-size: 1.5em;
+}
+input{
+    font-family: 'Raleway', Arial, sans-serif;
+    width: 150px;
+}
+#suggest{
+    font-family: 'Raleway', Arial, sans-serif;
+    width: 150px;
+    font-size: 0.8em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+/*.content-item, .full-content, .full-form, .content-list, .content-details{*/
+/*    border: 1px solid white;*/
+/*}*/
+
+/*ul, nav{*/
+/*    border: 1px solid white;*/
+/*}*/
