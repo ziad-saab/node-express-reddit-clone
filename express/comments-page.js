@@ -22,18 +22,6 @@ app.get('/link/:contentId/comments/:commentId',function(req, res) {
   });
 });
 
-app.post('/comment/:contentId', function(req, res) {
-  var contentId = parseInt(req.params.contentId);
-  var sessionId = req.cookies.sessionId;
-  database.createNewComment(sessionId, contentId, null, req.body.comment)
-  .then(function(comment) {
-    res.redirect('/link/'+contentId+'/comments');
-  })
-  .catch(function(e) {
-    if(e === database.INVALID_SESSIONID)
-    res.redirect('/Login');
-  });
-});
 app.post('/comment/', function(req, res) {
   var contentId = parseInt(req.body.contentId);
   var commentId = req.body.commentId;
@@ -44,5 +32,7 @@ app.post('/comment/', function(req, res) {
   database.createNewComment(sessionId, contentId, commentId, comment)
   .then(function(comment) {
     res.send(comment);
+  }).catch(function(e){
+    res.sendStatus(401);
   });
 });

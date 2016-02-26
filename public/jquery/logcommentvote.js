@@ -20,7 +20,9 @@ $(document).ready(function() {
       votescore.text(score);
       if(score === 1)
       metatext.find(".pointString").first().text("point");
-    });
+    }).fail(function(data){
+      displayLoginBox();
+    });;
   });
   $(".allComments").on("click", ".commentDownvote", function() {
     var elem = $(this);
@@ -44,6 +46,29 @@ $(document).ready(function() {
       if(score === 1)
       metatext.find(".pointString").first().text("point");
       else metatext.find(".pointString").first().text("points");
-    });
+    }).fail(function(data){
+      displayLoginBox();
+    });;
   });
 });
+function displayLoginBox(){
+  //THIS IS SAME CODE FROM popbox.js TO DISPLAY LOGIN BOX
+  //hide loginbox if it has been clicked
+  $(".signupbox").hide();
+  //remove error message
+  $('.error').text('');
+  //remove previous input text
+  $('.input-field').val('');
+
+  var placement = $("body").width()/2 - $(".loginbox").width()/2;
+  $(".loginbox").css("left", placement);
+  //Fade in the Popup
+  $(".loginbox").fadeIn(300);
+
+  //apply the mask which will grey out background
+  $('body').append('<div id="mask"></div>');
+  $('#mask').unbind();
+  $('#mask').on("click", fadeOut);
+  $('#mask').fadeIn(300);
+  $('a.close').on("click", fadeOut);
+}
