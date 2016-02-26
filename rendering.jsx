@@ -11,27 +11,25 @@ function renderHtml(jsxStructure) {
 function Layout(data) {
   return (
     <html>
-        <section>
-            <head>
-                <link rel="stylesheet" type="text/css" href="style.css"></link>
-                <link href='https://fonts.googleapis.com/css?family=Raleway:400,700|Indie+Flower' rel='stylesheet' type='text/css'></link>
-                <link rel="stylesheet" href="/font-awesome-4.5.0/css/font-awesome.min.css" type='text/css'></link>
-                    <title>{data.title}</title>
-            </head>
-            <body>
-            <header><h1 className='banner'>Sounding board</h1></header>
-                <nav>
-                    <ul className="nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/createContent">Share</a></li>
-                        <li><a href="/login">Login</a></li>
-                    </ul>
-                </nav>
-                    {data.children}
-                <script type = "text/javascript" src="https://code.jquery.com/jquery-1.12.1.js"></script>
-                <script type = "text/javascript" src= 'app.js'></script>
-            </body>
-        </section>
+        <head>
+            <link rel="stylesheet" type="text/css" href="/style.css"></link>
+            <link href='https://fonts.googleapis.com/css?family=Raleway:400,700|Indie+Flower' rel='stylesheet' type='text/css'></link>
+            <link rel="stylesheet" href="/font-awesome-4.5.0/css/font-awesome.min.css" type='text/css'></link>
+                <title>{data.title}</title>
+        </head>
+        <body>
+        <header><h1 className='banner'>Sounding board</h1></header>
+            <nav>
+                <ul className="mainNav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/createContent">Share</a></li>
+                    <li><a href="/login">Login</a></li>
+                </ul>
+            </nav>
+                {data.children}
+            <script type = "text/javascript" src="https://code.jquery.com/jquery-1.12.1.js"></script>
+            <script type = "text/javascript" src= '/app.js'></script>
+        </body>
     </html>
   );
 }
@@ -102,13 +100,20 @@ function renderCreateContent(data){
 function renderHomepage(data) {
     var structure = (
     <Layout>
+        <nav>
+            <ul className="sortNav">
+                <li><a href="/sort/new">New</a></li>
+                <li><a href="/sort/top">Top</a></li>
+                <li><a href="/sort/hot">Hot</a></li>
+            </ul>
+        </nav>
         <div id="contents">
         <h1 className="table-name">Posts</h1>
         <ul className="contents-list">
         
          {data.map(function(item) {
             return (
-            <li className="content-item">
+            <li key={item.id} className="content-item">
                 <div className="full-content">
                     <h2 className="content-item__title">
                         <a href={item.url}>{item.title}</a>
