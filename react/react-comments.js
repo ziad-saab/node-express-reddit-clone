@@ -3,7 +3,6 @@ var Nav = require('./react-nav');
 var contentRow = require('./react-contentRow');
 
 function renderComment(comment, commentScores) {
-  var commentScore = getCommentScore(comment, commentScores);
   var upvote = "/images/grey-upvote.png";
   var downvote = "/images/grey-downvote.png";
   var vote;
@@ -29,7 +28,7 @@ function renderComment(comment, commentScores) {
         <div className="commentContent">
           <div className="commentMeta">
             <div className="submissionInfo">
-              <a className="metatext">{commentScore} Post by {comment.user.username}</a>
+              <a className="metatext">{commentScores[comment.id]} Post by {comment.user.username}</a>
               <a className="metatext">{comment.createdAt.toString()}</a>
             </div>
           </div>
@@ -54,24 +53,22 @@ function renderComment(comment, commentScores) {
     </div>
   )};
 
-function getCommentScore(comment, commentScores) {
-  return commentScores.find(function(commentScore) {
-    return comment.id === commentScore.id;
-  }).voteScore;
-}
-
   function Comments(user, submitter, content, comments, vote, votescore, commentScores){
     var nav;
     if (user)
     nav = Nav(user.username, []);
     else nav = Nav(undefined, []);
 
+    var commentScoreHash = {};
+    commentScores.forEach(function(commentScore) {
+      commentScoreHash[commentScore.id] = commentScore.voteScore;
+    })
     var contentHeader = contentRow(content, vote.upVote, submitter.username, votescore);
 
     var commentAction = "/comment/" + content.id;
 
     var comments = comments.map(function(comment) {
-      return renderComment(comment, commentScores);
+      return renderComment(comment, commentScoreHash);
     });
 
     return (
