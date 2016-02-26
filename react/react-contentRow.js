@@ -28,7 +28,8 @@ function contentRow(content, vote, submitter, votescore) {
         </table>
         <div className="contentMetaData">
           <div className="submissionInfo">
-            <a className="metatext">Submitted {Moment(content.createdAt).fromNow()} by <span className="userLink" href="/">{submitter}</span></a>
+            <a className="metatext">Submitted {Moment(content.createdAt).fromNow()} by </a>
+            <a className="userLink" href={submitterLink}>{submitter}</a>
           </div>
           <a className="metalink" href={comments}>Comments</a>
         </div>
