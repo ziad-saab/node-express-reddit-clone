@@ -1,4 +1,5 @@
 var React = require('react');
+var Moment = require('moment');
 
 function renderComment(comment, commentScores) {
   var upvote = "/images/grey-upvote.png";
@@ -16,6 +17,9 @@ function renderComment(comment, commentScores) {
   var children = comment.children.map(function(child) {
     return renderComment(child, commentScores);
   });
+  var pointString = 'points';
+  if(commentScores[comment.id] === 1)
+  var pointString = 'point';
   return (
     <div className="commentNest">
       <div className="commentRow" key={comment.id}>
@@ -26,8 +30,7 @@ function renderComment(comment, commentScores) {
         <div className="commentContent">
           <div className="commentMeta">
             <div className="submissionInfo">
-              <a className="metatext">{commentScores[comment.id]} Post by {comment.user.username}</a>
-              <a className="metatext">{comment.createdAt.toString()}</a>
+              <a className="metatext">{comment.user.username} <span className="commentScore">{commentScores[comment.id]}</span> <span className="pointString">{pointString}</span> {Moment(comment.createdAt).fromNow()}</a>
             </div>
           </div>
 

@@ -1,4 +1,5 @@
 var React = require('react');
+var Moment = require('moment');
 
 function contentRow(content, vote, submitter, votescore) {
   var upvote = "/images/grey-upvote.png";
@@ -26,8 +27,7 @@ function contentRow(content, vote, submitter, votescore) {
         </table>
         <div className="contentMetaData">
           <div className="submissionInfo">
-            <a className="metatext">Post by {submitter}</a>
-            <a className="metatext">{content.createdAt.toString()}</a>
+            <a className="metatext">Submitted {Moment(content.createdAt).fromNow()} by {submitter}</a>
           </div>
           <a className="metalink" href={comments}>Comments</a>
         </div>
