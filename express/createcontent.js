@@ -5,14 +5,21 @@ require('babel-register');
 var CreateContent = require('../react/react-createcontent');
 
 app.get('/CreateContent', function(req, res){
-  var htmlStructure = CreateContent(req.query.error);
-  var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-  res.send('<!doctype html>' + html);
+  database.getUserFromSessionId(req.cookies.sessionId)
+  .then(function(user){
+    var htmlStructure = CreateContent(user.username, req.query.error);
+    var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
+    res.send('<!doctype html>' + html);
+  })
+  .catch(function(e){
+    var htmlStructure = CreateContent(null, req.query.error);
+    var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
+    res.send('<!doctype html>' + html);
+  })
 });
 
 app.post('/CreateContent', function(request, response){
-    console.log(request.body);
-    database.postContent(request.cookies.sessionId, request.body.url,  request.body.title)
+    database.postContent(request.cookies.sessionId, request.body.url, request.body.title)
     .then(function(result){
         console.log(result);
         database.voteOnContent(request.cookies.sessionId, result.dataValues.id, true)
@@ -23,7 +30,10 @@ app.post('/CreateContent', function(request, response){
     })
     .catch(function(e){
       if(e.message === database.INVALID_SESSIONID){
-      response.redirect('/CreateContent/?error=You are not logged in');
+        var error = "You are not logged in";
+        var htmlStructure = CreateContent(null, error);
+        var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
+        response.send('<!doctype html>' + html);
       }
       else throw e;
     });
