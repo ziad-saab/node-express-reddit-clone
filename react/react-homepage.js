@@ -2,7 +2,7 @@ var React = require('react');
 var Nav = require('./react-nav');
 var contentRow = require('./react-contentRow');
 
-function Post(content, postNumber) {
+function Post(content, postNumber, width) {
   var vote;
   if (content.upvote === 1)
   vote = true;
@@ -14,8 +14,8 @@ function Post(content, postNumber) {
   return (
     <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
       <div className="numberedRow">
-        <div className="postNumber">
-        <a>{postNumber}</a>
+        <div className="postNumber" style={{"min-width": width}}>
+          <a>{postNumber}</a>
         </div>
         {row}
       </div>
@@ -63,10 +63,11 @@ function Pages(page, type) {
 
 function HomePage(user, contents, type, page, pageLength) {
   var nav = Nav(user, getTablist(type));
+  var width = (((page+1)*pageLength).toString().length*0.7).toString() + 'em';
   var posts = []
   for (var i = 0; i < contents.length; i++) {
     var pageNumber = page*pageLength + i + 1;
-    posts.push(Post(contents[i], pageNumber));
+    posts.push(Post(contents[i], pageNumber, width));
   }
   var pages = Pages(page, type);
   return (

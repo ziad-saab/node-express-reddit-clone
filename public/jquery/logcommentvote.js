@@ -1,9 +1,7 @@
 $(document).ready(function() {
   $(".allComments").on("click", ".commentUpvote", function() {
-    console.log('upvoted');
     var elem = $(this);
     var commentId = elem.attr("data-comment");
-    console.log("clicked upvote");
     $.ajax({
       type:'POST',
       url:'/commentupvote',
@@ -11,23 +9,25 @@ $(document).ready(function() {
     }).success(function (data){
       console.log('successful upvote');
       var downvote = elem.parent().find(".commentDownvote");
-      //var votescore = elem.parent().find(".votescore");
-      //var score = parseInt(votescore.text()) + 1;
-      var score = 0;
+      var metatext = elem.closest(".commentNest").find(".metatext");
+      var votescore = metatext.find(".commentScore").first();
+      var score = parseInt(votescore.text()) + 1;
+      console.log("score is " + score);
       if (downvote.attr("src") === "/images/red-downvote.png")
       score ++;
       if (elem.attr("src") === "/images/green-upvote.png")
       score --;
+      console.log("score set to " + score);
       elem.attr( "src", "/images/green-upvote.png");
       downvote.attr("src", "/images/grey-downvote.png");
-      //votescore.text(score);
+      votescore.text(score);
+      if(score === 1)
+      metatext.find(".pointString").first().text("point");
     });
   });
   $(".allComments").on("click", ".commentDownvote", function() {
-    console.log('downvoted')
     var elem = $(this);
     var commentId = $(this).attr("data-comment");
-    console.log(commentId);
     $.ajax({
       type:'POST',
       url:'/commentdownvote',
@@ -35,16 +35,21 @@ $(document).ready(function() {
     }).success(function (data){
       console.log('successful downvote');
       var upvote = elem.parent().find(".commentUpvote");
-      //var votescore = elem.parent().find(".votescore");
-      //var score = parseInt(votescore.text()) - 1;
-      var score = 0;
+      var metatext = elem.closest(".commentNest").find(".metatext");
+      var votescore = metatext.find(".commentScore").first();
+      var score = parseInt(votescore.text()) - 1;
+      console.log("score is " + votescore.val());
+      console.log("score is " + score);
       if (elem.attr("src") === "/images/red-downvote.png")
       score ++;
       if (upvote.attr("src") === "/images/green-upvote.png")
       score --;
+      console.log("score set to " + score);
       elem.attr("src", "/images/red-downvote.png");
       upvote.attr("src", "/images/grey-upvote.png");
-      //votescore.text(score);
+      votescore.text(score);
+      if(score === 1)
+      metatext.find(".pointString").first().text("point");
     });
   });
 });
