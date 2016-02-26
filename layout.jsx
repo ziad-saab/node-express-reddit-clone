@@ -31,15 +31,27 @@ function Layout (data) {
 }
 
 function HomePage (data) {
+  console.log('inside render', data.votes)
+
   var postsList = data.posts.map( item => {
+    var userVoted;
+
+    data.votes.forEach( vote => {
+      if (vote.contentId === item.id) {
+        userVoted = vote.voteValue;
+        console.log(vote.contentId, vote.voteValue, item.id, userVoted)
+      }
+    });
+
     return (
       <li key={item.id}>
         <Post title = {item.title}
               url = {item.url}
-              contentID = {item.id}
+              contentId = {item.id}
               createdAt = {item.createdAt}
               creator = {item.user}
               loggedIn = {data.loggedIn}
+              userVoted = {userVoted}
               voteScore = {item.get('voteScore')}
               voteDiff = {item.get('voteDiff')} />
       </li>
@@ -57,15 +69,28 @@ function HomePage (data) {
 }
 
 function Post (data) {
+  var upVoteClass = 'vote-button';
+  var downVoteClass = 'vote-button';
+
+  if (data.userVoted) {
+    switch (data.userVoted) {
+      case 1:
+        upVoteClass += ' upvote-exists';
+        break;
+      case -1:
+        downVoteClass += ' downvote-exists';
+        break;
+    }
+  }
+
   return (
     <article className='post'>
     { data.loggedIn ?
       <section className='post-vote'>
         <form action="/vote" method="POST">
-          <input className='button' id='upvote' type='submit' name='upvote' value='+1'/>
+          <button className={upVoteClass} id='upvote' type='button' name='upvote' value={data.contentId}> ▲ </button>
           <h5 className='vote-score'> {data.voteDiff} </h5>
-          <input className='button' id='downvote' type='submit' name='downvote' value='-1'/>
-          <input type='hidden' name='contentID' value={data.contentID} />
+          <button className={downVoteClass} id='downvote' type='button' name='downvote' value={data.contentId}> ▼ </button>
         </form>
       </section>
     :

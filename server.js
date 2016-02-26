@@ -54,7 +54,7 @@ app.use( (req, res, next) => {
 app.get('/', function(request, response) {
   var sort = request.query.sort || 'top';
   var score;
-  var voteDiff = fn('SUM', fn('COALESCE', col('votes.upVote'), 0));
+  var voteDiff = fn('SUM', fn('COALESCE', col('votes.voteValue'), 0));
   // var voteDiff = Sequelize.literal('SUM(IF(votes.upVote = 1, 1, IF(votes.upVote = 0, -1, 0)))');
   var dateDiff = Sequelize.literal('(TIMESTAMPDIFF(SECOND, NOW(), content.createdAt) / 1000000)');
 
@@ -86,13 +86,28 @@ app.get('/', function(request, response) {
     subQuery: false
   })
   .then( results => {
-    console.log(results[0].toJSON())
 
-    var homepage = layout.renderPage(
-      layout.HomePage({posts: results, loggedIn: request.loggedIn}), 'Reddit Clone'
-    );
+    db.Vote.findAll({
+      include: [{model: db.Content, attributes: []}],
+      attributes: ['contentId', 'voteValue'],
+      where: {
+        userId: request.loggedIn.dataValues.id
+      }
+    })
+    .then( votes => {
+      votes = votes.map( item => {
+        return {
+          contentId: item.contentId,
+          voteValue: item.voteValue
+        };
+      });
 
-    response.status(200).send(homepage);
+      var homepage = layout.renderPage(
+        layout.HomePage({posts: results, loggedIn: request.loggedIn, votes: votes}), 'Reddit Clone'
+      );
+
+      response.status(200).send(homepage);
+    });
   })
   .catch( err => {
     console.log(err);
@@ -275,12 +290,12 @@ app.post('/create-content', function(request, response) {
 app.post('/vote', function(request, response) {
   if (request.loggedIn) {
     var user = request.loggedIn;
-    var contentID = request.body.contentID;
-    var isUpVote = request.body.upvote ? 1 : -1;
+    var contentId = request.body.contentId;
+    var vote = request.body.vote;
 
-    db.Content.findById(contentID)
-    .then( content => user.addUpVotes(content, {upVote: isUpVote}) )
-    .then( () => response.status(303).redirect(request.headers.referer || '/') );
+    db.Content.findById(contentId)
+    .then( content => user.addVotes(content, {voteValue: vote}) )
+    // .then( () => response.send() );
   }
   else {
     response.status(400).response(`Can't vote if not logged in!`);

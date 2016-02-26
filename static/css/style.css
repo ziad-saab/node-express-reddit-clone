@@ -14,7 +14,7 @@ body {
 }
 
 a {
-  text-decoration: none;  
+  text-decoration: none;
 }
 
 ul {
@@ -84,17 +84,19 @@ ul {
   margin: 0;
 }
 
-.button {
+.vote-button {
   border-radius: 8px;
   width: 3em;
   height: 3em;
   font-weight: bold;
 }
 
-#upvote {
+.upvote-exists {
+  background: green;
 }
 
-#downvote {
+.downvote-exists {
+  background: orange;
 }
 
 nav {
@@ -133,5 +135,5 @@ nav>form>input {
 
 .external-form button {
   margin: 3px;
-  border-radius: 4px;  
+  border-radius: 4px;
 }

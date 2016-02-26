@@ -30,62 +30,28 @@ var Content = db.define('content', {
 });
 
 var Vote = db.define('vote', {
-  upVote: Sequelize.INTEGER
+  voteValue: Sequelize.INTEGER
 });
 
 var Session = db.define('session', {
   token: Sequelize.STRING,
 });
 
-Content.belongsTo(User); // This will add a `setUser` function on content objects
-User.hasMany(Content); // This will add an `addContent` function on user objects
+Content.belongsTo(User);
+User.hasMany(Content);
 
-User.belongsToMany(Content, {through: Vote, as: 'upVotes'}); // This will add an `add`
-Content.belongsToMany(User, {through: Vote});
+User.belongsToMany(Content, {through: Vote, as: 'votes'});
+Content.belongsToMany(User, {through: Vote, as: 'votes'});
 Content.hasMany(Vote);
+// Content.hasMany(Vote, {as: 'uservotes'});
 Vote.belongsTo(Content);
 
 User.hasMany(Session);
 Session.belongsTo(User);
 
-
 db.sync({
   // force: true
 });
-// createNewUser('test', 'abc123');
-
-//sequelize helper functions
-// function createNewUser (name, pass) {
-//   return User.create({
-//     username: name,
-//     password: pass
-//   });
-// }
-
-// function createNewContent (userID, url, title) {
-//   return User.findById(userID)
-//   .then( function(user) {
-//     return user.createContent({
-//       url: url,
-//       title: title
-//     });
-//   });
-// }
-
-// function voteOnContent (contentID, userID, isUpVote) {
-//   return Promise.all([
-//     User.findById(userID),
-//     Content.findById(contentID)
-//   ])
-//   .then( function (val) {
-//     var user = val[0];
-//     var content = val[1];
-
-//     user.addUpVotes(content, {
-//       upVote: isUpVote
-//     });
-//   });
-// }
 
 module.exports = {
   Content: Content,
