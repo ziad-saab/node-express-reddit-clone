@@ -20,8 +20,6 @@ db.content.belongsTo(db.user);
 db.user.hasMany(db.content);
 db.session.belongsTo(db.user);
 db.user.hasMany(db.session);
-
-
 db.user.belongsToMany(db.content, {through: db.vote, as: 'Upvotes'});
 db.content.belongsToMany(db.user, {through: db.vote, as: "Upvotes"});
 db.content.hasMany(db.vote);

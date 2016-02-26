@@ -9,7 +9,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 var rl = require("./rendering.jsx");
-console.log(rl);
+app.use(express.static('css'));
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -22,7 +23,7 @@ app.get("/signup", function(req, res) {
 
 // get page of login
 app.get("/login", function(req, res) {
-    res.send(rl.renderLogin({data: ""}));
+    res.send(rl.renderLogin({title: "Login"}));
 });
 
 // get page of homepage
@@ -39,6 +40,7 @@ app.get("/homepage", function(req, res) {
         limit: 25,
         subQuery: false
     }).then(function (allPosts) {
+        
         res.send(rl.homePage(allPosts));
     });
 });
@@ -107,8 +109,6 @@ app.post("/createPost", mw.checkLoginToken, function(req, res) {
 
 // allowing users to vote
 app.post("/voteContent", mw.checkLoginToken, function(req, res) {
-    console.log(req.loggedInUser);
-    console.log(req.body);
     db.vote.findOne({
         where: {
             UserId: req.loggedInUser.id, // This should be the currently logged in user's ID
@@ -132,7 +132,9 @@ app.post("/voteContent", mw.checkLoginToken, function(req, res) {
             }
         }
     );
-    res.redirect("/homepage");
+    
+    res.json("voted");
+
 });
 
 /////////////////////////// APP POST SECTION (ABOVE) //////////////////////////////////
