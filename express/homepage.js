@@ -33,9 +33,16 @@ function getFunction(type) {
 app.get('/sort/:order/:page', function(req, res){
   var sessionId = req.cookies.sessionId;
   var page = parseInt(req.params.page);
-  if (isNaN(page))
-  page = 0;
-  getFunction(req.params.order)(sessionId, PAGE_LENGTH, page*PAGE_LENGTH)
+  if (isNaN(page)) {
+    res.send(404)
+    return;
+  }
+  var orderFunction = getFunction(req.params.order);
+  if(!orderFunction) {
+    res.sendStatus(404);
+    return;
+  }
+  orderFunction(sessionId, PAGE_LENGTH, page*PAGE_LENGTH)
   .then(function(response) {
     var username;
     try {username = response.User.username} catch(e) {}

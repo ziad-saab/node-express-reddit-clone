@@ -35,6 +35,15 @@ function getTablist(type) {
   });
 }
 
+function longerScoreString(content1, content2) {
+  if (content1.votescore > content2.votescore)
+  return content1;
+  else return content2;
+}
+function longestScoreString(contents) {
+  return longerScoreString.apply(null, contents);
+}
+
 function Pages(page, type, pageLength, numEntries) {
   var next = page + 1;
   var previous = page - 1;
@@ -71,6 +80,7 @@ function Pages(page, type, pageLength, numEntries) {
 function HomePage(user, contents, type, page, pageLength) {
   var nav = Nav(user, getTablist(type));
   var width = (((page+1)*pageLength).toString().length*0.7).toString() + 'em';
+  var scoreWidth = (longestScoreString(contents).votescore.length*0.7).toString() + 'em';
   var posts = []
   for (var i = 0; i < contents.length; i++) {
     var pageNumber = page*pageLength + i + 1;

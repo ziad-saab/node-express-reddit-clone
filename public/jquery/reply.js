@@ -12,8 +12,9 @@ function hideReplyBox() {
 }
 
 function showReplyBox() {
-  var replyBox = $(this).closest(".commentNest, .rootNest").find(".hiddenReplyBox");
-  replyBox.first().css("display","flex");
+  var replyBox = $(this).closest(".commentNest, .rootNest").find(".hiddenReplyBox").first();
+  replyBox.css("display","flex");
+  replyBox.find("textarea").first().focus();
 }
 
 function submitReply() {

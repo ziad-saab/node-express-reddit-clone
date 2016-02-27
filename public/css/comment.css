@@ -1,4 +1,4 @@
-
+@import url("metatext.css");
 .commentRow {
   display:flex;
   justify-content: flex-start;
@@ -34,6 +34,7 @@
   display:flex;
   flex-direction: column;
   justify-content: center;
+  padding-left: 2px;
 }
 
 .commentText {
@@ -81,15 +82,4 @@
 }
 .lowerLinks .metalink {
   padding-right: 5px;
-}
-
-.userLink {
-  color: #ff9900;
-  font-size: 12px;
-  text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-}
-.userLink:hover {
-  text-decoration: underline;
 }

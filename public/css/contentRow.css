@@ -1,3 +1,4 @@
+@import url("comment.css");
 
 .contentRow {
   display:flex;
@@ -34,40 +35,21 @@
   display:flex;
   flex-direction: column;
 }
-
-.contentpost:link {
+.contentpost {
+  font: normal large verdana,arial,helvetica,sans-serif;
   text-decoration: none;
   color: #ff9900;
-  font-weight: bold;
-  font-size: 20px;
 }
 
 .contentpost:visited {
-  text-decoration: none;
   color: #ffc266;
-  font-weight: bold;
-  font-size: 20px;
-  padding-left: 30px;
 }
-.metatext, .metalink {
-  color: #808080;
-  font-size: 12px;
-  text-decoration: none;
+.submissionInfo {
+  margin-top: -4px;
+  padding: 0px;
 }
-.metalink {
-  font-weight: bold;
-  cursor: pointer;
-}
-.metalink:hover {
-  text-decoration: underline;
-}
-.userLink {
-  color: #ff9900;
-  font-size: 12px;
-  text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-}
-.userLink:hover {
-  text-decoration: underline;
+table {
+  margin: 0px;
+  padding: 0px;
+  border-spacing: 0px;
 }

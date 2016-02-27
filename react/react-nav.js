@@ -8,8 +8,8 @@ function Nav(user, tablist) {
     var submitterLink = `/user/${user}`
   userbar = (
     <div className="userbar">
-      <a className="userLink" href={submitterLink}>{user}</a>
-      <a href="/Logout" className="elementLink">Logout</a>
+      <a className="elementLink" href={submitterLink}>{user}</a>
+      <a className="elementLink" href="/Logout">Logout</a>
     </div>);
   }
 

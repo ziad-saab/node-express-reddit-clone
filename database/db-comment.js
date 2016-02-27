@@ -68,7 +68,7 @@ function getCommentsForUser(user, username, n, m) {
   return dbinit.then(function(initDB) {
     return initDB.Comment.findAll({
       include: [{model: initDB.User, where: {username: username}},
-      {model: initDB.CommentVote, as: 'usercommentvotes', where: {userId: user.id}}],
+      {model: initDB.CommentVote, as: 'usercommentvotes', where: {userId: user.id}, required: false}],
       limit: n,
       offset: m,
       order: [initDB.Sequelize.literal('createdAt DESC')],

@@ -5,6 +5,10 @@ var Comments = require('../react/react-comments-page.js');
 
 app.get('/link/:contentId/comments',function(req, res) {
   var contentId = parseInt(req.params.contentId);
+  if (isNaN(contentId)) {
+    res.send(404)
+    return;
+  }
   var sessionId = req.cookies.sessionId;
   database.getContentAndComments(sessionId, contentId, null)
   .then(function(response) {
@@ -15,6 +19,10 @@ app.get('/link/:contentId/comments',function(req, res) {
 app.get('/link/:contentId/comments/:commentId',function(req, res) {
   var contentId = parseInt(req.params.contentId);
   var commentId = parseInt(req.params.commentId);
+  if (isNaN(contentId) || isNaN(commentId)) {
+    res.send(404)
+    return;
+  }
   var sessionId = req.cookies.sessionId;
   database.getContentAndComments(sessionId, contentId, commentId)
   .then(function(response) {

@@ -20,23 +20,6 @@
   display: flex;
   align-items: center;
 }
-.contentButton {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  background-color: #ff9900;
-  color: white;
-  padding: 5px 60px;
-  margin-top: 50px;
-  font-family: "Arial", Serif;
-  font-weight: bold;
-  font-size: 30px;
-  text-decoration: none;
-  border-radius: 2px;
-}
-.contentButton:hover {
-  background-color: #00cc00;
-}
 
 .pagebutton{
     padding: 1px 4px;
