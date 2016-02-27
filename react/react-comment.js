@@ -27,7 +27,6 @@ function renderComment(comment, commentScores, rootComment) {
   var upvote = "/images/grey-upvote.png";
   var downvote = "/images/grey-downvote.png";
   var vote = null;
-
   try {
     if (comment.usercommentvotes.length > 0)
     vote = comment.usercommentvotes[0].upVote;
@@ -50,6 +49,9 @@ function renderComment(comment, commentScores, rootComment) {
   var permalink = `/link/${comment.contentId}/comments/${comment.id}`;
   var parentLink = createParentLink(comment);
   var submitterLink = `/user/${comment.user.username}`;
+  var continueReading = ``;
+  if (comment.user.the_end)
+  continueReading = <a className="continueReading" href={permalink}>continue this thread</a>;
   return (
     <div className={rootClass}>
       <div className="commentRow" key={comment.id}>
@@ -75,6 +77,7 @@ function renderComment(comment, commentScores, rootComment) {
             {parentLink}
             <a className="metalink reply">reply</a>
           </div>
+          {continueReading}
         </div>
       </div>
 

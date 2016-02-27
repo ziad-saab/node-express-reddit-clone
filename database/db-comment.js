@@ -141,10 +141,12 @@ function getContentAndCommentsForUser(user, contentId, commentId) {
         var vote = {};
         if (response[0])
         vote = response[0].toJSON();
+        content = content.toJSON();
+        content.commentCount = commentScores.length
         return {
           user: user,
           submitter: response[1].toJSON(),
-          content: content.toJSON(),
+          content: content,
           comments: comments,
           vote: vote,
           votescore: votescore,
@@ -158,7 +160,10 @@ function getContentAndCommentsForUser(user, contentId, commentId) {
 //provides a nested comment query with a depth of n
 function getNCommentLevels(user, n, initDB) {
   if (n <= 0)
-  return [initDB.User, {
+  return [{
+    model: initDB.User,
+    attributes: { include: [[initDB.Sequelize.literal('true'), 'the_end']] }
+  }, {
     model: initDB.CommentVote,
     as: 'usercommentvotes',
     where: {userId: user.id},

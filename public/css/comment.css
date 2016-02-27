@@ -68,6 +68,7 @@
   color: white;
   padding: 5px 10px;
   margin: 4px 0px;
+  font: normal medium verdana,arial,helvetica,sans-serif;
   font-weight: bold;
 }
 .replyCancelButton {
@@ -82,4 +83,9 @@
 }
 .lowerLinks .metalink {
   padding-right: 5px;
+}
+.continueReading {
+  text-decoration: none;
+  font: normal small verdana,arial,helvetica,sans-serif;
+  color: #ff9900;
 }

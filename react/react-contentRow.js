@@ -11,6 +11,9 @@ function contentRow(content, vote, submitter, votescore) {
     downvote = "/images/red-downvote.png";
   }
   var submitterLink = `/user/${submitter}`
+  var commentString = 'comments';
+  if (content.commentCount === 1)
+  commentString = 'comment';
   return (
     <div className="contentRow">
       <div className="contentVotescore">
@@ -31,7 +34,7 @@ function contentRow(content, vote, submitter, votescore) {
             <a className="metatext">submitted {Moment(content.createdAt).fromNow()} by </a>
             <a className="userLink" href={submitterLink}>{submitter}</a>
           </div>
-          <a className="metalink" href={comments}>comments</a>
+          <a className="metalink" href={comments}>{content.commentCount} {commentString}</a>
         </div>
       </div>
     </div>

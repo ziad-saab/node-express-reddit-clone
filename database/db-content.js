@@ -80,7 +80,7 @@ function getOrderedNtoMContentForSession(sessionId, n, m, order) {
 function getOrderedNtoMContent(userId, n, m, order) {
   return dbinit.then(function(initDB) {
     return initDB.db.query(
-      'SELECT          `contentlist`.*, `uservotes`.`upvote` AS `upvote` \
+      'SELECT          `contentlist`.*, `uservotes`.`upvote` AS `upvote`, count(DISTINCT `comments`.`id`) AS `commentCount` \
 FROM  (     SELECT          `contents`.*, \
                             `users`.`username`               AS `submitter`, \
                             ' + order + '                    AS `postorder`, \
@@ -95,6 +95,8 @@ FROM  (     SELECT          `contents`.*, \
 LEFT OUTER JOIN `votes` AS `uservotes` \
 ON              `uservotes`.`contentid`=`contentlist`.`id` \
 AND             `uservotes`.`userid`='+ userId +' \
+LEFT OUTER JOIN `comments` AS `comments` \
+ON              `contentlist`.`id` = `comments`.`contentId` \
 GROUP BY        `contentlist`.`id` \
 ORDER BY        `contentlist`.`postorder` DESC, `contentlist`.`createdAt` DESC \
 LIMIT ' + n + ' \

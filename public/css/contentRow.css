@@ -15,6 +15,7 @@
 }
 .contentContent {
   display:flex;
+  margin-left: 2px;
   flex-direction: column;
   justify-content: center;
 }
