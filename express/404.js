@@ -5,7 +5,10 @@ var page404 = require('../react/react-404.js');
 function send404(request, response) {
   database.getUserFromSessionId(request.cookies.sessionId)
   .then(function(user) {
-    response.send(404, parseReact(page404(user.username)));
+    response.status(404).send(parseReact(page404(user.username)));
+  })
+  .catch(function(e) {
+    response.status(404).send(parseReact(page404(undefined)));
   })
 }
 
