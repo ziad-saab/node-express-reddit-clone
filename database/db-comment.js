@@ -69,10 +69,9 @@ function getCommentsForUser(user, username, n, m) {
     return initDB.Comment.findAll({
       include: [{model: initDB.User, where: {username: username}},
       {model: initDB.CommentVote, as: 'usercommentvotes', where: {userId: user.id}, required: false}],
+      order: [[initDB.Sequelize.col('createdAt'), 'DESC']],
       limit: n,
-      offset: m,
-      order: [initDB.Sequelize.literal('createdAt DESC')],
-      subquery: false
+      offset: m
     });
   });
 }

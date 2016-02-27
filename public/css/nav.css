@@ -90,6 +90,10 @@ color:#00cc00;
 .titleLine {
 
 }
+
+.commentButtons {
+  display: flex;
+}
 .contentButton {
   display: inline-block;
   overflow: hidden;

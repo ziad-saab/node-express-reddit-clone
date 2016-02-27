@@ -34,7 +34,9 @@ function contentRow(content, vote, submitter, votescore) {
             <a className="metatext">submitted {Moment(content.createdAt).fromNow()} by </a>
             <a className="userLink" href={submitterLink}>{submitter}</a>
           </div>
-          <a className="metalink" href={comments}>{content.commentCount} {commentString}</a>
+          <div>
+            <a className="metalink" href={comments}>{content.commentCount} {commentString}</a>
+          </div>
         </div>
       </div>
     </div>
