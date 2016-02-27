@@ -7,7 +7,7 @@ var renderComment = require('./react-comment').renderComment;
     var nav;
     if (user)
     nav = Nav({user: user.username, pageTitle: userPage});
-    else nav = Nav({});
+    else nav = Nav({pageTitle: userPage});
     var commentScoreHash = {};
     commentScores.forEach(function(commentScore) {
       commentScoreHash[commentScore.id] = commentScore.voteScore;

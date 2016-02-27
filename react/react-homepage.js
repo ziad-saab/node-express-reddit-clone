@@ -49,6 +49,13 @@ function Pages(page, type, pageLength, numEntries) {
   var previous = page - 1;
   var nextlink = "/sort/" + type + "/" + next;
   var prevlink = "/sort/" + type + "/" + previous;
+  if (page === 0 && pageLength > numEntries)
+  return (
+    <section id="pagenav">
+      <div className="button-wrapper">
+      </div>
+    </section>
+  );
   if (page === 0)
   return (
     <section id="pagenav">
@@ -79,7 +86,7 @@ function Pages(page, type, pageLength, numEntries) {
 
 function HomePage(user, contents, type, page, pageLength) {
   var nav = Nav({user: user, tablist: getTablist(type)});
-  
+
   var width = (((page+1)*pageLength).toString().length*0.7).toString() + 'em';
   var scoreWidth = (longestScoreString(contents).votescore.length*0.7).toString() + 'em';
   var posts = []
