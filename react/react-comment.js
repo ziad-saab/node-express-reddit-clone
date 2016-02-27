@@ -37,21 +37,24 @@ function renderComment(comment, commentScores, rootComment) {
   } else if (vote === false){
     downvote = "/images/red-downvote.png";
   }
-  var children = [];
-
-  if (comment.children)
-  var children = sortComment(comment.children, commentScores).map(function(child) {
-    return renderComment(child, commentScores, false);
-  });
-  var pointString = 'points';
-  if(commentScores[comment.id] === 1)
-  var pointString = 'point';
   var permalink = `/link/${comment.contentId}/comments/${comment.id}`;
   var parentLink = createParentLink(comment);
   var submitterLink = `/user/${comment.user.username}`;
-  var continueReading = ``;
-  if (comment.user.the_end)
-  continueReading = <a className="continueReading" href={permalink}>continue this thread</a>;
+  var children = [];
+  var continueReading = '';
+  if (comment.children && comment.children.length > 0) {
+    if (comment.children[0].user.the_end)
+    continueReading = (<a className="continueReading" href={permalink}>continue this thread</a>);
+
+    else {
+      children = sortComment(comment.children, commentScores).map(function(child) {
+        return renderComment(child, commentScores, false);
+      });
+    }
+  }
+  var pointString = 'points';
+  if(commentScores[comment.id] === 1)
+  var pointString = 'point';
   return (
     <div className={rootClass}>
       <div className="commentRow" key={comment.id}>

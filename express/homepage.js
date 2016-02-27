@@ -3,6 +3,7 @@ var app = require('./app.js');
 var database = require('../database/database.js');
 var parseReact = require('./react-parser.js').parseReact;
 var HomePage = require('../react/react-homepage');
+var send404 = require('./404.js')
 const PAGE_LENGTH = 20;
 
 app.get('/', function(req, res){
@@ -34,12 +35,12 @@ app.get('/sort/:order/:page', function(req, res){
   var sessionId = req.cookies.sessionId;
   var page = parseInt(req.params.page);
   if (isNaN(page)) {
-    res.send(404)
+    send404(req, res);
     return;
   }
   var orderFunction = getFunction(req.params.order);
   if(!orderFunction) {
-    res.sendStatus(404);
+    send404(req, res);
     return;
   }
   orderFunction(sessionId, PAGE_LENGTH, page*PAGE_LENGTH)

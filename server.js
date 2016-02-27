@@ -9,6 +9,8 @@ require('./express/commentvote.js');
 require('./express/comments-page.js');
 require('./express/user-page.js');
 
+var send404 = require('./express/404.js');
+
 app.get('*', function(req, res){
-  res.sendStatus(404);
+  send404(req, res);
 });

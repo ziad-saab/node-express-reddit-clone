@@ -1,7 +1,6 @@
 var React = require('react');
 var Nav = require('./react-nav');
 var renderComment = require('./react-comment').renderComment;
-var renderComment = require('./react-comment').renderComment;
 
   function UserPage(user, userPage, comments, commentScores){
     console.log(comments);

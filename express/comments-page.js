@@ -2,11 +2,12 @@ var database = require('../database/database.js');
 var app = require('./app.js');
 var parseReact = require('./react-parser.js').parseReact;
 var Comments = require('../react/react-comments-page.js');
+var send404 = require('./404.js')
 
 app.get('/link/:contentId/comments',function(req, res) {
   var contentId = parseInt(req.params.contentId);
   if (isNaN(contentId)) {
-    res.send(404)
+    send404(req, res);
     return;
   }
   var sessionId = req.cookies.sessionId;
@@ -20,7 +21,7 @@ app.get('/link/:contentId/comments/:commentId',function(req, res) {
   var contentId = parseInt(req.params.contentId);
   var commentId = parseInt(req.params.commentId);
   if (isNaN(contentId) || isNaN(commentId)) {
-    res.send(404)
+    send404(req, res);
     return;
   }
   var sessionId = req.cookies.sessionId;
