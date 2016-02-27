@@ -83,3 +83,13 @@ color:#00cc00;
   padding-right: 10px;
   text-decoration: none;
 }
+.userLink {
+  color: #ff9900;
+  font-size: 12px;
+  text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+.userLink:hover {
+  text-decoration: underline;
+}

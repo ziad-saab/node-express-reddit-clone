@@ -4,12 +4,14 @@ var Popbox = require('./react-popbox.js');
 function Nav(user, tablist) {
 
   var userbar;
-  if (user)
+  if (user) {
+    var submitterLink = `/user/${user}`
   userbar = (
     <div className="userbar">
-      <a className="userbarElement">{user}</a>
+      <a className="userLink" href={submitterLink}>{user}</a>
       <a href="/Logout" className="elementLink">Logout</a>
     </div>);
+  }
 
   else userbar = (
     <div className="userbar">

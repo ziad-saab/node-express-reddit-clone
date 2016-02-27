@@ -2,7 +2,7 @@
 
 .popbox{
     float: left;
-    position: absolute;
+    position: fixed;
     /*left: 50%;*/
     top: 160px;
     z-index: 1000;
