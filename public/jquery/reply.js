@@ -52,7 +52,7 @@ function submitReply() {
         <div class="commentMeta">
           <div class="submissionInfo">
             <a class="userLink" href=${submitterLink}>${data.user.username}</a>
-            <a class="metatext"> <span class="commentScore">1</span> <span class="pointString">points</span> ${moment(data.comment.createdAt).fromNow()}</a>
+            <a class="metatext"> <span class="commentScore">1</span> <span class="pointString">point</span> ${moment(data.comment.createdAt).fromNow()}</a>
           </div>
         </div>
 

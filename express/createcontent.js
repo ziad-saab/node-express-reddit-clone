@@ -26,9 +26,7 @@ app.post('/CreateContent', function(request, response){
     .catch(function(e){
       if(e.message === database.INVALID_SESSIONID){
         var error = "You are not logged in";
-        var htmlStructure = CreateContent(null, error);
-        var html = ReactDOMServer.renderToStaticMarkup(htmlStructure);
-        response.send('<!doctype html>' + html);
+        response.send(parseReact(CreateContent(null, error)));
       }
       else throw e;
     });

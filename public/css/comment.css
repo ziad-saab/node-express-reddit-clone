@@ -38,6 +38,7 @@
 
 .commentText {
   table-layout: fixed;
+  font: normal small verdana,arial,helvetica,sans-serif;
   width: 100%;
   word-wrap: break-word;
 }

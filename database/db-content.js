@@ -36,7 +36,7 @@ function getControversialNContent(sessionId, n, m) {
 //hottest content, starting at position m
 function getHottestNContent(sessionId, n, m) {
   var currentTime = Math.floor(Date.now() / 1000);
-  var ageFactor = '(((' + currentTime + ' - UNIX_TIMESTAMP(CONVERT_TZ(`contents`.`createdAt`, \'+00:00\', @@global.time_zone))) / 3600)^2)';
+  var ageFactor = '(POWER(((' + currentTime + ' - UNIX_TIMESTAMP(CONVERT_TZ(`contents`.`createdAt`, \'+00:00\', @@global.time_zone))) / (3*3600)) ,2))';
   return getOrderedNtoMContentForSession(sessionId, n, m, '((Sum(IF(`votes`.`upvote`, 1, -1))) - ' + ageFactor + ')');
 }
 
@@ -101,6 +101,7 @@ LIMIT ' + n + ' \
 OFFSET '+ m +';',
     { type: initDB.Sequelize.QueryTypes.SELECT});
   }).then(function(contents) {
+    console.log(contents)
     return {
       Content: contents
     }

@@ -35,7 +35,7 @@ function getTablist(type) {
   });
 }
 
-function Pages(page, type) {
+function Pages(page, type, pageLength, numEntries) {
   var next = page + 1;
   var previous = page - 1;
   var nextlink = "/sort/" + type + "/" + next;
@@ -48,7 +48,14 @@ function Pages(page, type) {
       </div>
     </section>
   );
-
+  else if (pageLength > numEntries)
+  return (
+    <section id="pagenav">
+      <div className="button-wrapper">
+        <a className="pagebutton tangerine" href={prevlink}>Previous</a>
+      </div>
+    </section>
+  );
   else return (
     <section id="pagenav">
       <div className="button-wrapper">
@@ -69,7 +76,7 @@ function HomePage(user, contents, type, page, pageLength) {
     var pageNumber = page*pageLength + i + 1;
     posts.push(Post(contents[i], pageNumber, width));
   }
-  var pages = Pages(page, type);
+  var pages = Pages(page, type, pageLength, posts.length);
   return (
     <html>
     <head>

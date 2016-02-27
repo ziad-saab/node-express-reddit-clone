@@ -50,7 +50,6 @@ function CreateContent(user, error) {
                       <form action="" method="post">
                         <label htmlFor="title"><span>Title <span className="required">*</span></span><input type="title" className="input-field" name="title" pattern=".{1,}" required title="1 character minimum" maxLength="255"/></label>
                         <label htmlFor="text"><span>Text <span className="required">*</span></span><input type="text" className="input-field" name="text" value="" maxLength="255"/></label>
-                        <label><span>&nbsp;</span><input type="submit" value="Create" /></label>
                       </form>
                       <h3>Functionality Will be Added!!!</h3>
               </div>
