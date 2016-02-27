@@ -7,9 +7,9 @@ var sortComment = require('./react-comment').sortComment;
   function Comments(user, submitter, content, comments, vote, votescore, commentScores, rootComment){
     var nav;
     if (user)
-    nav = Nav(user.username, []);
-    else nav = Nav(undefined, []);
-    console.log(JSON.stringify(comments, null, 20));
+    nav = Nav({user: user.username});
+    else nav = Nav({});
+    
     var commentScoreHash = {};
     commentScores.forEach(function(commentScore) {
       commentScoreHash[commentScore.id] = commentScore.voteScore;

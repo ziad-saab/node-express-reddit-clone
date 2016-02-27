@@ -8,6 +8,6 @@ app.get('/user/:username', function(req, res){
   var username = req.params.username;
   database.getCommentsAndScoresForUser(sessionId, username, 10, 0)
   .then(function(resp) {
-    res.send(parseReact(UserPage(resp.user, resp.comments, resp.commentScores)));
+    res.send(parseReact(UserPage(resp.user, username, resp.comments, resp.commentScores)));
   });
 });

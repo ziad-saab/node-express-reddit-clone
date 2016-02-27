@@ -78,7 +78,8 @@ function Pages(page, type, pageLength, numEntries) {
 }
 
 function HomePage(user, contents, type, page, pageLength) {
-  var nav = Nav(user, getTablist(type));
+  var nav = Nav({user: user, tablist: getTablist(type)});
+  
   var width = (((page+1)*pageLength).toString().length*0.7).toString() + 'em';
   var scoreWidth = (longestScoreString(contents).votescore.length*0.7).toString() + 'em';
   var posts = []

@@ -2,7 +2,7 @@ var React = require('react');
 var Nav = require('./react-nav');
 
 function CreateContent(user, error) {
-  var nav = Nav(user, []);
+  var nav = Nav({user: user});
 
   // <section className="contentType">
   //     <button className="linkButton">Link</button>

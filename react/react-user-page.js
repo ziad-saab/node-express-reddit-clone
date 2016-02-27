@@ -3,12 +3,12 @@ var Nav = require('./react-nav');
 var renderComment = require('./react-comment').renderComment;
 var renderComment = require('./react-comment').renderComment;
 
-  function UserPage(user, comments, commentScores){
+  function UserPage(user, userPage, comments, commentScores){
     console.log(comments);
     var nav;
     if (user)
-    nav = Nav(user.username, []);
-    else nav = Nav(undefined, []);
+    nav = Nav({user: user.username, pageTitle: userPage});
+    else nav = Nav({});
     var commentScoreHash = {};
     commentScores.forEach(function(commentScore) {
       commentScoreHash[commentScore.id] = commentScore.voteScore;
