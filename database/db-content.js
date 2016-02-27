@@ -52,14 +52,25 @@ function getLatestNContent(sessionId, n, m) {
   return getOrderedNtoMContentForSession(sessionId, n, m, 'contents.createdAt');
 }
 
+//takes a sessionId, a list length n, and an offset m, and will return the n
+//latest content, starting at position m
+function getLatestNContentForUser(sessionId, username, n, m) {
+  return getOrderedNtoMContentForSessionForUser(sessionId, username, n, m, 'contents.createdAt');
+}
 //takes a sessionId, a list length n, an offset m, and a mysql expression and
 //will return the top n results according to the expression, starting at
 //position m
 function getOrderedNtoMContentForSession(sessionId, n, m, order) {
+  return getOrderedNtoMContentForSessionForUser(sessionId, undefined, n, m, order);
+}
+//takes a sessionId, a list length n, an offset m, and a mysql expression and
+//will return the top n results according to the expression, starting at
+//position m
+function getOrderedNtoMContentForSessionForUser(sessionId, username, n, m, order) {
   return dbinit.then(function(initDB) {
     return getUserFromSessionId(sessionId)
     .then(function(user) {
-      return getOrderedNtoMContent(user.dataValues.id, n, m, order)
+      return getOrderedNtoMContentForUser(user.dataValues.id, username, n, m, order)
       .then(function(contentObject) {
         contentObject.User = user.toJSON();
         return contentObject;
@@ -69,15 +80,19 @@ function getOrderedNtoMContentForSession(sessionId, n, m, order) {
       if(e.message !== INVALID_SESSIONID) {
         throw e;
     }
-
-      return getOrderedNtoMContent(null, n, m, order);
+      return getOrderedNtoMContentForUser(null, username, n, m, order);
     });
   });
 }
-//takes a userId, a list length n, an offset m, and a mysql expression and
+
+//takes a userId, a username, a list length n, an offset m, and a mysql expression and
 //will return the top n results according to the expression, starting at
 //position m
-function getOrderedNtoMContent(userId, n, m, order) {
+function getOrderedNtoMContentForUser(userId, username, n, m, order) {
+  var usrquery = '';
+  if (username) {
+    usrquery = 'AND `users`.`username` = \'' + username + '\'';
+  }
   return dbinit.then(function(initDB) {
     return initDB.db.query(
       'SELECT          `contentlist`.*, `uservotes`.`upvote` AS `upvote`, count(DISTINCT `comments`.`id`) AS `commentCount` \
@@ -88,8 +103,8 @@ FROM  (     SELECT          `contents`.*, \
             FROM            `contents` \
             LEFT OUTER JOIN `votes` AS `votes` \
             ON              `contents`.`id` = `votes`.`contentid` \
-            LEFT OUTER JOIN `users` AS `users` \
-            ON              `contents`.`userid` = `users`.`id` \
+            JOIN            `users` AS `users` \
+            ON              `contents`.`userid` = `users`.`id` ' + usrquery + ' \
             GROUP BY        `contents`.`id` \
             ORDER BY        `postorder` DESC) AS contentlist \
 LEFT OUTER JOIN `votes` AS `uservotes` \
@@ -103,7 +118,6 @@ LIMIT ' + n + ' \
 OFFSET '+ m +';',
     { type: initDB.Sequelize.QueryTypes.SELECT});
   }).then(function(contents) {
-    console.log(contents)
     return {
       Content: contents
     }
@@ -144,6 +158,7 @@ function voteOnContent(sessionId, contentId, isUpvote) {
 module.exports = {
   createNewContent: createNewContent,
   voteOnContent: voteOnContent,
+  getLatestNContentForUser: getLatestNContentForUser,
   getLatestNContent: getLatestNContent,
   getHottestNContent: getHottestNContent,
   getControversialNContent: getControversialNContent,

@@ -1,12 +1,29 @@
 var React = require('react');
 var Nav = require('./react-nav');
-var renderComment = require('./react-comment').renderComment;
+var contentRow = require('./react-contentRow');
+
+
+function Post(content) {
+  var vote;
+  if (content.upvote === 1)
+  vote = true;
+
+  else if (content.upvote === 0)
+  vote = false;
+
+  var row = contentRow(content, vote, content.submitter, content.votescore);
+  return (
+    <li style={{"listStyle": "none"}} className="content-item" key={content.id}>
+        {row}
+    </li>
+  )
+}
 
 function Pages(user, page, pageLength, numEntries) {
   var next = page + 1;
   var previous = page - 1;
-  var nextlink = "/user/" + user + "/comments/" + next;
-  var prevlink = "/user/" + user + "/comments/" + previous;
+  var nextlink = "/user/" + user + "/submissions/" + next;
+  var prevlink = "/user/" + user + "/submissions/" + previous;
   if (page === 0 && pageLength > numEntries)
   return (
     <section id="pagenav">
@@ -53,21 +70,12 @@ function getTablist(type, username) {
   });
 }
 
-  function UserPage(user, userPage, comments, commentScores, page, pageLength) {
-    var tablist = getTablist('comments', userPage);
-    var nav;
-    if (user)
-    nav = Nav({user: user.username, tablist: tablist, pageTitle: userPage});
-    else nav = Nav({pageTitle: userPage, tablist: tablist});
-    var commentScoreHash = {};
-    commentScores.forEach(function(commentScore) {
-      commentScoreHash[commentScore.id] = commentScore.voteScore;
-    })
-    var rendercomments = []
-    var rendercomments = comments.map(function(comment) {
-      return renderComment(comment, commentScoreHash, false);
-    });
-    var pages = Pages(userPage, page, pageLength, comments.length)
+  function UserSubmissionPage(user, userPage, contents, page, pageLength) {
+    var tablist = getTablist('submissions', userPage);
+    var nav = Nav({user: user, tablist: tablist, pageTitle: userPage});
+
+    var posts = contents.map(Post);
+    var pages = Pages(userPage, page, pageLength, contents.length)
     return (
       <html>
         <head>
@@ -75,18 +83,14 @@ function getTablist(type, username) {
           <link href="/css/user-page.css" rel="stylesheet" type="text/css"/>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-          <script src="/jquery/reply.js"></script>
-          <script src="/jquery/logcommentvote.js"></script>
+          <script src="/jquery/logvote.js"></script>
           <script src="/jquery/popbox.js"></script>
         </head>
         <body>
           {nav}
           <main className="contents">
             <div className="pageBody">
-
-              <div className="allComments">
-                {rendercomments}
-              </div>
+              {posts}
             </div>
             <div className="sidebar">
               <a href="/CreateContent" className="contentButton">Submit Link</a>
@@ -100,4 +104,4 @@ function getTablist(type, username) {
     );
   }
 
-  module.exports = UserPage;
+  module.exports = UserSubmissionPage;

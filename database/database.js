@@ -10,6 +10,7 @@ module.exports = {
   createNewUser: dbUser.createNewUser,
 	login: dbUser.login,
 	postContent: dbContent.createNewContent,
+  getLatestNContentForUser: dbContent.getLatestNContentForUser,
 	getLatestNContent: dbContent.getLatestNContent,
 	getHottestNContent: dbContent.getHottestNContent,
   getControversialNContent: dbContent.getControversialNContent,

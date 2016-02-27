@@ -1,5 +1,6 @@
 @import url("nav.css");
 @import url("comment.css");
+@import url("contentRow.css");
 
 
 .contents {
@@ -25,4 +26,11 @@
 #pagenav{
     display: flex;
     justify-content: space-around;
+}
+
+.pageBody {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin-left: 20px;
 }
