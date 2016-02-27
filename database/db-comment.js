@@ -34,24 +34,41 @@ function createNewComment(sessionId, contentId, parentCommentId, text) {
   });
 }
 
-function getCommentsAndScoresForUser(username, n, m) {
-  return Promise.all([
-    getCommentsForUser(username, n, m),
-    getCommentScoresForUserName(username)
-  ])
-  .then(function(response) {
-    return {
-      comments: response[0].map(i => i.toJSON()),
-      commentScores: response[1].map(i => i.toJSON())
-    }
-  });
+function getCommentsAndScoresForUser(sessionId, username, n, m) {
+  return getUserFromSessionId(sessionId)
+  .then(function(user) {
+    return Promise.all([
+      getCommentsForUser(user, username, n, m),
+      getCommentScoresForUserName(username)
+    ])
+    .then(function(response) {
+      return {
+        user: user.toJSON(),
+        comments: response[0].map(i => i.toJSON()),
+        commentScores: response[1].map(i => i.toJSON())
+      }
+    });
+  })
+  .catch(function(e) {
+    return Promise.all([
+      getCommentsForUser({}, username, n, m),
+      getCommentScoresForUserName(username)
+    ])
+    .then(function(response) {
+      return {
+        comments: response[0].map(i => i.toJSON()),
+        commentScores: response[1].map(i => i.toJSON())
+      }
+    });
+  })
 }
 
 //Gets all comments for the provided userId, with a limit of n offset by m
-function getCommentsForUser(username, n, m) {
+function getCommentsForUser(user, username, n, m) {
   return dbinit.then(function(initDB) {
     return initDB.Comment.findAll({
-      include: [{model: initDB.User, where: {username: username}}],
+      include: [{model: initDB.User, where: {username: username}},
+      {model: initDB.CommentVote, as: 'usercommentvotes', where: {userId: user.id}}],
       limit: n,
       offset: m,
       order: [initDB.Sequelize.literal('createdAt DESC')],
