@@ -73,11 +73,7 @@ function getTablist(type, username) {
         <head>
           <meta charSet="utf-8"/>
           <link href="/css/user-page.css" rel="stylesheet" type="text/css"/>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-          <script src="/jquery/reply.js"></script>
-          <script src="/jquery/logcommentvote.js"></script>
-          <script src="/jquery/popbox.js"></script>
+          
         </head>
         <body>
           {nav}
@@ -95,6 +91,13 @@ function getTablist(type, username) {
           <footer>
             {pages}
           </footer>
+          
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+          <script src="/jquery/reply.js"></script>
+          <script src="/jquery/logcommentvote.js"></script>
+          <script src="/jquery/popbox.js"></script>
+          
         </body>
       </html>
     );

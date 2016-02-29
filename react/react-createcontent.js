@@ -16,9 +16,6 @@ function CreateContent(user, error) {
         <link href="/css/nav.css" rel="stylesheet" type="text/css"/>
         <link href="/css/createcontent.css" rel="stylesheet" type="text/css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-        <script src="/jquery/popbox.js"></script>
-        <script src="/jquery/createcontentjq.js"></script>
       </head>
       <body>
         {nav}
@@ -57,7 +54,11 @@ function CreateContent(user, error) {
           </div>
 
         </div>
-
+        
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+      <script src="/jquery/popbox.js"></script>
+      <script src="/jquery/createcontentjq.js"></script>
+      
       </body>
     </html>
   )
