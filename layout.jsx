@@ -5,6 +5,7 @@ var ReactDOMServer = require('react-dom/server');
 function renderPage(component, title) {
   var jsx = (
     <Layout title={title}>
+      <div id='main'></div>
       {component}
     </Layout>
   );
@@ -18,13 +19,12 @@ function Layout (data) {
   return (
     <html>
       <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-        <script src="js/client.js"></script>
-        <link type="text/css" rel="stylesheet" href="css/style.css"/>
+        <link type="text/css" rel="stylesheet" href="/css/style.css"/>
         <title>{data.title}</title>
       </head>
       <body>
         {data.children}
+        <script src="/js/client-packed.js"></script>
       </body>
     </html>
   );
@@ -88,10 +88,27 @@ function Post (data) {
       <section className='post-details'>
         <h4 className='post-title'> <a href={data.url}> {data.title} </a> </h4>
         <p className='post-creator'> Posted by <strong> {data.creator} </strong> </p>
+        <a href={'/content/' + data.contentId}><p> Comments </p></a>
         <p className='post-timestamp'> {data.createdAt.toString()} </p>
       </section>
     </article>
-  );
+  )
+}
+
+function CommentPage (data) {
+  return (
+    <main>
+      <Header loggedIn = {data.loggedIn} />
+      <Post contentId = {data.post.id}
+            creator = {data.post.creator}
+            url = {data.post.url}
+            title = {data.post.title}
+            createdAt = {data.post.createdAt}
+            loggedIn = {data.loggedIn}
+            voteDiff = {data.post.voteDiff}
+            userVoted = {data.post.loggedInVote}/>
+    </main>
+  )
 }
 
 function Header (data) {
@@ -167,6 +184,7 @@ module.exports = {
   renderPage: renderPage,
   Layout: Layout,
   HomePage: HomePage,
+  CommentPage: CommentPage,
   Login: Login,
   Signup: Signup,
   CreateContent: CreateContent

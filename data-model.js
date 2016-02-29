@@ -2,7 +2,7 @@ var Sequelize = require("sequelize");
 var bcrypt = require('bcrypt');
 
 
-var db = new Sequelize('reddit_clone', 'phil', null, {
+var db = new Sequelize('reddit_clone', 'philraj', null, {
   dialect: 'mysql'
 });
 
@@ -34,7 +34,11 @@ var Vote = db.define('vote', {
 });
 
 var Session = db.define('session', {
-  token: Sequelize.STRING,
+  token: Sequelize.STRING
+});
+
+var Comment = db.define('comment', {
+  text: Sequelize.STRING
 });
 
 Content.belongsTo(User);
@@ -49,6 +53,9 @@ Vote.belongsTo(Content);
 User.hasMany(Session);
 Session.belongsTo(User);
 
+User.hasMany(Comment);
+Content.hasMany(Comment);
+
 db.sync({
   // force: true
 });
@@ -58,5 +65,6 @@ module.exports = {
   User: User,
   Vote: Vote,
   Session: Session,
+  Comment: Comment,
   Sequelize: Sequelize
 }

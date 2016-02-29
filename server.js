@@ -71,6 +71,7 @@ app.get('/', function(request, response) {
       score = dateDiff;
       break;
     case 'controversial':
+      // todo
       break;
   }
 
@@ -97,22 +98,7 @@ app.get('/', function(request, response) {
   .then( results => {
 
     results = results.map( item => {
-        item = item.toJSON();
-        item.creator = item.user.username;
-
-        if (item.loggedInVote) {
-          item.loggedInVote = item.loggedInVote.voteValue;
-        }
-
-        item = _.pick(item, [ 'id',
-                              'creator',
-                              'url',
-                              'title',
-                              'createdAt',
-                              'voteScore',
-                              'voteDiff',
-                              'loggedInVote' ]);
-        return item;
+        return sanitizeContent(item);
     });
 
     if (request.loggedIn) {
@@ -125,7 +111,9 @@ app.get('/', function(request, response) {
     };
 
     var homepage = layout.renderPage(
-      layout.HomePage(data), 'Reddit Clone');
+      layout.HomePage(data), 
+      'Reddit Clone'
+    );
 
     response.status(200).send(homepage);
   })
@@ -263,7 +251,7 @@ app.post('/signup', function(request, response) {
     response.status(303).redirect('/');
   })
   .catch( err => {
-    console.log(err);
+    console.log(err.stack);
     response.status(500).send('Unexpected error occured!!!');
   });
 });
@@ -320,18 +308,10 @@ app.post('/vote', function(request, response) {
                 contentId: contentId}
       })
       .then( vote => {
-        if (vote) {
-          if (vote.toJSON().voteValue === voteValue) {
-            console.log('attempting to destroy vote');
-            vote.destroy();
-          }
-          else {
-            console.log('updating vote');
-            user.addVotes(content, {voteValue: voteValue});
-          }
+        if (vote && vote.toJSON().voteValue === voteValue) {
+          vote.destroy();
         }
         else {
-          console.log('creating vote');
           user.addVotes(content, {voteValue: voteValue});
         }
       })
@@ -360,6 +340,108 @@ app.get('/suggest', function(req, res) {
     });
 });
 
+  ///////////////////
+ // View comments //
+///////////////////
+
+// GET
+app.get('/content/:id', function(request, response) {
+  var voteDiff = fn('SUM', fn('COALESCE', col('votes.voteValue'), 0));
+  var contentId = request.params.id;
+  
+  db.Content.findOne({
+    where: { id: contentId },
+    include:  [ { model: db.User, attributes: ['username'] },
+                { model: db.Vote, attributes: [] },
+                { model: db.Vote,
+                  as: 'loggedInVote',
+                  attributes: ['voteValue'],
+                  where: { userId: request.loggedIn && request.loggedIn.dataValues.id || null},
+                  required: false
+                }
+              ],
+    attributes: {
+      include: [
+        [voteDiff, 'voteDiff']
+      ]
+    }
+  })
+  .then( content => {
+    content = sanitizeContent(content);
+    
+    if (request.loggedIn) {
+      var user = _.pick(request.loggedIn.toJSON(), ['username']);
+    }
+
+    var data = {
+      post: content,
+      loggedIn: user && user.username || null
+    };
+    
+    var commentPage = layout.renderPage(
+      layout.CommentPage(data),
+      'Comment Page'
+    );
+    
+    response.status(200).send(commentPage);
+  })
+  .catch( err => {
+    console.log(err.stack);
+    response.status(500).send('unexpected err');
+  });
+});
+
+  //////////////////
+ // Post comment //
+//////////////////
+
+// POST
+app.post('/create-comment', function(request, response) {
+  if (request.loggedIn) {
+    var user = request.loggedIn;
+    var contentId = request.body.contentId;
+    var text = request.body.text;
+
+    if (contentId && text) {
+      db.Content.findById(contentId)
+      .then( content => {
+        if (content) {
+          user.addComment(content, {text: text});
+        }
+        else {
+          throw new Error('no content with that ID exists!');
+        }
+      })
+      .then( () => response.status(303).redirect('/') )
+      .catch( err => {
+        console.log(err.stack);
+        response.status(500).response('Unexpected server error.');
+      });      
+    }
+  }
+  else {
+    response.status(400).response(`Can't post comment if not logged in!`);
+  }
+});
 
 // Listen
 app.listen(8080);
+
+function sanitizeContent (item) {
+  item = item.toJSON();
+  item.creator = item.user.username;
+
+  if (item.loggedInVote) {
+    item.loggedInVote = item.loggedInVote.voteValue;
+  }
+
+  item = _.pick(item, [ 'id',
+                        'creator',
+                        'url',
+                        'title',
+                        'createdAt',
+                        'voteScore',
+                        'voteDiff',
+                        'loggedInVote' ]);
+  return item;
+}

@@ -4,6 +4,8 @@
   "description": "building a small proof of concept reddit clone",
   "main": "server.js",
   "dependencies": {
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.4",
     "babel-plugin-transform-react-jsx": "^6.5.2",
     "babel-register": "^6.5.2",
     "bcrypt": "^0.8.5",
@@ -20,7 +22,8 @@
     "react-dom": "^0.14.7",
     "request": "^2.69.0",
     "secure-random": "^1.1.1",
-    "sequelize": "^3.19.2"
+    "sequelize": "^3.19.2",
+    "webpack": "^1.12.14"
   },
   "devDependencies": {},
   "scripts": {

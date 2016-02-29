@@ -1,3 +1,7 @@
+var $ = require('jquery');
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 $(document).ready( function () {
   handleSuggestClick();
   handleVoteClick();
