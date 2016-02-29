@@ -54,11 +54,8 @@ function CreateContent(user, error) {
           </div>
 
         </div>
-        
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-      <script src="/jquery/popbox.js"></script>
-      <script src="/jquery/createcontentjq.js"></script>
-      
+      <script src="/compiled-scripts/compiled.js"></script>
+
       </body>
     </html>
   )

@@ -1,3 +1,4 @@
+var $ = require('jquery');
 $(document).ready(function() {
   $(".allComments").on("click", ".commentUpvote", function() {
     var elem = $(this);

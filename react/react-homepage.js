@@ -117,9 +117,7 @@ function HomePage(user, contents, type, page, pageLength) {
       <footer id="pages">
         {pages}
       </footer>
-      <script src="/jquery/logvote.js"></script>
-      <script src="/jquery/popbox.js"></script>
-      <script src="/jquery/app-compiled.js"></script>
+      <script src="/compiled-scripts/compiled.js"></script>
     </body>
     </html>
   );

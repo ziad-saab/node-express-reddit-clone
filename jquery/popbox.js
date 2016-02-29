@@ -1,3 +1,5 @@
+var $ = require('jquery');
+
 $(document).ready(function() {
   //Clicking sign up link
   $('a.signup').click(function() {

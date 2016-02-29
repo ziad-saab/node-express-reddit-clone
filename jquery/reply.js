@@ -1,3 +1,5 @@
+var $ = require('jquery');
+var moment = require('moment');
 $(document).ready(function() {
   $(".reply").on("click", showReplyBox);
 

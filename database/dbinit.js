@@ -5,7 +5,7 @@ Initialise the database
 var db = require('mysql-promise')();
 var Sequelize = require('sequelize');
 var bcrypt = require('bcrypt-nodejs');
-var config = require(`${'../config.json'}`);
+var config = require('../config.json');
 
 var username = config.username;
 db.configure({

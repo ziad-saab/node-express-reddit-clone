@@ -1,3 +1,4 @@
+var $ = require('jquery');
 $(document).ready(function(){
 
 	$('ul.tabs li').click(function(){
