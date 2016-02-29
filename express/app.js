@@ -7,6 +7,14 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine','ejs');
 app.use(express.static("public"));
+app.use(function(req, res, next){
+    res.setTimeout(120000, function(){
+        console.log('Request has timed out.');
+            res.send(408);
+        });
+
+    next();
+});
 
 var port = config.port;
 if(!port)
