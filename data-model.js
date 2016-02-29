@@ -55,6 +55,8 @@ Session.belongsTo(User);
 
 User.hasMany(Comment);
 Content.hasMany(Comment);
+Comment.belongsTo(User);
+Comment.belongsTo(Content);
 
 db.sync({
   // force: true
