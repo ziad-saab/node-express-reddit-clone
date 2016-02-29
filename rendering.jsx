@@ -12,14 +12,14 @@ function Layout(data){
     <html>
         <head>
             <title>{data.title}</title>
-            <link href='css/app.css' rel="stylesheet" type="text/css"/>
+            <link href='/css/app.css' rel="stylesheet" type="text/css"/>
             <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'/>
             <link href='https://fonts.googleapis.com/css?family=Merriweather:700,300,400italic' rel='stylesheet' type='text/css'/>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css"/>
         </head>
         <body>
             <div>
-                <logo><a href='/'>reddit<i className="fa fa-reddit-alien fa-spin"></i></a></logo>
+                <logo><a href='/'>saidit<i className="fa fa-reddit-alien"></i></a></logo>
             <nav>
                 <li><a id='hot' href='/hot'><i className='fa fa-fire'></i> hot</a></li>
                 <li><a id='new' href='/new'>new</a></li>
@@ -31,8 +31,7 @@ function Layout(data){
             </nav>
             </div>
             {data.children}
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-            <script src='main.js'></script>
+            <script src='/app-compiled.js'></script>
         </body>
     </html>
 );
@@ -47,7 +46,7 @@ function Post(data) {
             <h2>
                 <a href={data.url}>{data.title}</a>
             </h2>
-                <p>Created By:{data.user} | on: {data.date} <span className='hide'> - Hide?</span></p>
+                <p>Created By:{data.user} | on: {data.date} <span className='hide'> - Hide? - </span><a href={'/content/'+ data.contentId}>Comments</a></p>
                 
             </div>
             <div className='buttonForm'>
@@ -69,6 +68,33 @@ function Post(data) {
         </li>
         );
 }
+
+//////// COMMENT PAGE //////
+function renderCommentPage( data) {
+    var singlePost = function(item){
+            return (
+            <Post title={item.title} url={item.url} contentId={item.id} user={item.user && item.user.username || 'Anonymous'} date={item.createdAt.toString()} popularity={item.dataValues.voteScore}/>
+            );
+    };
+            
+    var result = (
+        <div>
+            <ul>
+                {singlePost(data)}
+            </ul>
+        </div>
+        );
+    
+    var layout = (
+        <Layout title="Comments">
+            {result}
+        </Layout>
+    )  
+    
+    return renderHtml(layout)
+}
+
+
 ////// HOMEPAGE ///////
 function renderHomePage (data) {
 
@@ -158,5 +184,6 @@ module.exports = {
     renderHomePage: renderHomePage,
     renderLoginPage: renderLoginPage,
     renderCreateUser: renderCreateUser,
-    renderCreateContent: renderCreateContent
+    renderCreateContent: renderCreateContent,
+    renderCommentPage: renderCommentPage
 }

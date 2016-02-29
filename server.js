@@ -79,6 +79,13 @@ var Session = db.define('session', {
     token: Sequelize.STRING
 });
 
+var Comment = db.define('comment',{
+    comment: Sequelize.STRING
+});
+
+User.hasMany(Comment);
+Content.hasMany(Comment);
+
 User.hasMany(Session);
 Session.belongsTo(User);
 
@@ -88,6 +95,42 @@ User.hasMany(Content);
 User.belongsToMany(Content, {through: UpVote, as: 'upvote'}); // This will add an `add`
 Content.belongsToMany(User, {through: UpVote, as: 'upvote'});
 Content.hasMany(UpVote);
+
+////////// COMMENTS //////////
+
+app.get('/content/:id', function(req,res){
+     Content.findOne({
+           where: {
+            id: req.params.id
+        },
+            include: [{model: UpVote, attributes: []}, User],
+            attributes: {
+                include: [
+                    [Sequelize.fn('SUM', Sequelize.fn('IF', Sequelize.col('upvotes.upvote'), 1, -1)), 'voteScore']
+                ]
+            },
+        }
+        
+        ).then( function(data){
+          res.send(layout.renderCommentPage(data))
+        } 
+            )
+})
+
+
+app.post('/createComment', function(req,res){
+    if(!req.loggedInUser){
+    res.status(401).send('You must be logged in to create a comment!');
+    } else {
+        
+        req.loggedInUser.createComment({
+            contentId: req.body.contentId,
+            comment: req.body.comment
+        }).then(function(val){
+        res.redirect("/");
+        });
+    }
+});
 
 
 

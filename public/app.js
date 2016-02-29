@@ -1,7 +1,14 @@
+var $ = require('jquery');
+var React = require("react");
+var ReactDOM = require('react-dom');
+
+
 $(document).ready(function(){
-    var selector = window.location.pathname.substring(1)
+    var selector = window.location.pathname.substring(1);
+    try {
        $('#'+ selector).toggleClass("selectedTab")
-       
+    }
+    catch(e) {}
 
 
 function makeAjaxCallAndGetTitle(url, cb) {
@@ -40,7 +47,6 @@ $('.hide').on('click', function(e){
 $('.voteForm').on('submit', function(e){
     e.preventDefault();
     var $this = $(this);
-    $this.find("button").css('color', 'green')
     var data = {
         contentId: $this.find("input[name=contentId]").val(),
         upVote: $this.find("input[name=upVote]").val()
@@ -52,3 +58,4 @@ $('.voteForm').on('submit', function(e){
          })
 })
 })
+
