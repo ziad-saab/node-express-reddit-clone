@@ -103,9 +103,6 @@ function HomePage(user, contents, type, page, pageLength) {
       <meta charSet="utf-8"/>
       <link href="/css/homepage.css" rel="stylesheet" type="text/css"/>
       <link href="/css/style.css" rel="stylesheet" type="text/css"/>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-      <script src="/jquery/logvote.js"></script>
-      <script src="/jquery/popbox.js"></script>
     </head>
     <body>
       {nav}
@@ -120,6 +117,9 @@ function HomePage(user, contents, type, page, pageLength) {
       <footer id="pages">
         {pages}
       </footer>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+      <script src="/jquery/logvote.js"></script>
+      <script src="/jquery/popbox.js"></script>
     </body>
     </html>
   );
