@@ -16,12 +16,8 @@ app.use(function(req, res, next){
     next();
 });
 
-var port = config.port;
-if(!port)
-port = process.env.PORT;
-var ip = config.server;
-if (!ip)
-ip = process.env.IP;
+var port =process.env.PORT;
+var ip = process.env.IP;
 
 var server = app.listen(port, ip, function () {
   var host = server.address().address;
@@ -29,5 +25,3 @@ var server = app.listen(port, ip, function () {
 
   console.log('Example app listening at http://%s:%s', host, port);
 });
-
-module.exports = app;

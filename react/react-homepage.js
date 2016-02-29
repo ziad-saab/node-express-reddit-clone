@@ -117,9 +117,9 @@ function HomePage(user, contents, type, page, pageLength) {
       <footer id="pages">
         {pages}
       </footer>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script src="/jquery/logvote.js"></script>
       <script src="/jquery/popbox.js"></script>
+      <script src="/jquery/app-compiled.js"></script>
     </body>
     </html>
   );

@@ -1,4 +1,5 @@
 //Requiring npm packagaes
+var jquery = require('jquery');
 var app = require('./app.js');
 var database = require('../database/database.js');
 var parseReact = require('./react-parser.js').parseReact;

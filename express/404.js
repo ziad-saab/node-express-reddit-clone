@@ -1,6 +1,8 @@
 var database = require('../database/database.js');
-var parseReact = require('./react-parser.js').parseReact;
+var parser = require('./react-parser.js');
 var page404 = require('../react/react-404.js');
+
+var parseReact = parser.parseReact;
 
 function send404(request, response) {
   database.getUserFromSessionId(request.cookies.sessionId)
