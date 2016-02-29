@@ -1,55 +1,27 @@
-$("#upVoteBtn").click(function(e) {
-    e.preventDefault();
-    var contentId = $("#upVoteContentId").val();
+$(".upVoteBtn, .downVoteBtn").click(function(e) {
+    var upDown    = $(this).parent().find("input[name='upVote']").val();
+    var contentId = $(this).parent().find("input[name='contentId']").val();
     $.ajax({
         method: "POST",
         url: "/voteContent",
         data: {
-            contentId: contentId
+            contentId: contentId,
+            upDown: upDown
         }
     }).done(function(data) {
-        var currentValue = $("." + contentId).text();
-        if (!$("#" + contentId).hasClass("upvoted") && currentValue < 1 ) {
-             $("." + contentId).empty().text((Number(currentValue) + 1).toString());
-            $("#" + contentId).addClass("upvoted");
-        } else  {
-            $("#" + contentId).removeClass("upvoted");
-            $("." + contentId).empty().text((Number(currentValue) - 1).toString());
+        var displayedVoteScore = data.voteScore;
+        if (data.voteCount > 1 && data.voteScore === 0) {
+            displayedVoteScore = -1;
         }
-        if($("#" + contentId).hasClass("downvoted")) {
-            $("." + contentId).empty().text((Number(currentValue) + 2).toString());
-            $("#" + contentId).addClass("upvoted");
-            $("#" + contentId).removeClass("downvoted");
+         $("."+contentId).empty().text(displayedVoteScore);
+        if(!$("#" + contentId + "upVote").hasClass("upvoted") && displayedVoteScore !== -1){
+            $("#" + contentId + "upVote").addClass("upvoted");
+        } else {
+            $("#" + contentId + "upVote").removeClass("upvoted");
         }
-        
-        
+        if($("#" + contentId + "downVote").hasClass("downvoted")) {
+            $("#" + contentId + "downVote").removeClass("downvoted");
+            $("#" + contentId + "upVote").addClass("upvoted");
+        }
     });
 });
-
-$("#downVoteBtn").click(function(e) {
-    e.preventDefault();
-    var contentId = $("#downVoteContentId").val();
-    $.ajax({
-        method: "POST",
-        url: "/voteContent",
-        data: {
-            contentId: contentId
-        }
-    }).done(function(data) {
-        var currentValue = $("." + contentId).text();
-        if (!$("#" + contentId).hasClass("downvoted")) {
-            $("." + contentId).empty().text((Number(currentValue) - 1).toString());
-            $("#" + contentId).addClass("downvoted");
-        }
-        else  {
-            $("#"+ contentId).removeClass("downvoted");
-            $("." + contentId).empty().text((Number(currentValue) + 1).toString());
-        }
-         if ($("#" + contentId).hasClass("upvoted")) {
-            $("." + contentId).empty().text((Number(currentValue) - 2).toString());
-            $("#" + contentId).addClass("downvoted");
-            $("#" + contentId).removeClass("upvoted");
-        } 
-        
-    });
-})

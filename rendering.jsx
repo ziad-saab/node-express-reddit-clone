@@ -44,7 +44,6 @@ var arrFunctions = {
     }, 
     renderSignup: function(data) {
         var structure = (
-            <html>
                 <Layout title={data.title}>
                     <h1>Sign up!</h1>
                     <form action="/signup" method="post">
@@ -55,14 +54,12 @@ var arrFunctions = {
                         <button type="submit">Sign up!</button>
                     </form>
                 </Layout>
-            </html>
         );
         var html = renderHtml(structure);
         return html;
     },
     renderCreatePost: function(data) {
         var structure = (
-            <html>
             <Layout title={data.title}>
                 <title>Create Post</title>
                 <h1>Create your post</h1>
@@ -73,47 +70,48 @@ var arrFunctions = {
                     <button type="submit">Create!</button>
                 </form>
             </Layout>
-        </html>
         );
         var html = renderHtml(structure);
         return html;
     },
     homePage: function(data) {
         var structure = (
-            <html>
                 <Layout title={data.title}>
                     <title>Homepage</title>
                     <h1>List of contents</h1>
                     <ol>
-                        {/*shifting to js land*/}
                         {
                             data.map(function(li) {
-                                return (
+                                if (li.dataValues.voteCount > 1 && li.dataValues.voteScore == 0) {
+                                    li.dataValues.voteScore = -1;
+                            }
+                            return (
                                     <li>
                                         <div className="container">
                                             <div>
                                                 <div className="titleurl">
                                                     <h1>{li.title}</h1>
-                                                    <a href={li.url}>{li.url}</a>
+                                                    <a href={"http://"+li.url}>{li.url}</a>
                                                 </div>
                                                 <h3>Created by {li.User.dataValues.userName}</h3>
                                             </div>
                                             <div className="center">
                                                 <div className="top">
-                                                    <form action='/voteContent' method='post' id="upVoteBtn">
+                                                    <form action='/voteContent' method='post'>
                                                         <input type='hidden' name='upVote' value='true'/>
-                                                        <input type='hidden' name='contentId' id="upVoteContentId" value={li.id}/>
-                                                        <button id={li.id} type='submit' >upvote this</button>
+                                                        <input type='hidden' name='contentId' value={li.id}/>
+                                                        <input type="button" className="upVoteBtn" id={li.id + "upVote"} value="upvote this"/>
+                                                    
                                                     </form>
                                                 </div>
                                                 <div className={li.id}>
                                                     {li.dataValues.voteScore}
                                                 </div>
                                                 <div>
-                                                    <form action='/voteContent' method='post' id="downVoteBtn">
-                                                        <input type='hidden' name='downVote' value='true'/>
-                                                        <input type='hidden' name='contentId' id="downVoteContentId" value={li.id}/>
-                                                        <button id={li.id} type='submit' >downvote this</button>
+                                                    <form action='/voteContent' method='post'>
+                                                        <input type='hidden' name='upVote' value='false'/>
+                                                        <input type='hidden' name='contentId' value={li.id}/>
+                                                        <input type="button" className="downVoteBtn" id={li.id + "downVote"}  value="downvote this" />
                                                     </form>
                                                 </div>
                                             </div>
@@ -124,7 +122,6 @@ var arrFunctions = {
                         }
                     </ol>
                 </Layout>
-            </html>
         );
         return renderHtml(structure);
     }

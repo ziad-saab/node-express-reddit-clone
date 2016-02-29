@@ -109,32 +109,49 @@ app.post("/createPost", mw.checkLoginToken, function(req, res) {
 
 // allowing users to vote
 app.post("/voteContent", mw.checkLoginToken, function(req, res) {
+    
+    
+    var voteValue = req.body.upDown === 'true' ? 1 : -1;
+    
     db.vote.findOne({
         where: {
             UserId: req.loggedInUser.id, // This should be the currently logged in user's ID
             ContentId: req.body.contentId // This should be the ID of the content we want to vote on
         }
-    }).then(
-        function(vote) {
-            if (!vote) {
-                // here we didn't find a vote so let's add one. Notice Vote with capital V, the model
-                return db.vote.create({
-                    UserId: req.loggedInUser.id, // Received from the loggedIn middleware
-                    ContentId: req.body.contentId, // Received from the user's form submit
-                    upDown: req.body.upVote // Received from the user's form submit
-                });
-            }
-            else {
-                // user already voted, perhaps we need to change the direction of the vote?
-                return vote.update({
-                    upDown: !vote.get("upDown") // Received from the user's form submit
-                });
-            }
-        }
-    );
-    
-    res.json("voted");
-
+    }).then(function(vote) {
+                if (!vote) {
+                    // here we didn't find a vote so let's add one. Notice Vote with capital V, the model
+                    return db.vote.create({
+                        UserId: req.loggedInUser.id, // Received from the loggedIn middleware
+                        ContentId: req.body.contentId, // Received from the user's form submit
+                        upDown: voteValue // Received from the user's form submit
+                    });
+                }
+                else {
+                    // user already voted, perhaps we need to change the direction of the vote?
+                    return vote.update({
+                        upDown: voteValue === vote.upDown ? 0 : voteValue // Received from the user's form submit
+                    });
+                }
+           }
+    ).then(function(){
+       db.content.findOne({
+        where: {
+            id: req.body.contentId
+        },
+        include:[ {model: db.user}, {model: db.vote}],
+        group: 'Content.id',
+        attributes: {
+            include: [
+                 [db.sequelize.fn('SUM', db.sequelize.fn('COALESCE', db.sequelize.col('Votes.upDown'), 1)), 'voteScore'],
+                 [db.sequelize.fn('COUNT', db.sequelize.col('Content.id')), 'voteCount']
+            ]
+        },
+        subQuery: false
+    }).then(function (post) {
+        res.json(post.toJSON());
+    });  
+    });
 });
 
 /////////////////////////// APP POST SECTION (ABOVE) //////////////////////////////////
