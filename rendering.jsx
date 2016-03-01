@@ -1,5 +1,6 @@
 var React = require('react')
 
+
 var ReactDOMServer = require('react-dom/server');
 function renderHtml(jsxStructure) {
   var outputHtml = ReactDOMServer.renderToStaticMarkup(jsxStructure);
@@ -69,7 +70,7 @@ function Post(data) {
         );
 }
 
-//////// COMMENT PAGE //////
+//////// COMMENT PAGES //////
 function renderCommentPage( data) {
     var singlePost = function(item){
             return (
@@ -82,8 +83,10 @@ function renderCommentPage( data) {
             <ul>
                 {singlePost(data)}
             </ul>
+            <div id='commentBox'></div>
         </div>
         );
+    
     
     var layout = (
         <Layout title="Comments">

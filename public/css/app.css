@@ -107,3 +107,13 @@ button {
     justify-content:center;
     flex-grow: 1;
 }
+
+#commentBox {
+    margin-left: 60px;
+}
+
+textarea {
+    margin: 0px;
+    width: 450px;
+    height: 60px;
+}

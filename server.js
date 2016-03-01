@@ -97,7 +97,19 @@ Content.belongsToMany(User, {through: UpVote, as: 'upvote'});
 Content.hasMany(UpVote);
 
 ////////// COMMENTS //////////
+app.get('/comments/:id', function(req,res){
+     Comment.findAll({
+           where: {
+            contentid: req.params.id
+        },
+        
+        }).then(function(val){
+            res.json(val)
+        })
+})
 
+
+////get a single post/////
 app.get('/content/:id', function(req,res){
      Content.findOne({
            where: {
@@ -122,12 +134,14 @@ app.post('/createComment', function(req,res){
     if(!req.loggedInUser){
     res.status(401).send('You must be logged in to create a comment!');
     } else {
-        
         req.loggedInUser.createComment({
             contentId: req.body.contentId,
-            comment: req.body.comment
+            comment: req.body.commentText
         }).then(function(val){
-        res.redirect("/");
+            var user = req.loggedInUser.username;
+            var comment = val.get({plain: true})
+            comment.postedBy = user;
+            res.json(comment)
         });
     }
 });
