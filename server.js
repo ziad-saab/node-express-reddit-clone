@@ -85,6 +85,7 @@ var Comment = db.define('comment',{
 
 User.hasMany(Comment);
 Content.hasMany(Comment);
+Comment.belongsTo(User)
 
 User.hasMany(Session);
 Session.belongsTo(User);
@@ -102,9 +103,10 @@ app.get('/comments/:id', function(req,res){
            where: {
             contentid: req.params.id
         },
+            include: [{model: User}]
         
-        }).then(function(val){
-            res.json(val)
+        }).then(function(allcomments){
+            res.json(allcomments);
         })
 })
 

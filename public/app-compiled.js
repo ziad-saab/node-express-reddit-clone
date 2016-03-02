@@ -116,7 +116,8 @@
 	    },
 	    loadComments: function loadComments() {
 	        var that = this;
-	        f('/comments/8', {
+	        var contentId = window.location.pathname.split('/')[2];
+	        f('/comments/' + contentId, {
 	            headers: {
 	                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 	            },
@@ -124,6 +125,7 @@
 	        }).then(function (r) {
 	            return r.json(); // this parses the response as JSON to an object
 	        }).then(function (result) {
+	
 	            that.setState({
 	                displayed: true,
 	                comments: result
@@ -150,12 +152,13 @@
 	
 	            return r.json(); // this parses the response as JSON to an object
 	        }).then(function (result) {
+	
 	            // result is the response from the server as an actual object
 	
 	            // here we can finally add the new comment!!                // WHY ARE WE USING that INSTEAD OF this???
 	            that.state.comments.unshift({
 	                id: result.id,
-	                text: result.comment,
+	                comment: result.comment,
 	                postedBy: result.postedBy
 	            });
 	
@@ -170,19 +173,26 @@
 	            var contentId = window.location.pathname.split('/')[2];
 	
 	            var commentList = this.state.comments.map(function (comment) {
+	                var postedby = "";
+	                if (comment.postedBy) {
+	                    postedby = comment.postedBy;
+	                } else {
+	                    postedby = comment.user.username;
+	                }
+	
 	                return React.createElement(
 	                    'li',
 	                    { key: comment.id },
 	                    React.createElement(
 	                        'p',
 	                        null,
-	                        comment.text
+	                        comment.comment
 	                    ),
 	                    React.createElement(
 	                        'p',
 	                        null,
 	                        'Posted by: ',
-	                        comment.postedBy
+	                        postedby
 	                    )
 	                );
 	            });
