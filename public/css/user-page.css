@@ -1,0 +1,36 @@
+@import url("nav.css");
+@import url("comment.css");
+@import url("contentRow.css");
+
+
+.contents {
+  display: flex;
+  justify-content: space-between;
+}
+.pagebutton{
+    padding: 1px 4px;
+    background: #ffc266;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-weight: bold;
+    font: normal x-small verdana,arial,helvetica,sans-serif;
+    font-size: larger;
+    text-decoration: none;
+    color: #369;
+}
+
+.pagebutton:hover{
+    border: 1px solid blue;
+}
+
+#pagenav{
+    display: flex;
+    justify-content: space-around;
+}
+
+.pageBody {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin-left: 20px;
+}

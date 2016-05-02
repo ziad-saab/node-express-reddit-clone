@@ -1,0 +1,59 @@
+@import url("createcontent.css");
+@import url("nav.css");
+@import url("popbox.css");
+
+/*.popbox{
+    float: left;
+    position: absolute;
+    top: 160px;
+    z-index: 1000;
+    display: none;
+    border: 1px solid black;
+    background-color: #0066cc;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}*/
+
+/*This css is for the createcontent form labels*/
+.form label{
+    display: block;
+    margin: 0px 0px 15px 0px;
+}
+.form label > span{
+    width: 100px;
+    font-weight: bold;
+    float: left;
+    padding-top: 8px;
+    padding-right: 5px;
+}
+
+ul.tabs{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+  font-family: 'Trebuchet MS', serif;
+}
+ul.tabs li{
+	background: none;
+	color: #0033cc;
+	display: inline-block;
+	padding: 10px 15px;
+	cursor: pointer;
+}
+
+ul.tabs li.current{
+	background: #ffb366;
+	color: #0033cc;
+  font-weight: bold;
+}
+
+.tab-content{
+	display: none;
+	background: #ffb366;
+	padding: 15px;
+}
+
+.tab-content.current{
+	display: inherit;
+}

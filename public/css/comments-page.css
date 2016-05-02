@@ -1,0 +1,22 @@
+@import url("nav.css");
+@import url("contentRow.css");
+@import url("comment.css");
+.allComments {
+}
+
+.commentButtons {
+  display: flex;
+}
+.pageBody {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin-left: 20px;
+}
+textarea {
+  max-width: 100px;
+}
+.contents {
+  display: flex;
+  justify-content: space-between;
+}

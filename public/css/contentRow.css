@@ -1,0 +1,56 @@
+@import url("comment.css");
+
+.contentRow {
+  display:flex;
+  justify-content: flex-start;
+  align-content: center;
+  margin: 10px 0px;
+}
+.contentVotescore {
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.contentContent {
+  display:flex;
+  margin-left: 2px;
+  flex-direction: column;
+  justify-content: center;
+}
+.votescore{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-weight: bold;
+  color: grey;
+  font-size: 15px;
+}
+.contentTitle {
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.contentMetaData {
+  display:flex;
+  flex-direction: column;
+}
+.contentpost {
+  font: normal large verdana,arial,helvetica,sans-serif;
+  text-decoration: none;
+  color: #ff9900;
+}
+
+.contentpost:visited {
+  color: #ffc266;
+}
+.submissionInfo {
+  margin-top: -4px;
+  padding: 0px;
+}
+table {
+  margin: 0px;
+  padding: 0px;
+  border-spacing: 0px;
+}
