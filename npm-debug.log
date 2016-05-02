@@ -1,0 +1,887 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/ubuntu/.nvm/versions/node/v4.2.4/bin/node',
+1 verbose cli   '/home/ubuntu/.nvm/versions/node/v4.2.4/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'isomorphic-fetch',
+1 verbose cli   '--save' ]
+2 info using npm@2.14.12
+3 info using node@v4.2.4
+4 verbose install initial load of /home/ubuntu/workspace/package.json
+5 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/babel-core/package.json
+6 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/babel-loader/package.json
+7 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/babel-preset-es2015/package.json
+8 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/babel-preset-react/package.json
+9 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/babel-register/package.json
+10 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/bcrypt/package.json
+11 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/body-parser/package.json
+12 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/cheerio/package.json
+13 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/cookie-parser/package.json
+14 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/express/package.json
+15 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/font-awesome/package.json
+16 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/jquery/package.json
+17 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/mysql/package.json
+18 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/nodemon/package.json
+19 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/react/package.json
+20 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/react-dom/package.json
+21 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/react-font-awesome/package.json
+22 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/react-intl/package.json
+23 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/request/package.json
+24 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/secure-random/package.json
+25 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/sequelize/package.json
+26 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/sha-1/package.json
+27 verbose installManyTop reading scoped package data from /home/ubuntu/workspace/node_modules/webpack/package.json
+28 verbose readDependencies loading dependencies from /home/ubuntu/workspace/package.json
+29 silly cache add args [ 'isomorphic-fetch', null ]
+30 verbose cache add spec isomorphic-fetch
+31 silly cache add parsed spec Result {
+31 silly cache add   raw: 'isomorphic-fetch',
+31 silly cache add   scope: null,
+31 silly cache add   name: 'isomorphic-fetch',
+31 silly cache add   rawSpec: '',
+31 silly cache add   spec: 'latest',
+31 silly cache add   type: 'tag' }
+32 silly addNamed isomorphic-fetch@latest
+33 verbose addNamed "latest" is being treated as a dist-tag for isomorphic-fetch
+34 info addNameTag [ 'isomorphic-fetch', 'latest' ]
+35 silly mapToRegistry name isomorphic-fetch
+36 silly mapToRegistry using default registry
+37 silly mapToRegistry registry https://registry.npmjs.org/
+38 silly mapToRegistry uri https://registry.npmjs.org/isomorphic-fetch
+39 verbose addNameTag registry:https://registry.npmjs.org/isomorphic-fetch not in flight; fetching
+40 verbose request uri https://registry.npmjs.org/isomorphic-fetch
+41 verbose request no auth needed
+42 info attempt registry request try #1 at 8:51:59 PM
+43 verbose request id 57060c301e87214b
+44 http request GET https://registry.npmjs.org/isomorphic-fetch
+45 http 200 https://registry.npmjs.org/isomorphic-fetch
+46 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+46 verbose headers   etag: '"DH2AJQ4NTE3NHCRUJ98KGL7I4"',
+46 verbose headers   'content-type': 'application/json',
+46 verbose headers   'cache-control': 'max-age=300',
+46 verbose headers   'content-length': '33901',
+46 verbose headers   'accept-ranges': 'bytes',
+46 verbose headers   date: 'Tue, 01 Mar 2016 20:52:00 GMT',
+46 verbose headers   via: '1.1 varnish',
+46 verbose headers   age: '90',
+46 verbose headers   connection: 'keep-alive',
+46 verbose headers   'x-served-by': 'cache-dfw1834-DFW',
+46 verbose headers   'x-cache': 'HIT',
+46 verbose headers   'x-cache-hits': '1',
+46 verbose headers   'x-timer': 'S1456865520.035364,VS0,VE0',
+46 verbose headers   vary: 'Accept' }
+47 silly get cb [ 200,
+47 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+47 silly get     etag: '"DH2AJQ4NTE3NHCRUJ98KGL7I4"',
+47 silly get     'content-type': 'application/json',
+47 silly get     'cache-control': 'max-age=300',
+47 silly get     'content-length': '33901',
+47 silly get     'accept-ranges': 'bytes',
+47 silly get     date: 'Tue, 01 Mar 2016 20:52:00 GMT',
+47 silly get     via: '1.1 varnish',
+47 silly get     age: '90',
+47 silly get     connection: 'keep-alive',
+47 silly get     'x-served-by': 'cache-dfw1834-DFW',
+47 silly get     'x-cache': 'HIT',
+47 silly get     'x-cache-hits': '1',
+47 silly get     'x-timer': 'S1456865520.035364,VS0,VE0',
+47 silly get     vary: 'Accept' } ]
+48 verbose get saving isomorphic-fetch to /home/ubuntu/.npm/registry.npmjs.org/isomorphic-fetch/.cache.json
+49 silly addNameTag next cb for isomorphic-fetch with tag latest
+50 silly addNamed isomorphic-fetch@2.2.1
+51 verbose addNamed "2.2.1" is a plain semver version for isomorphic-fetch
+52 silly mapToRegistry name isomorphic-fetch
+53 silly mapToRegistry using default registry
+54 silly mapToRegistry registry https://registry.npmjs.org/
+55 silly mapToRegistry uri https://registry.npmjs.org/isomorphic-fetch
+56 verbose addRemoteTarball https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz not in flight; adding
+57 verbose addRemoteTarball [ 'https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz',
+57 verbose addRemoteTarball   '611ae1acf14f5e81f729507472819fe9733558a9' ]
+58 info retry fetch attempt 1 at 8:52:00 PM
+59 info attempt registry request try #1 at 8:52:00 PM
+60 http fetch GET https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz
+61 http fetch 200 https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz
+62 silly fetchAndShaCheck shasum 611ae1acf14f5e81f729507472819fe9733558a9
+63 verbose addTmpTarball /tmp/npm-3957-ccddafab/registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz not in flight; adding
+64 verbose addTmpTarball already have metadata; skipping unpack for isomorphic-fetch@2.2.1
+65 silly cache afterAdd isomorphic-fetch@2.2.1
+66 verbose afterAdd /home/ubuntu/.npm/isomorphic-fetch/2.2.1/package/package.json not in flight; writing
+67 verbose afterAdd /home/ubuntu/.npm/isomorphic-fetch/2.2.1/package/package.json written
+68 silly install resolved [ { name: 'isomorphic-fetch',
+68 silly install resolved     version: '2.2.1',
+68 silly install resolved     description: 'Isomorphic WHATWG Fetch API, for Node & Browserify',
+68 silly install resolved     browser: 'fetch-npm-browserify.js',
+68 silly install resolved     main: 'fetch-npm-node.js',
+68 silly install resolved     scripts:
+68 silly install resolved      { files: 'find . -name \'*.js\' ! -path \'./node_modules/*\' ! -path \'./bower_components/*\'',
+68 silly install resolved        test: 'jshint `npm run -s files` && lintspaces -i js-comments -e .editorconfig `npm run -s files` && mocha' },
+68 silly install resolved     repository:
+68 silly install resolved      { type: 'git',
+68 silly install resolved        url: 'git+https://github.com/matthew-andrews/isomorphic-fetch.git' },
+68 silly install resolved     author: { name: 'Matt Andrews', email: 'matt@mattandre.ws' },
+68 silly install resolved     license: 'MIT',
+68 silly install resolved     bugs: { url: 'https://github.com/matthew-andrews/isomorphic-fetch/issues' },
+68 silly install resolved     homepage: 'https://github.com/matthew-andrews/isomorphic-fetch/issues',
+68 silly install resolved     dependencies: { 'node-fetch': '^1.0.1', 'whatwg-fetch': '>=0.10.0' },
+68 silly install resolved     devDependencies:
+68 silly install resolved      { chai: '^1.10.0',
+68 silly install resolved        'es6-promise': '^2.0.1',
+68 silly install resolved        jshint: '^2.5.11',
+68 silly install resolved        'lintspaces-cli': '0.0.4',
+68 silly install resolved        mocha: '^2.1.0',
+68 silly install resolved        nock: '^0.56.0',
+68 silly install resolved        'npm-prepublish': '^1.0.2' },
+68 silly install resolved     gitHead: '43437dc5b381e391b73522d71cea23fc72675154',
+68 silly install resolved     _id: 'isomorphic-fetch@2.2.1',
+68 silly install resolved     _shasum: '611ae1acf14f5e81f729507472819fe9733558a9',
+68 silly install resolved     _from: 'isomorphic-fetch@latest',
+68 silly install resolved     _npmVersion: '2.14.7',
+68 silly install resolved     _nodeVersion: '4.2.3',
+68 silly install resolved     _npmUser: { name: 'financial-times', email: 'strategic.products@ft.com' },
+68 silly install resolved     dist:
+68 silly install resolved      { shasum: '611ae1acf14f5e81f729507472819fe9733558a9',
+68 silly install resolved        tarball: 'http://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz' },
+68 silly install resolved     maintainers: [ [Object], [Object] ],
+68 silly install resolved     directories: {},
+68 silly install resolved     _resolved: 'https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz' } ]
+69 info install isomorphic-fetch@2.2.1 into /home/ubuntu/workspace
+70 info installOne isomorphic-fetch@2.2.1
+71 verbose installOne of isomorphic-fetch to /home/ubuntu/workspace not in flight; installing
+72 verbose lock using /home/ubuntu/.npm/_locks/isomorphic-fetch-d85733dc3d838a13.lock for /home/ubuntu/workspace/node_modules/isomorphic-fetch
+73 silly install write writing isomorphic-fetch 2.2.1 to /home/ubuntu/workspace/node_modules/isomorphic-fetch
+74 verbose unbuild node_modules/isomorphic-fetch
+75 silly gentlyRm /home/ubuntu/workspace/node_modules/isomorphic-fetch is being purged from base /home/ubuntu/workspace
+76 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/isomorphic-fetch
+77 verbose tar unpack /home/ubuntu/.npm/isomorphic-fetch/2.2.1/package.tgz
+78 verbose tar unpacking to /home/ubuntu/workspace/node_modules/isomorphic-fetch
+79 silly gentlyRm /home/ubuntu/workspace/node_modules/isomorphic-fetch is being purged
+80 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/isomorphic-fetch
+81 silly gunzTarPerm modes [ '755', '644' ]
+82 silly gunzTarPerm extractEntry package.json
+83 silly gunzTarPerm extractEntry .npmignore
+84 silly gunzTarPerm extractEntry README.md
+85 silly gunzTarPerm extractEntry LICENSE
+86 silly gunzTarPerm extractEntry fetch-bower.js
+87 silly gunzTarPerm extractEntry fetch-npm-browserify.js
+88 silly gunzTarPerm extractEntry fetch-npm-node.js
+89 silly gunzTarPerm extractEntry .travis.yml
+90 silly gunzTarPerm extractEntry .editorconfig
+91 silly gunzTarPerm extractEntry .jshintrc
+92 silly gunzTarPerm extractEntry bower.json
+93 silly gunzTarPerm extractEntry test/api.test.js
+94 verbose write writing to /home/ubuntu/workspace/node_modules/isomorphic-fetch/package.json
+95 info preinstall isomorphic-fetch@2.2.1
+96 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/isomorphic-fetch/package.json
+97 silly prepareForInstallMany adding node-fetch@^1.0.1 from isomorphic-fetch dependencies
+98 silly prepareForInstallMany adding whatwg-fetch@>=0.10.0 from isomorphic-fetch dependencies
+99 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/isomorphic-fetch/package.json
+100 silly cache add args [ 'whatwg-fetch@>=0.10.0', null ]
+101 verbose cache add spec whatwg-fetch@>=0.10.0
+102 silly cache add parsed spec Result {
+102 silly cache add   raw: 'whatwg-fetch@>=0.10.0',
+102 silly cache add   scope: null,
+102 silly cache add   name: 'whatwg-fetch',
+102 silly cache add   rawSpec: '>=0.10.0',
+102 silly cache add   spec: '>=0.10.0',
+102 silly cache add   type: 'range' }
+103 silly addNamed whatwg-fetch@>=0.10.0
+104 verbose addNamed ">=0.10.0" is a valid semver range for whatwg-fetch
+105 silly addNameRange { name: 'whatwg-fetch', range: '>=0.10.0', hasData: false }
+106 silly mapToRegistry name whatwg-fetch
+107 silly mapToRegistry using default registry
+108 silly mapToRegistry registry https://registry.npmjs.org/
+109 silly mapToRegistry uri https://registry.npmjs.org/whatwg-fetch
+110 verbose addNameRange registry:https://registry.npmjs.org/whatwg-fetch not in flight; fetching
+111 silly cache add args [ 'node-fetch@^1.0.1', null ]
+112 verbose cache add spec node-fetch@^1.0.1
+113 silly cache add parsed spec Result {
+113 silly cache add   raw: 'node-fetch@^1.0.1',
+113 silly cache add   scope: null,
+113 silly cache add   name: 'node-fetch',
+113 silly cache add   rawSpec: '^1.0.1',
+113 silly cache add   spec: '>=1.0.1 <2.0.0',
+113 silly cache add   type: 'range' }
+114 silly addNamed node-fetch@>=1.0.1 <2.0.0
+115 verbose addNamed ">=1.0.1 <2.0.0" is a valid semver range for node-fetch
+116 silly addNameRange { name: 'node-fetch', range: '>=1.0.1 <2.0.0', hasData: false }
+117 silly mapToRegistry name node-fetch
+118 silly mapToRegistry using default registry
+119 silly mapToRegistry registry https://registry.npmjs.org/
+120 silly mapToRegistry uri https://registry.npmjs.org/node-fetch
+121 verbose addNameRange registry:https://registry.npmjs.org/node-fetch not in flight; fetching
+122 verbose request uri https://registry.npmjs.org/node-fetch
+123 verbose request no auth needed
+124 info attempt registry request try #1 at 8:52:00 PM
+125 http request GET https://registry.npmjs.org/node-fetch
+126 verbose request uri https://registry.npmjs.org/whatwg-fetch
+127 verbose request no auth needed
+128 info attempt registry request try #1 at 8:52:00 PM
+129 verbose etag "D58ADOCOCSWNJ95IQ0P6A4YNG"
+130 http request GET https://registry.npmjs.org/whatwg-fetch
+131 http 200 https://registry.npmjs.org/whatwg-fetch
+132 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+132 verbose headers   etag: '"3UGPXALK3GNOXHQDOIKBIIA4S"',
+132 verbose headers   'content-type': 'application/json',
+132 verbose headers   'cache-control': 'max-age=300',
+132 verbose headers   'content-length': '20436',
+132 verbose headers   'accept-ranges': 'bytes',
+132 verbose headers   date: 'Tue, 01 Mar 2016 20:52:00 GMT',
+132 verbose headers   via: '1.1 varnish',
+132 verbose headers   age: '198',
+132 verbose headers   connection: 'keep-alive',
+132 verbose headers   'x-served-by': 'cache-dfw1830-DFW',
+132 verbose headers   'x-cache': 'HIT',
+132 verbose headers   'x-cache-hits': '1',
+132 verbose headers   'x-timer': 'S1456865520.549783,VS0,VE0',
+132 verbose headers   vary: 'Accept' }
+133 silly get cb [ 200,
+133 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+133 silly get     etag: '"3UGPXALK3GNOXHQDOIKBIIA4S"',
+133 silly get     'content-type': 'application/json',
+133 silly get     'cache-control': 'max-age=300',
+133 silly get     'content-length': '20436',
+133 silly get     'accept-ranges': 'bytes',
+133 silly get     date: 'Tue, 01 Mar 2016 20:52:00 GMT',
+133 silly get     via: '1.1 varnish',
+133 silly get     age: '198',
+133 silly get     connection: 'keep-alive',
+133 silly get     'x-served-by': 'cache-dfw1830-DFW',
+133 silly get     'x-cache': 'HIT',
+133 silly get     'x-cache-hits': '1',
+133 silly get     'x-timer': 'S1456865520.549783,VS0,VE0',
+133 silly get     vary: 'Accept' } ]
+134 verbose get saving whatwg-fetch to /home/ubuntu/.npm/registry.npmjs.org/whatwg-fetch/.cache.json
+135 http 200 https://registry.npmjs.org/node-fetch
+136 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+136 verbose headers   etag: '"39A1UM13Z27UQW1BO5UDV37UZ"',
+136 verbose headers   'content-type': 'application/json',
+136 verbose headers   'cache-control': 'max-age=300',
+136 verbose headers   'content-length': '29103',
+136 verbose headers   'accept-ranges': 'bytes',
+136 verbose headers   date: 'Tue, 01 Mar 2016 20:52:00 GMT',
+136 verbose headers   via: '1.1 varnish',
+136 verbose headers   age: '84',
+136 verbose headers   connection: 'keep-alive',
+136 verbose headers   'x-served-by': 'cache-dfw1833-DFW',
+136 verbose headers   'x-cache': 'HIT',
+136 verbose headers   'x-cache-hits': '1',
+136 verbose headers   'x-timer': 'S1456865520.552033,VS0,VE0',
+136 verbose headers   vary: 'Accept' }
+137 silly get cb [ 200,
+137 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+137 silly get     etag: '"39A1UM13Z27UQW1BO5UDV37UZ"',
+137 silly get     'content-type': 'application/json',
+137 silly get     'cache-control': 'max-age=300',
+137 silly get     'content-length': '29103',
+137 silly get     'accept-ranges': 'bytes',
+137 silly get     date: 'Tue, 01 Mar 2016 20:52:00 GMT',
+137 silly get     via: '1.1 varnish',
+137 silly get     age: '84',
+137 silly get     connection: 'keep-alive',
+137 silly get     'x-served-by': 'cache-dfw1833-DFW',
+137 silly get     'x-cache': 'HIT',
+137 silly get     'x-cache-hits': '1',
+137 silly get     'x-timer': 'S1456865520.552033,VS0,VE0',
+137 silly get     vary: 'Accept' } ]
+138 verbose get saving node-fetch to /home/ubuntu/.npm/registry.npmjs.org/node-fetch/.cache.json
+139 silly addNameRange number 2 { name: 'whatwg-fetch', range: '>=0.10.0', hasData: true }
+140 silly addNameRange versions [ 'whatwg-fetch',
+140 silly addNameRange   [ '0.5.0',
+140 silly addNameRange     '0.6.0',
+140 silly addNameRange     '0.6.1',
+140 silly addNameRange     '0.7.0',
+140 silly addNameRange     '0.8.0',
+140 silly addNameRange     '0.8.1',
+140 silly addNameRange     '0.8.2',
+140 silly addNameRange     '0.9.0',
+140 silly addNameRange     '0.10.0',
+140 silly addNameRange     '0.10.1',
+140 silly addNameRange     '0.11.0' ] ]
+141 silly addNamed whatwg-fetch@0.11.0
+142 verbose addNamed "0.11.0" is a plain semver version for whatwg-fetch
+143 silly addNameRange number 2 { name: 'node-fetch', range: '>=1.0.1 <2.0.0', hasData: true }
+144 silly addNameRange versions [ 'node-fetch',
+144 silly addNameRange   [ '0.1.0',
+144 silly addNameRange     '1.0.0',
+144 silly addNameRange     '1.0.1',
+144 silly addNameRange     '1.0.2',
+144 silly addNameRange     '1.0.3',
+144 silly addNameRange     '1.0.4',
+144 silly addNameRange     '1.0.5',
+144 silly addNameRange     '1.0.6',
+144 silly addNameRange     '1.1.0',
+144 silly addNameRange     '1.1.1',
+144 silly addNameRange     '1.1.2',
+144 silly addNameRange     '1.2.0',
+144 silly addNameRange     '1.2.1',
+144 silly addNameRange     '1.3.0',
+144 silly addNameRange     '1.3.1',
+144 silly addNameRange     '1.3.2',
+144 silly addNameRange     '1.3.3' ] ]
+145 silly addNamed node-fetch@1.3.3
+146 verbose addNamed "1.3.3" is a plain semver version for node-fetch
+147 silly mapToRegistry name whatwg-fetch
+148 silly mapToRegistry using default registry
+149 silly mapToRegistry registry https://registry.npmjs.org/
+150 silly mapToRegistry uri https://registry.npmjs.org/whatwg-fetch
+151 verbose addRemoteTarball https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.11.0.tgz not in flight; adding
+152 verbose addRemoteTarball [ 'https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.11.0.tgz',
+152 verbose addRemoteTarball   '46b1d18d0aa99955971ef1a2f5aac506add28815' ]
+153 info retry fetch attempt 1 at 8:52:00 PM
+154 info attempt registry request try #1 at 8:52:00 PM
+155 http fetch GET https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.11.0.tgz
+156 silly mapToRegistry name node-fetch
+157 silly mapToRegistry using default registry
+158 silly mapToRegistry registry https://registry.npmjs.org/
+159 silly mapToRegistry uri https://registry.npmjs.org/node-fetch
+160 verbose addRemoteTarball https://registry.npmjs.org/node-fetch/-/node-fetch-1.3.3.tgz not in flight; adding
+161 verbose addRemoteTarball [ 'https://registry.npmjs.org/node-fetch/-/node-fetch-1.3.3.tgz',
+161 verbose addRemoteTarball   '880228be75fd207a8a9baa2042ead437e6edaf84' ]
+162 info retry fetch attempt 1 at 8:52:00 PM
+163 info attempt registry request try #1 at 8:52:00 PM
+164 http fetch GET https://registry.npmjs.org/node-fetch/-/node-fetch-1.3.3.tgz
+165 http fetch 200 https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.11.0.tgz
+166 silly fetchAndShaCheck shasum 46b1d18d0aa99955971ef1a2f5aac506add28815
+167 verbose addTmpTarball /tmp/npm-3957-ccddafab/registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.11.0.tgz not in flight; adding
+168 verbose addTmpTarball already have metadata; skipping unpack for whatwg-fetch@0.11.0
+169 http fetch 200 https://registry.npmjs.org/node-fetch/-/node-fetch-1.3.3.tgz
+170 silly fetchAndShaCheck shasum 880228be75fd207a8a9baa2042ead437e6edaf84
+171 verbose addTmpTarball /tmp/npm-3957-ccddafab/registry.npmjs.org/node-fetch/-/node-fetch-1.3.3.tgz not in flight; adding
+172 verbose addTmpTarball already have metadata; skipping unpack for node-fetch@1.3.3
+173 silly cache afterAdd whatwg-fetch@0.11.0
+174 verbose afterAdd /home/ubuntu/.npm/whatwg-fetch/0.11.0/package/package.json not in flight; writing
+175 verbose afterAdd /home/ubuntu/.npm/whatwg-fetch/0.11.0/package/package.json written
+176 silly cache afterAdd node-fetch@1.3.3
+177 verbose afterAdd /home/ubuntu/.npm/node-fetch/1.3.3/package/package.json not in flight; writing
+178 verbose afterAdd /home/ubuntu/.npm/node-fetch/1.3.3/package/package.json written
+179 silly install resolved [ { name: 'whatwg-fetch',
+179 silly install resolved     description: 'A window.fetch polyfill.',
+179 silly install resolved     version: '0.11.0',
+179 silly install resolved     main: 'fetch.js',
+179 silly install resolved     repository: { type: 'git', url: 'git+https://github.com/github/fetch.git' },
+179 silly install resolved     licenses: [ [Object] ],
+179 silly install resolved     devDependencies:
+179 silly install resolved      { bower: '1.3.8',
+179 silly install resolved        chai: '1.10.0',
+179 silly install resolved        jshint: '2.8.0',
+179 silly install resolved        'mocha-phantomjs': '3.5.2',
+179 silly install resolved        mocha: '2.1.0',
+179 silly install resolved        phantomjs: '1.9.19' },
+179 silly install resolved     files: [ 'LICENSE', 'fetch.js' ],
+179 silly install resolved     gitHead: '989a1e8132e9adb4c4e973875ad043ff7219fc5a',
+179 silly install resolved     bugs: { url: 'https://github.com/github/fetch/issues' },
+179 silly install resolved     homepage: 'https://github.com/github/fetch#readme',
+179 silly install resolved     _id: 'whatwg-fetch@0.11.0',
+179 silly install resolved     scripts: {},
+179 silly install resolved     _shasum: '46b1d18d0aa99955971ef1a2f5aac506add28815',
+179 silly install resolved     _from: 'whatwg-fetch@>=0.10.0',
+179 silly install resolved     _npmVersion: '3.3.12',
+179 silly install resolved     _nodeVersion: '5.4.0',
+179 silly install resolved     _npmUser: { name: 'mislav', email: 'mislav.marohnic@gmail.com' },
+179 silly install resolved     dist:
+179 silly install resolved      { shasum: '46b1d18d0aa99955971ef1a2f5aac506add28815',
+179 silly install resolved        tarball: 'http://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.11.0.tgz' },
+179 silly install resolved     maintainers: [ [Object], [Object] ],
+179 silly install resolved     directories: {},
+179 silly install resolved     _resolved: 'https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.11.0.tgz' },
+179 silly install resolved   { name: 'node-fetch',
+179 silly install resolved     version: '1.3.3',
+179 silly install resolved     description: 'A light-weight module that brings window.fetch to node.js and io.js',
+179 silly install resolved     main: 'index.js',
+179 silly install resolved     scripts:
+179 silly install resolved      { test: 'mocha test/test.js',
+179 silly install resolved        report: 'istanbul cover _mocha -- -R spec test/test.js',
+179 silly install resolved        coverage: 'istanbul cover _mocha --report lcovonly -- -R spec test/test.js && cat ./coverage/lcov.info | coveralls' },
+179 silly install resolved     repository:
+179 silly install resolved      { type: 'git',
+179 silly install resolved        url: 'git+https://github.com/bitinn/node-fetch.git' },
+179 silly install resolved     keywords: [ 'fetch', 'http', 'promise' ],
+179 silly install resolved     author: { name: 'David Frank' },
+179 silly install resolved     license: 'MIT',
+179 silly install resolved     bugs: { url: 'https://github.com/bitinn/node-fetch/issues' },
+179 silly install resolved     homepage: 'https://github.com/bitinn/node-fetch',
+179 silly install resolved     devDependencies:
+179 silly install resolved      { bluebird: '^2.9.1',
+179 silly install resolved        chai: '^1.10.0',
+179 silly install resolved        'chai-as-promised': '^4.1.1',
+179 silly install resolved        coveralls: '^2.11.2',
+179 silly install resolved        'form-data': '^1.0.0-rc1',
+179 silly install resolved        istanbul: '^0.3.5',
+179 silly install resolved        mocha: '^2.1.0',
+179 silly install resolved        parted: '^0.1.1',
+179 silly install resolved        promise: '^6.1.0',
+179 silly install resolved        resumer: '0.0.0' },
+179 silly install resolved     dependencies: { encoding: '^0.1.11' },
+179 silly install resolved     gitHead: 'fd3f89fcd94e5bcee31de4cbca4c15cd79999b07',
+179 silly install resolved     _id: 'node-fetch@1.3.3',
+179 silly install resolved     _shasum: '880228be75fd207a8a9baa2042ead437e6edaf84',
+179 silly install resolved     _from: 'node-fetch@>=1.0.1 <2.0.0',
+179 silly install resolved     _npmVersion: '2.11.1',
+179 silly install resolved     _nodeVersion: '2.3.0',
+179 silly install resolved     _npmUser: { name: 'bitinn', email: 'bitinn@gmail.com' },
+179 silly install resolved     maintainers: [ [Object] ],
+179 silly install resolved     dist:
+179 silly install resolved      { shasum: '880228be75fd207a8a9baa2042ead437e6edaf84',
+179 silly install resolved        tarball: 'http://registry.npmjs.org/node-fetch/-/node-fetch-1.3.3.tgz' },
+179 silly install resolved     directories: {},
+179 silly install resolved     _resolved: 'https://registry.npmjs.org/node-fetch/-/node-fetch-1.3.3.tgz' } ]
+180 info install whatwg-fetch@0.11.0 into /home/ubuntu/workspace/node_modules/isomorphic-fetch
+181 info install node-fetch@1.3.3 into /home/ubuntu/workspace/node_modules/isomorphic-fetch
+182 info installOne whatwg-fetch@0.11.0
+183 verbose installOne of whatwg-fetch to /home/ubuntu/workspace/node_modules/isomorphic-fetch not in flight; installing
+184 info installOne node-fetch@1.3.3
+185 verbose installOne of node-fetch to /home/ubuntu/workspace/node_modules/isomorphic-fetch not in flight; installing
+186 verbose lock using /home/ubuntu/.npm/_locks/whatwg-fetch-6b5fad23541492e8.lock for /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch
+187 verbose lock using /home/ubuntu/.npm/_locks/node-fetch-7cb0187531454194.lock for /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch
+188 silly install write writing whatwg-fetch 0.11.0 to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch
+189 silly install write writing node-fetch 1.3.3 to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch
+190 verbose unbuild node_modules/isomorphic-fetch/node_modules/whatwg-fetch
+191 verbose unbuild node_modules/isomorphic-fetch/node_modules/node-fetch
+192 silly gentlyRm /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch is being purged from base /home/ubuntu/workspace
+193 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch
+194 silly gentlyRm /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch is being purged from base /home/ubuntu/workspace
+195 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch
+196 verbose tar unpack /home/ubuntu/.npm/whatwg-fetch/0.11.0/package.tgz
+197 verbose tar unpacking to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch
+198 silly gentlyRm /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch is being purged
+199 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch
+200 verbose tar unpack /home/ubuntu/.npm/node-fetch/1.3.3/package.tgz
+201 verbose tar unpacking to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch
+202 silly gentlyRm /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch is being purged
+203 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch
+204 silly gunzTarPerm modes [ '755', '644' ]
+205 silly gunzTarPerm modes [ '755', '644' ]
+206 silly gunzTarPerm extractEntry package.json
+207 silly gunzTarPerm extractEntry package.json
+208 silly gunzTarPerm extractEntry README.md
+209 silly gunzTarPerm extractEntry LICENSE
+210 silly gunzTarPerm extractEntry .npmignore
+211 silly gunzTarPerm extractEntry README.md
+212 silly gunzTarPerm extractEntry fetch.js
+213 silly gunzTarPerm extractEntry index.js
+214 silly gunzTarPerm extractEntry LICENSE.md
+215 silly gunzTarPerm extractEntry LIMITS.md
+216 silly gunzTarPerm extractEntry .travis.yml
+217 silly gunzTarPerm extractEntry lib/headers.js
+218 silly gunzTarPerm extractEntry lib/request.js
+219 silly gunzTarPerm extractEntry lib/response.js
+220 verbose write writing to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch/package.json
+221 info preinstall whatwg-fetch@0.11.0
+222 silly gunzTarPerm extractEntry CHANGELOG.md
+223 silly gunzTarPerm extractEntry test/server.js
+224 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch/package.json
+225 silly gunzTarPerm extractEntry test/test.js
+226 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch/package.json
+227 silly install resolved []
+228 verbose about to build /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch
+229 info build /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch
+230 info linkStuff whatwg-fetch@0.11.0
+231 silly linkStuff whatwg-fetch@0.11.0 has /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules as its parent node_modules
+232 verbose linkBins whatwg-fetch@0.11.0
+233 verbose linkMans whatwg-fetch@0.11.0
+234 verbose rebuildBundles whatwg-fetch@0.11.0
+235 info install whatwg-fetch@0.11.0
+236 info postinstall whatwg-fetch@0.11.0
+237 verbose unlock done using /home/ubuntu/.npm/_locks/whatwg-fetch-6b5fad23541492e8.lock for /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/whatwg-fetch
+238 verbose write writing to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/package.json
+239 info preinstall node-fetch@1.3.3
+240 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/package.json
+241 silly prepareForInstallMany adding encoding@^0.1.11 from node-fetch dependencies
+242 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/package.json
+243 silly cache add args [ 'encoding@^0.1.11', null ]
+244 verbose cache add spec encoding@^0.1.11
+245 silly cache add parsed spec Result {
+245 silly cache add   raw: 'encoding@^0.1.11',
+245 silly cache add   scope: null,
+245 silly cache add   name: 'encoding',
+245 silly cache add   rawSpec: '^0.1.11',
+245 silly cache add   spec: '>=0.1.11 <0.2.0',
+245 silly cache add   type: 'range' }
+246 silly addNamed encoding@>=0.1.11 <0.2.0
+247 verbose addNamed ">=0.1.11 <0.2.0" is a valid semver range for encoding
+248 silly addNameRange { name: 'encoding', range: '>=0.1.11 <0.2.0', hasData: false }
+249 silly mapToRegistry name encoding
+250 silly mapToRegistry using default registry
+251 silly mapToRegistry registry https://registry.npmjs.org/
+252 silly mapToRegistry uri https://registry.npmjs.org/encoding
+253 verbose addNameRange registry:https://registry.npmjs.org/encoding not in flight; fetching
+254 verbose request uri https://registry.npmjs.org/encoding
+255 verbose request no auth needed
+256 info attempt registry request try #1 at 8:52:00 PM
+257 http request GET https://registry.npmjs.org/encoding
+258 http 200 https://registry.npmjs.org/encoding
+259 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+259 verbose headers   etag: '"ED80P0SXOPGKRRYI0EVINPZUR"',
+259 verbose headers   'content-type': 'application/json',
+259 verbose headers   'cache-control': 'max-age=300',
+259 verbose headers   'content-length': '11979',
+259 verbose headers   'accept-ranges': 'bytes',
+259 verbose headers   date: 'Tue, 01 Mar 2016 20:52:00 GMT',
+259 verbose headers   via: '1.1 varnish',
+259 verbose headers   age: '46',
+259 verbose headers   connection: 'keep-alive',
+259 verbose headers   'x-served-by': 'cache-dfw1831-DFW',
+259 verbose headers   'x-cache': 'HIT',
+259 verbose headers   'x-cache-hits': '1',
+259 verbose headers   'x-timer': 'S1456865520.885945,VS0,VE0',
+259 verbose headers   vary: 'Accept' }
+260 silly get cb [ 200,
+260 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+260 silly get     etag: '"ED80P0SXOPGKRRYI0EVINPZUR"',
+260 silly get     'content-type': 'application/json',
+260 silly get     'cache-control': 'max-age=300',
+260 silly get     'content-length': '11979',
+260 silly get     'accept-ranges': 'bytes',
+260 silly get     date: 'Tue, 01 Mar 2016 20:52:00 GMT',
+260 silly get     via: '1.1 varnish',
+260 silly get     age: '46',
+260 silly get     connection: 'keep-alive',
+260 silly get     'x-served-by': 'cache-dfw1831-DFW',
+260 silly get     'x-cache': 'HIT',
+260 silly get     'x-cache-hits': '1',
+260 silly get     'x-timer': 'S1456865520.885945,VS0,VE0',
+260 silly get     vary: 'Accept' } ]
+261 verbose get saving encoding to /home/ubuntu/.npm/registry.npmjs.org/encoding/.cache.json
+262 silly addNameRange number 2 { name: 'encoding', range: '>=0.1.11 <0.2.0', hasData: true }
+263 silly addNameRange versions [ 'encoding',
+263 silly addNameRange   [ '0.1.1',
+263 silly addNameRange     '0.1.2',
+263 silly addNameRange     '0.1.3',
+263 silly addNameRange     '0.1.4',
+263 silly addNameRange     '0.1.5',
+263 silly addNameRange     '0.1.6',
+263 silly addNameRange     '0.1.7',
+263 silly addNameRange     '0.1.8',
+263 silly addNameRange     '0.1.9',
+263 silly addNameRange     '0.1.10',
+263 silly addNameRange     '0.1.11',
+263 silly addNameRange     '0.1.12' ] ]
+264 silly addNamed encoding@0.1.12
+265 verbose addNamed "0.1.12" is a plain semver version for encoding
+266 silly mapToRegistry name encoding
+267 silly mapToRegistry using default registry
+268 silly mapToRegistry registry https://registry.npmjs.org/
+269 silly mapToRegistry uri https://registry.npmjs.org/encoding
+270 verbose addRemoteTarball https://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz not in flight; adding
+271 verbose addRemoteTarball [ 'https://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz',
+271 verbose addRemoteTarball   '538b66f3ee62cd1ab51ec323829d1f9480c74beb' ]
+272 info retry fetch attempt 1 at 8:52:00 PM
+273 info attempt registry request try #1 at 8:52:00 PM
+274 http fetch GET https://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz
+275 http fetch 200 https://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz
+276 silly fetchAndShaCheck shasum 538b66f3ee62cd1ab51ec323829d1f9480c74beb
+277 verbose addTmpTarball /tmp/npm-3957-ccddafab/registry.npmjs.org/encoding/-/encoding-0.1.12.tgz not in flight; adding
+278 verbose addTmpTarball already have metadata; skipping unpack for encoding@0.1.12
+279 silly cache afterAdd encoding@0.1.12
+280 verbose afterAdd /home/ubuntu/.npm/encoding/0.1.12/package/package.json not in flight; writing
+281 verbose afterAdd /home/ubuntu/.npm/encoding/0.1.12/package/package.json written
+282 silly install resolved [ { name: 'encoding',
+282 silly install resolved     version: '0.1.12',
+282 silly install resolved     description: 'Convert encodings, uses iconv by default and fallbacks to iconv-lite if needed',
+282 silly install resolved     main: 'lib/encoding.js',
+282 silly install resolved     scripts: { test: 'nodeunit test' },
+282 silly install resolved     repository:
+282 silly install resolved      { type: 'git',
+282 silly install resolved        url: 'git+https://github.com/andris9/encoding.git' },
+282 silly install resolved     author: { name: 'Andris Reinman' },
+282 silly install resolved     license: 'MIT',
+282 silly install resolved     dependencies: { 'iconv-lite': '~0.4.13' },
+282 silly install resolved     devDependencies: { iconv: '~2.1.11', nodeunit: '~0.9.1' },
+282 silly install resolved     gitHead: '91ae950aaa854a119122c27cdbabd8c5585106f7',
+282 silly install resolved     bugs: { url: 'https://github.com/andris9/encoding/issues' },
+282 silly install resolved     homepage: 'https://github.com/andris9/encoding#readme',
+282 silly install resolved     _id: 'encoding@0.1.12',
+282 silly install resolved     _shasum: '538b66f3ee62cd1ab51ec323829d1f9480c74beb',
+282 silly install resolved     _from: 'encoding@>=0.1.11 <0.2.0',
+282 silly install resolved     _npmVersion: '3.3.12',
+282 silly install resolved     _nodeVersion: '5.3.0',
+282 silly install resolved     _npmUser: { name: 'andris', email: 'andris@kreata.ee' },
+282 silly install resolved     dist:
+282 silly install resolved      { shasum: '538b66f3ee62cd1ab51ec323829d1f9480c74beb',
+282 silly install resolved        tarball: 'http://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz' },
+282 silly install resolved     maintainers: [ [Object] ],
+282 silly install resolved     directories: {},
+282 silly install resolved     _resolved: 'https://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz' } ]
+283 info install encoding@0.1.12 into /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch
+284 info installOne encoding@0.1.12
+285 verbose installOne of encoding to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch not in flight; installing
+286 verbose lock using /home/ubuntu/.npm/_locks/encoding-8d944ae61c1b52f6.lock for /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding
+287 silly install write writing encoding 0.1.12 to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding
+288 verbose unbuild node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding
+289 silly gentlyRm /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding is being purged from base /home/ubuntu/workspace
+290 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding
+291 verbose tar unpack /home/ubuntu/.npm/encoding/0.1.12/package.tgz
+292 verbose tar unpacking to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding
+293 silly gentlyRm /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding is being purged
+294 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding
+295 silly gunzTarPerm modes [ '755', '644' ]
+296 silly gunzTarPerm extractEntry package.json
+297 silly gunzTarPerm extractEntry .npmignore
+298 silly gunzTarPerm extractEntry README.md
+299 silly gunzTarPerm extractEntry LICENSE
+300 silly gunzTarPerm extractEntry .travis.yml
+301 silly gunzTarPerm extractEntry lib/encoding.js
+302 silly gunzTarPerm extractEntry lib/iconv-loader.js
+303 silly gunzTarPerm extractEntry test/test.js
+304 verbose write writing to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/package.json
+305 info preinstall encoding@0.1.12
+306 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/package.json
+307 silly prepareForInstallMany adding iconv-lite@~0.4.13 from encoding dependencies
+308 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/package.json
+309 silly cache add args [ 'iconv-lite@~0.4.13', null ]
+310 verbose cache add spec iconv-lite@~0.4.13
+311 silly cache add parsed spec Result {
+311 silly cache add   raw: 'iconv-lite@~0.4.13',
+311 silly cache add   scope: null,
+311 silly cache add   name: 'iconv-lite',
+311 silly cache add   rawSpec: '~0.4.13',
+311 silly cache add   spec: '>=0.4.13 <0.5.0',
+311 silly cache add   type: 'range' }
+312 silly addNamed iconv-lite@>=0.4.13 <0.5.0
+313 verbose addNamed ">=0.4.13 <0.5.0" is a valid semver range for iconv-lite
+314 silly addNameRange { name: 'iconv-lite', range: '>=0.4.13 <0.5.0', hasData: false }
+315 silly mapToRegistry name iconv-lite
+316 silly mapToRegistry using default registry
+317 silly mapToRegistry registry https://registry.npmjs.org/
+318 silly mapToRegistry uri https://registry.npmjs.org/iconv-lite
+319 verbose addNameRange registry:https://registry.npmjs.org/iconv-lite not in flight; fetching
+320 verbose request uri https://registry.npmjs.org/iconv-lite
+321 verbose request no auth needed
+322 info attempt registry request try #1 at 8:52:01 PM
+323 verbose etag "98R2ANHZDE4DJLQRVFON27TWG"
+324 http request GET https://registry.npmjs.org/iconv-lite
+325 http 200 https://registry.npmjs.org/iconv-lite
+326 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+326 verbose headers   etag: '"ERXWJXRLKIE3X9TOO6MRCM5O6"',
+326 verbose headers   'content-type': 'application/json',
+326 verbose headers   'cache-control': 'max-age=300',
+326 verbose headers   'content-length': '59626',
+326 verbose headers   'accept-ranges': 'bytes',
+326 verbose headers   date: 'Tue, 01 Mar 2016 20:52:01 GMT',
+326 verbose headers   via: '1.1 varnish',
+326 verbose headers   age: '31',
+326 verbose headers   connection: 'keep-alive',
+326 verbose headers   'x-served-by': 'cache-dfw1834-DFW',
+326 verbose headers   'x-cache': 'HIT',
+326 verbose headers   'x-cache-hits': '3',
+326 verbose headers   'x-timer': 'S1456865521.159636,VS0,VE0',
+326 verbose headers   vary: 'Accept' }
+327 silly get cb [ 200,
+327 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+327 silly get     etag: '"ERXWJXRLKIE3X9TOO6MRCM5O6"',
+327 silly get     'content-type': 'application/json',
+327 silly get     'cache-control': 'max-age=300',
+327 silly get     'content-length': '59626',
+327 silly get     'accept-ranges': 'bytes',
+327 silly get     date: 'Tue, 01 Mar 2016 20:52:01 GMT',
+327 silly get     via: '1.1 varnish',
+327 silly get     age: '31',
+327 silly get     connection: 'keep-alive',
+327 silly get     'x-served-by': 'cache-dfw1834-DFW',
+327 silly get     'x-cache': 'HIT',
+327 silly get     'x-cache-hits': '3',
+327 silly get     'x-timer': 'S1456865521.159636,VS0,VE0',
+327 silly get     vary: 'Accept' } ]
+328 verbose get saving iconv-lite to /home/ubuntu/.npm/registry.npmjs.org/iconv-lite/.cache.json
+329 silly addNameRange number 2 { name: 'iconv-lite', range: '>=0.4.13 <0.5.0', hasData: true }
+330 silly addNameRange versions [ 'iconv-lite',
+330 silly addNameRange   [ '0.1.0',
+330 silly addNameRange     '0.1.1',
+330 silly addNameRange     '0.1.2',
+330 silly addNameRange     '0.1.3',
+330 silly addNameRange     '0.1.4',
+330 silly addNameRange     '0.2.0',
+330 silly addNameRange     '0.2.1',
+330 silly addNameRange     '0.2.3',
+330 silly addNameRange     '0.2.4',
+330 silly addNameRange     '0.2.5',
+330 silly addNameRange     '0.2.6',
+330 silly addNameRange     '0.2.7',
+330 silly addNameRange     '0.2.8',
+330 silly addNameRange     '0.2.9',
+330 silly addNameRange     '0.2.10',
+330 silly addNameRange     '0.2.11',
+330 silly addNameRange     '0.4.0-pre',
+330 silly addNameRange     '0.4.0-pre2',
+330 silly addNameRange     '0.4.0-pre3',
+330 silly addNameRange     '0.4.0',
+330 silly addNameRange     '0.4.1',
+330 silly addNameRange     '0.4.2',
+330 silly addNameRange     '0.4.3',
+330 silly addNameRange     '0.4.4',
+330 silly addNameRange     '0.4.5',
+330 silly addNameRange     '0.4.6',
+330 silly addNameRange     '0.4.7',
+330 silly addNameRange     '0.4.8',
+330 silly addNameRange     '0.4.9',
+330 silly addNameRange     '0.4.10',
+330 silly addNameRange     '0.4.11',
+330 silly addNameRange     '0.4.12',
+330 silly addNameRange     '0.4.13' ] ]
+331 silly addNamed iconv-lite@0.4.13
+332 verbose addNamed "0.4.13" is a plain semver version for iconv-lite
+333 silly cache afterAdd iconv-lite@0.4.13
+334 verbose afterAdd /home/ubuntu/.npm/iconv-lite/0.4.13/package/package.json not in flight; writing
+335 verbose afterAdd /home/ubuntu/.npm/iconv-lite/0.4.13/package/package.json written
+336 silly install resolved [ { name: 'iconv-lite',
+336 silly install resolved     description: 'Convert character encodings in pure javascript.',
+336 silly install resolved     version: '0.4.13',
+336 silly install resolved     license: 'MIT',
+336 silly install resolved     keywords: [ 'iconv', 'convert', 'charset', 'icu' ],
+336 silly install resolved     author: { name: 'Alexander Shtuchkin', email: 'ashtuchkin@gmail.com' },
+336 silly install resolved     contributors:
+336 silly install resolved      [ [Object],
+336 silly install resolved        [Object],
+336 silly install resolved        [Object],
+336 silly install resolved        [Object],
+336 silly install resolved        [Object],
+336 silly install resolved        [Object],
+336 silly install resolved        [Object],
+336 silly install resolved        [Object],
+336 silly install resolved        [Object],
+336 silly install resolved        [Object],
+336 silly install resolved        [Object],
+336 silly install resolved        [Object] ],
+336 silly install resolved     main: './lib/index.js',
+336 silly install resolved     homepage: 'https://github.com/ashtuchkin/iconv-lite',
+336 silly install resolved     bugs: { url: 'https://github.com/ashtuchkin/iconv-lite/issues' },
+336 silly install resolved     repository:
+336 silly install resolved      { type: 'git',
+336 silly install resolved        url: 'git://github.com/ashtuchkin/iconv-lite.git' },
+336 silly install resolved     engines: { node: '>=0.8.0' },
+336 silly install resolved     scripts:
+336 silly install resolved      { coverage: 'istanbul cover _mocha -- --grep .',
+336 silly install resolved        'coverage-open': 'open coverage/lcov-report/index.html',
+336 silly install resolved        test: 'mocha --reporter spec --grep .' },
+336 silly install resolved     browser: { './extend-node': false, './streams': false },
+336 silly install resolved     devDependencies:
+336 silly install resolved      { mocha: '*',
+336 silly install resolved        request: '2.47',
+336 silly install resolved        unorm: '*',
+336 silly install resolved        errto: '*',
+336 silly install resolved        async: '*',
+336 silly install resolved        istanbul: '*',
+336 silly install resolved        iconv: '2.1' },
+336 silly install resolved     gitHead: 'f5ec51b1e7dd1477a3570824960641eebdc5fbc6',
+336 silly install resolved     _id: 'iconv-lite@0.4.13',
+336 silly install resolved     _shasum: '1f88aba4ab0b1508e8312acc39345f36e992e2f2',
+336 silly install resolved     _from: 'iconv-lite@>=0.4.13 <0.5.0',
+336 silly install resolved     _npmVersion: '2.14.4',
+336 silly install resolved     _nodeVersion: '4.1.1',
+336 silly install resolved     _npmUser: { name: 'ashtuchkin', email: 'ashtuchkin@gmail.com' },
+336 silly install resolved     maintainers: [ [Object] ],
+336 silly install resolved     dist:
+336 silly install resolved      { shasum: '1f88aba4ab0b1508e8312acc39345f36e992e2f2',
+336 silly install resolved        tarball: 'http://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.13.tgz' },
+336 silly install resolved     directories: {},
+336 silly install resolved     _resolved: 'https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.13.tgz',
+336 silly install resolved     readme: 'ERROR: No README data found!' } ]
+337 info install iconv-lite@0.4.13 into /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding
+338 info installOne iconv-lite@0.4.13
+339 verbose installOne of iconv-lite to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding not in flight; installing
+340 verbose lock using /home/ubuntu/.npm/_locks/iconv-lite-ff4e3c32edf82051.lock for /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite
+341 silly install write writing iconv-lite 0.4.13 to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite
+342 verbose unbuild node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite
+343 silly gentlyRm /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite is being purged from base /home/ubuntu/workspace
+344 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite
+345 verbose tar unpack /home/ubuntu/.npm/iconv-lite/0.4.13/package.tgz
+346 verbose tar unpacking to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite
+347 silly gentlyRm /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite is being purged
+348 verbose gentlyRm don't care about contents; nuking /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite
+349 silly gunzTarPerm modes [ '755', '644' ]
+350 silly gunzTarPerm extractEntry package.json
+351 silly gunzTarPerm extractEntry .npmignore
+352 silly gunzTarPerm extractEntry README.md
+353 silly gunzTarPerm extractEntry LICENSE
+354 silly gunzTarPerm extractEntry encodings/dbcs-codec.js
+355 silly gunzTarPerm extractEntry encodings/dbcs-data.js
+356 silly gunzTarPerm extractEntry encodings/index.js
+357 silly gunzTarPerm extractEntry encodings/internal.js
+358 silly gunzTarPerm extractEntry encodings/sbcs-codec.js
+359 silly gunzTarPerm extractEntry encodings/sbcs-data-generated.js
+360 silly gunzTarPerm extractEntry encodings/sbcs-data.js
+361 silly gunzTarPerm extractEntry encodings/utf16.js
+362 silly gunzTarPerm extractEntry encodings/utf7.js
+363 silly gunzTarPerm extractEntry encodings/tables/big5-added.json
+364 silly gunzTarPerm extractEntry encodings/tables/cp936.json
+365 silly gunzTarPerm extractEntry encodings/tables/cp949.json
+366 silly gunzTarPerm extractEntry encodings/tables/cp950.json
+367 silly gunzTarPerm extractEntry encodings/tables/eucjp.json
+368 silly gunzTarPerm extractEntry encodings/tables/gb18030-ranges.json
+369 silly gunzTarPerm extractEntry encodings/tables/gbk-added.json
+370 silly gunzTarPerm extractEntry encodings/tables/shiftjis.json
+371 silly gunzTarPerm extractEntry .travis.yml
+372 silly gunzTarPerm extractEntry lib/bom-handling.js
+373 silly gunzTarPerm extractEntry lib/extend-node.js
+374 silly gunzTarPerm extractEntry lib/index.js
+375 silly gunzTarPerm extractEntry lib/streams.js
+376 silly gunzTarPerm extractEntry Changelog.md
+377 verbose write writing to /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite/package.json
+378 info preinstall iconv-lite@0.4.13
+379 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite/package.json
+380 verbose readDependencies loading dependencies from /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite/package.json
+381 silly install resolved []
+382 verbose about to build /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite
+383 info build /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite
+384 info linkStuff iconv-lite@0.4.13
+385 silly linkStuff iconv-lite@0.4.13 has /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules as its parent node_modules
+386 verbose linkBins iconv-lite@0.4.13
+387 verbose linkMans iconv-lite@0.4.13
+388 verbose rebuildBundles iconv-lite@0.4.13
+389 info install iconv-lite@0.4.13
+390 info postinstall iconv-lite@0.4.13
+391 verbose unlock done using /home/ubuntu/.npm/_locks/iconv-lite-ff4e3c32edf82051.lock for /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding/node_modules/iconv-lite
+392 verbose about to build /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding
+393 info build /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding
+394 info linkStuff encoding@0.1.12
+395 silly linkStuff encoding@0.1.12 has /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules as its parent node_modules
+396 verbose linkBins encoding@0.1.12
+397 verbose linkMans encoding@0.1.12
+398 verbose rebuildBundles encoding@0.1.12
+399 verbose rebuildBundles [ 'iconv-lite' ]
+400 info install encoding@0.1.12
+401 info postinstall encoding@0.1.12
+402 verbose unlock done using /home/ubuntu/.npm/_locks/encoding-8d944ae61c1b52f6.lock for /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch/node_modules/encoding
+403 verbose about to build /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch
+404 info build /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch
+405 info linkStuff node-fetch@1.3.3
+406 silly linkStuff node-fetch@1.3.3 has /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules as its parent node_modules
+407 verbose linkBins node-fetch@1.3.3
+408 verbose linkMans node-fetch@1.3.3
+409 verbose rebuildBundles node-fetch@1.3.3
+410 verbose rebuildBundles [ 'encoding' ]
+411 info install node-fetch@1.3.3
+412 info postinstall node-fetch@1.3.3
+413 verbose unlock done using /home/ubuntu/.npm/_locks/node-fetch-7cb0187531454194.lock for /home/ubuntu/workspace/node_modules/isomorphic-fetch/node_modules/node-fetch
+414 verbose about to build /home/ubuntu/workspace/node_modules/isomorphic-fetch
+415 info build /home/ubuntu/workspace/node_modules/isomorphic-fetch
+416 info linkStuff isomorphic-fetch@2.2.1
+417 silly linkStuff isomorphic-fetch@2.2.1 has /home/ubuntu/workspace/node_modules as its parent node_modules
+418 verbose linkBins isomorphic-fetch@2.2.1
+419 verbose linkMans isomorphic-fetch@2.2.1
+420 verbose rebuildBundles isomorphic-fetch@2.2.1
+421 verbose rebuildBundles [ 'node-fetch', 'whatwg-fetch' ]
+422 info install isomorphic-fetch@2.2.1
+423 info postinstall isomorphic-fetch@2.2.1
+424 verbose unlock done using /home/ubuntu/.npm/_locks/isomorphic-fetch-d85733dc3d838a13.lock for /home/ubuntu/workspace/node_modules/isomorphic-fetch
+425 verbose validateInstall loading /home/ubuntu/workspace/package.json for validation
+426 verbose stack Error: The package react@0.14.7 does not satisfy its siblings' peerDependencies requirements!
+426 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/lib/install.js:125:32
+426 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/lib/install.js:268:7
+426 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+426 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+426 verbose stack     at cb (/home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+426 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+426 verbose stack     at cb (/home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+426 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+426 verbose stack     at cb (/home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+426 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.2.4/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+427 verbose cwd /home/ubuntu/workspace
+428 error Linux 4.2.0-c9
+429 error argv "/home/ubuntu/.nvm/versions/node/v4.2.4/bin/node" "/home/ubuntu/.nvm/versions/node/v4.2.4/bin/npm" "install" "isomorphic-fetch" "--save"
+430 error node v4.2.4
+431 error npm  v2.14.12
+432 error code EPEERINVALID
+433 error peerinvalid The package react@0.14.7 does not satisfy its siblings' peerDependencies requirements!
+433 error peerinvalid Peer react-dom@0.14.7 wants react@^0.14.7
+433 error peerinvalid Peer react-font-awesome@1.0.3 wants react@~0.11.2
+434 verbose exit [ 1, true ]
