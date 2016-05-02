@@ -1,0 +1,55 @@
+.container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.center {
+    align-self: center;
+    margin-right: 15px;
+}
+
+.space {
+    margin-bottom: 25px;
+}
+
+.titleurl {
+    display: flex;
+}
+
+a {
+    margin-left: 20px;
+    align-self: center;
+    margin-top: 9px;
+    font-size: 20px;
+}
+
+body {
+    background: url("https://a.thumbs.redditmedia.com/lPr-Vvr5_9sUUUOn.png");
+}
+
+h3 {
+    color: #776d63;
+}
+
+ol { 
+  list-style: symbols("*" "\2020" "\2021" "\A7"); 
+}
+
+.vs {
+    text-align: center;
+    font-size: 20px;
+    height: 30px;
+}
+
+.top {
+    height: 25px;
+}
+
+.upvoted {
+    background-color: green;
+}
+
+.downvoted {
+    background-color: red;
+}
