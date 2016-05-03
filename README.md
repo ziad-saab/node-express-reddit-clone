@@ -125,7 +125,7 @@ function checkLogin(user, pass, cb) {
     }
     else {
       var user = result[0];
-      var actualHashedPassword = user.password;
+      var actualHashedPassword = result.password;
       bcrypt.compare(pass, actualHashedPassword, function(err, result) {
         if(result === true) { // let's be extra safe here
           callback(null, user);
