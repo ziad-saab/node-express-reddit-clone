@@ -367,7 +367,7 @@ So really it's simply a nicer way of writing JavaScript that will create HTML :)
 
 If you want to try this at home, you have to make some changes to your server and the way to run it. You also have to install a few NPM modules:
 
-1. Let's install NPM packages `react` and `react-dom` and `babel-presets-react`.
+1. Let's install NPM packages `react` and `react-dom` and `babel-preset-react`.
 2. Let's install the `babel-cli` package **globally** with `npm install --global`. This will make the package available as a command-line tool called `babel-node`
 3. In our `package.json` let's add a `babel` section like this:
 ```json
