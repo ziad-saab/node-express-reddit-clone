@@ -278,9 +278,7 @@ How will the user cast a vote for a post eventually? Their browser will have to 
 This is weird though. Imagine if on Reddit every time you cast a vote, the page would refresh? In the next weeks we will learn how to make these kind of requests (GET, POST, ...) to a server but without refreshing the page, perhaps using jQuery or even React!
 
 ## Rendering HTML
-*This whole section is optional. You can render HTML on the server-side by simply doing string concatenation.*
-
-Rendering HTML by doing things like:
+Rendering HTML by writing code like this:
 
 ```javascript
 var output = "<ul>";
@@ -292,139 +290,44 @@ output += "</ul>";
 
 can quickly get out of hand, especially as you have a more complex page.
 
-There exist a lot of libraries and frameworks with the unique goal of letting us render HTML a bit more easily. Since we are going to look at [ReactJS](https://facebook.github.io/react/) when we study front-end development, now would be a good time to discover how React can help us render complex HTML structures directly in our JavaScript code, in a quite intuitive way.
+As seen in class, Express offers the EJS templating language out of the box. It's a mix of HTML code and special `<% %>` tags that can let us write JavaScript to control HTML.
 
-Here's an example of how we could use React's JSX to render the posts page:
+Here's a full example:
 
+In your `server.js`:
 ```javascript
-function PostList(data) {
-
-  var postItems = data.posts.map(function(item) {
-    return <Post key={item.id} id={item.id} url={item.url} title={item.title} voteScore={item.voteScore}/>;
-  });
-
-  return (
-    <div>
-      <h1>Posts page!</h1>
-      <ul>
-        {postItems}
-      </ul>
-    </div>
-  );
-}
-
-function Post(data) {
-  return (
-    <li>
-      <h2>
-        <a href={data.url}>{data.title}</a> (score: {data.voteScore})
-      </h2>
-    </li>
-  );
-}
-
-var htmlStructure = <PostList posts={[]}/>
-
-var html = render(htmlStructure);
-```
-
-**What sorcery is this?!??** We're straight up writing HTML inside our JavaScript?!
-
-The sorcery is called [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and it can be used to write code that looks like HTML, but with actual variables like arrays, numbers and strings inside.
-
-While there is a lot more to React than writing this JSX template code, perhaps you can already see how this can let us separate our rendering code into **functions**. If you look at the piece of code above, we have two functions: `PostList` and `Post`. The `PostList` receives as data an array of posts, and using the `map` function transforms this list to a list of `<Post>`s, which is another rendering function.
-
-JSX lets us nest these rendering functions the same way we would nest HTML tags, *effectively letting us write our own HTML elements*. It may sound a bit complicated, but it's not! There are a few things to know if you want to do this right now...
-
-1. The React library is mostly useful on the front-end or browser side of things. It's used to create fully interactive applications. Here, we're using React and the JSX syntax on the server-side simply to render HTML nicely.
-2. What you are looking at is not actually HTML and it's not JavaScript. It's an extension called JSX, which lets you write a nested structure of components and pass properties to them. Since you can use any JavaScript expression as a value, it's extremely powerful.
-3. Neither browsers nor NodeJS understand JSX! To make this code even usable, we have to transform it. The official tool to transform newer, modern JavaScript or JSX into something the browser or even NodeJS can understand is called Babel. It's what we call a transpiler, because it transform code to other code.
-4. Babel can take your JSX and transform it to regular JavaScript. When it does that, all it's doing is making calls to a function called `React.createElement`, so there's nothing magical about JSX. Here's an example before and after:
-
-**BEFORE**:
-```javascript
-function Post(data) {
-  return (
-    <div className="post">
-      <h2>{data.title}</h2>
-    </div>
-  )
-}
-```
-
-**AFTER**:
-```javascript
-function Post(data) {
-  return (
-    React.createElement("div", {className: "post"},
-      React.createElement("h2", null, data.title)
-    )
-  );
-}
-```
-
-So really it's simply a nicer way of writing JavaScript that will create HTML :)
-
-If you want to try this at home, you have to make some changes to your server and the way to run it. You also have to install a few NPM modules:
-
-1. Let's install NPM packages `react` and `react-dom` and `babel-preset-react`.
-2. Let's install the `babel-cli` package **globally** with `npm install --global`. This will make the package available as a command-line tool called `babel-node`
-3. In our `package.json` let's add a `babel` section like this:
-```json
-{
-  "babel": {
-    "presets": ["react"]
-  }
-}
-```
-
-That's all that's really needed. Now, instead of running your web server with `node index.js` you can run it with `babel-node index.js`. **This is not something you should do in production**, but it's good enough for development. It will let you use JSX inside your NodeJS code.
-
-Here's a small example of a fully functional Express server, where one of the URLs returns HTML built with this method, versus the same built with straight HTML:
-
-```javascript
-var React = require('react');
-var render = require('react-dom/server').renderToStaticMarkup;
-var express = require('express');
-
-var app = express();
-
-function PostList(data) {
-
-  var postItems = data.posts.map(function(item) {
-    return <Post url={item.url} title={item.title} voteScore={item.voteScore}/>;
-  });
-
-  return (
-    <div>
-      <h1>Posts page!</h1>
-      <ul>
-        {postItems}
-      </ul>
-    </div>
-  );
-}
-
-function Post(data) {
-  return (
-    <li>
-      <h2>
-        <a href={data.url}>{data.title}</a> (score: {data.voteScore})
-      </h2>
-    </li>
-  );
-}
-
-app.get('/posts', function(request, response) {
-  redditAPI.getAllPosts(function(err, posts) {
-    if (err) {
-      response.status(500).send('try again later!');
-    }
-    else {
-      var htmlStructure = PostList({posts: posts}); // calling the function that "returns JSX"
-      var html = render(htmlStructure); // rendering the JSX "structure" to HTML
-      response.send(html);
-    }
+app.get('/r/:subreddit', function(request, response) {
+  redditAPI.getPostsForSubreddit(request.params.subreddit, function(err, posts) {
+    response.render('post-list', {
+      posts: posts,
+      subreddit: request.params.subreddit
+    });
   });
 });
+```
+
+In your `subreddit.ejs`:
+
+```
+<html>
+  <head>
+    <title>Subreddit: <%= subreddit %></title>
+  </head>
+  <body>
+    <h1>Reddit clone!</h1>
+    <hr>
+    <h2>Posts for <%= subreddit %></h2>
+    
+    <ul>
+      <% posts.forEach(function(post) { %>
+      <li>
+        <h3><%= post.title %></h3>
+        <p>
+          shared by: <%= post.user.username %>
+        </p>
+      </li>
+      <% }); %>
+    </ul>
+  </body>
+</html>
 ```
