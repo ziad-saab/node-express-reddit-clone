@@ -11,9 +11,11 @@ At the end of this workshop, we should have a Reddit clone with the following fu
   * Logged in users will be able to add new posts to the site. A post will be a combination of a URL and a title.
 
 ## Getting started
-Since we already have some code going in our `reddit-nodejs-api` project, as well as a MySQL database and some pre-existing data, we will be starting from this project.
+Since we already have some code going in our `reddit-nodejs-api` project, as well as a MySQL database and some pre-existing data, we will be starting from that project.
 
-Currently, the `index.js` file has been the place where you test your API, making requests like `redditAPI.createUser`, or `redditAPI.createPost`, ... For this workshop, we are going to make `index.js` the centerpiece of our project: in addition to establishing a connection to our database, we'll be creating an Express server and making it listen to `process.env.PORT`. Eventually we'll be adding our `app.get`s and `app.post`s to make our Reddit clone happen!
+:warning: :warning: **DO NOT FORK/CLONE THIS PROJECT! INSTEAD, COPY THE NECESSARY CODE TO THE `reddit-nodejs-api` PROJECT** :warning: :warning:
+
+Currently, the `demo-using-api.js` file has been the place where you test your API, making requests like `redditAPI.createUser`, or `redditAPI.createPost`, ... For this workshop, we are going to make this repo's `index.js` the centerpiece of our project: in addition to establishing a connection to our database, we'll be creating an Express server and making it listen to `process.env.PORT`. Eventually we'll be adding our `app.get`s and `app.post`s to make our Reddit clone happen!
 
 ## How does this work relate to the Reddit API we built last week?
 Last week we started building a Reddit API in Node: a series of data functions that are going to drive the site. Each of us is at a different stage of this process, which is fine. This workshop is 100% related to the API workshop. If you only built the `getAllPosts` function, then you can still build parts of the web server. You can go back and forth between the API functions and the web server as you add more functionality.
@@ -43,6 +45,120 @@ Before starting to write any code, let's figure out the different pages we will 
   * **Create post page**
 
   The create post page will also be a simple page with an HTML `<form>`. The form will have title and URL fields, as well as a "create" submit button.
+
+  * **Subreddits pages**
+
+    :warning: **This is an optional functionality**.
+
+    If you have implemented subreddits in your API, you can create subreddit pages. They will work similarly to the homepage, except that the posts will be filtered for one subreddit only.
+
+    In your Express code, you will have one `app.get('/r/:subreddit')` and use the `req.params.subreddit` to make a request to your Reddit API. Then, you can use the same rendering code as the homepage to print the posts for that subreddit :)
+
+## Rendering HTML
+Rendering HTML by writing code like this:
+
+```javascript
+var output = "<ul>";
+contents.forEach(function(item) {
+  output += "<li><a href='" + item.url + "'>" + item.title + "</a>";
+});
+output += "</ul>";
+```
+
+can quickly get out of hand, especially as you have a more complex page.
+
+As seen in class, Express offers the [Pug](https://github.com/pugjs) [templating engine](https://expressjs.com/en/guide/using-template-engines.html), which was [previously known as Jade](https://github.com/pugjs/pug/issues/2184). The syntax will look a bit weird at first, but it translates to HTML and allows you to avoid the whole string concatenation headache
+
+Here's a full example:
+
+In your `server.js`:
+```javascript
+// At the top (already added for you)
+app.set('view engine', 'pug');
+
+app.get('/', function(request, response) {
+  // This is only an example!
+  redditAPI.getAllPosts(function(err, posts) {
+
+    // Response.render will call the Pug template engine with the `post-list.pug` file.
+    response.render('post-list', {
+      posts: posts,
+    });
+
+  });
+});
+```
+
+In your `post-list.pug`:
+
+```pug
+h1 Welcome to Reddit Clone!!!
+ul.post-list
+  each post in posts
+    li.post
+      h2
+        a(href=post.url)= post.title
+      p Submitted by #{post.username}
+      p Score: #{post.score} Upvotes: #{post.upVotes} Downvotes: #{post.downVotes}
+```
+
+Which will return this HTML:
+
+```html
+<h1>Welcome to Reddit Clone!!!</h1>
+<ul class="post-list">
+  <li class="post">
+    <h2>
+      <a href="http://blabla">This is the first post</a>
+    </h2>
+    <p>Submitted by 514FOREVER</p>
+    <p>Score: 100 Upvotes: 500 Downvotes: 400</p>
+  </li>
+  <li class="post">
+    <h2>
+      <a href="http://blabla123">This is the second post</a>
+    </h2>
+    <p>Submitted by Other_User</p>
+    <p>Score: 123 Upvotes: 523 Downvotes: 400</p>
+  </li>
+</ul>
+```
+
+In general, we want to return a full page of HTML , not only a snippet. For this, Pug gives us [template inheritance](https://pugjs.org/language/inheritance.html). We can create a layout which has the general structure of our page, and have a placeholder for the content.
+
+Here would be an example of `layout.pug` file. By using so-called "blocks", we can create placeholders for content.
+
+```pug
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    block title
+      title The Default Title
+  body
+    block content
+```
+
+Then, in our `post-list.pug` file, we can **extend** this layout, and provide a block for each block in the layout:
+
+```pug
+extends layout.pug
+
+block title
+  title Welcome to Reddit Clone!!!
+
+block content
+  h1 Welcome to Reddit Clone!!!
+  ul.post-list
+    each post in posts
+      li.post
+        h2
+          a(href=post.url)= post.title
+        p Submitted by #{post.username}
+        p Score: #{post.score} Upvotes: #{post.upVotes} Downvotes: #{post.downVotes}
+```
+
+Check out the full [documentation for Pug](https://pugjs.org/api/getting-started.html) to learn more.
 
 ## Handling form submissions
 We will have at least three form submissions to handle: login, signup and create post. Each form should be sent using a **POST** request to the server. Sending a **POST** request is an indication that we want to create new data on the target system. Therefore it's very important to not submit such data more than once.
@@ -276,58 +392,3 @@ How will the user cast a vote for a post eventually? Their browser will have to 
 ```
 
 This is weird though. Imagine if on Reddit every time you cast a vote, the page would refresh? In the next weeks we will learn how to make these kind of requests (GET, POST, ...) to a server but without refreshing the page, perhaps using jQuery or even React!
-
-## Rendering HTML
-Rendering HTML by writing code like this:
-
-```javascript
-var output = "<ul>";
-contents.forEach(function(item) {
-  output += "<li><a href='" + item.url + "'>" + item.title + "</a>";
-});
-output += "</ul>";
-```
-
-can quickly get out of hand, especially as you have a more complex page.
-
-As seen in class, Express offers the EJS templating language out of the box. It's a mix of HTML code and special `<% %>` tags that can let us write JavaScript to control HTML.
-
-Here's a full example:
-
-In your `server.js`:
-```javascript
-app.get('/r/:subreddit', function(request, response) {
-  redditAPI.getPostsForSubreddit(request.params.subreddit, function(err, posts) {
-    response.render('post-list', {
-      posts: posts,
-      subreddit: request.params.subreddit
-    });
-  });
-});
-```
-
-In your `subreddit.ejs`:
-
-```
-<html>
-  <head>
-    <title>Subreddit: <%= subreddit %></title>
-  </head>
-  <body>
-    <h1>Reddit clone!</h1>
-    <hr>
-    <h2>Posts for <%= subreddit %></h2>
-    
-    <ul>
-      <% posts.forEach(function(post) { %>
-      <li>
-        <h3><%= post.title %></h3>
-        <p>
-          shared by: <%= post.user.username %>
-        </p>
-      </li>
-      <% }); %>
-    </ul>
-  </body>
-</html>
-```
