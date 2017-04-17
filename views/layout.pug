@@ -1,8 +1,20 @@
 doctype html
 html
-  head
-    meta(charset="utf-8")
-    block title
-      title The Default Title
-  body
-    block content
+    head
+        meta(charset="utf-8")
+        link(rel="stylesheet", href="/static/app.css")
+        block title
+            title Redit Clone
+    body
+        header
+            if loggedInUser
+                p Welcome #{loggedInUser.username}
+            else
+                ul
+                    li
+                        a(href="/auth/signup") Signup
+                    li
+                        a(href="/auth/login") Login
+        main
+            block content
+        footer &copy; 2017 blah
