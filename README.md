@@ -412,3 +412,32 @@ This concludes the minimal part of the project. The following section gives you 
 
 ## Extra features
 TODO.
+
+
+
+
+### CSS make it look nice *
+Add basic style to the main elements of your Reddit clone. Style the header, the main navigation, the main content, the sidebar and the footer. Try to make it look nice. If you need help to pick a colorway, you can try [Adobe Color CC](https://color.adobe.com/explore/?filter=newest) for inspiration.
+
+
+### Subreddit moderator **
+Add a feature that will designate a moderator for a subreddit. A moderator is someone who will have admin power that will allow him or her to delete the post in this subreddit. In order to achieve this, you will need to:
+
+- Add a new field called `moderator_id` in your subreddit table. When creating a new subreddit, insert the `user_id` of the creator as the `moderator_id`.
+- When the moderator of a subreddit visits the subreddit, he should have a new button on every post that allows him or her to delete a post. **Attention**: You will have to make sure only the moderator of this subreddit can delete a post.
+- Bonus: You can also add this delete button on all the single post page for the subreddit.
+
+
+### Theme by subreddit with custom `<style>` CSS ***
+Allow the moderator of a subreddit to change the appearance of it. In order to do this, you will need to add a new page -and route- to allow the style customization. On this page, the moderator should be presented with a list of style he can modify. Here is an example of what it could look like:
+
+![Imgur](http://i.imgur.com/XyX2s3q.png)
+
+To do this, you will need to:
+
+- Create a new table in your database called `subreddit_style`. This table should have the following fields: `id`, `subreddit_id`, `style_name`, `style_value`.
+- When saving the custom style page, it should insert any modified entry in your  `subreddit_style` table. Every style element its own row.
+- When on a subreddit page, grab all the custom styles and inject them into the page using a `<style></style>` tag.
+
+
+
