@@ -277,12 +277,15 @@ This file exports a function that takes a `RedditAPI` instance and returns an Ex
 This file exports a simple middleware that will force a user to be logged in. If a request comes from a non-logged in user, the middleware will not call `next()` and instead return a `401 Unauthorized` response. **This middleware is not meant to be used on every request**. Look in `index.js` for how this middleware is used.
 
 ### `views/layout.pug`
-This file contains the main layout for the website. It outputs the main `<html>` structure, and uses [Pug's inheritance system](https://pugjs.org/language/inheritance.html). The part that says `block content` will be replaced with the content output by any template that extends `layout.pug`. Check `post-list.pug` for an example of extending the layout.
+This file contains the main layout for the website. It outputs the main `<html>` structure, and uses [Pug's inheritance system](https://pugjs.org/language/inheritance.html). The part that says `block content` will be replaced with the content output by any template that extends `layout.pug`. Check `homepage.pug` for an example of extending the layout.
 
 ### `views/post-list.pug`
-This file will use a Pug iteration to output a list of posts
+This file creates a [Pug mixin](https://pugjs.org/language/mixins.html) which is the equivalent of a function in that it can take arguments and be re-used. This mixin is used in `views/homepage.pug` and will be useful for you to build other views.
 
-### `error.pug`
+### `views/homepage.pug`
+This file extends the `layout.pug` file and defines a block called "content". This block in turn uses the `postList` mixin to output a list of posts after outputting a generic title.
+
+### `views/error.pug`
 This file can be used anytime you have access to an error object. It is useful to output the error in a nice way to the browser.
 
 ---
