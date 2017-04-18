@@ -414,8 +414,11 @@ This concludes the minimal part of the project. The following section gives you 
 TODO.
 
 ### Users listing page
-In `index.js` add `GET` handler for a new `/users` endpoint. In `reddit.js` add an API function `getAllUsers` which will fetch all the users from the database such that you can call `RedditAPI.getAllUsers` in your `/users` handler to retrieve a list of all users. Create a new Pug template that will output a list of usernames.
-Each username should a link to `/users/:userId` which we will create in the next step.
+In `reddit.js` add an API function `getAllUsers` which will fetch all the users from the database such that you can call `RedditAPI.getAllUsers` in a new endpoint handler called `/users`. This endpoint should render a new Pug template that will output a list of usernames.
+Each username should a link to `/users/:userId`(an endpoint we will reate in the next step).
 
 ### User posts page
 In `index.js` add `GET` handler for a new `/users/:userId` endpoint. This endpoint should serve list of all posts by a single user. Create a new API function to retrieve all the posts made by a given userId. Finally this endpoint could re-use the `post-list` Pug template.
+
+### Create Comment Form
+Earlier we created a Single Post View for the endpoint `/post/:postId`. Let's extend the pug template of this page to add a comment form which will POST its data to a new endpoint `/createComment` which will handle the request and make use of `RedditAPI.createComment`.
