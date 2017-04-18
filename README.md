@@ -350,7 +350,7 @@ In `index.js`, there is an `app.get('/r/:subreddit')` that is currently not retu
 1. First, we have to go from subreddit name to subreddit ID. Create a `RedditAPI` function called `getSubredditByName(name)`. This should make a query to the database, and return a subreddit object that matches the given name. If no subreddit was found, the promise should resolve with `null`.
 2. Call `getSubredditByName` from the `app.get` handler, and pass it the `request.params.subreddit`. If you get back null, send a 404 response. Otherwise move to the next step.
 3. Modify the `RedditAPI.getAllPosts` function to accept a `subredditId` optional parameter. If this parameter is passed, the `SELECT` query should be changed to add a `WHERE p.subredditId = ?`, and return only posts for that subreddit.
-4. Call `getAllPosts` from your `app.get` handler, passing it the subreddit ID from step 2. Then, render the resulting list of posts using the `post-list.pug` template. Since this is a subreddit, the rendering should include the name of the subreddit as well as its description before the post list. You can use Pug conditionals in `post-list.pug` to make this happen. 
+4. Call `getAllPosts` from your `app.get` handler, passing it the subreddit ID from step 2. Then, render the resulting list of posts using the `post-list.pug` template. Since this is a subreddit, the rendering should include the name of the subreddit as well as its description before the post list. You can use Pug conditionals in `post-list.pug` to make this happen.
 
 ### Sorted pages
 In `index.js`, there is an `app.get('/sort/:method') that is currently not returning anything. We'd like to make it output a list of posts just like on the front page, but sorted by something other than `createdAt DESC`.
@@ -371,7 +371,7 @@ In `index.js`, there is a `GET` and `POST` handlers for `/createPost`. Let's imp
         Subreddit:
         <select name="subredditId">
             <option value="1">FirstSubreddit</option>
-            ... one option tag for each subreddit 
+            ... one option tag for each subreddit
         </select>
     </p>
     <p>URL: <input type="text" name="url"></p>
@@ -412,3 +412,10 @@ This concludes the minimal part of the project. The following section gives you 
 
 ## Extra features
 TODO.
+
+### Users listing page
+In `index.js` add `GET` handler for a new `/users` endpoint. In `reddit.js` add an API function `getAllUsers` which will fetch all the users from the database such that you can call `RedditAPI.getAllUsers` in your `/users` handler to retrieve a list of all users. Create a new Pug template that will output a list of usernames.
+Each username should a link to `/users/:userId` which we will create in the next step.
+
+### User posts page
+In `index.js` add `GET` handler for a new `/users/:userId` endpoint. This endpoint should serve list of all posts by a single user. Create a new API function to retrieve all the posts made by a given userId. Finally this endpoint could re-use the `post-list` Pug template.
