@@ -430,7 +430,7 @@ Look at the [`node-emoji`](https://github.com/omnidan/node-emoji) package on NPM
 ### :star: Allow markdown in posts
 Markdown is a text format that can be automatically converted to HTML but is easier to write and read for humans. [Learn more about Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet). It's a great format for writing technical documentation because it allows for `fixed width` text as well as code blocks with syntax highlighting. For example, this `README.md` is written with Markdown.
 
-For this feature, you can use the [`marked`](https://www.npmjs.com/package/marked) package to transform a string of markdown to HTML. When outputting that string of HTML with Pug, you'll have a surprise. Pug will do the safe thing and  [escape your HTML](https://pugjs.org/language/interpolation.html), effectively replacing characters like '<' with their HTML entity counterparts like '&lt;'. Read the [Pug interpolation](https://pugjs.org/language/interpolation.html) documentation and find out how to tell Pug to not escape this bit of HTML.
+For this feature, you can use the [`marked`](https://www.npmjs.com/package/marked) package to transform a string of markdown to HTML. When outputting that string of HTML with Pug, you'll have a surprise. Pug will do the safe thing and  [escape your HTML](https://pugjs.org/language/interpolation.html), effectively replacing characters like `<` with their HTML entity counterparts like `&lt;`. Read the [Pug interpolation](https://pugjs.org/language/interpolation.html) documentation and find out how to tell Pug to not escape this bit of HTML.
 
 ---
 
@@ -445,6 +445,13 @@ Currently comments are being displayed by `createdAt` date. We will build this f
 
 ---
 
+### :star: CSS, make it look nice
+Next week we will look at CSS together. Working on this feature will allow you to get a head start, and make your Reddit Clone more unique.
+
+Add basic style to the main elements of your Reddit clone. Style the header, the main navigation, the main content, the sidebar and the footer. Try to make it look nice. If you need help to pick a colorway, you can try [Adobe Color CC](https://color.adobe.com/explore/?filter=newest) for inspiration.
+
+---
+
 ### :star: :star: Add "self posts" feature
 In addition to sharing links, give users the ability to share their thoughts through self posts. Here is an [example of self post on Reddit](https://www.reddit.com/r/Showerthoughts/comments/6650fj/i_watched_my_dog_chase_his_tail_for_10_minutes/). To accomplish this feature, you'll have to implement the following steps:
 
@@ -456,3 +463,25 @@ In addition to sharing links, give users the ability to share their thoughts thr
 
 ---
 
+### :star: :star: Subreddit moderator
+Add a feature that will designate a moderator for a subreddit. A moderator is someone who will have admin power that will allow him or her to delete the posts in this subreddit. In order to achieve this, you will need to:
+
+1. Add a new column called `moderatorId` in your `subreddits` table. When creating a new subreddit, insert the `userId` of the creator as the `moderatorId`.
+2. When the moderator of a subreddit visits the subreddit, he should have a new button on every post that allows him or her to delete a post. **ATTENTION**: You will have to make sure only the moderator of this subreddit can delete a post.
+3. Clicking the button should submit a form that makes a `POST` to `/deletePost` with the `id` of the post. Make sure to only allow the moderator to delete a post!
+4. Bonus: You can also add this delete button on the single post page.
+
+---
+
+### :star: :star: :star: Theme by subreddit with custom `<style>` CSS
+**This feature depends on the "subreddit moderator" feature.**
+
+Allow the moderator of a subreddit to change the appearance of it. In order to do this, you will need to add a new page to allow the style customization at `/r/:subreddit/admin`. On this page, the moderator should be presented with a list of styles they can modify. Here is an example of what it could look like:
+
+![Imgur](http://i.imgur.com/XyX2s3q.png)
+
+To do this, you will need to:
+
+1. Create a new table in your database called `subredditStyle`. This table should have the following columns: `id`, `subredditId`, `styleName`, `styleValue`. There should be a unique key constraint on the (`subredditId`,`styleValue`) pair.
+2. When saving the custom style page, it should insert any modified entry in your  `subredditStyle` table. Every style element has its own row. Use the `ON DUPLICATE KEY UPDATE` in your `INSERT` query, like for the `votes` table.
+3. When on a subreddit page, grab all the custom styles and inject them into the page using a `<style></style>` tag in the `<head>` of the output.
