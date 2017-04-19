@@ -1,0 +1,9 @@
+extends layout.pug
+include mixins/post-list
+
+block title
+    title Welcome to Reddit Clone!!!
+
+block content
+    h1 Welcome to Reddit!!!
+    +postList(posts)
