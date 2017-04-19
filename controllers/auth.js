@@ -23,8 +23,6 @@ module.exports = function(myReddit) {
 // When that function is done, you'll get back a random session ID. Use Express response.cookie to set a cookie with name SESSION and value being that session id
 
 // Use response.redirect to send the user back to the home page.
-
-// Checking if user is actually logged in The code in lib/check-login-token.js gets executed on every request to check if the request contains a SESSION cookie. Even though the code was written for you, it relies on a function called getUserFromSession in the RedditAPI. Implement that function by doing a JOIN query between the sessions and users tables, and return the full user object for the given session ID. Once you do that, refresh the home page and you should see a message at the top saying "Welcome YOUR USER".
         myReddit.checkUserLogin(request.body.username, request.body.password)
         .then(result => { 
             return myReddit.createUserSession(result.id)
@@ -35,7 +33,10 @@ module.exports = function(myReddit) {
         })
         .then(useless =>
             {response.redirect('/')}
-        );
+        )
+        .catch( error => { //response.render('error', {error: error})
+            response.status(401).send('401 Unauthorized.')
+        })
     });
     
     authController.get('/signup', function(request, response) {
