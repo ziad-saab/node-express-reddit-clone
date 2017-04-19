@@ -117,7 +117,26 @@ app.get('/subreddits', function(request, response) {
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
 app.get('/r/:subreddit', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    //Call getSubredditByName from the app.get handler, and pass it the request.params.subreddit. 
+    //If you get back null, send a 404 response. Otherwise move to the next step.
+    var selectedSubreddit;
+    myReddit.getSubredditByName(request.params.subreddit)
+    .then(result => {
+        selectedSubreddit = result;
+        if (!selectedSubreddit) {
+            response.status(404).send('404 WHERE AM I !?!.')
+        } else {
+            console.log("this id is bass:" + selectedSubreddit.id);
+            myReddit.getAllPosts(selectedSubreddit.id)
+            .then(function(posts) {
+                console.log(posts[0] + "booyaaaah");
+                response.render('subreddit-page', {posts: posts});
+            })
+            .catch(function(error) {
+                response.render('error', {error: error});
+            })
+        }
+    })
 });
 
 // Sorted home page

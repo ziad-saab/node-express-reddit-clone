@@ -10,19 +10,7 @@ module.exports = function(myReddit) {
     
     authController.post('/login', function(request, response) {
         console.log(request.body);
-// In lib/reddit.js, complete the code of the checkUserLogin function following the instructions in comments.
-// In lib/reddit.js, complete the code of the createUserSession function following the instructions in comments.
-// When these two functions are done, start working on the POST handler for /login:
 
-// Use the checkUserLogin function, passing it the request.body username and password
-
-// If the login check is unsuccessful, send a 401 Unauthorized status to the browser, else move to step 3
-
-// Since login is successful, use the checkUserLogin response to find the user's ID, and pass it to the createUserSession function
-
-// When that function is done, you'll get back a random session ID. Use Express response.cookie to set a cookie with name SESSION and value being that session id
-
-// Use response.redirect to send the user back to the home page.
         myReddit.checkUserLogin(request.body.username, request.body.password)
         .then(result => { 
             return myReddit.createUserSession(result.id)
