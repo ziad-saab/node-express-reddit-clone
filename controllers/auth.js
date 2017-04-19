@@ -4,19 +4,21 @@ module.exports = function(myReddit) {
     var authController = express.Router();
     
     authController.get('/login', function(request, response) {
-        response.send("TO BE IMPLEMENTED");
+        response.render('login-form', {});
     });
     
     authController.post('/login', function(request, response) {
-        response.send("TO BE IMPLEMENTED");
+        myReddit.checkUserLogin(request.body.username, request.body.password).then(response.redirect('/auth/login'));
     });
     
     authController.get('/signup', function(request, response) {
-        response.send("TO BE IMPLEMENTED");
+        response.render('signup-form', {});
+
     });
     
     authController.post('/signup', function(request, response) {
-        response.send("TO BE IMPLEMENTED");
+        myReddit.createUser(request.body).then(response.redirect('/auth/login'));
+
     });
     
     return authController;
