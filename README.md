@@ -497,3 +497,24 @@ To do this, you will need to:
 1. Create a new table in your database called `subredditStyle`. This table should have the following columns: `id`, `subredditId`, `styleName`, `styleValue`. There should be a unique key constraint on the (`subredditId`,`styleValue`) pair.
 2. When saving the custom style page, it should insert any modified entry in your  `subredditStyle` table. Every style element has its own row. Use the `ON DUPLICATE KEY UPDATE` in your `INSERT` query, like for the `votes` table.
 3. When on a subreddit page, grab all the custom styles and inject them into the page using a `<style></style>` tag in the `<head>` of the output.
+
+## :star: :star: :star: Add a "Forgot Password" feature
+This feature only makes sense if users provide an email address. To implement the feature you'll need to cover the following points:
+
+1. Add an `email VARCHAR(100)` column to the `users` table and make sure there is a unique constraint on that column. Emails should be optional.
+2. At signup, allow the user to provide an email address and make it optional. Modify the signup form and the `POST` handler as well as the `createUser` function accordingly.
+3. Add a `/auth/recover` page through the `controllers/auth.js` Router with a form that asks for the email address. Make it `POST` to `/auth/createResetToken`.
+4. Add a `POST` handler for `/auth/createResetToken` in the `controllers/auth.js` Router. It will receive a `request.body.email`. If the email address is found in the database, we will let the user reset their password by using a random token similar to the session id token.
+    1. Create a new table `passwordResetTokens` with columns `userId INT` and `token VARCHAR(100)`, making sure that the token is unique.
+    2. Add a `createPasswordResetToken(userId)` method to the `RedditAPI`. In this method, generate a random string and insert it along with the user ID in the `passwordResetTokens` table.
+    3. Send an email to the user with a link to your website at `/auth/resetPassword?token=XXXX` replacing `XXXX` with the random string that is in the database
+        1. Signup for an account at [Mailgun](https://app.mailgun.com/new/signup/), a web service for sending emails
+        2. Install the NPM package [`mailgun-js`](https://www.npmjs.com/package/mailgun-js) and read its documentation.
+        3. Go to https://app.mailgun.com/app/domains and click on the sandbox domain to find your domain name and API key
+        4. Use the `mailgun-js` module to send an email to your user with the link to reset their password `/auth/resetPassword?token=XXXX`
+5. Add a `GET` handler for `/auth/resetPassword` that will output a `<form>` with a "new password" field. When the form should also have a hidden input that will be whatever is in the `token` param of the query string. The form will `POST` to `/resetPassword` with the `token` and the `newPassword`.
+6. Add a `resetPassword(token, newPassword)` method to the `RedditAPI`. In it, find if the `token` corresponds to a real token and which `userId` it corresponds to. Then, reset their password by hashing the `newPassword` with bcrypt and making an `UPDATE` to the database. **Make sure to delete the password reset token from the database so that it cannot be reused!**
+7. Add a `POST` handler for `/auth/resetPassword` that will call `RedditAPI.resetPassword` and pass it the necessary info. Once the password is updated, redirect the user to `/auth/login` so they can re-login with their new password.
+8. Test everything!
+
+:warning: **ATTENTION**: In a production-ready system, we will usually avoid sending an email from a request handler. To make the web server response more snappy, we will prefer to queue an email task that will be handled by another process, after the web server has returned.
