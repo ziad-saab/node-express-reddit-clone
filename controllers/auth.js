@@ -5,10 +5,20 @@ module.exports = function(myReddit) {
     
     authController.get('/login', function(request, response) {
         response.render('login-form', {});
-    });
+    });        
     
     authController.post('/login', function(request, response) {
-        myReddit.checkUserLogin(request.body.username, request.body.password).then(response.redirect('/auth/login'));
+
+        myReddit.checkUserLogin(request.body.username, request.body.password)
+        .then(result => { 
+            return myReddit.createUserSession(result.id)
+        })
+        .then(cookie => { 
+            response.cookie('SESSION', cookie);
+        })
+        .then(result =>
+            {response.redirect('/')}
+        );
     });
     
     authController.get('/signup', function(request, response) {
