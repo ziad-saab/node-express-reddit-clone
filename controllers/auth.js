@@ -26,7 +26,16 @@ module.exports = function(myReddit) {
 
 // Checking if user is actually logged in The code in lib/check-login-token.js gets executed on every request to check if the request contains a SESSION cookie. Even though the code was written for you, it relies on a function called getUserFromSession in the RedditAPI. Implement that function by doing a JOIN query between the sessions and users tables, and return the full user object for the given session ID. Once you do that, refresh the home page and you should see a message at the top saying "Welcome YOUR USER".
         myReddit.checkUserLogin(request.body.username, request.body.password)
-        .then(response.redirect('/'));
+        .then(result => { 
+            return myReddit.createUserSession(result.id)
+        })
+        .then(token => { 
+            console.log(token)
+            response.cookie('SESSION', token);
+        })
+        .then(useless =>
+            {response.redirect('/')}
+        );
     });
     
     authController.get('/signup', function(request, response) {
