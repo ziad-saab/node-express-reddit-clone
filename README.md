@@ -350,7 +350,7 @@ In `index.js`, there is an `app.get('/r/:subreddit')` that is currently not retu
 1. First, we have to go from subreddit name to subreddit ID. Create a `RedditAPI` function called `getSubredditByName(name)`. This should make a query to the database, and return a subreddit object that matches the given name. If no subreddit was found, the promise should resolve with `null`.
 2. Call `getSubredditByName` from the `app.get` handler, and pass it the `request.params.subreddit`. If you get back null, send a 404 response. Otherwise move to the next step.
 3. Modify the `RedditAPI.getAllPosts` function to accept a `subredditId` optional parameter. If this parameter is passed, the `SELECT` query should be changed to add a `WHERE p.subredditId = ?`, and return only posts for that subreddit.
-4. Call `getAllPosts` from your `app.get` handler, passing it the subreddit ID from step 2. Then, render the resulting list of posts using the `post-list.pug` template. Since this is a subreddit, the rendering should include the name of the subreddit as well as its description before the post list. You can use Pug conditionals in `post-list.pug` to make this happen. 
+4. Call `getAllPosts` from your `app.get` handler, passing it the subreddit ID from step 2. Then, render the resulting list of posts using the `post-list.pug` template. Since this is a subreddit, the rendering should include the name of the subreddit as well as its description before the post list. You can use Pug conditionals in `post-list.pug` to make this happen.
 
 ### Sorted pages
 In `index.js`, there is an `app.get('/sort/:method') that is currently not returning anything. We'd like to make it output a list of posts just like on the front page, but sorted by something other than `createdAt DESC`.
@@ -371,7 +371,7 @@ In `index.js`, there is a `GET` and `POST` handlers for `/createPost`. Let's imp
         Subreddit:
         <select name="subredditId">
             <option value="1">FirstSubreddit</option>
-            ... one option tag for each subreddit 
+            ... one option tag for each subreddit
         </select>
     </p>
     <p>URL: <input type="text" name="url"></p>
@@ -410,5 +410,111 @@ This concludes the minimal part of the project. The following section gives you 
 
 ---
 
-## Extra features
-TODO.
+# Extra features
+The following are suggestions for features you can add to your Reddit Clone. If you have an idea for a feature that's not listed here, don't hesitate to ask us what we think about it. Each feature is rated from one :star: up to three :star: depending on its difficulty level. It's up to you and your group to decide which features you'd like to implement.
+
+## :star: Add a thumbnail for image posts
+In all post listings (`post-list.pug`), if the post URL looks like it leads to an image -- ends in `.gif`, `.png` or `.jpg` -- then include a 40x40 image thumbnail along with the rest of the information for that post.
+
+:warning: **ATTENTION** Normally it's not recommended to embed `<img>` tags with images from other domains and sometimes those domains will block you from doing so. If we wanted to implement this feature in a real application, we would have to produce the thumbnails on our own server.
+
+---
+
+## :star: User posts page
+When listing posts, the user who created the post is linked as `/u/:username`. In `index.js` add a `GET` handler for a new `/u/:username` endpoint. This endpoint should serve list of all the posts made by that user.
+
+Create a new `RedditAPI` method `getAllPostsForUsername` to retrieve all the posts made by a given `username`. Re-use the `post-list` mixin to render the post list for that user.
+
+---
+
+## :star: Emojis in post title and comments text
+Make post titles and comments text emojifiable so that if a word like `:rocket:` or `:metal:` appears in the text, they will be replaced with :rocket: or :metal:.
+
+Look at the [`node-emoji`](https://github.com/omnidan/node-emoji) package on NPM and try to incorporate it in your project. The best place to do this is in the `RedditAPI` functions concerned by this change: `getAllPosts`, `getSinglePost` and `getCommentsForPost`.
+
+---
+
+## :star: Allow markdown in posts
+Markdown is a text format that can be automatically converted to HTML but is easier to write and read for humans. [Learn more about Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet). It's a great format for writing technical documentation because it allows for `fixed width` text as well as code blocks with syntax highlighting. For example, this `README.md` is written with Markdown.
+
+For this feature, you can use the [`marked`](https://www.npmjs.com/package/marked) package to transform a string of markdown to HTML. When outputting that string of HTML with Pug, you'll have a surprise. Pug will do the safe thing and  [escape your HTML](https://pugjs.org/language/interpolation.html), effectively replacing characters like `<` with their HTML entity counterparts like `&lt;`. Read the [Pug interpolation](https://pugjs.org/language/interpolation.html) documentation and find out how to tell Pug to not escape this bit of HTML.
+
+---
+
+## :star: Add a comment form to the single post page
+Earlier we created a Single Post View for the endpoint `/post/:postId`. Extend the pug template of this page to add a comment form which will POST its data to a new endpoint `/createComment`. Then, add a `POST` handler for `/createComment` and make use of the `RedditAPI.createComment` function to add a comment. When the comment is created, redirect the user back to the post page from the `POST` handler.
+
+---
+
+## :star: Add voting on comments
+Currently comments are being displayed by `createdAt` date. We will build this feature the same way as the post votes feature. The steps are roughly:
+
+1. Create a `commentVotes` table, similar to the `votes` table for posts.
+2. Add a `createCommentVote` method to the `RedditAPI`
+3. Add an `app.post('/commentVote')` handler similar to the post vote handler
+4. Add an HTML `<form>` to each comment output, similar to the post vote form
+5. Test everything
+
+---
+
+## :star: CSS, make it look nice
+Next week we will look at CSS together. Working on this feature will allow you to get a head start, and make your Reddit Clone more unique.
+
+Add basic style to the main elements of your Reddit clone. Style the header, the main navigation, the main content, the sidebar and the footer. Try to make it look nice. If you need help to pick a colorway, you can try [Adobe Color CC](https://color.adobe.com/explore/?filter=newest) for inspiration.
+
+---
+
+## :star: :star: Add "self posts" feature
+In addition to sharing links, give users the ability to share their thoughts through self posts. Here is an [example of self post on Reddit](https://www.reddit.com/r/Showerthoughts/comments/6650fj/i_watched_my_dog_chase_his_tail_for_10_minutes/). To accomplish this feature, you'll have to implement the following steps:
+
+1. Add column `postText TEXT` to the `posts` table, and set appropriate values for the already existing posts.
+2. Update the `createPost` function so that it accepts a `postText` in the `post` object. A post should have one and only one of `url` or `postText`.
+3. Update the create a post form to accept self posts. You'll have to add a `<textarea name="postText"></textarea>` element where the user will be able to type their self post.
+4. Update the `app.post('/createPost')` handler to accept and pass through the value of the text area.
+5. **Optional** Next week we will look at how to make a web page dynamic with browser-side JavaScript. If you want to take a head start, make the form dynamic by allowing the user to toggle between a self-post form and a link sharing form.
+
+---
+
+## :star: :star: Subreddit moderator
+Add a feature that will designate a moderator for a subreddit. A moderator is someone who will have admin power that will allow him or her to delete the posts in this subreddit. In order to achieve this, you will need to:
+
+1. Add a new column called `moderatorId` in your `subreddits` table. When creating a new subreddit, insert the `userId` of the creator as the `moderatorId`.
+2. When the moderator of a subreddit visits the subreddit, he should have a new button on every post that allows him or her to delete a post. **ATTENTION**: You will have to make sure only the moderator of this subreddit can delete a post.
+3. Clicking the button should submit a form that makes a `POST` to `/deletePost` with the `id` of the post. Make sure to only allow the moderator to delete a post!
+4. Bonus: You can also add this delete button on the single post page.
+
+---
+
+## :star: :star: :star: Theme by subreddit with custom `<style>` CSS
+**This feature depends on the "subreddit moderator" feature.**
+
+Allow the moderator of a subreddit to change the appearance of it. In order to do this, you will need to add a new page to allow the style customization at `/r/:subreddit/admin`. On this page, the moderator should be presented with a list of styles they can modify. Here is an example of what it could look like:
+
+![Imgur](http://i.imgur.com/XyX2s3q.png)
+
+To do this, you will need to:
+
+1. Create a new table in your database called `subredditStyle`. This table should have the following columns: `id`, `subredditId`, `styleName`, `styleValue`. There should be a unique key constraint on the (`subredditId`,`styleValue`) pair.
+2. When saving the custom style page, it should insert any modified entry in your  `subredditStyle` table. Every style element has its own row. Use the `ON DUPLICATE KEY UPDATE` in your `INSERT` query, like for the `votes` table.
+3. When on a subreddit page, grab all the custom styles and inject them into the page using a `<style></style>` tag in the `<head>` of the output.
+
+## :star: :star: :star: Add a "Forgot Password" feature
+This feature only makes sense if users provide an email address. To implement the feature you'll need to cover the following points:
+
+1. Add an `email VARCHAR(100)` column to the `users` table and make sure there is a unique constraint on that column. Emails should be optional.
+2. At signup, allow the user to provide an email address and make it optional. Modify the signup form and the `POST` handler as well as the `createUser` function accordingly.
+3. Add a `/auth/recover` page through the `controllers/auth.js` Router with a form that asks for the email address. Make it `POST` to `/auth/createResetToken`.
+4. Add a `POST` handler for `/auth/createResetToken` in the `controllers/auth.js` Router. It will receive a `request.body.email`. If the email address is found in the database, we will let the user reset their password by using a random token similar to the session id token.
+    1. Create a new table `passwordResetTokens` with columns `userId INT` and `token VARCHAR(100)`, making sure that the token is unique.
+    2. Add a `createPasswordResetToken(userId)` method to the `RedditAPI`. In this method, generate a random string and insert it along with the user ID in the `passwordResetTokens` table.
+    3. Send an email to the user with a link to your website at `/auth/resetPassword?token=XXXX` replacing `XXXX` with the random string that is in the database
+        1. Signup for an account at [Mailgun](https://app.mailgun.com/new/signup/), a web service for sending emails
+        2. Install the NPM package [`mailgun-js`](https://www.npmjs.com/package/mailgun-js) and read its documentation.
+        3. Go to https://app.mailgun.com/app/domains and click on the sandbox domain to find your domain name and API key
+        4. Use the `mailgun-js` module to send an email to your user with the link to reset their password `/auth/resetPassword?token=XXXX`
+5. Add a `GET` handler for `/auth/resetPassword` that will output a `<form>` with a "new password" field. When the form should also have a hidden input that will be whatever is in the `token` param of the query string. The form will `POST` to `/resetPassword` with the `token` and the `newPassword`.
+6. Add a `resetPassword(token, newPassword)` method to the `RedditAPI`. In it, find if the `token` corresponds to a real token and which `userId` it corresponds to. Then, reset their password by hashing the `newPassword` with bcrypt and making an `UPDATE` to the database. **Make sure to delete the password reset token from the database so that it cannot be reused!**
+7. Add a `POST` handler for `/auth/resetPassword` that will call `RedditAPI.resetPassword` and pass it the necessary info. Once the password is updated, redirect the user to `/auth/login` so they can re-login with their new password.
+8. Test everything!
+
+:warning: **ATTENTION**: In a production-ready system, we will usually avoid sending an email from a request handler. To make the web server response more snappy, we will prefer to queue an email task that will be handled by another process, after the web server has returned.
