@@ -350,7 +350,7 @@ In `index.js`, there is an `app.get('/r/:subreddit')` that is currently not retu
 1. First, we have to go from subreddit name to subreddit ID. Create a `RedditAPI` function called `getSubredditByName(name)`. This should make a query to the database, and return a subreddit object that matches the given name. If no subreddit was found, the promise should resolve with `null`.
 2. Call `getSubredditByName` from the `app.get` handler, and pass it the `request.params.subreddit`. If you get back null, send a 404 response. Otherwise move to the next step.
 3. Modify the `RedditAPI.getAllPosts` function to accept a `subredditId` optional parameter. If this parameter is passed, the `SELECT` query should be changed to add a `WHERE p.subredditId = ?`, and return only posts for that subreddit.
-4. Call `getAllPosts` from your `app.get` handler, passing it the subreddit ID from step 2. Then, render the resulting list of posts using the `post-list.pug` template. Since this is a subreddit, the rendering should include the name of the subreddit as well as its description before the post list. You can use Pug conditionals in `post-list.pug` to make this happen. 
+4. Call `getAllPosts` from your `app.get` handler, passing it the subreddit ID from step 2. Then, render the resulting list of posts using the `post-list.pug` template. Since this is a subreddit, the rendering should include the name of the subreddit as well as its description before the post list. You can use Pug conditionals in `post-list.pug` to make this happen.
 
 ### Sorted pages
 In `index.js`, there is an `app.get('/sort/:method') that is currently not returning anything. We'd like to make it output a list of posts just like on the front page, but sorted by something other than `createdAt DESC`.
@@ -371,7 +371,7 @@ In `index.js`, there is a `GET` and `POST` handlers for `/createPost`. Let's imp
         Subreddit:
         <select name="subredditId">
             <option value="1">FirstSubreddit</option>
-            ... one option tag for each subreddit 
+            ... one option tag for each subreddit
         </select>
     </p>
     <p>URL: <input type="text" name="url"></p>
@@ -420,6 +420,13 @@ In all post listings (`post-list.pug`), if the post URL looks like it leads to a
 
 ---
 
+### :star: User posts page
+When listing posts, the user who created the post is linked as `/u/:username`. In `index.js` add a `GET` handler for a new `/u/:username` endpoint. This endpoint should serve list of all the posts made by that user.
+
+Create a new `RedditAPI` method `getAllPostsForUsername` to retrieve all the posts made by a given `username`. Re-use the `post-list` mixin to render the post list for that user.
+
+---
+
 ### :star: Emojis in post title and comments text
 Make post titles and comments text emojifiable so that if a word like `:rocket:` or `:metal:` appears in the text, they will be replaced with :rocket: or :metal:.
 
@@ -431,6 +438,11 @@ Look at the [`node-emoji`](https://github.com/omnidan/node-emoji) package on NPM
 Markdown is a text format that can be automatically converted to HTML but is easier to write and read for humans. [Learn more about Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet). It's a great format for writing technical documentation because it allows for `fixed width` text as well as code blocks with syntax highlighting. For example, this `README.md` is written with Markdown.
 
 For this feature, you can use the [`marked`](https://www.npmjs.com/package/marked) package to transform a string of markdown to HTML. When outputting that string of HTML with Pug, you'll have a surprise. Pug will do the safe thing and  [escape your HTML](https://pugjs.org/language/interpolation.html), effectively replacing characters like `<` with their HTML entity counterparts like `&lt;`. Read the [Pug interpolation](https://pugjs.org/language/interpolation.html) documentation and find out how to tell Pug to not escape this bit of HTML.
+
+---
+
+### :star: Add a comment form to the single post page
+Earlier we created a Single Post View for the endpoint `/post/:postId`. Extend the pug template of this page to add a comment form which will POST its data to a new endpoint `/createComment`. Then, add a `POST` handler for `/createComment` and make use of the `RedditAPI.createComment` function to add a comment. When the comment is created, redirect the user back to the post page from the `POST` handler.
 
 ---
 
