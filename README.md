@@ -411,4 +411,48 @@ This concludes the minimal part of the project. The following section gives you 
 ---
 
 ## Extra features
-TODO.
+The following are suggestions for features you can add to your Reddit Clone. If you have an idea for a feature that's not listed here, don't hesitate to ask us what we think about it. Each feature is rated from one :star: up to three :star: depending on its difficulty level. It's up to you and your group to decide which features you'd like to implement.
+
+### :star: Add a thumbnail for image posts
+In all post listings (`post-list.pug`), if the post URL looks like it leads to an image -- ends in `.gif`, `.png` or `.jpg` -- then include a 40x40 image thumbnail along with the rest of the information for that post.
+
+:warning: **ATTENTION** Normally it's not recommended to embed `<img>` tags with images from other domains and sometimes those domains will block you from doing so. If we wanted to implement this feature in a real application, we would have to produce the thumbnails on our own server.
+
+---
+
+### :star: Emojis in post title and comments text
+Make post titles and comments text emojifiable so that if a word like `:rocket:` or `:metal:` appears in the text, they will be replaced with :rocket: or :metal:.
+
+Look at the [`node-emoji`](https://github.com/omnidan/node-emoji) package on NPM and try to incorporate it in your project. The best place to do this is in the `RedditAPI` functions concerned by this change: `getAllPosts`, `getSinglePost` and `getCommentsForPost`.
+
+---
+
+### :star: Allow markdown in posts
+Markdown is a text format that can be automatically converted to HTML but is easier to write and read for humans. [Learn more about Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet). It's a great format for writing technical documentation because it allows for `fixed width` text as well as code blocks with syntax highlighting. For example, this `README.md` is written with Markdown.
+
+For this feature, you can use the [`marked`](https://www.npmjs.com/package/marked) package to transform a string of markdown to HTML. When outputting that string of HTML with Pug, you'll have a surprise. Pug will do the safe thing and  [escape your HTML](https://pugjs.org/language/interpolation.html), effectively replacing characters like '<' with their HTML entity counterparts like '&lt;'. Read the [Pug interpolation](https://pugjs.org/language/interpolation.html) documentation and find out how to tell Pug to not escape this bit of HTML.
+
+---
+
+### :star: Add voting on comments
+Currently comments are being displayed by `createdAt` date. We will build this feature the same way as the post votes feature. The steps are roughly:
+
+1. Create a `commentVotes` table, similar to the `votes` table for posts.
+2. Add a `createCommentVote` method to the `RedditAPI`
+3. Add an `app.post('/commentVote')` handler similar to the post vote handler
+4. Add an HTML `<form>` to each comment output, similar to the post vote form
+5. Test everything
+
+---
+
+### :star: :star: Add "self posts" feature
+In addition to sharing links, give users the ability to share their thoughts through self posts. Here is an [example of self post on Reddit](https://www.reddit.com/r/Showerthoughts/comments/6650fj/i_watched_my_dog_chase_his_tail_for_10_minutes/). To accomplish this feature, you'll have to implement the following steps:
+
+1. Add column `postText TEXT` to the `posts` table, and set appropriate values for the already existing posts.
+2. Update the `createPost` function so that it accepts a `postText` in the `post` object. A post should have one and only one of `url` or `postText`.
+3. Update the create a post form to accept self posts. You'll have to add a `<textarea name="postText"></textarea>` element where the user will be able to type their self post.
+4. Update the `app.post('/createPost')` handler to accept and pass through the value of the text area.
+5. **Optional** Next week we will look at how to make a web page dynamic with browser-side JavaScript. If you want to take a head start, make the form dynamic by allowing the user to toggle between a self-post form and a link sharing form.
+
+---
+
