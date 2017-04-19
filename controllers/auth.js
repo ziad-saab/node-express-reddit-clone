@@ -8,7 +8,7 @@ module.exports = function(myReddit) {
     });        
     
     authController.post('/login', function(request, response) {
-
+    
         myReddit.checkUserLogin(request.body.username, request.body.password)
         .then(result => { 
             return myReddit.createUserSession(result.id)
@@ -18,7 +18,11 @@ module.exports = function(myReddit) {
         })
         .then(result =>
             {response.redirect('/')}
-        );
+        )
+        .catch(error => {
+                response.status(401).send('Unauthorized')
+                });
+        
     });
     
     authController.get('/signup', function(request, response) {
