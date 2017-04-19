@@ -410,43 +410,43 @@ This concludes the minimal part of the project. The following section gives you 
 
 ---
 
-## Extra features
+# Extra features
 The following are suggestions for features you can add to your Reddit Clone. If you have an idea for a feature that's not listed here, don't hesitate to ask us what we think about it. Each feature is rated from one :star: up to three :star: depending on its difficulty level. It's up to you and your group to decide which features you'd like to implement.
 
-### :star: Add a thumbnail for image posts
+## :star: Add a thumbnail for image posts
 In all post listings (`post-list.pug`), if the post URL looks like it leads to an image -- ends in `.gif`, `.png` or `.jpg` -- then include a 40x40 image thumbnail along with the rest of the information for that post.
 
 :warning: **ATTENTION** Normally it's not recommended to embed `<img>` tags with images from other domains and sometimes those domains will block you from doing so. If we wanted to implement this feature in a real application, we would have to produce the thumbnails on our own server.
 
 ---
 
-### :star: User posts page
+## :star: User posts page
 When listing posts, the user who created the post is linked as `/u/:username`. In `index.js` add a `GET` handler for a new `/u/:username` endpoint. This endpoint should serve list of all the posts made by that user.
 
 Create a new `RedditAPI` method `getAllPostsForUsername` to retrieve all the posts made by a given `username`. Re-use the `post-list` mixin to render the post list for that user.
 
 ---
 
-### :star: Emojis in post title and comments text
+## :star: Emojis in post title and comments text
 Make post titles and comments text emojifiable so that if a word like `:rocket:` or `:metal:` appears in the text, they will be replaced with :rocket: or :metal:.
 
 Look at the [`node-emoji`](https://github.com/omnidan/node-emoji) package on NPM and try to incorporate it in your project. The best place to do this is in the `RedditAPI` functions concerned by this change: `getAllPosts`, `getSinglePost` and `getCommentsForPost`.
 
 ---
 
-### :star: Allow markdown in posts
+## :star: Allow markdown in posts
 Markdown is a text format that can be automatically converted to HTML but is easier to write and read for humans. [Learn more about Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet). It's a great format for writing technical documentation because it allows for `fixed width` text as well as code blocks with syntax highlighting. For example, this `README.md` is written with Markdown.
 
 For this feature, you can use the [`marked`](https://www.npmjs.com/package/marked) package to transform a string of markdown to HTML. When outputting that string of HTML with Pug, you'll have a surprise. Pug will do the safe thing and  [escape your HTML](https://pugjs.org/language/interpolation.html), effectively replacing characters like `<` with their HTML entity counterparts like `&lt;`. Read the [Pug interpolation](https://pugjs.org/language/interpolation.html) documentation and find out how to tell Pug to not escape this bit of HTML.
 
 ---
 
-### :star: Add a comment form to the single post page
+## :star: Add a comment form to the single post page
 Earlier we created a Single Post View for the endpoint `/post/:postId`. Extend the pug template of this page to add a comment form which will POST its data to a new endpoint `/createComment`. Then, add a `POST` handler for `/createComment` and make use of the `RedditAPI.createComment` function to add a comment. When the comment is created, redirect the user back to the post page from the `POST` handler.
 
 ---
 
-### :star: Add voting on comments
+## :star: Add voting on comments
 Currently comments are being displayed by `createdAt` date. We will build this feature the same way as the post votes feature. The steps are roughly:
 
 1. Create a `commentVotes` table, similar to the `votes` table for posts.
@@ -457,14 +457,14 @@ Currently comments are being displayed by `createdAt` date. We will build this f
 
 ---
 
-### :star: CSS, make it look nice
+## :star: CSS, make it look nice
 Next week we will look at CSS together. Working on this feature will allow you to get a head start, and make your Reddit Clone more unique.
 
 Add basic style to the main elements of your Reddit clone. Style the header, the main navigation, the main content, the sidebar and the footer. Try to make it look nice. If you need help to pick a colorway, you can try [Adobe Color CC](https://color.adobe.com/explore/?filter=newest) for inspiration.
 
 ---
 
-### :star: :star: Add "self posts" feature
+## :star: :star: Add "self posts" feature
 In addition to sharing links, give users the ability to share their thoughts through self posts. Here is an [example of self post on Reddit](https://www.reddit.com/r/Showerthoughts/comments/6650fj/i_watched_my_dog_chase_his_tail_for_10_minutes/). To accomplish this feature, you'll have to implement the following steps:
 
 1. Add column `postText TEXT` to the `posts` table, and set appropriate values for the already existing posts.
@@ -475,7 +475,7 @@ In addition to sharing links, give users the ability to share their thoughts thr
 
 ---
 
-### :star: :star: Subreddit moderator
+## :star: :star: Subreddit moderator
 Add a feature that will designate a moderator for a subreddit. A moderator is someone who will have admin power that will allow him or her to delete the posts in this subreddit. In order to achieve this, you will need to:
 
 1. Add a new column called `moderatorId` in your `subreddits` table. When creating a new subreddit, insert the `userId` of the creator as the `moderatorId`.
@@ -485,7 +485,7 @@ Add a feature that will designate a moderator for a subreddit. A moderator is so
 
 ---
 
-### :star: :star: :star: Theme by subreddit with custom `<style>` CSS
+## :star: :star: :star: Theme by subreddit with custom `<style>` CSS
 **This feature depends on the "subreddit moderator" feature.**
 
 Allow the moderator of a subreddit to change the appearance of it. In order to do this, you will need to add a new page to allow the style customization at `/r/:subreddit/admin`. On this page, the moderator should be presented with a list of styles they can modify. Here is an example of what it could look like:
