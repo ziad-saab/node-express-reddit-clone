@@ -411,14 +411,89 @@ This concludes the minimal part of the project. The following section gives you 
 ---
 
 ## Extra features
-TODO.
+The following are suggestions for features you can add to your Reddit Clone. If you have an idea for a feature that's not listed here, don't hesitate to ask us what we think about it. Each feature is rated from one :star: up to three :star: depending on its difficulty level. It's up to you and your group to decide which features you'd like to implement.
 
-### Users listing page
-In `reddit.js` add an API function `getAllUsers` which will fetch all the users from the database such that you can call `RedditAPI.getAllUsers` in a new endpoint handler called `/users`. This endpoint should render a new Pug template that will output a list of usernames.
-Each username should a link to `/users/:userId`(an endpoint we will reate in the next step).
+### :star: Add a thumbnail for image posts
+In all post listings (`post-list.pug`), if the post URL looks like it leads to an image -- ends in `.gif`, `.png` or `.jpg` -- then include a 40x40 image thumbnail along with the rest of the information for that post.
 
-### User posts page
-In `index.js` add `GET` handler for a new `/users/:userId` endpoint. This endpoint should serve list of all posts by a single user. Create a new API function to retrieve all the posts made by a given userId. Finally this endpoint could re-use the `post-list` Pug template.
+:warning: **ATTENTION** Normally it's not recommended to embed `<img>` tags with images from other domains and sometimes those domains will block you from doing so. If we wanted to implement this feature in a real application, we would have to produce the thumbnails on our own server.
 
-### Create Comment Form
-Earlier we created a Single Post View for the endpoint `/post/:postId`. Let's extend the pug template of this page to add a comment form which will POST its data to a new endpoint `/createComment` which will handle the request and make use of `RedditAPI.createComment`.
+---
+
+### :star: User posts page
+When listing posts, the user who created the post is linked as `/u/:username`. In `index.js` add a `GET` handler for a new `/u/:username` endpoint. This endpoint should serve list of all the posts made by that user.
+
+Create a new `RedditAPI` method `getAllPostsForUsername` to retrieve all the posts made by a given `username`. Re-use the `post-list` mixin to render the post list for that user.
+
+---
+
+### :star: Emojis in post title and comments text
+Make post titles and comments text emojifiable so that if a word like `:rocket:` or `:metal:` appears in the text, they will be replaced with :rocket: or :metal:.
+
+Look at the [`node-emoji`](https://github.com/omnidan/node-emoji) package on NPM and try to incorporate it in your project. The best place to do this is in the `RedditAPI` functions concerned by this change: `getAllPosts`, `getSinglePost` and `getCommentsForPost`.
+
+---
+
+### :star: Allow markdown in posts
+Markdown is a text format that can be automatically converted to HTML but is easier to write and read for humans. [Learn more about Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet). It's a great format for writing technical documentation because it allows for `fixed width` text as well as code blocks with syntax highlighting. For example, this `README.md` is written with Markdown.
+
+For this feature, you can use the [`marked`](https://www.npmjs.com/package/marked) package to transform a string of markdown to HTML. When outputting that string of HTML with Pug, you'll have a surprise. Pug will do the safe thing and  [escape your HTML](https://pugjs.org/language/interpolation.html), effectively replacing characters like `<` with their HTML entity counterparts like `&lt;`. Read the [Pug interpolation](https://pugjs.org/language/interpolation.html) documentation and find out how to tell Pug to not escape this bit of HTML.
+
+---
+
+### :star: Add a comment form to the single post page
+Earlier we created a Single Post View for the endpoint `/post/:postId`. Extend the pug template of this page to add a comment form which will POST its data to a new endpoint `/createComment`. Then, add a `POST` handler for `/createComment` and make use of the `RedditAPI.createComment` function to add a comment. When the comment is created, redirect the user back to the post page from the `POST` handler.
+
+---
+
+### :star: Add voting on comments
+Currently comments are being displayed by `createdAt` date. We will build this feature the same way as the post votes feature. The steps are roughly:
+
+1. Create a `commentVotes` table, similar to the `votes` table for posts.
+2. Add a `createCommentVote` method to the `RedditAPI`
+3. Add an `app.post('/commentVote')` handler similar to the post vote handler
+4. Add an HTML `<form>` to each comment output, similar to the post vote form
+5. Test everything
+
+---
+
+### :star: CSS, make it look nice
+Next week we will look at CSS together. Working on this feature will allow you to get a head start, and make your Reddit Clone more unique.
+
+Add basic style to the main elements of your Reddit clone. Style the header, the main navigation, the main content, the sidebar and the footer. Try to make it look nice. If you need help to pick a colorway, you can try [Adobe Color CC](https://color.adobe.com/explore/?filter=newest) for inspiration.
+
+---
+
+### :star: :star: Add "self posts" feature
+In addition to sharing links, give users the ability to share their thoughts through self posts. Here is an [example of self post on Reddit](https://www.reddit.com/r/Showerthoughts/comments/6650fj/i_watched_my_dog_chase_his_tail_for_10_minutes/). To accomplish this feature, you'll have to implement the following steps:
+
+1. Add column `postText TEXT` to the `posts` table, and set appropriate values for the already existing posts.
+2. Update the `createPost` function so that it accepts a `postText` in the `post` object. A post should have one and only one of `url` or `postText`.
+3. Update the create a post form to accept self posts. You'll have to add a `<textarea name="postText"></textarea>` element where the user will be able to type their self post.
+4. Update the `app.post('/createPost')` handler to accept and pass through the value of the text area.
+5. **Optional** Next week we will look at how to make a web page dynamic with browser-side JavaScript. If you want to take a head start, make the form dynamic by allowing the user to toggle between a self-post form and a link sharing form.
+
+---
+
+### :star: :star: Subreddit moderator
+Add a feature that will designate a moderator for a subreddit. A moderator is someone who will have admin power that will allow him or her to delete the posts in this subreddit. In order to achieve this, you will need to:
+
+1. Add a new column called `moderatorId` in your `subreddits` table. When creating a new subreddit, insert the `userId` of the creator as the `moderatorId`.
+2. When the moderator of a subreddit visits the subreddit, he should have a new button on every post that allows him or her to delete a post. **ATTENTION**: You will have to make sure only the moderator of this subreddit can delete a post.
+3. Clicking the button should submit a form that makes a `POST` to `/deletePost` with the `id` of the post. Make sure to only allow the moderator to delete a post!
+4. Bonus: You can also add this delete button on the single post page.
+
+---
+
+### :star: :star: :star: Theme by subreddit with custom `<style>` CSS
+**This feature depends on the "subreddit moderator" feature.**
+
+Allow the moderator of a subreddit to change the appearance of it. In order to do this, you will need to add a new page to allow the style customization at `/r/:subreddit/admin`. On this page, the moderator should be presented with a list of styles they can modify. Here is an example of what it could look like:
+
+![Imgur](http://i.imgur.com/XyX2s3q.png)
+
+To do this, you will need to:
+
+1. Create a new table in your database called `subredditStyle`. This table should have the following columns: `id`, `subredditId`, `styleName`, `styleValue`. There should be a unique key constraint on the (`subredditId`,`styleValue`) pair.
+2. When saving the custom style page, it should insert any modified entry in your  `subredditStyle` table. Every style element has its own row. Use the `ON DUPLICATE KEY UPDATE` in your `INSERT` query, like for the `votes` table.
+3. When on a subreddit page, grab all the custom styles and inject them into the page using a `<style></style>` tag in the `<head>` of the output.
