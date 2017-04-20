@@ -96,7 +96,7 @@ app.use('/static', express.static(__dirname + '/public'));
 
 // Regular home Page
 app.get('/', function(request, response) {
-    myReddit.getAllPosts()
+    myReddit.getAllPosts({})
     .then(function(posts) {
         response.render('homepage', {posts: posts});
     })
@@ -127,9 +127,8 @@ app.get('/r/:subreddit', function(request, response) {
             response.status(404).send('404 WHERE AM I !?!.')
         } else {
             console.log("this id is bass:" + selectedSubreddit.id);
-            myReddit.getAllPosts(selectedSubreddit.id)
+            myReddit.getAllPosts({ subredditId: selectedSubreddit.id})
             .then(function(posts) {
-                console.log(posts[0] + "booyaaaah");
                 response.render('subreddit-page', {posts: posts});
             })
             .catch(function(error) {
@@ -141,7 +140,21 @@ app.get('/r/:subreddit', function(request, response) {
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    // In the app.get handler, check if request.params.method is either hot or top. 
+    // If not, then return a 404 error. If it is, call the getAllPosts and then render 
+    // a list of posts just like on the home page.
+     if (request.params.method !== 'hot' && request.params.method !== 'top'){
+        response.status(404).send('404 wrong method! getouttahere D:< ')    
+     } else {
+         myReddit.getAllPosts({sortingMethod: request.params.method})
+         .then(function(posts) {
+                response.render('homepage', {posts: posts});
+            })
+        .catch(function(error) {
+            response.render('error', {error: error});
+        })
+     }
+     
 });
 
 app.get('/post/:postId', function(request, response) {
