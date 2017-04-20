@@ -88,10 +88,13 @@ body {
     margin-left: 170px;
 }
 .postTitle {
-    font-size: 20pt;
+    font-size: 18pt;
     text-decoration: none;
     color: #f5af07;
     float: inherit;
+}
+.postTitle:hover{
+    text-decoration: underline;
 }
 ul img {
     float: left;
