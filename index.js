@@ -187,12 +187,6 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
     // Make it call RedditAPI.createVote and pass the necessary information. 
     // The postId will come from the hidden input. Hidden inputs are useful 
     // because they allow us to pass information to the server without any user input.
-    console.log({
-        postId: parseInt(request.body.postId),
-        userId: request.loggedInUser.id,
-        voteDirection: request.body.vote
-    })
-    console.log("hallo")
     myReddit.createVote({
         postId: parseInt(request.body.postId),
         userId: request.loggedInUser.id,
