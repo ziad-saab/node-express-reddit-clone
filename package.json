@@ -16,7 +16,7 @@
     "bcrypt-as-promised": "^1.1.0",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
-    "express": "^4.14.0",
+    "express": "^4.15.2",
     "morgan": "^1.7.0",
     "mysql": "^2.13.0",
     "promise-mysql": "^3.0.1",
