@@ -4,14 +4,16 @@ html
         meta(charset="utf-8")
         link(rel="stylesheet", href="/static/app.css")
         link(rel="shortcut icon" type="image/png" href="/static/Reddit-icon.png")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet" type="text/css" href="bootstrap.min.css")
         block title
             title Redit Clone
     body
         header
             if loggedInUser
-                p Welcome #{loggedInUser.username}
-                p 
-                 a(href="/createpost") Create Post
+                p(class="title") Welcome #{loggedInUser.username}
+                p
+                 a(class="link")(href="/createpost") Create Post
             else
                 ul
                     li

@@ -5,7 +5,9 @@ block title
     title Welcome to Reddit Clone!!!
 
 block content
-    h1 Welcome to Reddit!!!
-    a(href='/sort/hot') hot 
-    a(href='/sort/top') top
-    +postList(posts)
+    h1(class="maintitle") Welcome to Reddit!!!
+    p(class="topnav")
+        a(href='/sort/hot') HOT 
+        a(href='/sort/top') TOP
+        a(href="javascript:void(0);" style="font-size:15px;" class="icon")
+        +postList(posts)

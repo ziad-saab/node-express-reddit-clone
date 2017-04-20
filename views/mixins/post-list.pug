@@ -1,11 +1,14 @@
 mixin postList(posts)
-    ul.post-list
+    ul(class="mainlist").post-list
         each post in posts
-            li.post
+            li(class="liststyle").post
                 h2
-                    a(href=post.url, target="_blank")= post.title
+        
+                    img(src= "/static/slide1.jpg")
+                    a(class="postTitle")(href=post.url, target="_blank")= post.title
                     p Submitted by
-                        a(href="/u/" + post.user.username)= post.user.username
+                        a(class="mainListLinkTwo")(href="/u/" + post.user.username)= post.user.username
                         span  in
-                        a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
-                    p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+                        a(class="mainListOne")(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
+                    p(class="postScore") Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+                    div(class="clear")
