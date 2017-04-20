@@ -10,9 +10,11 @@ CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(50) NOT NULL,
   password VARCHAR(60) NOT NULL, -- why 60??? ask me :)
+  email VARCHAR(100),
   createdAt DATETIME NOT NULL,
   updatedAt DATETIME NOT NULL,
-  UNIQUE KEY username (username)
+  UNIQUE KEY username (username),
+  UNIQUE KEY email (email)
 );
 
 CREATE TABLE sessions (
@@ -72,4 +74,10 @@ CREATE TABLE comments (
   updatedAt DATETIME NOT NULL,
   FOREIGN KEY (userId) REFERENCES users (id) ON DELETE SET NULL,
   FOREIGN KEY (postId) REFERENCES posts (id) ON DELETE CASCADE
+);
+
+CREATE TABLE passwordResetTokens (
+  userId INT,
+  token VARCHAR(100),
+  UNIQUE KEY token (token)
 );
