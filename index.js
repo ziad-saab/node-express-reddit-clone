@@ -184,10 +184,8 @@ app.get('/createPost', onlyLoggedIn, function(request, response) {
 
 // POST handler for form submissions creating a new post
 app.post('/createPost', onlyLoggedIn, function(request, response) {
-    // console.log(request.loggedInUser.id);
-    return myReddit.createPost({subredditId: request.body.subredditId, url: request.body.url, title: request.body.title, userId: request.loggedInUser.id})
+    return myReddit.createPost({userId: request.loggedInUser.id, title: request.body.title, url: request.body.url, subredditId: request.body.subredditId})
     .then( result => {
-        console.log(result)
          response.redirect('/');
     })
 });
