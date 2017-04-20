@@ -9,6 +9,8 @@ html
         header
             if loggedInUser
                 p Welcome #{loggedInUser.username}
+                p 
+                 a(href="/createpost") Create Post
             else
                 ul
                     li
