@@ -31,7 +31,6 @@ module.exports = function(myReddit) {
     });
 
     authController.post('/signup', function(request, response) {
-        console.log(request.body);
         myReddit.createUser(request.body).then(() =>{
         response.redirect('/auth/login');
         })
@@ -48,8 +47,24 @@ module.exports = function(myReddit) {
    });
    
    authController.post('/createResetToken', function(request, response){
-      myReddit.createPasswordResetToken(request.body.email) 
+      myReddit.createPasswordResetToken(request.body.email)
+      .then(response.send('email sent'))
    });
+   
+   authController.get('/resetPassword', function(request, response){
+    // Output a <form> with a "new password" field. When the form should also 
+    // have a hidden input that will be whatever is in the token param of the query string. 
+    // The form will POST to /resetPassword with the token and the newPassword.
+        response.render('password-form', {token: request.query.token});
+   })
+   authController.post('/resetPassword', function(request, response){
+       console.log(request.body);
+       myReddit.resetPassword(request.body.token, request.body.newPassword)
+       .then(()=>{
+            response.redirect('/auth/login');
+       })
+       
+   })
     
     return authController;
 }
