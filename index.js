@@ -57,10 +57,6 @@ method `getUserFromSession`
  */
 app.use(checkLoginToken(myReddit));
 
-
-
-
-
 /*
 app.use can also take a path prefix as a parameter. the next app.use says that anytime the request URL
 starts with /auth, the middleware exported by controllers/auth.js should be called.
@@ -111,14 +107,34 @@ app.get('/subreddits', function(request, response) {
     1. Get all subreddits with RedditAPI
     2. Render some HTML that lists all the subreddits
      */
-    
+
     response.send("TO BE IMPLEMENTED");
 });
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
 app.get('/r/:subreddit', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    //Call getSubredditByName from the app.get handler, and pass it the request.params.subreddit. 
+    //If you get back null, send a 404 response. Otherwise move to the next step.
+    var selectedSubreddit;
+    myReddit.getSubredditByName(request.params.subreddit)
+    .then(result => {
+        selectedSubreddit = result;
+        if (!selectedSubreddit) {
+            response.status(404).send('404 WHERE AM I !?!.')
+        } else {
+            myReddit.getAllPosts(selectedSubreddit.id)
+            .then(function(posts) {
+                response.render('homepage', {posts: posts});
+            })
+            .catch(function(error) {
+                response.render('error', {error: error});
+            })
+        }
+    })
 });
+// Call getAllPosts from your app.get handler, passing it the subreddit ID from step 2. Then, render the resulting list of posts using 
+// the post-list.pug template. Since this is a subreddit, the rendering should include the name of the subreddit as well as its 
+// description before the post list. You can use Pug conditionals in post-list.pug to make this happen.
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
@@ -126,8 +142,19 @@ app.get('/sort/:method', function(request, response) {
 });
 
 app.get('/post/:postId', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+            // myReddit.getSinglePost(postId)
+            // .then(result => {
+            //     response.render('post', {posts: posts});
+            // })
+            // .catch(function(error) {
+            //     response.status(404).send('404 WHERE AM I !?!.')
+            // })
 });
+         
+    //In index.js there is a GET handler for /post/:postId. This should use the RedditAPI.getSinglePost function to get the post by its ID. 
+    //If the post does not exist, return a 404. If it does, then create a new Pug template that will output that post as well as its comments.
+    //To do this, you'll not only need to call getSinglePost, but also getCommentsForPost. Make sure to use Promise.all to do this, 
+    //since the two requests are independent.
 
 /*
 This is a POST endpoint. It will be called when a form is submitted with method="POST" action="/vote"
@@ -144,13 +171,28 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    myReddit.getAllSubreddits()
+    .then( result => { // returns all the info for the subreddits... we can scrub the data later for needed 
+                       // for the names or ids 
+                        console.log(request.loggedInUser.id + 'lol')
+        response.render('create-posts-form', { 
+            subredditOptions: result
+        })
+    })
+    
 });
 
 // POST handler for form submissions creating a new post
 app.post('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    // console.log(request.loggedInUser.id);
+    return myReddit.createPost({subredditId: request.body.subredditId, url: request.body.url, title: request.body.title, userId: request.loggedInUser.id})
+    .then( result => {
+        console.log(result)
+         response.redirect('/');
+    })
 });
+
+
 
 // Listen
 var port = process.env.PORT || 3000;
