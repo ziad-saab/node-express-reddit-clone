@@ -5,7 +5,18 @@ module.exports = function(myReddit) {
     
     authController.get('/login', function(request, response) {
         response.render('login-form', {});
-    });        
+    });     
+    
+    authController.get('/logout', function(request, response) {
+        request.session.destroy(err => {
+            if(err){
+                response.status(401).send('err');
+            }
+            else{
+                response.redirect('/')
+            }
+        })
+    });    
     
     authController.post('/login', function(request, response) {
     

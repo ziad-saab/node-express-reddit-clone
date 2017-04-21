@@ -3,8 +3,7 @@ mixin postList(posts)
         each post in posts
             li(class="liststyle").post
                 h2
-        
-                    img(src= "/static/slide1.jpg")
+                    img(src="/static/slide1.jpg")
                     a(class="postTitle")(href=post.url, target="_blank")= post.title
                     p Submitted by
                         a(class="mainListLinkTwo")(href="/u/" + post.user.username)= post.user.username

@@ -11,9 +11,14 @@ html
     body
         header
             if loggedInUser
-                p(class="title") Welcome #{loggedInUser.username}
-                p
-                 a(class="link")(href="/createpost") Create Post
+                ul
+                    li
+                        | p(class="title") Welcome #{loggedInUser.username}
+                    li
+                        a(class="link")(href="/createpost") Create Post
+                    li
+                        a(href="/auth/logout") logout
+                
             else
                 ul
                     li
