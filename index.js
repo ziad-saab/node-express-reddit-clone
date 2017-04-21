@@ -10,7 +10,7 @@ var onlyLoggedIn = require('./lib/only-logged-in.js'); // only allows requests f
 
 // Controllers
 var authController = require('./controllers/auth.js');
- 
+
 /*
  Load the RedditAPI class and create an API with db connection. This connection will stay open as
  long as the web server is running, which is 24/7.
@@ -44,7 +44,9 @@ app.set('view engine', 'pug');
 app.use(morgan('dev'));
 
 // This middleware will parse the POST requests coming from an HTML form, and put the result in request.body.
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 // This middleware will parse the Cookie header from all requests, and put the result in request.cookies as an object.
 app.use(cookieParser());
@@ -94,20 +96,22 @@ app.use('/static', express.static(__dirname + '/public'));
 // Regular home Page
 app.get('/', function(request, response) {
     myReddit.getAllPosts({})
-    .then(function(posts) {
-        response.render('homepage', {posts: posts});
-    })
-    .catch(function(error) {
-        response.render('error', {error: error});
-    })
+
+        .then(function(posts) {
+            response.render('homepage', {
+                posts: posts
+            });
+        })
+        .catch(function(error) {
+            response.render('error', {
+                error: error
+            });
+        })
 });
 
 // Listing of subreddits
 app.get('/subreddits', function(request, response) {
-    /*
-    1. Get all subreddits with RedditAPI
-    2. Render some HTML that lists all the subreddits
-     */
+
 
     response.send("TO BE IMPLEMENTED");
 });
@@ -118,22 +122,29 @@ app.get('/r/:subreddit', function(request, response) {
     //If you get back null, send a 404 response. Otherwise move to the next step.
     var selectedSubreddit;
     myReddit.getSubredditByName(request.params.subreddit)
-    .then(result => {
-        selectedSubreddit = result;
-        if (!selectedSubreddit) {
-            response.status(404).send('404 WHERE AM I !?!.')
-        } else {
+        .then(result => {
+            selectedSubreddit = result;
+            if (!selectedSubreddit) {
+                response.status(404).send('404 WHERE AM I !?!.')
+            }
+            else {
 
-            myReddit.getAllPosts({ subredditId: selectedSubreddit.id})
-            .then(function(posts) {
-                response.render('subreddit-page', {posts: posts});
+                myReddit.getAllPosts({
+                        subredditId: selectedSubreddit.id
+                    })
+                    .then(function(posts) {
+                        response.render('subreddit-page', {
+                            posts: posts
+                        });
 
-            })
-            .catch(function(error) {
-                response.render('error', {error: error});
-            })
-        }
-    })
+                    })
+                    .catch(function(error) {
+                        response.render('error', {
+                            error: error
+                        });
+                    })
+            }
+        })
 });
 // Call getAllPosts from your app.get handler, passing it the subreddit ID from step 2. Then, render the resulting list of posts using 
 // the post-list.pug template. Since this is a subreddit, the rendering should include the name of the subreddit as well as its 
@@ -144,34 +155,44 @@ app.get('/sort/:method', function(request, response) {
     // In the app.get handler, check if request.params.method is either hot or top. 
     // If not, then return a 404 error. If it is, call the getAllPosts and then render 
     // a list of posts just like on the home page.
-     if (request.params.method !== 'hot' && request.params.method !== 'top'){
-        response.status(404).send('404 wrong method! getouttahere D:< ')    
-     } else {
-         myReddit.getAllPosts({sortingMethod: request.params.method})
-         .then(function(posts) {
-                response.render('homepage', {posts: posts});
+    if (request.params.method !== 'hot' && request.params.method !== 'top') {
+        response.status(404).send('404 wrong method! getouttahere D:< ')
+    }
+    else {
+        myReddit.getAllPosts({
+                sortingMethod: request.params.method
             })
+            .then(function(posts) {
+                response.render('homepage', {
+                    posts: posts
+                });
+            })
+
         .catch(function(error) {
-            response.render('error', {error: error});
+            response.render('error', {
+                error: error
+            });
         })
-     }
-     
+    }
+
 });
 
 app.get('/post/:postId', function(request, response) {
-            // myReddit.getSinglePost(postId)
-            // .then(result => {
-            //     response.render('post', {posts: posts});
-            // })
-            // .catch(function(error) {
-            //     response.status(404).send('404 WHERE AM I !?!.')
-            // })
+    // var postId = request.params.postId;
+    return Promise.all([myReddit.getSinglePost(request.params.postId), myReddit.getCommentsForPost(request.params.postId)])
+    .then(results => { // array of future values that we gave to promise.all
+    console.log(results)
+        response.render('single-post', {post:results[0], comments:results[1]})
+        })
+        .catch(function(error) {
+            response.status(404).send('404 WHERE AM I !?!.')
+        })
 });
-         
-    //In index.js there is a GET handler for /post/:postId. This should use the RedditAPI.getSinglePost function to get the post by its ID. 
-    //If the post does not exist, return a 404. If it does, then create a new Pug template that will output that post as well as its comments.
-    //To do this, you'll not only need to call getSinglePost, but also getCommentsForPost. Make sure to use Promise.all to do this, 
-    //since the two requests are independent.
+
+//In index.js there is a GET handler for /post/:postId. This should use the RedditAPI.getSinglePost function to get the post by its ID. 
+//If the post does not exist, return a 404. If it does, then create a new Pug template that will output that post as well as its comments.
+//To do this, you'll not only need to call getSinglePost, but also getCommentsForPost. Make sure to use Promise.all to do this, 
+//since the two requests are independent.
 
 /*
 This is a POST endpoint. It will be called when a form is submitted with method="POST" action="/vote"
@@ -183,30 +204,69 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    // Then, you have to implement the POST handler for /vote in index.js. 
+    // Make it call RedditAPI.createVote and pass the necessary information. 
+    // The postId will come from the hidden input. Hidden inputs are useful 
+    // because they allow us to pass information to the server without any user input.
+    myReddit.createVote({
+        postId: parseInt(request.body.postId),
+        userId: request.loggedInUser.id,
+        voteDirection: parseInt(request.body.vote)
+    }) //[vote.postId, vote.userId, vote.voteDirection, vote.voteDirection]
+    .then(()=>{
+        response.redirect('/')
+    });
 });
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
     myReddit.getAllSubreddits()
-    .then( result => { // returns all the info for the subreddits... we can scrub the data later for needed 
-                       // for the names or ids 
-                        console.log(request.loggedInUser.id + 'lol')
-        response.render('create-posts-form', { 
-            subredditOptions: result
+        .then(result => { // returns all the info for the subreddits... we can scrub the data later for needed 
+            // for the names or ids 
+            response.render('create-posts-form', {
+                subredditOptions: result
+            })
         })
-    })
-    
+
 });
 
 // POST handler for form submissions creating a new post
 app.post('/createPost', onlyLoggedIn, function(request, response) {
-    return myReddit.createPost({userId: request.loggedInUser.id, title: request.body.title, url: request.body.url, subredditId: request.body.subredditId})
-    .then( result => {
-         response.redirect('/');
-    })
+    return myReddit.createPost({
+        userId: request.loggedInUser.id,
+        title: request.body.title,
+        url: request.body.url,
+        subredditId: request.body.subredditId
+        })
+        .then(result => {
+            response.redirect('/post/postId');
+        })
 });
 
+// app.get('/createComment', onlyLoggedIn, function(request, response) {
+//         console.log(request.params.postId)
+//         return myReddit.getCommentsForPost(request.params.postId)
+//         .then(result => { // returns all the info for the subreddits... we can scrub the data later for needed 
+//             // for the names or ids 
+//             response.render('create-comments-form', {
+//                 comment: result
+//             })
+//         })
+
+// });
+// // POST handler for form submissions creating a new comment
+// app.post('/createComment', onlyLoggedIn, function(request, response) {
+//     return myReddit.createComment({
+//             userId: request.loggedInUser.id,
+//             postId: request.params.postId,
+//             text: request.body.text
+//         })
+            
+//         .then(result => {
+//             response.redirect('/Post/77');
+//         })
+
+//     });
 
 
 // Listen
@@ -220,4 +280,3 @@ app.listen(port, function() {
         console.log('Web server is listening on http://localhost:' + port);
     }
 });
- 

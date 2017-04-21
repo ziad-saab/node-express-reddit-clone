@@ -40,12 +40,8 @@ module.exports = function(myReddit) {
     authController.get('/signup', function(request, response) {
         response.render('signup-form', {});
     });
-    // Then, implement the code of app.post('/signup'). 
-    // This code will receive the form data under request.body. 
-    // There, you have to call myReddit.createUser and pass it the necessary info.
-    // Once the createUser promise is resolved, use response.redirect to send the user to /auth/login.
-    authController.post('/signup', function(request, response) {
 
+    authController.post('/signup', function(request, response) {
         myReddit.createUser(request.body).then(() =>{
         response.redirect('/auth/login');
         })
@@ -53,6 +49,33 @@ module.exports = function(myReddit) {
             response.send(err.message);
         })
     });
+    
+   // Add a /auth/recover page through the controllers/auth.js Router with a form 
+   // that asks for the email address. Make it POST to /auth/createResetToken.
+   authController.get('/recover', function(request, response) {
+       console.log('hello;');
+       response.render('reset-form', {});
+   });
+   
+   authController.post('/createResetToken', function(request, response){
+      myReddit.createPasswordResetToken(request.body.email)
+      .then(response.send('email sent'))
+   });
+   
+   authController.get('/resetPassword', function(request, response){
+    // Output a <form> with a "new password" field. When the form should also 
+    // have a hidden input that will be whatever is in the token param of the query string. 
+    // The form will POST to /resetPassword with the token and the newPassword.
+        response.render('password-form', {token: request.query.token});
+   })
+   authController.post('/resetPassword', function(request, response){
+       console.log(request.body);
+       myReddit.resetPassword(request.body.token, request.body.newPassword)
+       .then(()=>{
+            response.redirect('/auth/login');
+       })
+       
+   })
     
     return authController;
 }

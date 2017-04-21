@@ -1,0 +1,36 @@
+extends layout.pug
+
+block title
+    title Welcome to Reddit Clone!!!
+
+block content
+    h1 Welcome to Reddit!!!
+    a(href="/createpost") post  
+    a(href="/createComment") New Comment
+    a(href='/sort/hot') hot  
+    a(href='/sort/top') top 
+    
+
+    ul.post-list
+            ul.post
+                h4
+                  a(href=post.url, target="_blank")= post.title
+                  p Submitted by 
+                  a(href="/u/" + post.user.username)= post.user.username
+                    span  in 
+                    a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
+                    p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+
+            #comment
+                each comment in comments
+                  ul
+                    ul.post
+                      | #{comment.text}
+                    br  
+                    ul.user
+                      | Posted by 
+                      a(href='/u' + comment.user.user)= comment.user.username
+                      |  on 
+                      |  #{comment.createdAt}
+                    br
+                      

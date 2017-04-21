@@ -2,9 +2,10 @@ extends layout.pug
 include mixins/post-list
 
 block title
-    title Welcome to Reddit Clone!!!
+    title Hello, Nerds
 
 block content
+
     h1(class="maintitle") Welcome to Reddit!!!
     
     p(class="topnav")
@@ -12,6 +13,4 @@ block content
       a(href='/sort/top') TOP
       a(href='javascript:void(0);' style="font-size:15px;" class="icon")
       +postList(posts)
-           
-           
-
+          

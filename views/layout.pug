@@ -11,6 +11,7 @@ html
     body
         header
             if loggedInUser
+<<<<<<< HEAD
                 ul
                     li
                         | p(class="title") Welcome #{loggedInUser.username}
@@ -19,6 +20,12 @@ html
                     li
                         a(href="/auth/logout") logout
                 
+=======
+                p Welcome #{loggedInUser.username}
+                 a(href="/createpost") Create Post
+                 a(href='/sort/hot') hot 
+                 a(href='/sort/top') top
+>>>>>>> origin/master
             else
                 ul
                     li
@@ -27,4 +34,4 @@ html
                         a(href="/auth/login") Login
         main
             block content
-        footer &copy; 2017 blah
+        footer &copy; 2017 bruh

@@ -1,0 +1,10 @@
+extends layout.pug
+block content
+ h1 Reset Password
+ form(action='/auth/createResetToken', method='POST')
+  p
+    |  Email: 
+    input(type='email', name='email')
+
+  p
+    button(type='submit') Reset my password
