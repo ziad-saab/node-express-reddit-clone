@@ -10,12 +10,12 @@ CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(50) NOT NULL,
   password VARCHAR(60) NOT NULL, -- why 60??? ask me :)
-  email VARCHAR(100),
   createdAt DATETIME NOT NULL,
   updatedAt DATETIME NOT NULL,
-  UNIQUE KEY username (username),
-  UNIQUE KEY email (email)
+  UNIQUE KEY username (username)
 );
+
+ALTER TABLE users ADD COLUMN email VARCHAR(100) UNIQUE;
 
 CREATE TABLE sessions (
   id INT AUTO_INCREMENT PRIMARY KEY,

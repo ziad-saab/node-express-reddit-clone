@@ -95,6 +95,7 @@ app.use('/static', express.static(__dirname + '/public'));
 app.get('/', function(request, response) {
     myReddit.getAllPosts({})
     .then(function(posts) {
+        console.log('hallooo' + posts[0]);
         response.render('homepage', {posts: posts});
     })
     .catch(function(error) {
