@@ -15,6 +15,8 @@ CREATE TABLE users (
   UNIQUE KEY username (username)
 );
 
+ALTER TABLE users ADD COLUMN email VARCHAR(100) UNIQUE;
+
 CREATE TABLE sessions (
   id INT AUTO_INCREMENT PRIMARY KEY,
   userId INT,
@@ -72,4 +74,10 @@ CREATE TABLE comments (
   updatedAt DATETIME NOT NULL,
   FOREIGN KEY (userId) REFERENCES users (id) ON DELETE SET NULL,
   FOREIGN KEY (postId) REFERENCES posts (id) ON DELETE CASCADE
+);
+
+CREATE TABLE passwordResetTokens (
+  userId INT,
+  token VARCHAR(100),
+  UNIQUE KEY token (token)
 );

@@ -96,6 +96,7 @@ app.use('/static', express.static(__dirname + '/public'));
 // Regular home Page
 app.get('/', function(request, response) {
     myReddit.getAllPosts({})
+
         .then(function(posts) {
             response.render('homepage', {
                 posts: posts
@@ -203,7 +204,18 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    // Then, you have to implement the POST handler for /vote in index.js. 
+    // Make it call RedditAPI.createVote and pass the necessary information. 
+    // The postId will come from the hidden input. Hidden inputs are useful 
+    // because they allow us to pass information to the server without any user input.
+    myReddit.createVote({
+        postId: parseInt(request.body.postId),
+        userId: request.loggedInUser.id,
+        voteDirection: parseInt(request.body.vote)
+    }) //[vote.postId, vote.userId, vote.voteDirection, vote.voteDirection]
+    .then(()=>{
+        response.redirect('/')
+    });
 });
 
 // This handler will send out an HTML form for creating a new post
@@ -221,10 +233,10 @@ app.get('/createPost', onlyLoggedIn, function(request, response) {
 // POST handler for form submissions creating a new post
 app.post('/createPost', onlyLoggedIn, function(request, response) {
     return myReddit.createPost({
-            userId: request.loggedInUser.id,
-            title: request.body.title,
-            url: request.body.url,
-            subredditId: request.body.subredditId
+        userId: request.loggedInUser.id,
+        title: request.body.title,
+        url: request.body.url,
+        subredditId: request.body.subredditId
         })
         .then(result => {
             response.redirect('/post/postId');

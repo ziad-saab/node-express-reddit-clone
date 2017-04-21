@@ -9,3 +9,10 @@ mixin postList(posts)
                         span  in
                         a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
                     p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+                    
+                    form(action='/vote', method='post')
+                      input(type='hidden', name='postId', value=post.id)
+                      |  
+                      button(type='submit', name='vote', value='1') upvote this
+                      |  
+                      button(type='submit', name='vote', value='-1') downvote this
