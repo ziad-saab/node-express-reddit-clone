@@ -1,8 +1,7 @@
-mixin postList(posts)
+mixin postIdList(posts)
     ul.post-list
-        each post in posts
-            ul.post
-                h4
+            li.post
+                h2
                     a(href=post.url, target="_blank")= post.title
                     p Submitted by
                         a(href="/u/" + post.user.username)= post.user.username
