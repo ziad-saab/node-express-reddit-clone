@@ -2,10 +2,8 @@ extends layout.pug
 include mixins/post-list
 
 block title
-    title Welcome to Reddit Clone!!!
+    title Hello, Nerds
 
 block content
-    h1 Welcome to Reddit!!!
-    a(href='/sort/hot') hot 
-    a(href='/sort/top') top
     +postList(posts)
+    
