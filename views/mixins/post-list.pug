@@ -1,9 +1,8 @@
 mixin postList(posts)
     ul.post-list
         each post in posts
-            li.post
-                h2
-                    
+            ul.post
+                h4
                     a(href=post.url, target="_blank")= post.title
                     p Submitted by
                         a(href="/u/" + post.user.username)= post.user.username
