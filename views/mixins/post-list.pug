@@ -4,8 +4,8 @@ mixin postList(posts)
             li.post
                 h2
                     a(href=post.url, target="_blank")= post.title
-                    p Submitted by
+                    p Submitted by 
                         a(href="/u/" + post.user.username)= post.user.username
-                        span  in
+                        span  in 
                         a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
                     p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
