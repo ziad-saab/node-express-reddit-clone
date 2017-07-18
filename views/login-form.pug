@@ -1,0 +1,12 @@
+extends layout
+block title
+    title User Login
+block content
+    h1 Welcome!! Please Login to Continue :)
+    form(action="/auth/login", method ="POST")
+        p Username: 
+            input(type="text", name="username" required)
+        p Password:  
+            input(type="password", name="password" required)
+        p 
+            button(type="submit") Login!!
