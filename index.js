@@ -56,7 +56,7 @@ This custom middleware checks in the cookies if there is a SESSION token and val
 NOTE: This middleware is currently commented out! Uncomment it once you've implemented the RedditAPI
 method `getUserFromSession`
  */
-// app.use(checkLoginToken(myReddit));
+app.use(checkLoginToken(myReddit));
 
 
 
