@@ -1,23 +1,47 @@
 var express = require('express');
 
+
+
 module.exports = function(myReddit) {
     var authController = express.Router();
     
+    
+   
+    
     authController.get('/login', function(request, response) {
-        response.send("TO BE IMPLEMENTED");
+        response.render("login-form");
     });
     
     authController.post('/login', function(request, response) {
-        response.send("TO BE IMPLEMENTED");
+        
+        response.send("Attempted login -> username: " + request.body.username + ", password: " + request.body.password);
+        
+        console.log("Attempted login -> username: " + request.body.username + ", password: " + request.body.password);
+        
+        myReddit.checkUserLogin({
+            username: request.body.username
+        })
+        
     });
     
+    
+    
     authController.get('/signup', function(request, response) {
-        response.send("TO BE IMPLEMENTED");
+        response.render('signup-form');
     });
     
     authController.post('/signup', function(request, response) {
-        response.send("TO BE IMPLEMENTED");
+
+        console.log("User created -> username: " + request.body.username + ", password: " + request.body.password);
+        
+        myReddit.createUser({
+            username: request.body.username,
+            password: request.body.password
+        })
+        
+        response.redirect('/login');
     });
     
     return authController;
 }
+
