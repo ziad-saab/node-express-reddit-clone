@@ -103,7 +103,7 @@ app.get('/', function(request, response) {
     })
     .catch(function(error) {
         response.render('error', {error: error});
-    })
+    });
 });
 
 // Listing of subreddits
@@ -118,7 +118,23 @@ app.get('/subreddits', function(request, response) {
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
 app.get('/r/:subreddit', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    myReddit.getSubredditByName(request.params.subreddit)
+    .then(result => {
+        //console.log('GetAllPostResult=',result);
+        if (result === null) {
+            response.status(404).send('Subreddit not found');
+        }
+        else {
+            myReddit.getAllPosts(result.id)
+            .then(function(posts) {
+                response.render('homepage', {posts: posts, subreddit: result});
+            })
+            .catch(function(error) {
+                response.render('error', {error: error});
+            });
+        }
+    });
 });
 
 // Sorted home page
