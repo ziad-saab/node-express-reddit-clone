@@ -6,8 +6,12 @@ mixin postList(posts)
             li.post
                 h2
                     a(href=post.url, target="_blank")= post.title
-                    p Submitted by 
-                        a(href="/u/" + post.user.username)= post.user.username
-                        span  in 
-                        a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
-                    p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+                p Submitted by 
+                    a(href="/u/" + post.user.username)= post.user.username
+                    span  in 
+                    a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
+                p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+                form(action="/vote" method="post")
+                    input(type='hidden' name='postId' value=post.id)
+                    button(type='submit' name='vote' value=1) Upvote This!
+                    button(type='submit' name='vote' value=-1) Downvote This!

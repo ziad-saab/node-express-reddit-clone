@@ -139,14 +139,20 @@ app.get('/r/:subreddit', function(request, response) {
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-    myReddit.getAllPosts(null, request.params.sort)
+    //console.log(request.params.method); //Test
+    myReddit.getAllPosts(null, request.params.method)
     .then(posts => {
         response.render('homepage', {posts: posts});
     });
 });
 
 app.get('/post/:postId', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    //console.log(request.params);
+    myReddit.getSinglePost(+request.params.postId)
+    .then(post => {
+        console.log(post);
+        response.render('post-info', {post: post});
+    })
 });
 
 /*
@@ -159,7 +165,16 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    //console.log(request.body);
+    var myVote = {
+        userId: request.loggedInUser.userId,
+        postId: request.body.postId,
+        voteDirection: +request.body.vote
+    };
+    myReddit.createVote(myVote)
+    .then(result => {
+        response.redirect('/');
+    });
 });
 
 // This handler will send out an HTML form for creating a new post
@@ -182,7 +197,7 @@ app.post('/createPost', onlyLoggedIn, function(request, response) {
     
     myReddit.createPost(postInfo)
     .then(post => {
-        console.log(post);
+        //console.log(post);
         response.redirect('/post/' + post);
     });
 });
