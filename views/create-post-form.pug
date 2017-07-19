@@ -1,0 +1,15 @@
+extends layout.pug
+
+block content
+    h1 Share a new link!
+    form(action="/createPost" method="POST")
+        p Subreddit:
+            select(name="subredditId")
+                each subreddit in subreddits
+                    option(value=subreddit.id) #{subreddit.name}
+        p URL:
+            input(type='text' name='url' placeholder='http://www.google.ca')
+        p Title:
+            input(type='text' name='title' placeholder='The post\'s title')
+        p 
+            button(type='submit') Create Post!

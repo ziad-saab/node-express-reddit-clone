@@ -127,10 +127,10 @@ app.get('/r/:subreddit', function(request, response) {
         }
         else {
             myReddit.getAllPosts(result.id)
-            .then(function(posts) {
+            .then(posts => {
                 response.render('homepage', {posts: posts, subreddit: result});
             })
-            .catch(function(error) {
+            .catch(error => {
                 response.render('error', {error: error});
             });
         }
@@ -139,7 +139,10 @@ app.get('/r/:subreddit', function(request, response) {
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    myReddit.getAllPosts(null, request.params.sort)
+    .then(posts => {
+        response.render('homepage', {posts: posts});
+    });
 });
 
 app.get('/post/:postId', function(request, response) {
@@ -161,12 +164,27 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    myReddit.getAllSubreddits()
+    .then(subreddits => {
+        response.render('create-post-form', {subreddits: subreddits});
+    });
 });
 
 // POST handler for form submissions creating a new post
 app.post('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    //console.log(request.body); //Test
+    var postInfo = {
+        subredditId: +request.body.subredditId,
+        url: request.body.url,
+        title: request.body.title,
+        userId: +request.loggedInUser.userId
+    };
+    
+    myReddit.createPost(postInfo)
+    .then(post => {
+        console.log(post);
+        response.redirect('/post/' + post);
+    });
 });
 
 // Listen
