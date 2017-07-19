@@ -9,6 +9,7 @@ var checkLoginToken = require('./lib/check-login-token.js'); // checks if cookie
 var onlyLoggedIn = require('./lib/only-logged-in.js'); // only allows requests from logged in users
 
 // Controllers
+//For Sign UP and Login
 var authController = require('./controllers/auth.js');
 
 /*
@@ -18,7 +19,7 @@ var authController = require('./controllers/auth.js');
 var RedditAPI = require('./lib/reddit.js');
 var connection = mysql.createPool({
     user: 'root',
-    database: 'reddit'
+    database: 'reddit2'
 });
 var myReddit = new RedditAPI(connection);
 
@@ -55,7 +56,7 @@ This custom middleware checks in the cookies if there is a SESSION token and val
 NOTE: This middleware is currently commented out! Uncomment it once you've implemented the RedditAPI
 method `getUserFromSession`
  */
-// app.use(checkLoginToken(myReddit));
+app.use(checkLoginToken(myReddit));
 
 
 
@@ -75,6 +76,7 @@ express application that takes care of its own set of paths. look at the file fo
 The authController needs access to the RedditAPI to do its work, so we pass it as a parameter and the
 controller gets returned from that function.
  */
+//The authController gets a myRedit object passed into it to be able to use all 
 app.use('/auth', authController(myReddit));
 
 /*

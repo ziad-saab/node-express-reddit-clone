@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS reddit;
+DROP DATABASE IF EXISTS reddit2;
 
-CREATE DATABASE reddit;
+CREATE DATABASE reddit2;
 
-USE reddit;
+USE reddit2;
 
 -- This creates the users table. The username field is constrained to unique
 -- values only, by using a UNIQUE KEY on that column
