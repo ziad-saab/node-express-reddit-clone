@@ -9,6 +9,9 @@ var morgan = require('morgan'); // logs every request on the console
 var checkLoginToken = require('./lib/check-login-token.js'); // checks if cookie has a SESSION token and sets request.user
 var onlyLoggedIn = require('./lib/only-logged-in.js'); // only allows requests from logged in users
 var marked = require('marked'); // Allow markdowns
+//import fetch from 'isomorphic-fetch';
+var ajax = require('ajax');
+//window.$ = require('jquery')(window);
 
 // Controllers
 var authController = require('./controllers/auth.js');
@@ -48,7 +51,7 @@ app.use(morgan('dev'));
 
 // This middleware will parse the POST requests coming from an HTML form, and put the result in request.body.
 app.use(bodyParser.urlencoded({extended: false}));
-
+app.use(bodyParser.json()); //Needed for voting
 // This middleware will parse the Cookie header from all requests, and put the result in request.cookies as an object.
 app.use(cookieParser());
 
@@ -140,7 +143,7 @@ app.get('/r/:subreddit', function(request, response) {
 });
 
 app.get('/u/:username', (request, response) => {
-    console.log("Username=",request.params.username);
+    //console.log("Username=",request.params.username);
     myReddit.getPostsForUsername(request.params.username)
     .then(posts => {
         console.log("Posts in GET",posts);
@@ -205,8 +208,9 @@ The app.* methods of express can actually take multiple middleware, forming a ch
 This basically says: if there is a POST /vote request, first pass it thru the onlyLoggedIn middleware. If that
 middleware calls next(), then also pass it to the final request handler specified.
  */
+
 app.post('/vote', onlyLoggedIn, function(request, response) {
-    //console.log(request.body);
+    //console.log("request body=",request.body);
     var myVote = {
         userId: request.loggedInUser.userId,
         postId: request.body.postId,
@@ -214,7 +218,9 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
     };
     myReddit.createVote(myVote)
     .then(result => {
-        response.redirect('back'); //Redirect to the current page
+        //return Promise.json("Test");
+        response.send(JSON.stringify(myVote.voteDirection));
+        //response.redirect('back'); //Redirect to the current page
     });
 });
 
