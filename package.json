@@ -17,6 +17,7 @@
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
+    "marked": "^0.3.6",
     "morgan": "^1.7.0",
     "mysql": "^2.13.0",
     "promise-mysql": "^3.0.1",

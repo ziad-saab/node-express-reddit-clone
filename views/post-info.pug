@@ -15,5 +15,5 @@ block content
     ul.comment-list
         each comment in comments
             li.comment
-                h3 #{comment.text}
+                h3 !{comment.markedText}
                 p Submitted by #{comment.username} on #{comment.createdAt}

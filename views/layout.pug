@@ -4,9 +4,22 @@ html
         meta(charset="utf-8")
         link(rel="stylesheet", href="/static/app.css")
         block title
-            title Redit Clone
+            title DecodedReddit
     body
         header
+            h3
+                ul(class='MainMenu')
+                    li
+                        a(href="/") Home
+                    li
+                        a(href='/sort/top/') Top Scored Posts
+                    li
+                        a(href='/sort/hot/') Hottest Posts
+                    li
+                        a(href='/sort/commented/') Most Commented
+                    li
+                        a(href='/subreddit/') Subreddit
+
             if loggedInUser
                 p Welcome #{loggedInUser.username}
             else

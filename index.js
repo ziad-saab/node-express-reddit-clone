@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser'); // parses cookie from Cookie reques
 var morgan = require('morgan'); // logs every request on the console
 var checkLoginToken = require('./lib/check-login-token.js'); // checks if cookie has a SESSION token and sets request.user
 var onlyLoggedIn = require('./lib/only-logged-in.js'); // only allows requests from logged in users
+var marked = require('marked'); // Allow markdowns
 
 // Controllers
 var authController = require('./controllers/auth.js');
@@ -29,6 +30,7 @@ var app = express();
 
 // Specify the usage of the Pug template engine
 app.set('view engine', 'pug');
+app.use('/static', express.static('static'));
 
 /*
  This next section specifies the middleware we want to run.
@@ -169,14 +171,27 @@ app.get('/post/:postId', function(request, response) {
     //Need to Promise.all single post and comments for the post!!
     Promise.all([myReddit.getSinglePost(+request.params.postId), myReddit.getCommentsForPost(+request.params.postId,1)])
     .then(result => {
-        console.log(result);
+        //console.log(result);
         if (result === null) {
             response.status(404).send('Error fetching post');
         }
         else {
             var post = result[0];
             var comments = result[1];
-            response.render('post-info', {post: post, comments: comments});            
+            //comments.markedText = marked(comments.text);
+            //console.log(marked(comments[0].text));
+            var markedComments = comments.map(comment => {
+                console.log("TextId =", comment.id);
+                console.log("Text=", comment.text);
+                comment.markedText = '';
+                if (comment.text !== null) {
+                    comment.markedText = marked(comment.text);
+                }
+                console.log('MarkedText=', comment.markedText);
+                return comment;
+            });
+            //console.log("Marked Comments", markedComments);
+            response.render('post-info', {post: post, comments: markedComments});  
         }
     });
 });
