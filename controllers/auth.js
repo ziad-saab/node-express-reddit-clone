@@ -48,7 +48,7 @@ module.exports = function(myReddit) {
             password: request.body.password
         })
         
-        response.redirect('/login');
+        response.redirect('/auth/login');
     });
     
     return authController;

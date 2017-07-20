@@ -131,9 +131,7 @@ app.get('/r/:subreddit', function(request, response) {
                 response.render('error', {error: error});
             })
         }
-
     })
-
 });
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
@@ -143,12 +141,16 @@ app.get('/r/:subreddit', function(request, response) {
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-
+    if(request.params.method !== "hot" && request.params.method !== "top") {
+        response.status(404);
+    } else {
+        myReddit.getAllPosts(response.method)
+        .then(posts => {
+        console.log(posts);    
+        response.render('homepage', {posts: posts, method: response});
+    });
+    }
     
-
-
-    response.send("TO BE IMPLEMENTED");
-
 });
 
 app.get('/post/:postId', function(request, response) {
