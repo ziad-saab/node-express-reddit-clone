@@ -117,8 +117,23 @@ app.get('/subreddits', function(request, response) {
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
 app.get('/r/:subreddit', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
-});
+    myReddit.getSubredditByName(request.params.subreddit)
+    .then( result => {
+    //console.log(result[0])
+       if (result === null) { 
+           response.status(404).send("no page exists");
+       } else {
+          return myReddit.getAllPosts(result[0].id)
+          }
+    })
+    .then(results => {
+       // console.log(results, 'these are results')
+        response.render('homepage', {posts: results })
+    })
+})
+      
+    // search we need to make a request to the database and bring up the data. 
+   
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
