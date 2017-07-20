@@ -136,7 +136,10 @@ app.get('/r/:subreddit', function(request, response) {
        }
     })
     .then(result=>{
-        myReddit.getAllPosts(result.name)
+        //myReddit.getAllPosts(result.name)
+        //giving it the object result, then I will do onject.hasOwnProperty(name) in getAllPost() function
+        console.log('result is: ' + result)
+        myReddit.getAllPosts(result) 
         .then(posts => {
            response.render('homepage',{posts: posts});
         })
@@ -148,7 +151,24 @@ app.get('/r/:subreddit', function(request, response) {
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    return Promise.resolve()
+    .then(result =>{
+        var method = {};
+        method.sortMethod = request.params.method;
+        if (method.sortMethod !== "hot" && method.sortMethod !== "top")
+        {
+            console.log('Invalid sort method: '+ method.sortMethod);
+            response.sendStatus(404);
+        }
+        else
+        {
+            return myReddit.getAllPosts(method);
+        }
+    })
+    .then(result => {
+       //print sorted data out to webpage 
+    });
+    //response.send("TO BE IMPLEMENTED");
 });
 
 app.get('/post/:postId', function(request, response) {
