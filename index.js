@@ -94,7 +94,7 @@ app.use('/auth', authController(myReddit));
  at how to do this in the next few weeks but don't hesitate to take a head start.
  */
 app.use('/static', express.static(__dirname + '/public'));
-
+//
 // Regular home Page
 app.get('/', function(request, response) {
     myReddit.getAllPosts()
@@ -170,13 +170,37 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    myReddit.getAllSubreddits()
+    .then(function(subreddits) {
+        response.render("create-post-form", {subreddits: subreddits});
+    })
+    .catch(function(error) {
+        response.render('error', {error: error});
+    })
+
 });
+
+
 
 // POST handler for form submissions creating a new post
 app.post('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+
+    var postInfo = {
+        subredditId: request.body.subredditId,
+        url: request.body.url,
+        title: request.body.title,
+        userId: request.loggedInUser.userId
+    };
+
+    myReddit.createPost(postInfo)
+    .then(postId => {
+            response.redirect('/post/:postId');
+    })
+
 });
+
+
 
 // Listen
 var port = process.env.PORT || 3000;
