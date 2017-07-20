@@ -218,9 +218,8 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
     };
     myReddit.createVote(myVote)
     .then(result => {
-        //return Promise.json("Test");
-        response.send(JSON.stringify(myVote.voteDirection));
-        //response.redirect('back'); //Redirect to the current page
+        //response.send(JSON.stringify(myVote.voteDirection));
+        response.redirect('back'); //Redirect to the current page
     });
 });
 

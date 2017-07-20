@@ -17,7 +17,7 @@ mixin postList(posts)
                     p(id='postListScore') Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes} Comments: #{post.numComments}
                     span
                 div
-                    //form(action="/vote" method="post")
-                    input(type='hidden' name='postId' value=post.id)
-                    button(type='submit' name='vote' data-post-postid=post.id value=1) Upvote This!
-                    button(type='submit' name='vote' data-post-postid=post.id value=-1) Downvote This!
+                    form(action="/vote" method="post")
+                        input(type='hidden' name='postId' value=post.id)
+                        button(type='submit' name='vote' data-post-postid=post.id value=1) Upvote This!
+                        button(type='submit' name='vote' data-post-postid=post.id value=-1) Downvote This!
