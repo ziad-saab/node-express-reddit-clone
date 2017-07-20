@@ -17,7 +17,7 @@ var authController = require('./controllers/auth.js');
  */
 var RedditAPI = require('./lib/reddit.js');
 var connection = mysql.createPool({
-    user: 'root',
+    user: 'timmcnamara',
     database: 'redditNew'
 });
 var myReddit = new RedditAPI(connection);
@@ -55,7 +55,7 @@ This custom middleware checks in the cookies if there is a SESSION token and val
 NOTE: This middleware is currently commented out! Uncomment it once you've implemented the RedditAPI
 method `getUserFromSession`
  */
-// app.use(checkLoginToken(myReddit));
+app.use(checkLoginToken(myReddit));
 
 
 
