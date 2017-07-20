@@ -1,3 +1,105 @@
+* {
+    box-sizing: border-box;
+}
 body {
     font-family: Helvetica, arial, sans-serif;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+.topnav {
+    overflow: hidden;
+    background-color: #f5af07;
+}
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 14pt;
+}
+.topnav a:hover {
+    background-color: white;
+    color: black;
+}
+.topnav .icon {
+    display: none;
+}
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+
+.title {
+    font-size: 12pt;
+    text-align: right;
+}
+.link {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+.maintitle {
+    text-align: center;
+    font-size: 20pt;
+}
+.mainlist {
+    display: table-cell;
+    table-layout: fixed;
+    width: 100%;
+   
+    font-size: 10pt;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+    list-style: circle;
+    text-decoration: none;
+    margin: 0;
+    border-spacing: 0;
+    color: black;
+}
+.mainlist h2 {
+    display: inline-table;
+    text-align: -webkit-match-parent;
+    color: black;
+    font-size: 14pt;
+    text-decoration: none;
+    width: 60%;
+}
+.mainListLinkTwo {
+    color: #afafaf;
+    text-decoration: none;
+}
+.mainListOne {
+    color: #afafaf;
+    text-decoration: none;
+}
+.postScore {
+    font-size: 10pt;
+    color: black;
+    margin-left: 170px;
+}
+.postTitle {
+    font-size: 18pt;
+    text-decoration: none;
+    color: #f5af07;
+    float: inherit;
+}
+.postTitle:hover{
+    text-decoration: underline;
+}
+ul img {
+    float: left;
+    padding-right: 20px;
+}
+.clear {
+    clear: both;
 }

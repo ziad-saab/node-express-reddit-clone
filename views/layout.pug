@@ -3,12 +3,29 @@ html
     head
         meta(charset="utf-8")
         link(rel="stylesheet", href="/static/app.css")
+        link(rel="shortcut icon" type="image/png" href="/static/Reddit-icon.png")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet" type="text/css" href="bootstrap.min.css")
         block title
             title Redit Clone
     body
         header
             if loggedInUser
+<<<<<<< HEAD
+                ul
+                    li
+                        | p(class="title") Welcome #{loggedInUser.username}
+                    li
+                        a(class="link")(href="/createpost") Create Post
+                    li
+                        a(href="/auth/logout") logout
+                
+=======
                 p Welcome #{loggedInUser.username}
+                 a(href="/createpost") Create Post
+                 a(href='/sort/hot') hot 
+                 a(href='/sort/top') top
+>>>>>>> origin/master
             else
                 ul
                     li
@@ -17,4 +34,4 @@ html
                         a(href="/auth/login") Login
         main
             block content
-        footer &copy; 2017 blah
+        footer &copy; 2017 bruh

@@ -1,0 +1,12 @@
+extends layout.pug
+
+block content
+  h1 Share a new link!
+  form(method='POST', action='/createComment')
+    p
+      | Comment: 
+      input(type='text', name='text')
+      
+    p
+      button(class='button') Submit Comments
+    

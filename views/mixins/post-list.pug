@@ -1,11 +1,31 @@
 mixin postList(posts)
-    ul.post-list
+    ul(class="mainlist").post-list
         each post in posts
-            li.post
+<<<<<<< HEAD
+            li(class="liststyle").post
                 h2
+                    img(src="/static/slide1.jpg")
+                    a(class="postTitle")(href=post.url, target="_blank")= post.title
+=======
+            ul.post
+                h4
                     a(href=post.url, target="_blank")= post.title
+>>>>>>> origin/master
                     p Submitted by
-                        a(href="/u/" + post.user.username)= post.user.username
+                        a(class="mainListLinkTwo")(href="/u/" + post.user.username)= post.user.username
                         span  in
+<<<<<<< HEAD
+                        a(class="mainListOne")(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
+                    p(class="postScore") Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+                    div(class="clear")
+=======
                         a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
                     p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+                    
+                    form(action='/vote', method='post')
+                      input(type='hidden', name='postId', value=post.id)
+                      |  
+                      button(type='submit', name='vote', value='1') upvote this
+                      |  
+                      button(type='submit', name='vote', value='-1') downvote this
+>>>>>>> origin/master
