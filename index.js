@@ -1,10 +1,25 @@
 var express = require('express');
+// > npm install --save express
 var mysql = require('promise-mysql');
+// > npm install --save promise-mysql
+// ++ > npm install --save bcrypt-as-promised
+// ++ > npm install --save pug
+
+// Load express and create a new web server
+// Load all the Express middlewares we will use and adds them to the pipeline with app.use
+// Loads the RedditAPI, created a database connection and sets up the API
+// Delegates anything under /static to the static middleware
+// Delegates anything under /auth to a custom Express Router
+// Sets up a few other request handlers for the homepage, subreddits, creating posts and voting. These functionalities could be further split up in their own modules
+// Finally, makes the web server listen on process.env.PORT, which is set to 8080 on Cloud9.
 
 // Express middleware
 var bodyParser = require('body-parser'); // reads request bodies from POST requests
+// > npm install --save body-parser
 var cookieParser = require('cookie-parser'); // parses cookie from Cookie request header into an object
+// > npm install --save cookie-parser
 var morgan = require('morgan'); // logs every request on the console
+// > npm install --save morgan
 var checkLoginToken = require('./lib/check-login-token.js'); // checks if cookie has a SESSION token and sets request.user
 var onlyLoggedIn = require('./lib/only-logged-in.js'); // only allows requests from logged in users
 
@@ -18,6 +33,7 @@ var authController = require('./controllers/auth.js');
 var RedditAPI = require('./lib/reddit.js');
 var connection = mysql.createPool({
     user: 'root',
+    password : 'root',
     database: 'reddit'
 });
 var myReddit = new RedditAPI(connection);
@@ -111,7 +127,7 @@ app.get('/subreddits', function(request, response) {
     1. Get all subreddits with RedditAPI
     2. Render some HTML that lists all the subreddits
      */
-    
+
     response.send("TO BE IMPLEMENTED");
 });
 
