@@ -1,7 +1,5 @@
 extends layout.pug
-
-block content
-
+block append content
     h1 Login
     form(action="/auth/login" method="POST")
         p Username:
