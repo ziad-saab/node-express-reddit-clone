@@ -18,6 +18,7 @@ var authController = require('./controllers/auth.js');
 var RedditAPI = require('./lib/reddit.js');
 var connection = mysql.createPool({
     user: 'root',
+    password: 'root',
     database: 'reddit'
 });
 var myReddit = new RedditAPI(connection);
@@ -106,13 +107,31 @@ app.get('/', function(request, response) {
 });
 
 // Listing of subreddits
-app.get('/subreddits', function(request, response) {
+app.get('/r/:subreddit', function(request, response) {
     /*
     1. Get all subreddits with RedditAPI
     2. Render some HTML that lists all the subreddits
      */
-    
-    response.send("TO BE IMPLEMENTED");
+    myReddit.getSubredditByName(request.params.subreddit)
+    .then(result => {
+
+        console.log(result.id);
+
+        if (result === null) {
+            response.status(404);
+        }
+        else {
+            myReddit.getAllPosts(result.name)
+            .then(posts => {
+                response.render('homepage', {posts: posts, subreddit: result});
+            })
+            .catch(function(error) {
+                response.render('error', {error: error});
+            })
+        }
+
+    })
+
 });
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.

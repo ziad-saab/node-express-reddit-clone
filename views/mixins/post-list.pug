@@ -1,4 +1,6 @@
 mixin postList(posts)
+    if subreddit
+        h2 Subreddit # #{subreddit.id}: #{subreddit.name} #{subreddit.description}
     ul.post-list
         each post in posts
             li.post
