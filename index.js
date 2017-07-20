@@ -137,6 +137,23 @@ app.get('/r/:subreddit', function(request, response) {
     });
 });
 
+app.get('/u/:username', (request, response) => {
+    console.log("Username=",request.params.username);
+    myReddit.getPostsForUsername(request.params.username)
+    .then(posts => {
+        console.log("Posts in GET",posts);
+        if (posts === null) {
+            response.status(404).send('Username not found');
+        }
+        else {
+            response.render('homepage', {posts: posts});
+        }
+    })
+    .catch(error => {
+        response.render('error', {error: error});
+    });
+});
+
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
     //console.log(request.params.method); //Test
@@ -148,11 +165,20 @@ app.get('/sort/:method', function(request, response) {
 
 app.get('/post/:postId', function(request, response) {
     //console.log(request.params);
-    myReddit.getSinglePost(+request.params.postId)
-    .then(post => {
-        console.log(post);
-        response.render('post-info', {post: post});
-    })
+    // *** To-Do! ***
+    //Need to Promise.all single post and comments for the post!!
+    Promise.all([myReddit.getSinglePost(+request.params.postId), myReddit.getCommentsForPost(+request.params.postId,1)])
+    .then(result => {
+        console.log(result);
+        if (result === null) {
+            response.status(404).send('Error fetching post');
+        }
+        else {
+            var post = result[0];
+            var comments = result[1];
+            response.render('post-info', {post: post, comments: comments});            
+        }
+    });
 });
 
 /*
@@ -173,7 +199,7 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
     };
     myReddit.createVote(myVote)
     .then(result => {
-        response.redirect('/');
+        response.redirect('back'); //Redirect to the current page
     });
 });
 

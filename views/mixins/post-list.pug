@@ -1,16 +1,20 @@
 mixin postList(posts)
     if subreddit
-        h2 Subreddit #{subreddit.name} #{subreddit.description}
+        h2 Subreddit #{subreddit.name}
+        p #{subreddit.description}
     ul.post-list
         each post in posts
             li.post
                 h2
-                    a(href=post.url, target="_blank")= post.title
+                    a(href="/post/" + post.id)= post.title
+                p 
+                    a(href=post.url, target="_blank")= post.url
                 p Submitted by 
                     a(href="/u/" + post.user.username)= post.user.username
                     span  in 
                     a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
                 p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+                span
                 form(action="/vote" method="post")
                     input(type='hidden' name='postId' value=post.id)
                     button(type='submit' name='vote' value=1) Upvote This!
