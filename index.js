@@ -98,6 +98,7 @@ app.use('/static', express.static(__dirname + '/public'));
 
 // Regular home Page
 app.get('/', function(request, response) {
+    response.locals.isSubreddit = false; 
     myReddit.getAllPosts()
     .then(function(posts) {
         response.render('homepage', {posts: posts});
@@ -119,7 +120,30 @@ app.get('/subreddits', function(request, response) {
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
 app.get('/r/:subreddit', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    //response.send("TO BE IMPLEMENTED");
+    return myReddit.getSubredditByName(request.params.subreddit)
+    .then(result => {
+       if (result === null)
+       {
+            //response.send("No such subreddit");
+            response.sendStatus(404);
+       }
+       else
+       {
+           response.locals.isSubreddit = result;
+           console.log("The result is" + result);
+           return result;
+       }
+    })
+    .then(result=>{
+        myReddit.getAllPosts(result.name)
+        .then(posts => {
+           response.render('homepage',{posts: posts});
+        })
+        .catch(error => {
+            response.render('error', {error: error});
+        });
+    });
 });
 
 // Sorted home page

@@ -23,7 +23,7 @@ module.exports = function(myReddit) {
     //Login Get
     authController.get('/login', function(request, response) {
         //authController.use(cookieParser()); //No need anymore. Put on top
-/*        if(request.cookies.SESSION)
+        if(request.cookies.SESSION)
         {
             console.log("You are already logged in"); //Switch it up with a template here
             response.redirect('/');
@@ -31,12 +31,13 @@ module.exports = function(myReddit) {
         else
         {
             response.render('login-form');
-        }*/
-        response.render('login-form');
+        }
+        //response.render('login-form');
     });
+    
+    
     //Login Post
     authController.post('/login', urlBodyParser, function(request, response) {
-        //response.send("TO BE IMPLEMENTED");
         if (!request.body) return response.sendStatus(400);
     
         myReddit.checkUserLogin(request.body.username, request.body.password)
@@ -46,6 +47,7 @@ module.exports = function(myReddit) {
         })
         .then(result => {
             //authController.use(cookieParser()); //No need anymore. Put on top
+            //Set cookie
             response.cookie('SESSION', result); //SESSION can be accessed as request.cokkies.SESSION
             console.log('Successfully Logged In');
             response.redirect('/');
@@ -58,10 +60,11 @@ module.exports = function(myReddit) {
             
     });
     
+    
     //Sign Up Get
     authController.get('/signup', function(request, response) {
         //authController.use(cookieParser()); //No need anymore. Put on top
-/*        if(request.cookies.SESSION)
+        if(request.cookies.SESSION)
         {
             console.log("Log out to create new user"); //Switch it up with a template here
             response.redirect('/');
@@ -69,9 +72,10 @@ module.exports = function(myReddit) {
         else
         {
             response.render('signup-form');
-        }*/
-        response.render('signup-form');
+        }
+        //response.render('signup-form');
     });
+    
     
     //Sign Up Post
     authController.post('/signup', urlBodyParser, function(request, response) {
@@ -97,6 +101,21 @@ module.exports = function(myReddit) {
        response.render('error'); 
     });
     
+    //FOR LOGGING OUT
+    authController.get('/logout', function(request, response) {
+        response.locals.logoutForm = true;
+        response.render('logout-form');
+    });
+    
+    authController.post('/logout', function(request, response) {
+        myReddit.deleteSessionFromToken(request.cookies.SESSION)
+        .then(result => { //NTS:then cause promises are async
+            response.clearCookie("SESSION");
+            console.log("You Logged Out");
+            response.locals.logoutForm = false;
+            response.redirect('/'); 
+        });
+    });
     return authController;
 };
 

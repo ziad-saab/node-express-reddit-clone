@@ -21,7 +21,7 @@
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `reddit` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-USE `reddit`;
+USE `reddit2`;
 
 --
 -- Dumping data for table `comments`

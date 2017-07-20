@@ -7,8 +7,12 @@ html
             title Redit Clone
     body
         header
-            if loggedInUser
+            if loggedInUser && !logoutForm
                 p Welcome #{loggedInUser.username}
+                a(href="/auth/logout") Logout
+            else if loggedInUser && logoutForm
+                p #{loggedInUser.username} would you like to log out?
+                p Click button to logout
             else
                 ul
                     li

@@ -1,6 +1,9 @@
 mixin postList(posts)
     ul.post-list
         each post in posts
+            if isSubreddit
+                h2 Welcome To r/#{isSubreddit.name}
+                h3 #{isSubreddit.description}
             li.post
                 h2
                     a(href=post.url, target="_blank")= post.title
