@@ -311,7 +311,7 @@ The first thing you'll have to do is complete the signup and login features of t
     ```
   Make sure that your `pug` file extends the `layout.pug` so that your signup form gets output with all the surrounding HTML.
   
-  Then, implement the code of `app.post('/signup')`. This code will receive the form data under `request.body`. There, you have to call `myReddit.createUser` and pass it the necessary info. Once the `createUser` promise is resolved, use `response.redirect` to send the user to `/auth/login`.
+  Then, implement the code of `authController.post('/signup')`. This code will receive the form data under `request.body`. There, you have to call `myReddit.createUser` and pass it the necessary info. Once the `createUser` promise is resolved, use `response.redirect` to send the user to `/auth/login`.
 
 2. Login
   In `controllers/auth.js`, make the `app.get('/login')` render an HTML login form. To do this, add a file `views/login-form.pug` and make it output the following form:
@@ -326,7 +326,7 @@ The first thing you'll have to do is complete the signup and login features of t
     ```
   This form is super similar to the signup form, except for the `action`. Make sure that your `pug` file extends the `layout.pug` so that your signup form gets output with all the surrounding HTML.
 
-  Then, implement the code of `app.post('/login')`. To do this, you'll need to complete some code in `lib/reddit.js`:
+  Then, implement the code of `authController.post('/login')`. To do this, you'll need to complete some code in `lib/reddit.js`:
   
   1. In `lib/reddit.js`, complete the code of the `checkUserLogin` function following the instructions in comments.
   2. In `lib/reddit.js`, complete the code of the `createUserSession` function following the instructions in comments.
