@@ -99,13 +99,14 @@ app.use('/static', express.static(__dirname + '/public'));
 // Regular home Page
 app.get('/', function(request, response) {
     response.locals.isSubreddit = false; 
-    myReddit.getAllPosts()
+    myReddit.getAllPosts(undefined)
     .then(function(posts) {
+        console.log('These are the homepage posts' + posts);
         response.render('homepage', {posts: posts});
     })
     .catch(function(error) {
         response.render('error', {error: error});
-    })
+    });
 });
 
 // Listing of subreddits
@@ -120,7 +121,7 @@ app.get('/subreddits', function(request, response) {
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
 app.get('/r/:subreddit', function(request, response) {
-    //response.send("TO BE IMPLEMENTED");
+    //
     return myReddit.getSubredditByName(request.params.subreddit)
     .then(result => {
        if (result === null)
@@ -130,7 +131,7 @@ app.get('/r/:subreddit', function(request, response) {
        }
        else
        {
-           response.locals.isSubreddit = result;
+           response.locals.isSubreddit = result;    //for pug,this is true now
            console.log("The result is" + result);
            return result;
        }
@@ -138,19 +139,20 @@ app.get('/r/:subreddit', function(request, response) {
     .then(result=>{
         //myReddit.getAllPosts(result.name)
         //giving it the object result, then I will do onject.hasOwnProperty(name) in getAllPost() function
-        console.log('result is: ' + result)
-        myReddit.getAllPosts(result) 
-        .then(posts => {
-           response.render('homepage',{posts: posts});
-        })
-        .catch(error => {
-            response.render('error', {error: error});
-        });
+        console.log('result is: ' + result);
+        return myReddit.getAllPosts(result);
+    })
+    .then(posts => {
+       response.render('homepage',{posts: posts});
+    })
+    .catch(error => {
+        response.render('error', {error: error});
     });
 });
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
+    // since I need to return them as promise, using resolve()
     return Promise.resolve()
     .then(result =>{
         var method = {};
@@ -166,9 +168,42 @@ app.get('/sort/:method', function(request, response) {
         }
     })
     .then(result => {
-       //print sorted data out to webpage 
+       //print sorted data out to webpage
+       response.locals.isSubreddit = false;
+       response.render('homepage',{posts: result});
+    })
+    .catch(error => {
+        response.render('error', {error: error});
     });
     //response.send("TO BE IMPLEMENTED");
+});
+
+//sorted Subreddit
+app.get('/r/:subreddit/:method', function(request, response){
+   return myReddit.getSubredditByName(request.params.subreddit)
+   .then(result => {
+        var parameters = {};
+        parameters.sortMethod = request.params.method;
+        parameters.name = request.params.subreddit;
+        parameters.description = result.description;
+        if (parameters.sortMethod !== "hot" && parameters.sortMethod !== "top")
+        {
+            console.log('Invalid sort method: '+ parameters.sortMethod);
+            response.sendStatus(404);
+        }
+        else
+        {
+            response.locals.isSubreddit = parameters;
+            console.log(response.locals.isSubreddit);
+            return myReddit.getAllPosts(parameters);
+        }
+   })
+   .then(result => {
+        response.render('homepage',{posts: result});
+   })
+   .catch(error => {
+       response.render('error', {error: error});
+   });
 });
 
 app.get('/post/:postId', function(request, response) {

@@ -1,9 +1,29 @@
 mixin postList(posts)
     ul.post-list
+        if isSubreddit
+            - var subName = isSubreddit.name
+            - var subDesc = isSubreddit.description
+            
+            h2 Welcome To r/#{isSubreddit.name}
+            h3 #{isSubreddit.description}
+            h3 SORT POSTS BY:
+            ul
+                li
+                    a(href="/r/" + subName + "/top") TOP 
+                li
+                    a(href="/r/" + subName + "/hot") HOT
+                li
+                    a(href="/r/" + subName) NEW
+        else
+            h3 SORT POSTS BY:
+                li
+                    a(href="/sort/top") TOP
+                li
+                    a(href="/sort/hot") HOT
+                li
+                    a(href="/") NEW
+        
         each post in posts
-            if isSubreddit
-                h2 Welcome To r/#{isSubreddit.name}
-                h3 #{isSubreddit.description}
             li.post
                 h2
                     a(href=post.url, target="_blank")= post.title
