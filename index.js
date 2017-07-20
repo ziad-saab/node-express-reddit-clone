@@ -117,12 +117,14 @@ app.get('/r/:subreddit', function(request, response) {
 
         console.log(result.id);
 
-        if (result === null) {
+        if (result === undefined) {
             response.status(404);
         }
         else {
             myReddit.getAllPosts(result.name)
+
             .then(posts => {
+                console.log(posts);
                 response.render('homepage', {posts: posts, subreddit: result});
             })
             .catch(function(error) {
@@ -141,7 +143,12 @@ app.get('/r/:subreddit', function(request, response) {
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
+
+    
+
+
     response.send("TO BE IMPLEMENTED");
+
 });
 
 app.get('/post/:postId', function(request, response) {
