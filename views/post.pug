@@ -14,14 +14,17 @@ block content
 		input(type='hidden' name='commentPostId' value=post.id)
 		textarea(type='text' name='commentText' placeholder='Write your comment here!')
 		button(type='submit' name='commentButton') Comment
-	ul 
+	ul.comment-list
 		each comment in comments
 			li.comment
+				h3 #{comment.text}
+				h3 by: #{comment.user.username}
 				p Score: #{comment.voteScore} Upvotes: #{comment.numUpvotes} Downvotes: #{comment.numDownvotes}
 				form(action='/vote' method='POST')
 					input(type="hidden" name="commentId" value= comment.id) 
 					button(type="submit" name="vote" value=1) upvote this
 					button(type="submit" name="vote" value=-1) downvote this
+
 
 
 

@@ -161,12 +161,18 @@ app.get('/sort/:method', function(request, response) {
 });
 
 app.get('/post/:postId', function(request, response) {
-    var comments = [];
+    var post = {};
     myReddit.getSinglePost(request.params.postId)
-    .then(post => {
-        //console.log(post, "This is supposed to be a post");
+    .then(postObj => {
+        //console.log(postObj, "before getCommentsForPost")
+        post = postObj;
+        //console.log(post, "Post object after get Single Post")
+        return myReddit.getCommentsForPost(postObj.id)
+    })
+    .then(comments => {
+        console.log(comments, "Comments after getCommentsForPost")
+        //console.log(post, "Post after getCommentForPost")
         response.render('post', {post: post, comments: comments});
-        
     })
 });
 
