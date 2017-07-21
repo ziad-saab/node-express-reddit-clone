@@ -20,24 +20,24 @@ html
                         li(style="float:right")
                             a(href="/logout") Logout
                 br
-                ul.MainMenu
+                ul.MainMenu.Navigation
                     li
                         a(href="/") Home
-                    li
-                        a(href='/sort/top/') Top Scored Posts
-                    li
-                        a(href='/sort/hot/') Hottest Posts
-                    li
-                        a(href='/sort/commented/') Most Commented
+                    li.dropdown
+                        a(href="javascript:void(0)" class="dropdown-button") Sort Posts
+                        div.dropdown-list
+                            a(href='/sort/top/') Top Scored
+                            a(href='/sort/hot/') Hottest
+                            a(href='/sort/commented/') Most Commented
                     if loggedInUser
                         li
                             a(href='/createPost/') Create Post
                     li(style="float:right")
-                        a(href='/subreddit/') Subreddit
+                        a(href='/subreddits/') Subreddits
 
         main
             block content
         footer &copy; 2017 Chhaya Tuok
         script(src="https://code.jquery.com/jquery-2.2.4.js", integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=", crossorigin="anonymous")
-        //script
-        //    include ../lib/fetches.js
+        script
+            include ../lib/sticky-menu.js

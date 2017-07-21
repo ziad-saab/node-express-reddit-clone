@@ -37,11 +37,48 @@ li:last-child {
 .MainMenu a:hover {
     /* skyblue 35% #1a7599 */
     background-color: #1a7599;
+    color: gold;
 }
 
 .MainMenu .no-hover:hover {
     background-color: transparent;
+    color: white;
 }
+
+/* ===== Menu dropdown logic ===== */
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-list {
+    display: none;
+    position: absolute;
+    background-color: #51b8e1;
+    /*min-width: 160px;*/
+    /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-list {
+    display: block;
+    color: gold;
+}
+
+.dropdown-list a {
+    color: white;
+    /*padding: 12px 16px;*/
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+/* =END= Menu dropdown logic =END= */
+
+/* Test
+.MainMenu.Navigation a {
+    color: crimson;
+}
+*/
+
 
 .post-list {
     /*background-color: #ABDDF1;*/
@@ -75,9 +112,27 @@ li:last-child {
     font-size: 1em;
 }
 
+.post div:hover, .comment div:hover {
+    background-color: #fff099;
+    border-right: 2px solid gold;
+    border-bottom: 2px solid gold;
+}
+
+/* etc stuff */
+h1 {
+    color: #0f4357;
+}
+
 textarea {
     height: 200px;
     width: 70%;
+}
+
+footer {
+    background-color: #51b8e1;
+    color: white;
+    text-align: left;
+    padding: 2px 16px;
 }
 
 .loginError {

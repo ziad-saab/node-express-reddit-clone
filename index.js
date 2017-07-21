@@ -117,8 +117,11 @@ app.get('/subreddits', function(request, response) {
     1. Get all subreddits with RedditAPI
     2. Render some HTML that lists all the subreddits
      */
-    
-    response.send("TO BE IMPLEMENTED");
+    myReddit.getAllSubreddits()
+    .then(subreddits => {
+        response.render('subreddit-list', {subreddits: subreddits});
+    });
+    //response.send("TO BE IMPLEMENTED");
 });
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
