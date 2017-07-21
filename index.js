@@ -174,16 +174,18 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
+//so far this function can return vote data (except post id) but cannot insert it 
+//into the database and cannot display votes
     var vote = {
-        postId: request.body.postId,
-        userId: request.loggedInUser,
+        postId: request.body.id,
+        userId: request.loggedInUser.userId,
         voteDirection: request.body.vote
     }
     myReddit.createVote(vote)
-    .then(function(vote) {
-      
-    })
-    
+    .then(vote.results) 
+        console.log(vote);
+        response.end
+    });
     
     
     // .then(vote => {
@@ -209,7 +211,7 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
     // .then(result => {
     //         return result.insertId;
     //     });
-});
+// });
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
