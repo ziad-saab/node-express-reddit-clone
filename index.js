@@ -154,7 +154,26 @@ app.get('/sort/:method', function(request, response) {
 });
 
 app.get('/post/:postId', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    Promise.all([
+        myReddit.getSinglePost(request.params.postId),
+        myReddit.getCommentsForPost(request.params.postId)
+    ]).then( data => {
+        console.log(data)
+        // if the promise post returns an error, 404... 
+        var post = data[0];
+        var comments = data[1];
+        
+        if (!post) {
+            // 404
+        }
+        // 
+        response.render('post', { post: post, comments: comments}); 
+    });
+    
+    
+    // if the page does not exist, 404
+    // if it does then create a new Pug template that will output that post as well as its comments
+   
 });
 
 /*
