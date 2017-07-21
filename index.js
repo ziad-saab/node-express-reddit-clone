@@ -137,7 +137,20 @@ app.get('/r/:subreddit', function(request, response) {
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    console.log(request.params.method)
+    if (request.params.method === "hot" || request.params.method === "top") {
+        myReddit.getAllPosts(request.params.subreddit, request.params.method)
+        .then( result => {
+            response.render('homepage', {posts: result});
+        })
+        .catch(error => {
+            response.send("method fail");
+        })
+    } else {
+        response.status(404).send(" UNAUTHORIZED not hot or top")
+    }
+    
+    
 });
 
 app.get('/post/:postId', function(request, response) {

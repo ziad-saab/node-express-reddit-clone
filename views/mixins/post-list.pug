@@ -1,7 +1,7 @@
 mixin postList(posts)
     ul.post-list
         each post in posts
-            li.post
+            li.post.subreddit.name
                 h2
                     a(href=post.url, target="_blank")= post.title
                     p Submitted by
