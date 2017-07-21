@@ -17,6 +17,7 @@ var authController = require('./controllers/auth.js');
  */
 var RedditAPI = require('./lib/reddit.js');
 var connection = mysql.createPool({
+
     user: 'root',
     password: 'root',
     database: 'reddit'
@@ -127,7 +128,7 @@ app.get('/r/:subreddit', function(request, response) {
             subName = result;
         }
     })
-    .then(result => myReddit.getAllPosts(result.name))
+    .then(result => myReddit.getAllPosts(response.name))
     .then(posts => {
         //console.log(posts);
         response.render('homepage', {posts: posts, subreddit: subName});
@@ -147,7 +148,7 @@ app.get('/r/:subreddit', function(request, response) {
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-    console.log(request.params.method, "parameter method")
+    // console.log(request.params.method, "parameter method")
     if(request.params.method !== "hot" && request.params.method !== "top") {
         response.status(404);
     } else {
@@ -183,8 +184,44 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
-});
+//so far this function can return vote data (except post id) but cannot insert it 
+//into the database and cannot display votes
+    var vote = {
+        postId: request.body.id,
+        userId: request.loggedInUser.userId,
+        voteDirection: request.body.vote
+    }
+    myReddit.createVote(vote)
+    .then(vote.results) 
+        console.log(vote);
+        response.end
+    });
+    
+    
+    // .then(vote => {
+    //         response.redirect('/back');
+    // })
+    // console.log(vote);
+    // res.send(JSON.stringify(
+    // {
+    // console.log(vote)
+    // .then(response.send);
+    // .then(result => {
+    //     // result.send(vote)
+    //     // console.log(vote)
+    // });
+    // .then (response.send('views/mixins/post-list'))
+    
+    // .then(function(response) {
+    //     return response.insertVote;
+    //     })
+    // .then(function(response) {   
+    // response.send(voteInfo);
+    // })
+    // .then(result => {
+    //         return result.insertId;
+    //     });
+// });
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {

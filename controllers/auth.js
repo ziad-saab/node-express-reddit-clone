@@ -25,10 +25,10 @@ module.exports = function(myReddit) {
             console.log("Login User#:")
             console.log(result.id);
             myReddit.createUserSession(result.id)
-            .then(session => {
-                response.cookie("SESSION", session.token);
-                response.redirect('/');
-                return;
+        .then(session => {
+            response.cookie("SESSION", session.token);
+            response.redirect('/');
+            return;
             });
         });
     });
