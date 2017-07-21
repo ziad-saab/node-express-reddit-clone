@@ -1,3 +1,4 @@
+"use strict";
 var express = require('express');
 var mysql = require('promise-mysql');
 
@@ -18,8 +19,8 @@ var authController = require('./controllers/auth.js');
 var RedditAPI = require('./lib/reddit.js');
 var connection = mysql.createPool({
 
-    user: 'root',
-    password: 'root',
+    user: 'marissacodes',
+    password: '',
     database: 'reddit'
 });
 var myReddit = new RedditAPI(connection);
@@ -154,7 +155,6 @@ app.get('/sort/:method', function(request, response) {
     } else {
         myReddit.getAllPosts("", request.params.method)
         .then(posts => {
-        //console.log(posts);    
         response.render('homepage', {posts: posts, method: response});
     });
     }
@@ -162,16 +162,11 @@ app.get('/sort/:method', function(request, response) {
 });
 
 app.get('/post/:postId', function(request, response) {
-
-    //console.log(request.params.postId, "the params");
-
     myReddit.getSinglePost(request.params.postId)
     .then(post => {
         console.log(post, "This is supposed to be a post");
         response.render('post', {post: post});
     })
-
-    //response.send("TO BE IMPLEMENTED");
 });
 
 /*
@@ -184,44 +179,14 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
-//so far this function can return vote data (except post id) but cannot insert it 
-//into the database and cannot display votes
     var vote = {
-        postId: request.body.id,
+        postId: Number(request.body.postId),
         userId: request.loggedInUser.userId,
-        voteDirection: request.body.vote
+        voteDirection: Number(request.body.vote)
     }
     myReddit.createVote(vote)
-    .then(vote.results) 
-        console.log(vote);
-        response.end
-    });
-    
-    
-    // .then(vote => {
-    //         response.redirect('/back');
-    // })
-    // console.log(vote);
-    // res.send(JSON.stringify(
-    // {
-    // console.log(vote)
-    // .then(response.send);
-    // .then(result => {
-    //     // result.send(vote)
-    //     // console.log(vote)
-    // });
-    // .then (response.send('views/mixins/post-list'))
-    
-    // .then(function(response) {
-    //     return response.insertVote;
-    //     })
-    // .then(function(response) {   
-    // response.send(voteInfo);
-    // })
-    // .then(result => {
-    //         return result.insertId;
-    //     });
-// });
+    response.redirect('/')
+});
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
@@ -232,7 +197,7 @@ app.get('/createPost', onlyLoggedIn, function(request, response) {
     })
     .catch(function(error) {
         response.render('error', {error: error});
-    })
+    });
 
 });
 
@@ -251,8 +216,7 @@ app.post('/createPost', onlyLoggedIn, function(request, response) {
     myReddit.createPost(postInfo)
     .then(postId => {
         response.redirect('/post/' + postId);
-    })
-
+    });
 });
 
 
