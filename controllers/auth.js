@@ -29,7 +29,6 @@ module.exports = function(myReddit) {
     });
     
     authController.post('/signup', function(request, response) {
-        //response.send("TO BE IMPLEMENTED");
         console.log(request.body);
         myReddit.createUser(request.body)
         .then(user => {

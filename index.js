@@ -256,3 +256,10 @@ app.listen(port, function() {
         console.log('Web server is listening on http://localhost:' + port);
     }
 });
+
+app.get('/logout', onlyLoggedIn, (request, response) => {
+    myReddit.deleteUserSession(+request.loggedInUser.userId)
+    .then(result => {
+        response.redirect('back'); //Redirect to the current page
+    });
+});

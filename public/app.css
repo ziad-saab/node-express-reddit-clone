@@ -3,20 +3,30 @@ body {
     font-family: Helvetica, arial, sans-serif;
 }
 
-ul.MainMenu{
+.active {
+    background-color: #4CAF50;
+}
+
+.MainMenu{
+    /* skyblue 60% #51b8e1 */
+    background-color: #51b8e1;
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    /* skyblue 60% #51b8e1 */
-    background-color: #51b8e1;
 }
 
-ul.MainMenu li {
+.MainMenu li {
     float: left;
+    border-right: 2px solid #fff;
 }
 
-ul.MainMenu li a {
+li:last-child {
+    border-right: none;
+    border-left: 2px solid #fff;
+}
+
+.MainMenu a {
     display: block;
     color: white;
     text-align: center;
@@ -24,11 +34,41 @@ ul.MainMenu li a {
     text-decoration: none;
 }
 
-ul.MainMenu li a:hover {
+.MainMenu a:hover {
     /* skyblue 35% #1a7599 */
     background-color: #1a7599;
 }
 
-.active {
-    background-color: #4CAF50;
+.MainMenu .no-hover:hover {
+    background-color: transparent;
+}
+
+.post-list {
+    /*background-color: #ABDDF1;*/
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.post:nth-child(odd) {
+    background-color: #D5EEF8;
+    /*padding: 2px 2px;*/
+    text-decoration: none;  
+}
+
+.post:nth-child(even) {
+    background-color: #ABDDF1;
+    /*padding: 2px 2px;*/
+    text-decoration: none;  
+}
+
+.comment-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.comment:nth-child(odd) {
+    background-color: lightcyan;
+    font-size: 1em;
 }

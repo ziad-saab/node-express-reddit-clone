@@ -8,7 +8,19 @@ html
     body
         header
             h3
-                ul(class='MainMenu')
+                ul.MainMenu
+                    if !loggedInUser
+                        li
+                            a(href="/auth/signup") Signup
+                        li
+                            a(href="/auth/login") Login
+                    else
+                        li.no-hover
+                            a.no-hover Welcome #{loggedInUser.username} 
+                        li(style="float:right")
+                            a(href="/logout") Logout
+                br
+                ul.MainMenu
                     li
                         a(href="/") Home
                     li
@@ -17,20 +29,12 @@ html
                         a(href='/sort/hot/') Hottest Posts
                     li
                         a(href='/sort/commented/') Most Commented
-                    li
+                    li(style="float:right")
                         a(href='/subreddit/') Subreddit
 
-            if loggedInUser
-                p Welcome #{loggedInUser.username}
-            else
-                ul
-                    li
-                        a(href="/auth/signup") Signup
-                    li
-                        a(href="/auth/login") Login
         main
             block content
-        footer &copy; 2017 blah
+        footer &copy; 2017 Chhaya Tuok
         script(src="https://code.jquery.com/jquery-2.2.4.js", integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=", crossorigin="anonymous")
         //script
         //    include ../lib/fetches.js
