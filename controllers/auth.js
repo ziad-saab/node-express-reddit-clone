@@ -50,7 +50,7 @@ module.exports = function(myReddit) {
         .then(result => {
             //authController.use(cookieParser()); //No need anymore. Put on top
             //Set cookie
-            response.cookie('SESSION', result); //SESSION can be accessed as request.cokkies.SESSION
+            response.cookie('SESSION', result); //SESSION can be accessed as request.cookies.SESSION
             console.log('Successfully Logged In');
             response.redirect('/');
         })

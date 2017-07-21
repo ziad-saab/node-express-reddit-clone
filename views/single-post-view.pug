@@ -1,0 +1,9 @@
+extend layout
+include mixins/comment-list
+
+block title
+    title Showing you the post
+
+block content
+    h1 Welcome to Reddit!!
+    +commentList(comments)

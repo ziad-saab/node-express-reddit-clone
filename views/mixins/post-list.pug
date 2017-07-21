@@ -25,26 +25,27 @@ mixin postList(posts)
         
         if loggedInUser
             each post in posts
+                -var postId = post.id
                 li.post
                     form(action = "/vote", method = "POST")
                         h2
                             a(href=post.url, target="_blank")= post.title
-                            p Submitted by
-                                a(href="/u/" + post.user.username)= post.user.username
-                                span  in
-                                a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
+                            p Submitted by 
+                                a(href="/u/" + post.user.username) u/#{post.user.username}
+                                span  in 
+                                a(href="/r/" + post.subreddit.name) r/#{post.subreddit.name}
                             p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
                             p
-                                input(type="hidden", name="postId")
-                                button(type="submit") Upvote This
-                                button(type="submit") Downvote This
+                                input(type="hidden", name="postId" value = postId)
+                                button(type="submit", name = "voteDirection" value = 1) Upvote
+                                button(type="submit", name = "voteDirection" value = -1) Downvote
         else
             each post in posts
                 li.post
                     h2
                         a(href=post.url, target="_blank")= post.title
-                        p Submitted by
-                            a(href="/u/" + post.user.username)= post.user.username
-                            span  in
-                            a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
+                        p Submitted by 
+                            a(href="/u/" + post.user.username) u/#{post.user.username}
+                            span  in 
+                            a(href="/r/" + post.subreddit.name) r/#{post.subreddit.name}
                         p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}

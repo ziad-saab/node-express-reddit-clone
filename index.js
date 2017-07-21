@@ -211,35 +211,29 @@ app.get('/r/:subreddit/:method', function(request, response){
 
 app.get('/post/:postId', function(request, response) {
     //response.send("TO BE IMPLEMENTED");
-   return Promise.all([myReddit.getSinglePost(request.params.postId), myReddit.getCommentsForPost(request.params.postId)])
+    response.locals.singlePost = false;
+    return Promise.all([myReddit.getSinglePost(request.params.postId), myReddit.getCommentsForPost(request.params.postId)])
     .then(result => {
         //get single post returns A SINGLE POST, not an array
-        if(result[0].length === 0)
+        console.log(result[0]);
+        //case 1, No existing post
+        if(result[0].id === null)
         {
             //post dont exist
-            console.log("result of promise all is:" + result);
-            console.log("result of first promise length:" + result[0].length);
-            //console.log("result of second promise:" + result[1]);
-            console.log("result of second promise length:" + result[1].length);
-            response.sendStatus("NO SUCH POST ID");
-            //response.sendStatus(404);
+            //console.log("result of first promise length:" + JSON.stringify(result[0]));
+            //console.log("result of second promise length:" + result[1].length);
+            //response.send("NO SUCH POST ID");
+            response.sendStatus(404);
         }
-        else if (result[0].length === 0 && result[1].length === 0)
-        {
-            response.sendStatus("NO Comments on post");
-        } 
+        //case 2, post found
         else
         {
-            console.log("result of first promise:" + result[0].length);
-            console.log("result of second promise:" + result[1].length);
-            response.sendStatus("POST ID WAS FOUND");
-            //response.redirect('/');  
+            response.locals.singlePost = result[0];
+            //the name comments must be used in the each in pug
+            //ie, for each comment in *comments*
+            response.render('single-post-view', {comments: result[1]});
         }
-    });
-    
-    return myReddit.getCommentsForPost(request.params.postId)
-    .then(result => {
-       console.log("Comments are " +result); 
+        //case 3 There are comments
     });
 });
 
@@ -253,7 +247,23 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    //response.send("TO BE IMPLEMENTED");
+    return Promise.resolve()
+    .then(()=>{
+        console.log("creating vote")
+        var vote = {};
+        vote.postId = Number(request.body.postId);
+        vote.userId = request.loggedInUser.id;
+        vote.voteDirection = Number(request.body.voteDirection);
+        console.log("My Vote Object is" + JSON.stringify(vote));
+        return myReddit.createVote(vote);
+    })
+    .then(result => {
+        response.redirect('back');
+    })
+    .catch(error =>{
+        console.log(error.stack);
+    })
 });
 
 // This handler will send out an HTML form for creating a new post

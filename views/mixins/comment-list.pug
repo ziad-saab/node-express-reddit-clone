@@ -1,0 +1,45 @@
+mixin commentList(comments)
+    -var postURL = singlePost.url
+    -var postCreator = singlePost.user.username
+    -var postSubreddit = singlePost.subreddit.name
+    -var postId = singlePost.id
+    
+    if loggedInUser
+        form(action = "/vote", method = "POST")
+            h2
+                a(href=postURL, target="_blank")= singlePost.title 
+                p Submitted by 
+                    a(href="/u/" + postCreator) u/#{singlePost.user.username}
+                    span  in 
+                    a(href="/r/" + postSubreddit) r/#{singlePost.subreddit.name}
+                p Score: #{singlePost.voteScore} Upvotes: #{singlePost.numUpvotes} Downvotes: #{singlePost.numDownvotes}
+                p
+                    input(type="hidden", name="postId" value = postId)
+                    button(type="submit", name = "voteDirection" value = 1) Upvote
+                    button(type="submit", name = "voteDirection" value = -1) Downvote
+        
+            ul.comment-list
+                each comment in comments
+                    -var commentCreator = comment.user.username 
+                    li.comment
+                        p 
+                            a(href="/u/" + commentCreator) u/#{comment.user.username} 
+                            span #{comment.updatedAt}
+                        p #{comment.text}
+    else
+        h2
+            a(href=postURL, target="_blank")= singlePost.title 
+            p Submitted by 
+                a(href="/u/" + postCreator) u/#{singlePost.user.username}
+                span  in 
+                a(href="/r/" + postSubreddit) r/#{singlePost.subreddit.name}
+            p Score: #{singlePost.voteScore} Upvotes: #{singlePost.numUpvotes} Downvotes: #{singlePost.numDownvotes}
+
+        ul.comment-list
+            each comment in comments
+                -var commentCreator = comment.user.username 
+                li.comment
+                    p 
+                        a(href="/u/" + commentCreator) u/#{comment.user.username} 
+                        span #{comment.updatedAt}
+                    p #{comment.text}
