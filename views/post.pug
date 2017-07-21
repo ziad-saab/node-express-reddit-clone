@@ -1,0 +1,47 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        link(rel="stylesheet", href="/static/app.css")
+        link(href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet")
+        link(href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet")
+        block title
+            title ReadIt....be LOUD!!!!
+    body
+        header
+            div.logo
+                a(href='/')
+                    img(src='https://scontent.fybz2-1.fna.fbcdn.net/v/t1.0-9/20229156_1861642260755928_4405919261133155382_n.png?oh=b6b88077844cdd589e4b004b9c2a42e5&oe=59F9EDB4')
+            if loggedInUser
+                p Welcome #{loggedInUser.username}
+            else
+                div.credentials
+                    ul
+                        li
+                            a(href="/auth/signup") Signup
+                        li
+                            a(href="/auth/login") Login
+        main
+        h1 #{post.subreddit.name}
+        p Post Title: #{post.title}
+        p Post URL: 
+            a(href=post.url, target="_blank")= post.url
+        p Created At: #{post.createdAt}
+        p Updated At: #{post.updatedAt}
+        p Post created by: #{post.user.username}
+        p Vote score: #{post.voteScore}
+        p Make a comment:
+        form(action="/createComment" method="POST")
+            input(type='hidden' name='commentPostId' value=post.id)
+            textarea(type='text' name='commentText' placeholder='Write your comment here!')
+            button(type='submit' name='commentButton') Comment
+        ul.comment-list
+            each comment in comments
+                li.comment
+                    h3 #{comment.text}
+                    h3 by: #{comment.user.username}
+                    p Score: #{comment.voteScore} Upvotes: #{comment.numUpvotes} Downvotes: #{comment.numDownvotes}
+                    form(action='/vote' method='POST')
+                        input(type="hidden" name="commentId" value= comment.id) 
+                        button(type="submit" name="vote" value=1) upvote this
+                        button(type="submit" name="vote" value=-1) downvote this
