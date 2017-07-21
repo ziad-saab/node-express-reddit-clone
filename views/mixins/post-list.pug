@@ -12,6 +12,6 @@ mixin postList(posts)
                         a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
                     p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
                         form(action='/vote' method='POST')
-                            input(type="hidden" name="postId" value=current post id) //fix the value on this line
+                            input(type="hidden" name="postId" value=current post id)
                             button(type="submit" name="vote" value=1) upvote this
                             button(type="submit" name="vote" value=-1) downvote this

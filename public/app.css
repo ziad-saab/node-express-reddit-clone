@@ -1,3 +1,97 @@
+html {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Helvetica, arial, sans-serif;
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.credentials li {
+    display: flex;
+    flex-direction: row;
+}
+
+li a {
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+ul li  {
+    list-style-type: none;
+}
+
+header ul li a:hover {
+    color: #b2b200;
+}
+
+.credentials {
+    text-align: center;
+}
+
+.credentials ul li {
+    font-size: 140%;
+    line-height: 2;
+    display: inline-block;
+    margin-top: -50px;
+    margin-right: 50px; 
+    padding: 10px;
+}
+
+.credentials ul li a {
+    color: #000;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+
+footer {
+    display: flex;
+    justify-content: center;
+    font-family: 'Architects Daughter', sans-serif;
+}
+
+.home {
+    color: #000;
+    text-align: center;
+}
+
+.home h1 {
+    font-size: 250%;
+    font-family: 'Architects Daughter', sans-serif;
+    background-color: #b2b200;
+    border: 3px solid #000;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.home a {
+    text-decoration: none;
+    color: #007f00;
+}
+
+.home a:hover {
+    color: #b2b200;
+}
+
+p {
+    font-size: 20px;
 }
