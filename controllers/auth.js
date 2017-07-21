@@ -9,7 +9,7 @@ module.exports = function(myReddit) {
    
     
     authController.get('/login', function(request, response) {
-        response.render("login-form");
+        response.render('login-form');
     });
     
     authController.post('/login', function(request, response) {
@@ -41,14 +41,14 @@ module.exports = function(myReddit) {
     
     authController.post('/signup', function(request, response) {
 
-        console.log("User created -> username: " + request.body.username + ", password: " + request.body.password);
+        // console.log("User created -> username: " + request.body.username + ", password: " + request.body.password);
         
         myReddit.createUser({
             username: request.body.username,
             password: request.body.password
         })
 
-        response.redirect('/auth/login');
+        .then (response.redirect('/auth/login'));
 
     });
     
