@@ -15,7 +15,6 @@ mixin postList(posts)
                         span  in 
                         a(href="/r/" + post.subreddit.name) /r/#{post.subreddit.name}
                     p(id='postListScore') Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes} Comments: #{post.numComments}
-                    span
                 div
                     form(action="/vote" method="post")
                         input(type='hidden' name='postId' value=post.id)

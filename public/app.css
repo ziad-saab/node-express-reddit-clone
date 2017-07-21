@@ -1,3 +1,34 @@
 body {
+    background-color: aliceblue;
     font-family: Helvetica, arial, sans-serif;
+}
+
+ul.MainMenu{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* skyblue 60% #51b8e1 */
+    background-color: #51b8e1;
+}
+
+ul.MainMenu li {
+    float: left;
+}
+
+ul.MainMenu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 2px 16px;
+    text-decoration: none;
+}
+
+ul.MainMenu li a:hover {
+    /* skyblue 35% #1a7599 */
+    background-color: #1a7599;
+}
+
+.active {
+    background-color: #4CAF50;
 }

@@ -33,7 +33,7 @@ var app = express();
 
 // Specify the usage of the Pug template engine
 app.set('view engine', 'pug');
-app.use('/static', express.static('static'));
+app.use('/public', express.static('public'));
 
 /*
  This next section specifies the middleware we want to run.
@@ -146,7 +146,7 @@ app.get('/u/:username', (request, response) => {
     //console.log("Username=",request.params.username);
     myReddit.getPostsForUsername(request.params.username)
     .then(posts => {
-        console.log("Posts in GET",posts);
+        //console.log("Posts in GET",posts);
         if (posts === null) {
             response.status(404).send('Username not found');
         }
@@ -169,12 +169,9 @@ app.get('/sort/:method', function(request, response) {
 });
 
 app.get('/post/:postId', function(request, response) {
-    //console.log(request.params);
-    // *** To-Do! ***
-    //Need to Promise.all single post and comments for the post!!
     Promise.all([myReddit.getSinglePost(+request.params.postId), myReddit.getCommentsForPost(+request.params.postId,1)])
     .then(result => {
-        //console.log(result);
+        //console.log(result[0]); //Test
         if (result === null) {
             response.status(404).send('Error fetching post');
         }
@@ -184,13 +181,13 @@ app.get('/post/:postId', function(request, response) {
             //comments.markedText = marked(comments.text);
             //console.log(marked(comments[0].text));
             var markedComments = comments.map(comment => {
-                console.log("TextId =", comment.id);
-                console.log("Text=", comment.text);
+                //console.log("TextId =", comment.id);
+                //console.log("Text=", comment.text);
                 comment.markedText = '';
                 if (comment.text !== null) {
                     comment.markedText = marked(comment.text);
                 }
-                console.log('MarkedText=', comment.markedText);
+                //console.log('MarkedText=', comment.markedText);
                 return comment;
             });
             //console.log("Marked Comments", markedComments);
