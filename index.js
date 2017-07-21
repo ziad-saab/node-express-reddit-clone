@@ -17,8 +17,9 @@ var authController = require('./controllers/auth.js');
  */
 var RedditAPI = require('./lib/reddit.js');
 var connection = mysql.createPool({
-    user: 'marissacodes',
-    password: '',
+
+    user: 'root',
+    password: 'root',
     database: 'reddit'
 });
 var myReddit = new RedditAPI(connection);
@@ -161,7 +162,16 @@ app.get('/sort/:method', function(request, response) {
 });
 
 app.get('/post/:postId', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+
+    //console.log(request.params.postId, "the params");
+
+    myReddit.getSinglePost(request.params.postId)
+    .then(post => {
+        console.log(post, "This is supposed to be a post");
+        response.render('post', {post: post});
+    })
+
+    //response.send("TO BE IMPLEMENTED");
 });
 
 /*
@@ -240,7 +250,7 @@ app.post('/createPost', onlyLoggedIn, function(request, response) {
 
     myReddit.createPost(postInfo)
     .then(postId => {
-            response.redirect('/post/:postId');
+        response.redirect('/post/' + postId);
     })
 
 });

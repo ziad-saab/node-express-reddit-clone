@@ -48,7 +48,6 @@ module.exports = function(myReddit) {
             password: request.body.password
         })
 
-        .then (myReddit.createUser.response)
         .then (response.redirect('/auth/login'));
 
     });
