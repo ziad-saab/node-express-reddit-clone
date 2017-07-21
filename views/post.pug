@@ -2,6 +2,11 @@ extends layout.pug
 
 block content
 
-    h1 Post 
-    
+    h1 #{post.title}
+    a(href=post.url) #{post.url}
+    p Votescore: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+    p Created At: #{post.createdAt}
+    p Created by: #{post.user.username}
     h1 Comments
+    p #{comments[0].text} Created At: #{comments[0].createdAt} 
+    p By: #{comments[0].user.username}

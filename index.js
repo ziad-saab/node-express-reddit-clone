@@ -164,9 +164,11 @@ app.get('/post/:postId', function(request, response) {
         var comments = data[1];
         
         if (!post) {
-            // 404
+            
+          // post looks to return every post.. for some reason. 
+          response.render('404');
         }
-        // 
+        
         response.render('post', { post: post, comments: comments}); 
     });
     
@@ -186,7 +188,20 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    var vote = {
+        postId : +request.body.postId,
+        userId : request.loggedInUser.id,
+        voteDirection : +request.body.vote
+    }
+    console.log(vote, "vote object")
+    myReddit.createVote(vote).then( data => {
+        console.log(data)
+        
+        response.redirect('/')
+        
+        return data;
+    })
+    //response.send("TO BE IMPLEMENTED");
 });
 
 // This handler will send out an HTML form for creating a new post
