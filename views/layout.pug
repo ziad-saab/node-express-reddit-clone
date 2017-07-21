@@ -4,17 +4,40 @@ html
         meta(charset="utf-8")
         link(rel="stylesheet", href="/static/app.css")
         block title
-            title Redit Clone
+            title DecodedReddit
     body
         header
-            if loggedInUser
-                p Welcome #{loggedInUser.username}
-            else
-                ul
+            h3
+                ul.MainMenu
+                    if !loggedInUser
+                        li
+                            a(href="/auth/signup") Signup
+                        li(style="float:right")
+                            a(href="/auth/login") Login
+                    else
+                        li.no-hover
+                            a.no-hover Welcome #{loggedInUser.username} 
+                        li(style="float:right")
+                            a(href="/logout") Logout
+                br
+                ul.MainMenu.Navigation
                     li
-                        a(href="/auth/signup") Signup
-                    li
-                        a(href="/auth/login") Login
+                        a(href="/") Home
+                    li.dropdown
+                        a(href="javascript:void(0)" class="dropdown-button") Sort Posts
+                        div.dropdown-list
+                            a(href='/sort/top/') Top Scored
+                            a(href='/sort/hot/') Hottest
+                            a(href='/sort/commented/') Most Commented
+                    if loggedInUser
+                        li
+                            a(href='/createPost/') Create Post
+                    li(style="float:right")
+                        a(href='/subreddits/') Subreddits
+
         main
             block content
-        footer &copy; 2017 blah
+        footer &copy; 2017 Chhaya Tuok
+        script(src="https://code.jquery.com/jquery-2.2.4.js", integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=", crossorigin="anonymous")
+        script
+            include ../lib/sticky-menu.js

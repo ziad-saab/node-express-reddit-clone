@@ -1,0 +1,14 @@
+extends layout.pug
+
+block content
+    h3 #{subreddits.length} subreddits so far
+    ul.post-list
+        each subreddit in subreddits
+            li.post
+                div
+                    h2
+                        a(href="/r/" + subreddit.name)= subreddit.name
+                    p #{subreddit.description}
+                    p #{subreddit.numPosts} posts
+                        if(subreddit.numPosts > 1)
+                            p Latest post on #{subreddit.latestPost}

@@ -12,11 +12,13 @@
   "license": "ISC",
   "homepage": "https://github.com/ziad-saab/node-express-reddit-clone#readme",
   "dependencies": {
+    "ajax": "0.0.4",
     "bcrypt": "^1.0.2",
     "bcrypt-as-promised": "^1.1.0",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
+    "marked": "^0.3.6",
     "morgan": "^1.7.0",
     "mysql": "^2.13.0",
     "promise-mysql": "^3.0.1",

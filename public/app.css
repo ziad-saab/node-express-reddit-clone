@@ -1,3 +1,194 @@
 body {
+    background-color: aliceblue;
     font-family: Helvetica, arial, sans-serif;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+.MainMenu{
+    /* skyblue 60% #51b8e1 */
+    background-color: #51b8e1;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.MainMenu li {
+    float: left;
+    border-right: 2px solid #fff;
+}
+
+li:last-child {
+    border-right: none;
+    border-left: 2px solid #fff;
+}
+
+.MainMenu a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 2px 10px;
+    text-decoration: none;
+}
+
+.MainMenu a:hover {
+    /* skyblue 35% #1a7599 */
+    background-color: #1a7599;
+    color: gold;
+}
+
+.MainMenu .no-hover:hover {
+    background-color: transparent;
+    color: white;
+}
+
+/* ===== Menu dropdown logic ===== */
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-list {
+    display: none;
+    position: absolute;
+    background-color: #51b8e1;
+    /*min-width: 160px;*/
+    /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-list {
+    display: block;
+    color: gold;
+}
+
+.dropdown-list a {
+    color: white;
+    /*padding: 12px 16px;*/
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+/* =END= Menu dropdown logic =END= */
+
+/* Test
+.MainMenu.Navigation a {
+    color: crimson;
+}
+*/
+
+.post-list {
+    /*background-color: #ABDDF1;*/
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 95%;
+}
+
+.post:nth-child(odd) {
+    background-color: #D5EEF8;
+    /*padding: 2px 2px;*/
+    text-decoration: none;  
+}
+
+.post:nth-child(even) {
+    background-color: #ABDDF1;
+    /*padding: 2px 2px;*/
+    text-decoration: none;  
+}
+
+.comment-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 90%;
+}
+
+.comment:nth-child(odd) {
+    background-color: lightcyan;
+    font-size: 1em;
+}
+
+.comment:nth-child(even) {
+    background-color: #ABDDF1;
+    font-size: 1em;
+}
+
+.post div, .comment div {
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+}
+
+.post div:hover, .comment div:hover {
+    background-color: #fff099;
+    border-right: 2px solid gold;
+    border-bottom: 2px solid gold;
+}
+
+/* etc stuff */
+h1 {
+    color: #0f4357;
+}
+
+textarea {
+    height: 250px;
+    width: 75%;
+    resize: none;
+}
+
+footer {
+    background-color: #51b8e1;
+    color: white;
+    text-align: left;
+    padding: 2px 16px;
+}
+
+.loginError {
+    color: crimson;
+}
+
+/* Testing */
+#expand {
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.5s;
+}
+
+#toggleComment {
+    display: none;
+    visibility: hidden;
+}
+
+#toggleCommentLabel {
+    background-color: #51b8e1;
+    color: white;
+    display: block;
+    padding: 0.2em;
+    text-align: left;
+    border: 1px solid transparent;
+    width: 20em;
+}
+#toggleCommentLabel:hover {
+    color: gold;
+    border-right: 1px solid gold;
+}
+
+#toggleCommentLabel::before {
+  font-weight: bold;
+  font-size: 15px;
+  content: "I wanna comment too!";
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 3px;
+  border: 1px solid transparent;
+}
+
+#toggleComment:checked ~ #expand {
+  height: 300px;
+}
+
+#toggleComment:checked ~ label::before {
+  content: "Nevermind, I don't wanna comment..";
 }

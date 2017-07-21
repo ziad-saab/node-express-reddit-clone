@@ -1,0 +1,13 @@
+extends layout.pug
+
+block content
+    h1 Login
+    form(action="/auth/login" method="POST")
+        p Username:
+            input(type='text' name='username' placeholder='username')
+        p Password:
+            input(type='password' name='password' placeholder='password')
+        p 
+            button(type='submit') Login!
+        if(loginError.length > 0)
+            p.loginError !! #{loginError} !!

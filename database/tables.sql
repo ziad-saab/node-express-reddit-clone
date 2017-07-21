@@ -73,3 +73,15 @@ CREATE TABLE comments (
   FOREIGN KEY (userId) REFERENCES users (id) ON DELETE SET NULL,
   FOREIGN KEY (postId) REFERENCES posts (id) ON DELETE CASCADE
 );
+
+-- Adapt tables for the comment crawler
+ALTER TABLE comments
+ADD COLUMN parentId INT AFTER id,
+ADD COLUMN redditName VARCHAR(20) AFTER parentId;
+
+ALTER TABLE subreddits
+ADD COLUMN redditName VARCHAR(20) AFTER id;
+
+ALTER TABLE posts
+ADD COLUMN redditName VARCHAR(20) AFTER id,
+ADD COLUMN permanentLink VARCHAR(1000) AFTER url;
