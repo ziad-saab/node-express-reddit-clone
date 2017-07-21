@@ -18,13 +18,15 @@ module.exports = function(myReddit) {
 
         myReddit.checkUserLogin(username, password)
         .then(user => {
-          console.log(user);
-          return res.send("TO BE IMPLEMENTED");
-
+          return myReddit.createUserSession(user.id);
         })
+        .then(token => {console.log("here is the token :  " + token);
+            res.cookie("SESSION", token);})
+        .then(() => res.redirect(302, '/'))
         .catch( e =>{
-          return res.status(500).send('You fucked up mofo')
+          res.status(401).send(e.message);
         })
+
     });
 
     authController.get('/signup', function(request, response) {
