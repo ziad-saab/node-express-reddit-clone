@@ -172,7 +172,9 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    myReddit.getAllSubreddits().then( results => {
+        response.render('create-post-form', { results : results });  
+    })
 });
 
 // POST handler for form submissions creating a new post
