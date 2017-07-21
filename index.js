@@ -112,28 +112,32 @@ app.get('/r/:subreddit', function(request, response) {
     1. Get all subreddits with RedditAPI
     2. Render some HTML that lists all the subreddits
      */
+    var subName = "";
+    
     myReddit.getSubredditByName(request.params.subreddit)
     .then(result => {
-
-        console.log(result.id);
+        //I'm using an anonymous callback for error handling
+        //I'll pass result along, if everything is swell
+        console.log(result.id, "subreddit id", result);
 
         if (result === undefined) {
             response.status(404);
         }
         else {
-            myReddit.getAllPosts(result.name)
-
-            .then(posts => {
-                console.log(posts);
-                response.render('homepage', {posts: posts, subreddit: result});
-            })
-            .catch(function(error) {
-                response.render('error', {error: error});
-            })
+            subName = result;
         }
-
+    })
+    .then(result => myReddit.getAllPosts(result.name))
+    .then(posts => {
+        //console.log(posts);
+        response.render('homepage', {posts: posts, subreddit: subName});
+    })
+    .catch(function(error) {
+        response.render('error', {error: error});
     })
 
+            
+    
 });
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
@@ -143,16 +147,30 @@ app.get('/r/:subreddit', function(request, response) {
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-
+    console.log(request.params.method, "parameter method")
+    if(request.params.method !== "hot" && request.params.method !== "top") {
+        response.status(404);
+    } else {
+        myReddit.getAllPosts("", request.params.method)
+        .then(posts => {
+        //console.log(posts);    
+        response.render('homepage', {posts: posts, method: response});
+    });
+    }
     
-
-
-    response.send("TO BE IMPLEMENTED");
-
 });
 
 app.get('/post/:postId', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+
+    //console.log(request.params.postId, "the params");
+
+    myReddit.getSinglePost(request.params.postId)
+    .then(post => {
+        console.log(post, "This is supposed to be a post");
+        response.render('post', {post: post});
+    })
+
+    //response.send("TO BE IMPLEMENTED");
 });
 
 /*
@@ -195,7 +213,7 @@ app.post('/createPost', onlyLoggedIn, function(request, response) {
 
     myReddit.createPost(postInfo)
     .then(postId => {
-            response.redirect('/post/:postId');
+        response.redirect('/post/' + postId);
     })
 
 });
