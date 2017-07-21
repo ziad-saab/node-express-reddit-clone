@@ -167,11 +167,9 @@ app.get('/post/:postId', function(request, response) {
 
     myReddit.getSinglePost(request.params.postId)
     .then(post => {
-        console.log(post, "This is supposed to be a post");
+        //console.log(post, "This is supposed to be a post");
         response.render('post', {post: post});
     })
-
-    //response.send("TO BE IMPLEMENTED");
 });
 
 /*
@@ -255,6 +253,28 @@ app.post('/createPost', onlyLoggedIn, function(request, response) {
 
 });
 
+
+app.post('/createComment', onlyLoggedIn, function(request, response) {
+
+    var commentObj = {
+        postId: request.body.commentPostId,
+        userId: request.loggedInUser.userId,
+        text: request.body.commentText
+    }
+
+    console.log(commentObj, "this is commentObj");
+
+    myReddit.createComment(commentObj)
+
+    .then(commentId => {
+        console.log(commentId, "returned from createComment()");
+    })
+
+    .then(result => {
+        response.redirect('back');
+    })
+
+});
 
 
 // Listen
