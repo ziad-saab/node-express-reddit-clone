@@ -15,9 +15,14 @@ html
                         a(href="/auth/signup") Signup
                     li
                         a(href="/auth/login") Login
+                    li  
+                        <a href="/sort/hot"> View Hot Reddits
+                    li 
+                        <a href="/sort/top"> View Top Reddits
             if  subid
                 p Subreddit: #{nnn}
                 p Description: #{fff}
+            
         main
             block content
         footer &copy; 2017 blah
