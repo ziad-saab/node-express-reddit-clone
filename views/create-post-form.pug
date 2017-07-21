@@ -1,0 +1,17 @@
+extends layout
+block title
+    title Create a new post
+block content
+    h1 Share a new Post!
+    form(action="/createPost", method ="POST")
+        p Subreddit: 
+            select(name="subData")
+                each subreddit in posts
+                    option(value=subreddit.id) #{subreddit.name}
+                    //-subreddit comes from response.render{'', {posts:results}} in index.js
+        p URL:
+            input(type="url", name="url" required)
+        p Title: 
+            input(type="text", name="title" required)
+        p
+            button(type="submit") Submit

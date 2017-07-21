@@ -56,7 +56,10 @@ This custom middleware checks in the cookies if there is a SESSION token and val
 NOTE: This middleware is currently commented out! Uncomment it once you've implemented the RedditAPI
 method `getUserFromSession`
  */
+//this checks if user is logged in, if yes 
+//loggedInUser gets values from the users table, else it is set to false
 app.use(checkLoginToken(myReddit));
+
 
 
 
@@ -207,7 +210,37 @@ app.get('/r/:subreddit/:method', function(request, response){
 });
 
 app.get('/post/:postId', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    //response.send("TO BE IMPLEMENTED");
+   return Promise.all([myReddit.getSinglePost(request.params.postId), myReddit.getCommentsForPost(request.params.postId)])
+    .then(result => {
+        //get single post returns A SINGLE POST, not an array
+        if(result[0].length === 0)
+        {
+            //post dont exist
+            console.log("result of promise all is:" + result);
+            console.log("result of first promise length:" + result[0].length);
+            //console.log("result of second promise:" + result[1]);
+            console.log("result of second promise length:" + result[1].length);
+            response.sendStatus("NO SUCH POST ID");
+            //response.sendStatus(404);
+        }
+        else if (result[0].length === 0 && result[1].length === 0)
+        {
+            response.sendStatus("NO Comments on post");
+        } 
+        else
+        {
+            console.log("result of first promise:" + result[0].length);
+            console.log("result of second promise:" + result[1].length);
+            response.sendStatus("POST ID WAS FOUND");
+            //response.redirect('/');  
+        }
+    });
+    
+    return myReddit.getCommentsForPost(request.params.postId)
+    .then(result => {
+       console.log("Comments are " +result); 
+    });
 });
 
 /*
@@ -225,13 +258,35 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    return myReddit.getAllSubreddits()
+    .then(results =>{
+        response.render('create-post-form', {posts: results});    
+    })
 });
 
 // POST handler for form submissions creating a new post
 app.post('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    console.log("the user has props: " + request.loggedInUser.id);
+    console.log("request.body has" + request.body);
+    console.log("title " + request.body.title);
+    console.log("subId " + request.body.subData);
+    return Promise.resolve()
+    .then(result => {
+        var postData = {};
+        postData.title = request.body.title;
+        postData.url = request.body.url;
+        postData.userId = request.loggedInUser.id;
+        postData.subredditId = request.body.subData;
+        //console.log(postData.subredditId);
+        return myReddit.createPost(postData);
+    }).then(result => {
+        response.redirect('/post/' + result); //result is the insertId go up to /post/:postId
+    });
 });
+        
+    
+    //
+
 
 // Listen
 var port = process.env.PORT || 3000;

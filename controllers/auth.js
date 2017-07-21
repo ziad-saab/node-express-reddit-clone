@@ -37,6 +37,8 @@ module.exports = function(myReddit) {
     
     
     //Login Post
+    //NTS: request.body contains form data
+    //BUT we can only use with when paseed through a body parser middleware
     authController.post('/login', urlBodyParser, function(request, response) {
         if (!request.body) return response.sendStatus(400);
     
@@ -75,7 +77,6 @@ module.exports = function(myReddit) {
         }
         //response.render('signup-form');
     });
-    
     
     //Sign Up Post
     authController.post('/signup', urlBodyParser, function(request, response) {
