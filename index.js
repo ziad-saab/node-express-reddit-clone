@@ -179,7 +179,19 @@ app.get('/createPost', onlyLoggedIn, function(request, response) {
 
 // POST handler for form submissions creating a new post
 app.post('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    var newPost = {
+             subredditId: request.body.subredditId,
+             url: request.body.url,
+             title: request.body.title,
+             userId: request.loggedInUser.userId
+         };
+    
+    myReddit.createPost(newPost)
+    .then( post => {
+        response.redirect('/post/' + post);
+     });
+    
 });
 
 // Listen
