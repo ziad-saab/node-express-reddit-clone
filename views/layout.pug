@@ -14,6 +14,8 @@ html
                     img(src='https://scontent.fybz2-1.fna.fbcdn.net/v/t1.0-9/20229156_1861642260755928_4405919261133155382_n.png?oh=b6b88077844cdd589e4b004b9c2a42e5&oe=59F9EDB4')
             if loggedInUser
                 p Welcome #{loggedInUser.username}
+                a(href='/createPost')
+                    button(name="vote") Create Post!
             else
                 div.credentials
                     ul
