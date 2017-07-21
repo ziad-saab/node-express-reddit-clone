@@ -3,7 +3,8 @@ extends layout.pug
 block content
 	h1 #{post.subreddit.name}
 	p Post Title: #{post.title}
-	p Post URL: #{post.url}
+	p Post URL:
+		a(href=post.url, target="_blank")= post.url
 	p Created At: #{post.createdAt}
 	p Updated At: #{post.updatedAt}
 	p Post created by: #{post.user.username}
