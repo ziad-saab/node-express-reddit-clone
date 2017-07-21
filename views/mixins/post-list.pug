@@ -5,7 +5,9 @@ mixin postList(posts)
         each post in posts
             li.post
                 h2
-                    a(href=post.url, target="_blank")= post.title
+                    a(href="/post/" + post.id)=post.title
+                h2
+                    a(href=post.url, target="_blank")=post.url
                     p Submitted by
                         a(href="/u/" + post.user.username)= post.user.username
                         span  in

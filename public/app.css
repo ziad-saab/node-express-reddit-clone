@@ -39,6 +39,11 @@ header ul li a:hover {
     color: #b2b200;
 }
 
+.loggedin {
+    display: flex;
+    justify-content: center;
+}
+
 .credentials {
     text-align: center;
 }
