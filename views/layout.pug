@@ -9,7 +9,11 @@ html
         header
             if loggedInUser && !logoutForm
                 p Welcome #{loggedInUser.username}
-                a(href="/auth/logout") Logout
+                ul
+                    li 
+                        a(href="/subreddits") Subreddits List
+                    li
+                        a(href="/auth/logout") Logout
             else if loggedInUser && logoutForm
                 p #{loggedInUser.username} would you like to log out?
                 p Click button to logout
@@ -19,6 +23,8 @@ html
                         a(href="/auth/signup") Signup
                     li
                         a(href="/auth/login") Login
+                    li
+                        a(href="/subreddits") Subreddits List
         main
             block content
         footer &copy; 2017 blah
