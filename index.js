@@ -1,3 +1,4 @@
+"use strict";
 var express = require('express');
 var mysql = require('promise-mysql');
 
@@ -23,7 +24,6 @@ var connection = mysql.createPool({
     database: 'reddit'
 });
 var myReddit = new RedditAPI(connection);
-
 
 // Create a new Express web server
 var app = express();
@@ -154,7 +154,6 @@ app.get('/sort/:method', function(request, response) {
     } else {
         myReddit.getAllPosts("", request.params.method)
         .then(posts => {
-        //console.log(posts);    
         response.render('homepage', {posts: posts, method: response});
     });
     }
@@ -162,16 +161,19 @@ app.get('/sort/:method', function(request, response) {
 });
 
 app.get('/post/:postId', function(request, response) {
-
-    //console.log(request.params.postId, "the params");
-
+    var post = {};
     myReddit.getSinglePost(request.params.postId)
-    .then(post => {
-        console.log(post, "This is supposed to be a post");
-        response.render('post', {post: post});
+    .then(postObj => {
+        //console.log(postObj, "before getCommentsForPost")
+        post = postObj;
+        //console.log(post, "Post object after get Single Post")
+        return myReddit.getCommentsForPost(postObj.id)
     })
-
-    //response.send("TO BE IMPLEMENTED");
+    .then(comments => {
+        console.log(comments, "Comments after getCommentsForPost")
+        //console.log(post, "Post after getCommentForPost")
+        response.render('post', {post: post, comments: comments});
+    })
 });
 
 /*
@@ -184,44 +186,26 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
-//so far this function can return vote data (except post id) but cannot insert it 
-//into the database and cannot display votes
     var vote = {
-        postId: request.body.id,
+        postId: Number(request.body.postId),
         userId: request.loggedInUser.userId,
-        voteDirection: request.body.vote
+        voteDirection: Number(request.body.vote)
     }
     myReddit.createVote(vote)
-    .then(vote.results) 
-        console.log(vote);
-        response.end
-    });
-    
-    
-    // .then(vote => {
-    //         response.redirect('/back');
-    // })
-    // console.log(vote);
-    // res.send(JSON.stringify(
-    // {
-    // console.log(vote)
-    // .then(response.send);
-    // .then(result => {
-    //     // result.send(vote)
-    //     // console.log(vote)
-    // });
-    // .then (response.send('views/mixins/post-list'))
-    
-    // .then(function(response) {
-    //     return response.insertVote;
-    //     })
-    // .then(function(response) {   
-    // response.send(voteInfo);
-    // })
-    // .then(result => {
-    //         return result.insertId;
-    //     });
-// });
+    response.redirect('back')
+});
+
+app.post('/commentVote', onlyLoggedIn, function(request, response) {
+  var commentVote = {
+        postId: Number(request.body.postId),
+        userId: request.loggedInUser.userId,
+        commentId: Number(request.body.commentId),
+        voteDirection: Number(request.body.vote)
+    }
+    myReddit.createCommentVote(commentVote)
+    response.redirect('back')
+
+})
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
@@ -232,7 +216,7 @@ app.get('/createPost', onlyLoggedIn, function(request, response) {
     })
     .catch(function(error) {
         response.render('error', {error: error});
-    })
+    });
 
 });
 
@@ -251,10 +235,31 @@ app.post('/createPost', onlyLoggedIn, function(request, response) {
     myReddit.createPost(postInfo)
     .then(postId => {
         response.redirect('/post/' + postId);
+    });
+});
+
+
+app.post('/createComment', onlyLoggedIn, function(request, response) {
+
+    var commentObj = {
+        postId: request.body.commentPostId,
+        userId: request.loggedInUser.userId,
+        text: request.body.commentText
+    }
+
+    console.log(commentObj, "this is commentObj");
+
+    myReddit.createComment(commentObj)
+
+    .then(commentId => {
+        console.log(commentId, "returned from createComment()");
+    })
+
+    .then(result => {
+        response.redirect('back');
     })
 
 });
-
 
 
 // Listen
