@@ -17,8 +17,8 @@ var authController = require('./controllers/auth.js');
  */
 var RedditAPI = require('./lib/reddit.js');
 var connection = mysql.createPool({
-    user: 'root',
-    database: 'reddit'
+    user: 'timmcnamara',
+    database: 'redditNew'
 });
 var myReddit = new RedditAPI(connection);
 
@@ -55,7 +55,7 @@ This custom middleware checks in the cookies if there is a SESSION token and val
 NOTE: This middleware is currently commented out! Uncomment it once you've implemented the RedditAPI
 method `getUserFromSession`
  */
-// app.use(checkLoginToken(myReddit));
+app.use(checkLoginToken(myReddit));
 
 
 
@@ -117,16 +117,65 @@ app.get('/subreddits', function(request, response) {
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
 app.get('/r/:subreddit', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
-});
+    myReddit.getSubredditByName(request.params.subreddit)
+    .then( result => {
+    //console.log(result[0])
+       if (result === null) { 
+           response.status(404).send("no page exists");
+       } else {
+          return myReddit.getAllPosts(result[0].id)
+          }
+    })
+    .then(results => {
+       // console.log(results, 'these are results')
+        response.render('homepage', {posts: results })
+    })
+})
+      
+    // search we need to make a request to the database and bring up the data. 
+   
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    console.log(request.params.method)
+    if (request.params.method === "hot" || request.params.method === "top") {
+        myReddit.getAllPosts(request.params.subreddit, request.params.method)
+        .then( result => {
+            response.render('homepage', {posts: result});
+        })
+        .catch(error => {
+            response.send("method fail");
+        })
+    } else {
+        response.status(404).send(" UNAUTHORIZED not hot or top")
+    }
+    
+    
 });
 
 app.get('/post/:postId', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    Promise.all([
+        myReddit.getSinglePost(request.params.postId),
+        myReddit.getCommentsForPost(request.params.postId)
+    ]).then( data => {
+        console.log(data)
+        // if the promise post returns an error, 404... 
+        var post = data[0];
+        var comments = data[1];
+        
+        if (!post) {
+            
+          // post looks to return every post.. for some reason. 
+          response.render('404');
+        }
+        
+        response.render('post', { post: post, comments: comments}); 
+    });
+    
+    
+    // if the page does not exist, 404
+    // if it does then create a new Pug template that will output that post as well as its comments
+   
 });
 
 /*
@@ -139,17 +188,44 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    var vote = {
+        postId : +request.body.postId,
+        userId : request.loggedInUser.id,
+        voteDirection : +request.body.vote
+    }
+    console.log(vote, "vote object")
+    myReddit.createVote(vote).then( data => {
+        console.log(data)
+        
+        response.redirect('/')
+        
+        return data;
+    })
+    //response.send("TO BE IMPLEMENTED");
 });
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    myReddit.getAllSubreddits().then( results => {
+        response.render('create-post-form', { results : results });  
+    })
 });
 
 // POST handler for form submissions creating a new post
 app.post('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    var newPost = {
+             subredditId: request.body.subredditId,
+             url: request.body.url,
+             title: request.body.title,
+             userId: request.loggedInUser.userId
+         };
+    
+    myReddit.createPost(newPost)
+    .then( post => {
+        response.redirect('/post/' + post);
+     });
+    
 });
 
 // Listen

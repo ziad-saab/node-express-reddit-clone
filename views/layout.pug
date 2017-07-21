@@ -8,13 +8,19 @@ html
     body
         header
             if loggedInUser
-                p Welcome #{loggedInUser.username}
+                p Welcome #{loggedInUser.username} your Session cookie is #{loggedInUser.token}
             else
                 ul
                     li
                         a(href="/auth/signup") Signup
                     li
                         a(href="/auth/login") Login
+                    
         main
+            p
+                a(href="/sort/top") Top 
+            p   
+                a(href="/sort/hot") Hot
+                
             block content
         footer &copy; 2017 blah

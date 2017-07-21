@@ -1,4 +1,6 @@
 # Let's build a Reddit clone
+https://github.com/ziad-saab/node-express-reddit-clone
+
 Last week, we set out to build a Reddit clone from the database's perspective. We ended up with a `RedditAPI` with `createPost`, `getAllPosts`, `createUser` and other data-related methods.
 
 In this next part of the project, we are going to take the functionality that we already built, and make a website out of it! To do this, we are going to use many of the technologies we have already learned about, but we will also be adding a bit more on top.
