@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser'); // parses cookie from Cookie reques
 var morgan = require('morgan'); // logs every request on the console
 var checkLoginToken = require('./lib/check-login-token.js'); // checks if cookie has a SESSION token and sets request.user
 var onlyLoggedIn = require('./lib/only-logged-in.js'); // only allows requests from logged in users
+var https = require('https');
 
 // Controllers
 var authController = require('./controllers/auth.js');
@@ -55,7 +56,7 @@ This custom middleware checks in the cookies if there is a SESSION token and val
 NOTE: This middleware is currently commented out! Uncomment it once you've implemented the RedditAPI
 method `getUserFromSession`
  */
-// app.use(checkLoginToken(myReddit));
+app.use(checkLoginToken(myReddit));
 
 
 
@@ -96,6 +97,9 @@ app.use('/static', express.static(__dirname + '/public'));
 
 // Regular home Page
 app.get('/', function(request, response) {
+    
+    // var SubObj ={type:'home'};
+    //console.log("This is it",response.locals)
     myReddit.getAllPosts()
     .then(function(posts) {
         response.render('homepage', {posts: posts});
@@ -117,12 +121,55 @@ app.get('/subreddits', function(request, response) {
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
 app.get('/r/:subreddit', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    var SubObj ={};
+    
+  //  console.log("the request params: ",request.params.subreddit)
+    
+    return myReddit.getSubredditByName(request.params.subreddit)
+        .then( result => {
+          //  console.log("resulting data should be an id ", result.id)
+          
+          SubObj = {
+                    name:result.name,
+                    desc:result.description
+                }
+             //   console.log("The Result desc")
+            //    console.log(result.description)
+              //  var o = {p: 42, q: true};
+
+        //    console.log("after setting the local variable ", index)
+            return myReddit.getAllPosts(result.id)})
+        .then(function(posts){
+            // console.log("yeah: ",JSON.stringify(posts, null, 4))
+            response.render('homepage.pug', {posts: posts, subid:true,nnn:SubObj.name,fff:SubObj.desc})
+      }).catch(function(error) {
+        response.render('error', {error: error});
+    });
+    
 });
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    var SortObj = {};
+    if (request.params.method == 'hot'){
+        SortObj = { type: 'hot'} 
+    }
+    else if (request.params.method =='top'){
+        SortObj = { type: 'top' }
+    }
+    
+    return myReddit.getAllPosts(SortObj).then(function(posts){
+            console.log("yeah: ",JSON.stringify(posts, null, 4))
+            response.render('homepage.pug',{posts: posts}).catch(function(error) {
+        response.render('error', {error: error});
+    })//,
+      })
+    
+    
+    
+    
 });
 
 app.get('/post/:postId', function(request, response) {
@@ -144,7 +191,7 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    response.render('create-post-form.pug');
 });
 
 // POST handler for form submissions creating a new post
