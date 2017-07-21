@@ -12,7 +12,6 @@ module.exports = function(myReddit) {
     });
 
     authController.post('/login', parse_middle, function(req, res) {
-        console.log('boom');
         var username = req.body.username;
         var password = req.body.password;
 

@@ -133,7 +133,20 @@ app.get('/subreddits', function(request, response) {
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
 app.get('/r/:subreddit', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+  return myReddit.getSubredditByName(request.params.subreddit)
+    .then(subreddit => {
+      console.log(subreddit.subreddit_id);
+      if (!subreddit) {
+        throw new Error('404');
+      } else {
+        return myReddit.getAllPosts(subreddit.subreddit_id);
+      }
+    }).then(function(posts) {
+        response.render('homepage', {posts: posts});
+    })
+    .catch(function(error) {
+        response.render('error', {error: error});
+    })
 });
 
 // Sorted home page
