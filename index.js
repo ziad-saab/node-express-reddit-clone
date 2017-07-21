@@ -118,8 +118,10 @@ app.get('/subreddits', function(request, response) {
     1. Get all subreddits with RedditAPI
     2. Render some HTML that lists all the subreddits
      */
-    
-    response.send("TO BE IMPLEMENTED");
+    return myReddit.getAllSubreddits()
+    .then(result =>{
+        response.render('subreddit-view', {subreddits: result});    
+    });
 });
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
@@ -293,10 +295,6 @@ app.post('/createPost', onlyLoggedIn, function(request, response) {
         response.redirect('/post/' + result); //result is the insertId go up to /post/:postId
     });
 });
-        
-    
-    //
-
 
 // Listen
 var port = process.env.PORT || 3000;
