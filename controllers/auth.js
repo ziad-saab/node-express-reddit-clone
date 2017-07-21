@@ -5,13 +5,19 @@ module.exports = function(myReddit) {
     var authController = express.Router();
     
     authController.get('/login', function(request, response) {
-        response.render('login-form');
+        var loginError = [];
+        if (request.query.loginError) {
+            loginError = request.query.loginError;
+        }
+        console.log('LoginError=',loginError);
+        response.render('login-form', {loginError: loginError});
     });
     
     authController.post('/login', function(request, response) {
         myReddit.checkUserLogin(request.body.username, request.body.password)
         .catch(error => {
-            response.render('error', {error: error});
+            console.log(error);
+                response.redirect('/auth/login?loginError=' + error.message);
             return;
         })
         .then(result => {

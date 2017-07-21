@@ -9,3 +9,5 @@ block content
             input(type='password' name='password' placeholder='password')
         p 
             button(type='submit') Login!
+        if(loginError.length > 0)
+            p.loginError !! #{loginError} !!
