@@ -245,6 +245,27 @@ app.post('/createPost', onlyLoggedIn, function(request, response) {
     });
 });
 
+app.post('/createComment', onlyLoggedIn, (request,response) => {
+    console.log("request body=",request.body);
+    var commentInfo = {
+        postId: request.body.commentPostId,
+        userId: +request.loggedInUser.userId,
+        text: request.body.commentText
+    };
+    console.log("comment info=",commentInfo);
+    myReddit.createComment(commentInfo)
+    .then(comment => {
+        response.redirect('back');        
+    });
+});
+
+app.get('/logout', onlyLoggedIn, (request, response) => {
+    myReddit.deleteUserSession(+request.loggedInUser.userId)
+    .then(result => {
+        response.redirect('back'); //Redirect to the current page
+    });
+});
+
 // Listen
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
@@ -255,11 +276,4 @@ app.listen(port, function() {
     else {
         console.log('Web server is listening on http://localhost:' + port);
     }
-});
-
-app.get('/logout', onlyLoggedIn, (request, response) => {
-    myReddit.deleteUserSession(+request.loggedInUser.userId)
-    .then(result => {
-        response.redirect('back'); //Redirect to the current page
-    });
 });

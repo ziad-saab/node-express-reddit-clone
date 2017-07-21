@@ -48,6 +48,7 @@ li:last-child {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    width: 90%;
 }
 
 .post:nth-child(odd) {
@@ -66,9 +67,15 @@ li:last-child {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    width: 80%;
 }
 
 .comment:nth-child(odd) {
     background-color: lightcyan;
     font-size: 1em;
+}
+
+textarea {
+    height: 200px;
+    width: 70%;
 }

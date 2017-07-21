@@ -8,12 +8,21 @@ block content
     p Created by: #{post.user.username} 
         span on #{post.createdAt}
     p Score: #{post.voteScore} Upvotes: #{post.numUpvotes} Downvotes: #{post.numDownvotes}
+    
     form(action="/vote" method="post")
         input(type='hidden' name='postId' value=post.id)
         button(type='submit' name='vote' value=1) Upvote This!
         button(type='submit' name='vote' value=-1) Downvote This!
+    br
+    form(action="/createComment" method="post")
+        input(type='hidden' name='commentPostId' value=post.id)
+        textarea(class='comment_text' name='commentText' placeholder='comment here')
+        span
+        button(type='submit' name='comment') Comment!
+    br
     ul.comment-list
         each comment in comments
             li.comment
                 h3 !{comment.markedText}
                 p Submitted by #{comment.username} on #{comment.createdAt}
+            

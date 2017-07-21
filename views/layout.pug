@@ -29,6 +29,9 @@ html
                         a(href='/sort/hot/') Hottest Posts
                     li
                         a(href='/sort/commented/') Most Commented
+                    if loggedInUser
+                        li
+                            a(href='/createPost/') Create Post
                     li(style="float:right")
                         a(href='/subreddit/') Subreddit
 
