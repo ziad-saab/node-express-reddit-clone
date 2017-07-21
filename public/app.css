@@ -30,7 +30,7 @@ li:last-child {
     display: block;
     color: white;
     text-align: center;
-    padding: 2px 16px;
+    padding: 2px 10px;
     text-decoration: none;
 }
 
@@ -79,13 +79,12 @@ li.dropdown {
 }
 */
 
-
 .post-list {
     /*background-color: #ABDDF1;*/
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 90%;
+    width: 95%;
 }
 
 .post:nth-child(odd) {
@@ -104,12 +103,22 @@ li.dropdown {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 80%;
+    width: 90%;
 }
 
 .comment:nth-child(odd) {
     background-color: lightcyan;
     font-size: 1em;
+}
+
+.comment:nth-child(even) {
+    background-color: #ABDDF1;
+    font-size: 1em;
+}
+
+.post div, .comment div {
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
 }
 
 .post div:hover, .comment div:hover {
@@ -124,8 +133,9 @@ h1 {
 }
 
 textarea {
-    height: 200px;
-    width: 70%;
+    height: 250px;
+    width: 75%;
+    resize: none;
 }
 
 footer {
@@ -137,4 +147,48 @@ footer {
 
 .loginError {
     color: crimson;
+}
+
+/* Testing */
+#expand {
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.5s;
+}
+
+#toggleComment {
+    display: none;
+    visibility: hidden;
+}
+
+#toggleCommentLabel {
+    background-color: #51b8e1;
+    color: white;
+    display: block;
+    padding: 0.2em;
+    text-align: left;
+    border: 1px solid transparent;
+    width: 20em;
+}
+#toggleCommentLabel:hover {
+    color: gold;
+    border-right: 1px solid gold;
+}
+
+#toggleCommentLabel::before {
+  font-weight: bold;
+  font-size: 15px;
+  content: "I wanna comment too!";
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 3px;
+  border: 1px solid transparent;
+}
+
+#toggleComment:checked ~ #expand {
+  height: 300px;
+}
+
+#toggleComment:checked ~ label::before {
+  content: "Nevermind, I don't wanna comment..";
 }

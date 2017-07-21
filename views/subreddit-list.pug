@@ -5,8 +5,10 @@ block content
     ul.post-list
         each subreddit in subreddits
             li.post
-                h2
-                    a(href="/r/" + subreddit.name)= subreddit.name
-                p #{subreddit.numPosts} posts
-                    if(subreddit.numPosts > 1)
-                        p Latest post on #{subreddit.latestPost}
+                div
+                    h2
+                        a(href="/r/" + subreddit.name)= subreddit.name
+                    p #{subreddit.description}
+                    p #{subreddit.numPosts} posts
+                        if(subreddit.numPosts > 1)
+                            p Latest post on #{subreddit.latestPost}

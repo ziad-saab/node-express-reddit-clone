@@ -16,12 +16,15 @@ block content
         button(type='submit' name='vote' value=-1) Downvote This!
     if loggedInUser
         br
-        form(action="/createComment" method="post")
-            input(type='hidden' name='commentPostId' value=post.id)
-            textarea(class='comment_text' name='commentText' placeholder='comment here')
-            span
-            button(type='submit' name='comment') Comment!
-    br
+        input(type='checkbox' id='toggleComment')
+        label(for='toggleComment' id='toggleCommentLabel')
+        div(class='commentBox' id='expand')
+            form(action="/createComment" method="post")
+                input(type='hidden' name='commentPostId' value=post.id)
+                textarea(class='comment_text' name='commentText' placeholder='comment here')
+                br
+                button(type='submit' name='comment') Comment!
+    h4 #{comments.length} Comments
     ul.comment-list
         each comment in comments
             li.comment
