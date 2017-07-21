@@ -19,12 +19,11 @@ var authController = require('./controllers/auth.js');
 var RedditAPI = require('./lib/reddit.js');
 var connection = mysql.createPool({
 
-    user: 'root',
-    password: 'root',
+    user: 'marissacodes',
+    password: '',
     database: 'reddit'
 });
 var myReddit = new RedditAPI(connection);
-
 
 // Create a new Express web server
 var app = express();
@@ -185,8 +184,20 @@ app.post('/vote', onlyLoggedIn, function(request, response) {
         voteDirection: Number(request.body.vote)
     }
     myReddit.createVote(vote)
-    response.redirect('/')
+    response.redirect('back')
 });
+
+app.post('/commentVote', onlyLoggedIn, function(request, response) {
+  var commentVote = {
+        postId: Number(request.body.postId),
+        userId: request.loggedInUser.userId,
+        commentId: Number(request.body.commentId),
+        voteDirection: Number(request.body.vote)
+    }
+    myReddit.createCommentVote(commentVote)
+    response.redirect('back')
+
+})
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {

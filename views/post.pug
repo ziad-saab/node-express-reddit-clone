@@ -9,3 +9,10 @@ block content
 	p Updated At: #{post.updatedAt}
 	p Post created by: #{post.user.username}
 	p Vote score: #{post.voteScore}
+		each comment in comments
+			li.comment
+				p Score: #{comment.voteScore} Upvotes: #{comment.numUpvotes} Downvotes: #{comment.numDownvotes}
+				form(action='/vote' method='POST')
+					input(type="hidden" name="commentId" value= comment.id) 
+					button(type="submit" name="vote" value=1) upvote this
+					button(type="submit" name="vote" value=-1) downvote this
