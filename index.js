@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser'); // parses cookie from Cookie reques
 var morgan = require('morgan'); // logs every request on the console
 var checkLoginToken = require('./lib/check-login-token.js'); // checks if cookie has a SESSION token and sets request.user
 var onlyLoggedIn = require('./lib/only-logged-in.js'); // only allows requests from logged in users
+var https = require('https');
 
 // Controllers
 var authController = require('./controllers/auth.js');
@@ -55,7 +56,7 @@ This custom middleware checks in the cookies if there is a SESSION token and val
 NOTE: This middleware is currently commented out! Uncomment it once you've implemented the RedditAPI
 method `getUserFromSession`
  */
-// app.use(checkLoginToken(myReddit));
+app.use(checkLoginToken(myReddit));
 
 
 
@@ -96,6 +97,9 @@ app.use('/static', express.static(__dirname + '/public'));
 
 // Regular home Page
 app.get('/', function(request, response) {
+    
+    // var SubObj ={type:'home'};
+    //console.log("This is it",response.locals)
     myReddit.getAllPosts()
     .then(function(posts) {
         response.render('homepage', {posts: posts});
@@ -117,16 +121,70 @@ app.get('/subreddits', function(request, response) {
 
 // Subreddit homepage, similar to the regular home page but filtered by sub.
 app.get('/r/:subreddit', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    var SubObj ={};
+    
+  //  console.log("the request params: ",request.params.subreddit)
+    
+    return myReddit.getSubredditByName(request.params.subreddit)
+        .then( result => {
+          //  console.log("resulting data should be an id ", result.id)
+          
+          SubObj = {
+                    name:result.name,
+                    desc:result.description
+                }
+             //   console.log("The Result desc")
+            //    console.log(result.description)
+              //  var o = {p: 42, q: true};
+
+        //    console.log("after setting the local variable ", index)
+            return myReddit.getAllPosts(result.id)})
+        .then(function(posts){
+            // console.log("yeah: ",JSON.stringify(posts, null, 4))
+            response.render('homepage.pug', {posts: posts, subid:true,nnn:SubObj.name,fff:SubObj.desc})
+      }).catch(function(error) {
+        response.render('error', {error: error});
+    });
+    
 });
 
 // Sorted home page
 app.get('/sort/:method', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    
+    // I should do var SortObj = request.params.method NEXT TIME...
+    var SortObj = {};
+    if (request.params.method == 'hot'){
+        SortObj = { type: 'hot'} 
+    }
+    else if (request.params.method =='top'){
+        SortObj = { type: 'top' }
+    }
+    
+    
+    return myReddit.getAllPosts(SortObj).then(function(posts){
+          //  console.log("yeah: ",JSON.stringify(posts, null, 4))
+            response.render('homepage.pug',{posts: posts}).catch(function(error) {
+        response.status(401).send('Unauthorized Access')
+    })//,
+      })
+    
+    
+    
+    
 });
 
 app.get('/post/:postId', function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+  //  console.log("thePost id coming from a single post: ",request.params.postId)
+    
+    return myReddit.getSinglePost(request.params.postId).then(function(posts){
+          //  console.log("yeah: ",JSON.stringify(posts, null, 4))
+            response.render('homepage',{posts: [posts]}).catch(function(error) {
+        response.status(401).send('Unauthorized Access')
+    })//,
+      })
 });
 
 /*
@@ -139,18 +197,64 @@ This basically says: if there is a POST /vote request, first pass it thru the on
 middleware calls next(), then also pass it to the final request handler specified.
  */
 app.post('/vote', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    var VoteObj = { 
+         voteDirection: +request.body.vote,
+         postId: +request.body.postId,
+         userId: request.loggedInUser.id
+        }
+    console.log("the VoteObj: ",VoteObj)
+    
+    return myReddit.createVote(VoteObj).then(function() {
+        console.log("Inside the .then after createVote: ",VoteObj.postId)
+        response.redirect('/post/' + VoteObj.postId);
+        
+    }).catch(function(error) {
+        response.status(401).send('Unauthorized Access')
+})
 });
 
 // This handler will send out an HTML form for creating a new post
 app.get('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    myReddit.getAllSubreddits().then(function(posts){
+         response.render('create-post-form',{subreddits: posts});
+    })
+   
 });
 
 // POST handler for form submissions creating a new post
 app.post('/createPost', onlyLoggedIn, function(request, response) {
-    response.send("TO BE IMPLEMENTED");
+    
+    
+     var PostObj = { 
+         
+         title:request.body.title,
+         url: request.body.url,
+         subredditId: request.body.subredditId,
+         userId: request.loggedInUser.id
+         
+     }
+ //  console.log("the Post obj ",PostObj)
+     
+     
+   return myReddit.createPost(PostObj).then( result => {
+      // console.log("the RESULT obj ",result.postId)
+        response.redirect('/post/' + result);//,{post:[result]}); 
+     })
+     
+     
+     .catch(error => {
+             response.status(401).send('Unauthorized Access');
+        });
+    
+    //response.send("TO BE IMPLEMENTED");
 });
+
+app.get('*', function(req, res){
+  res.send('what??? Invalid URL', 404);
+});
+
 
 // Listen
 var port = process.env.PORT || 3000;

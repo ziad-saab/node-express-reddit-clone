@@ -19,6 +19,7 @@
     "express": "^4.14.0",
     "morgan": "^1.7.0",
     "mysql": "^2.13.0",
+    "nodemon": "^1.11.0",
     "promise-mysql": "^3.0.1",
     "pug": "^2.0.0-beta6"
   }

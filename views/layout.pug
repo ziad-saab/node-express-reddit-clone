@@ -9,12 +9,31 @@ html
         header
             if loggedInUser
                 p Welcome #{loggedInUser.username}
+                
+                li
+                    a(href="/") Home
+                li  
+                    a(href="/sort/hot") View Hot Reddits
+                li 
+                    a(href="/sort/top") View Top Reddits
+                li    
+                    a(href="/createPost") Create a Post
             else
                 ul
+                    li
+                        a(href="/") Home
                     li
                         a(href="/auth/signup") Signup
                     li
                         a(href="/auth/login") Login
+                    li  
+                        a(href="/sort/hot") View Hot Reddits
+                    li 
+                        a(href="/sort/top") View Top Reddits
+            if  subid
+                p Subreddit: #{nnn}
+                p Description: #{fff}
+            
         main
             block content
         footer &copy; 2017 blah
