@@ -1,18 +1,15 @@
 extends layout.pug
 
-block content 
-    h1 Share a new link!
-    form(method='POST', action='/createPost')
-      p
-        | Subreddit:
-        select(name='subredditId')
-          option(value='') 
-          each subred in subreddits
-            //option(value=user._id, selected=(user._id==thing.user._id))=user.username
-      p
-        | URL: 
-        input(type='text', name='url')
-      p
-        | Title: 
-        input(type='text', name='title')
-    
+block content
+     h1 Share a new link!
+     form(action="/createPost" method="POST")
+         p Subreddit:
+             select(name="subredditId")
+                 each subreddit in subreddits
+                     option(value=subreddit.id) #{subreddit.name}
+         p URL:
+             input(type='text' name='url' placeholder='http://www.audioboxlive.com')
+         p Title:
+             input(type='text' name='title' placeholder='The post\'s title')
+         p 
+             button(type='submit') Create Post!
