@@ -1,0 +1,9 @@
+extend layout
+include mixins/subreddit-list
+
+block title
+    title Subreddits
+
+block content
+    h1 Welcome to Reddit!!, Select A Subreddit to View :)
+    +subredditList(subreddits)

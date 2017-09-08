@@ -1,0 +1,12 @@
+extends layout
+block title
+    title SignUp with us
+block content
+    h1 Welcome New User!! Please Select your User Name and Password :)
+    form(action="/auth/signup", method ="POST")
+        p Username: 
+            input(type="text", name="username" required)
+        p Password:  
+            input(type="password", name="password" required)
+        p 
+            button(type="submit") SignUp!!

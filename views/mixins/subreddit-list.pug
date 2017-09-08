@@ -1,0 +1,7 @@
+mixin subredditList(subreddits)
+
+    each subreddit in subreddits
+        -var subName = subreddit.name
+        
+        li.subreddit
+            a(href="/r/" + subreddit.name) r/#{subreddit.name}
