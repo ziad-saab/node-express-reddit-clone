@@ -21,5 +21,8 @@
     "mysql": "^2.13.0",
     "promise-mysql": "^3.0.1",
     "pug": "^2.0.0-beta6"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
