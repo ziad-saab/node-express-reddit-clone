@@ -12,7 +12,7 @@
   "license": "ISC",
   "homepage": "https://github.com/ziad-saab/node-express-reddit-clone#readme",
   "dependencies": {
-    "bcrypt": "^1.0.2",
+    "bcrypt": "^5.0.0",
     "bcrypt-as-promised": "^1.1.0",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
